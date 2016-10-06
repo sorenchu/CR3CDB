@@ -1,0 +1,67 @@
+# src/DatabaseBundle/Resources/config/doctrine/PersonalData.orm.yml
+DatabaseBundle\Entity\PersonalData:
+  type: entity
+  table:  personalData
+  repositoryClass: DatabaseBundle\Repository\PersonalDataRepository
+  id:
+    id:
+        type: integer
+        generator:  { strategy: AUTO }
+
+  fields:
+    name:
+        type: string
+        length: 40
+        nullable: false
+
+    surname:
+        type: string
+        length: 150
+        nullable: false
+
+    nickname:
+        type: string
+        length: 30
+        nullable: true
+
+    email:
+        type: string
+        lengtlh: 255
+        nullable: true
+
+    phone:
+        type: bigint
+        nullable: true
+
+    dni:
+        type: string
+        length: 10
+        nullable: true
+        unique: true
+ 
+    birthday:
+        type: datetime
+        nullable: true
+
+    sex:
+        type: string
+
+  #oneToMany:
+  oneToOne:
+      playerData:
+          targetEntity: PlayerData
+          inversedBy: personalData
+          #mappedBy: personalData
+          joinColumn:
+              name: playerData_id
+              referencedColumnName: id
+          cascade: ["persist"]
+
+      coachData:
+          targetEntity: CoachData
+          inversedBy: personalData
+          joinColumn:
+          #mappedBy: personalData
+              name: coachData_id
+              referencedColumnName: id
+          cascade: ["persist"]

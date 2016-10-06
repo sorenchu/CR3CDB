@@ -1,0 +1,11 @@
+new_person:
+    resource: "@DatabaseBundle/Resources/config/routing.yml"
+    prefix:   /
+
+show_people:
+    path:     /person/showAll
+    defaults: { _controller: DatabaseBundle:AddPerson:showAll }
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

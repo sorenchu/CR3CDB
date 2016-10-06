@@ -1,0 +1,59 @@
+<html>
+<head>
+  <title> Editar miembro </title>
+  <style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    <!-- width: 100%; -->
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  </style>
+</head>
+
+<body>
+
+<h1>Editar miembro</h1>
+
+{# src/DatabaseBundle/Resources/views/Default/showperson.html.twig #}
+
+<table style="width: 100%">
+<tr>
+  <th>Datos personales</th>
+  <th>Jugador</th>
+  <th>Entrenador</th>
+  <th>Socio</th>
+  <th>Padre</th>
+</tr>
+<tr>
+  <td>
+    {{ form(personalDataForm) }}
+  </td>
+  <td>
+    {{ form(playerDataForm) }}
+  </td>
+  <td>
+    {{ form(coachDataForm) }} 
+  </td>
+</tr>
+</table>
+
+<table>
+  <tr>
+    <td>
+      <a href="/person/new"> Añadir miembro </a>
+    </td>
+    <td>
+      <a href="/person/showAll"> Mostrar todos </a>
+    </td>
+    <td>
+      <a href="/person/showPlayers"> Mostrar jugadores </a>
+    </td>
+  </tr>
+</body>
+</html>

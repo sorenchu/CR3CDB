@@ -1,0 +1,19 @@
+# src/DatabaseBundle/Resources/config/validation.yml
+
+DatabaseBundle\Entity\PersonalData:
+  properties:
+    name: 
+      - NotBlank: ~
+    surname:
+      - NotBlank: ~
+    nickname:
+    email:
+      - Email:
+          message: La dirección "{{ value }}" no es válida.
+    phone:
+    dni: 
+    sex:
+      - Choice:
+          choices: [male, female]
+    birthday:
+      

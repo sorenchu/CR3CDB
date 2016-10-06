@@ -1,0 +1,34 @@
+# src/DatabaseBundle/Resources/config/doctrine/PlayerData.orm.yml
+DatabaseBundle\Entity\PlayerData:
+    type: entity
+    table: playerData
+    repositoryClass: DatabaseBundle\Repository\PlayerDataRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        season:
+            type: integer
+            nullable: true
+        payment:
+            type: float
+            nullable: true
+        category:
+            type: string
+            length: '150'
+            
+    lifecycleCallbacks: {  }
+
+    #manyToOne:
+    oneToOne:
+        personalData:
+            targetEntity: PersonalData
+            mappedBy: playerData
+            #inversedBy: playerData
+            #joinColumn:
+            #    name: personalData_id
+            #    referencedColumnName: id
+            #cascade: ["persist"]

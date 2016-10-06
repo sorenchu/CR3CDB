@@ -1,0 +1,34 @@
+DatabaseBundle\Entity\CoachData:
+    type: entity
+    table: coachData
+    repositoryClass: DatabaseBundle\Repository\CoachDataRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        salary:
+            type: float
+            nullable: true
+        category:
+            type: string
+            length: '20'
+            nullable: true
+        season:
+            type: integer
+            nullable: true
+    lifecycleCallbacks: {  }
+
+    #manyToOne:
+    oneToOne:
+        personalData:
+            targetEntity: PersonalData
+            mappedBy: coachData
+            #inversedBy: coachData
+            #joinColumn:
+            #    name: personalData_id
+            #    referencedColumnName: id
+            #cascade: ["persist"]
+
