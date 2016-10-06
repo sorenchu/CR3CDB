@@ -33,7 +33,7 @@ class AddPersonController extends Controller
       $em = $this->getDoctrine()->getManager();
       $em->persist($personalData);
       $em->flush();
-      return $this->render('DatabaseBundle:Default:showperson.html.twig', array(
+      return $this->render('DatabaseBundle:Default:editperson.html.twig', array(
                   'personalDataForm' => $personalDataForm->createView(),
                   'playerDataForm' => $playerDataForm->createView(),
                   'coachDataForm' => $coachDataForm->createView(),
@@ -47,7 +47,7 @@ class AddPersonController extends Controller
     ));
   }
 
-  public function showPersonAction($id, Request $request)
+  public function editPersonAction($id, Request $request)
   {
     $em = $this->getDoctrine()->getManager();
     $personalData = $em->getRepository('DatabaseBundle:PersonalData')->find($id);
@@ -104,7 +104,7 @@ class AddPersonController extends Controller
       $em->flush();
     }
 
-    return $this->render('DatabaseBundle:Default:showperson.html.twig', array(
+    return $this->render('DatabaseBundle:Default:editperson.html.twig', array(
                 'personalDataForm' => $personalDataForm->createView(),
                 'playerDataForm' => $playerDataForm->createView(),
                 'coachDataForm' => $coachDataForm->createView(),
