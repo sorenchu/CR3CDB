@@ -1,0 +1,14 @@
+DatabaseBundle\Entity\ParentData:
+    type: entity
+    table: parentData
+    repositoryClass: DatabaseBundle\Repository\ParentDataRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        season:
+            type: integer
+    lifecycleCallbacks: {  }

@@ -5,9 +5,9 @@ namespace DatabaseBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * PlayerData
+ * MemberData
  */
-class PlayerData
+class MemberData
 {
     /**
      * @var int
@@ -24,11 +24,6 @@ class PlayerData
      */
     private $payment;
 
-    /**
-     * @var string
-     */
-    private $category;
-
 
     /**
      * Get id
@@ -44,7 +39,7 @@ class PlayerData
      * Set season
      *
      * @param integer $season
-     * @return PlayerData
+     * @return MemberData
      */
     public function setSeason($season)
     {
@@ -67,7 +62,7 @@ class PlayerData
      * Set payment
      *
      * @param float $payment
-     * @return PlayerData
+     * @return MemberData
      */
     public function setPayment($payment)
     {
@@ -85,55 +80,32 @@ class PlayerData
     {
         return $this->payment;
     }
+    /**
+     * @var integer
+     */
+    private $memberId;
+
 
     /**
-     * Set category
+     * Set memberId
      *
-     * @param string $category
-     * @return PlayerData
+     * @param integer $memberId
+     * @return MemberData
      */
-    public function setCategory($category)
+    public function setMemberId($memberId)
     {
-        $this->category = $category;
+        $this->memberId = $memberId;
 
         return $this;
     }
 
     /**
-     * Get category
+     * Get memberId
      *
-     * @return string 
+     * @return integer 
      */
-    public function getCategory()
+    public function getMemberId()
     {
-        return $this->category;
-    }
-    /**
-     * @var \DatabaseBundle\Entity\PersonalData
-     */
-    private $personalData;
-
-
-    /**
-     * Set personalData
-     *
-     * @param \DatabaseBundle\Entity\PersonalData $personalData
-     * @return PlayerData
-     */
-    public function setPersonalData(\DatabaseBundle\Entity\PersonalData $personalData = null)
-    {
-        $this->personalData = $personalData;
-
-        return $this;
-    }
-
-    /**
-     * Get personalData
-     *
-     * @return \DatabaseBundle\Entity\PersonalData 
-     */
-    public function getPersonalData()
-    {
-        return $this->personalData;
+        return $this->memberId;
     }
 }

@@ -21,14 +21,14 @@ DatabaseBundle\Entity\CoachData:
             nullable: true
     lifecycleCallbacks: {  }
 
-    #manyToOne:
-    oneToOne:
+    manyToOne:
+    #oneToOne:
         personalData:
             targetEntity: PersonalData
-            mappedBy: coachData
-            #inversedBy: coachData
-            #joinColumn:
-            #    name: personalData_id
-            #    referencedColumnName: id
-            #cascade: ["persist"]
+            #mappedBy: coachData
+            inversedBy: coachData
+            joinColumn:
+                name: personalData_id
+                referencedColumnName: id
+            cascade: ["persist"]
 

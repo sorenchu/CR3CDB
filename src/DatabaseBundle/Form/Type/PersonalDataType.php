@@ -42,4 +42,3 @@ class PersonalDataType extends AbstractType
 }
 ?>
 
-

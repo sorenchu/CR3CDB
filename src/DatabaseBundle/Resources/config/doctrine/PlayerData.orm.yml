@@ -22,13 +22,13 @@ DatabaseBundle\Entity\PlayerData:
             
     lifecycleCallbacks: {  }
 
-    #manyToOne:
-    oneToOne:
+    manyToOne:
+    #oneToOne:
         personalData:
             targetEntity: PersonalData
-            mappedBy: playerData
-            #inversedBy: playerData
-            #joinColumn:
-            #    name: personalData_id
-            #    referencedColumnName: id
-            #cascade: ["persist"]
+            #mappedBy: playerData
+            inversedBy: playerData
+            joinColumn:
+                name: personalData_id
+                referencedColumnName: id
+            cascade: ["persist"]

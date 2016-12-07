@@ -25,16 +25,16 @@ class ShowPeopleController extends Controller
   {
     $em = $this->getDoctrine()->getManager();
     $query = $em->createQuery(
-        'SELECT pd
-         FROM DatabaseBundle:PersonalData pd
-         JOIN pd.playerData c
+        'SELECT playerdata
+         FROM DatabaseBundle:PlayerData playerdata
+         JOIN playerdata.personalData c
          WHERE c.id <> :null
-         ORDER BY pd.surname ASC')
+         ORDER BY c.surname ASC')
         ->setParameter('null', 'NULL');
 
-    $personalData = $query->getResult();
+    $playerData = $query->getResult();
     return $this->render('DatabaseBundle:Default:showplayers.html.twig', array(
-                'personalData' => $personalData));
+                'playerData' => $playerData));
   }
 }
 ?>

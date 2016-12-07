@@ -1,0 +1,18 @@
+DatabaseBundle\Entity\MemberData:
+    type: entity
+    table: memberData
+    repositoryClass: DatabaseBundle\Repository\MemberDataRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        season:
+            type: integer
+        payment:
+            type: float
+        memberId:
+            type: integer
+    lifecycleCallbacks: {  }
