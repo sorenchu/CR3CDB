@@ -136,4 +136,32 @@ class PlayerData
     {
         return $this->personalData;
     }
+    /**
+     * @var boolean
+     */
+    private $isPlayer;
+
+
+    /**
+     * Set isPlayer
+     *
+     * @param boolean $isPlayer
+     * @return PlayerData
+     */
+    public function setIsPlayer($isPlayer)
+    {
+        $this->isPlayer = $isPlayer;
+
+        return $this;
+    }
+
+    /**
+     * Get isPlayer
+     *
+     * @return boolean 
+     */
+    public function getIsPlayer()
+    {
+        return $this->isPlayer;
+    }
 }

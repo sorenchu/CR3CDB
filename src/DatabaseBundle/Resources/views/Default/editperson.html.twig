@@ -25,21 +25,44 @@
 <table style="width: 100%">
 <tr>
   <th>Datos personales</th>
-  <th>Jugador</th>
-  <th>Entrenador</th>
-  <th>Socio</th>
-  <th>Padre</th>
+  {% if true == personalData.getIsPlayer() %}
+    <th>Jugador</th>
+  {% endif %}
+  
+  {% if true == personalData.getIsCoach() %}  
+    <th>Entrenador</th>
+  {% endif %}
+  {% if true == personalData.getIsMember() %}
+    <th>Socio</th>
+  {% endif %}
+  {% if true == personalData.getIsParent() %}
+    <th>Padre</th>
+  {%endif %}
 </tr>
 <tr>
   <td>
     {{ form(personalDataForm) }}
   </td>
-  <td>
-    {{ form(playerDataForm) }}
-  </td>
-  <td>
-    {{ form(coachDataForm) }} 
-  </td>
+  {% if true == personalData.getIsPlayer() %}
+    <td>
+      {{ form(playerDataForm) }}
+    </td>
+  {% endif %}
+  {% if true == personalData.getIsCoach() %}  
+    <td>
+      {{ form(coachDataForm) }} 
+    </td>
+  {%endif %}
+  {% if true == personalData.getIsMember() %}
+    <td> 
+      {{ form(memberDataForm) }}
+    </td>
+  {% endif%}
+  {% if true == personalData.getIsParent() %}
+    <td> 
+      {{ form(parentDataForm) }}
+    </td>
+  {% endif%}
 </tr>
 </table>
 

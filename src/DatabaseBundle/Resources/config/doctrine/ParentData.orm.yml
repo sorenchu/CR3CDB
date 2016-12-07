@@ -12,3 +12,14 @@ DatabaseBundle\Entity\ParentData:
         season:
             type: integer
     lifecycleCallbacks: {  }
+
+    manyToOne:
+    #oneToOne:
+        personalData:
+            targetEntity: PersonalData
+            #mappedBy: playerData
+            inversedBy: parentData
+            joinColumn:
+                name: personalData_id
+                referencedColumnName: id
+            cascade: ["persist"]

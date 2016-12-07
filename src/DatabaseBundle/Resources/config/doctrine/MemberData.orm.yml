@@ -16,3 +16,12 @@ DatabaseBundle\Entity\MemberData:
         memberId:
             type: integer
     lifecycleCallbacks: {  }
+
+    manyToOne:
+        personalData:
+            targetEntity: PersonalData
+            inversedBy: memberData
+            joinColumn: 
+                name: personalData_id
+                referencedColumnName: id
+            cascade: ["persist"]

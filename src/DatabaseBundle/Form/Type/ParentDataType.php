@@ -11,7 +11,7 @@ class ParentDataType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-        ->add('season', 'choide', array(
+        ->add('season', 'choice', array(
             'label' => 'Temporada',
             'choices' => array(
               2016 => '2016-2017',

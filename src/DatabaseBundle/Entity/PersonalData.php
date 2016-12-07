@@ -364,4 +364,192 @@ class PersonalData
     {
         $this->coachData->removeElement($coachData);
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $memberData;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $parentData;
+
+
+    /**
+     * Add memberData
+     *
+     * @param \DatabaseBundle\Entity\MemberData $memberData
+     * @return PersonalData
+     */
+    public function addMemberDatum(\DatabaseBundle\Entity\MemberData $memberData)
+    {
+        $this->memberData[] = $memberData;
+
+        return $this;
+    }
+
+    /**
+     * Remove memberData
+     *
+     * @param \DatabaseBundle\Entity\MemberData $memberData
+     */
+    public function removeMemberDatum(\DatabaseBundle\Entity\MemberData $memberData)
+    {
+        $this->memberData->removeElement($memberData);
+    }
+
+    /**
+     * Get memberData
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMemberData()
+    {
+        return $this->memberData;
+    }
+
+    /**
+     * Add parentData
+     *
+     * @param \DatabaseBundle\Entity\ParentData $parentData
+     * @return PersonalData
+     */
+    public function addParentDatum(\DatabaseBundle\Entity\ParentData $parentData)
+    {
+        $this->parentData[] = $parentData;
+
+        return $this;
+    }
+
+    /**
+     * Remove parentData
+     *
+     * @param \DatabaseBundle\Entity\ParentData $parentData
+     */
+    public function removeParentDatum(\DatabaseBundle\Entity\ParentData $parentData)
+    {
+        $this->parentData->removeElement($parentData);
+    }
+
+    /**
+     * Get parentData
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getParentData()
+    {
+        return $this->parentData;
+    }
+    /**
+     * @var boolean
+     */
+    private $isPlayer;
+
+
+    /**
+     * Set isPlayer
+     *
+     * @param boolean $isPlayer
+     * @return PersonalData
+     */
+    public function setIsPlayer($isPlayer)
+    {
+        $this->isPlayer = $isPlayer;
+
+        return $this;
+    }
+
+    /**
+     * Get isPlayer
+     *
+     * @return boolean 
+     */
+    public function getIsPlayer()
+    {
+        return $this->isPlayer;
+    }
+    /**
+     * @var boolean
+     */
+    private $isCoach;
+
+    /**
+     * @var boolean
+     */
+    private $isMember;
+
+    /**
+     * @var boolean
+     */
+    private $isParent;
+
+
+    /**
+     * Set isCoach
+     *
+     * @param boolean $isCoach
+     * @return PersonalData
+     */
+    public function setIsCoach($isCoach)
+    {
+        $this->isCoach = $isCoach;
+
+        return $this;
+    }
+
+    /**
+     * Get isCoach
+     *
+     * @return boolean 
+     */
+    public function getIsCoach()
+    {
+        return $this->isCoach;
+    }
+
+    /**
+     * Set isMember
+     *
+     * @param boolean $isMember
+     * @return PersonalData
+     */
+    public function setIsMember($isMember)
+    {
+        $this->isMember = $isMember;
+
+        return $this;
+    }
+
+    /**
+     * Get isMember
+     *
+     * @return boolean 
+     */
+    public function getIsMember()
+    {
+        return $this->isMember;
+    }
+
+    /**
+     * Set isParent
+     *
+     * @param boolean $isParent
+     * @return PersonalData
+     */
+    public function setIsParent($isParent)
+    {
+        $this->isParent = $isParent;
+
+        return $this;
+    }
+
+    /**
+     * Get isParent
+     *
+     * @return boolean 
+     */
+    public function getIsParent()
+    {
+        return $this->isParent;
+    }
 }

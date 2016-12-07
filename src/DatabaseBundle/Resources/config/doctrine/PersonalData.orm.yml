@@ -46,22 +46,35 @@ DatabaseBundle\Entity\PersonalData:
     sex:
         type: string
 
+    isPlayer:
+        type: boolean
+        default: false
+
+    isCoach:
+        type: boolean
+        default: false
+
+    isMember:
+        type: boolean
+        default: false
+
+    isParent:
+        type: boolean
+        default: false
+
   oneToMany:
-  #oneToOne:
       playerData:
           targetEntity: PlayerData
-          #inversedBy: personalData
           mappedBy: personalData
-          #joinColumn:
-          #    name: playerData_id
-          #    referencedColumnName: id
-          ##cascade: ["persist"]
 
       coachData:
           targetEntity: CoachData
-          #inversedBy: personalData
-          #joinColumn:
           mappedBy: personalData
-          #    name: coachData_id
-          #    referencedColumnName: id
-          #cascade: ["persist"]
+
+      memberData:
+          targetEntity: MemberData
+          mappedBy: personalData
+
+      parentData:
+          targetEntity: ParentData
+          mappedBy: personalData

@@ -12,6 +12,12 @@ use DatabaseBundle\Form\Type\PlayerDataType;
 use DatabaseBundle\Entity\CoachData;
 use DatabaseBundle\Form\Type\CoachDataType;
 
+use DatabaseBundle\Entity\MemberData;
+use DatabaseBundle\Form\Type\MemberDataType;
+
+use DatabaseBundle\Entity\ParentData;
+use DatabaseBundle\Form\Type\ParentDataType;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +31,8 @@ class AddPersonController extends Controller
     $personalDataForm->handleRequest($request);
     $playerDataForm = $this->createForm(new PlayerDataType(), new PlayerData());
     $coachDataForm = $this->createForm(new CoachDataType(), new CoachData());
+    $memberDataForm = $this->createForm(new MemberDataType(), new MemberData());
+    $parentDataForm = $this->createForm(new ParentDataType(), new ParentData());
 
     if($personalDataForm->isSubmitted()) 
     {
@@ -35,6 +43,8 @@ class AddPersonController extends Controller
                   'personalDataForm' => $personalDataForm->createView(),
                   'playerDataForm' => $playerDataForm->createView(),
                   'coachDataForm' => $coachDataForm->createView(),
+                  'memberDataForm' => $memberDataForm->createView(),
+                  'parentDataForm' => $parentDataForm->createView(),
       ));
     }
 
@@ -78,6 +88,36 @@ class AddPersonController extends Controller
       $coachData = new CoachData();
     }
 
+    $query = $em->createQuery(
+        'SELECT memberdata
+         FROM DatabaseBundle:Memberdata memberdata
+         JOIN memberdata.personalData person
+         WHERE person.id = :id')
+        ->setParameter('id', $id);
+    if (NULL != $query->getOneOrNullResult())
+    {
+      $memberData = $personalData->getMemberData();
+    }
+    else
+    {
+      $memberData = new MemberData(); 
+    }
+
+    $query = $em->createQuery(
+        'SELECT parentdata
+         FROM DatabaseBundle:Parentdata parentdata
+         JOIN parentdata.personalData person
+         WHERE person.id = :id')
+        ->setParameter('id', $id);
+    if (NULL != $query->getOneOrNullResult())
+    {
+      $parentData = $personalData->getParentData();
+    }
+    else
+    {
+      $parentData = new ParentData(); 
+    }
+
     if (!$personalData) 
     {
       throw $this->createNotFoundException(
@@ -92,6 +132,12 @@ class AddPersonController extends Controller
 
     $coachDataForm = $this->createForm(new CoachDataType(), $coachData);
     $coachDataForm->handleRequest($request);
+
+    $memberDataForm = $this->createForm(new MemberDataType(), $memberData);
+    $memberDataForm->handleRequest($request);
+
+    $parentDataForm = $this->createForm(new ParentDataType(), $parentData);
+    $parentDataForm->handleRequest($request);
 
     if($personalDataForm->isSubmitted()) 
     {
@@ -113,10 +159,27 @@ class AddPersonController extends Controller
       $em->flush();
     }
 
+    if($memberDataForm->isSubmitted())
+    {
+      $memberData->setMemberData($personalData);
+      $em->merge($memberData);
+      $em->flush();
+    }
+
+    if($parentDataForm->isSubmitted())
+    {
+      $parentData->setMemberData($personalData);
+      $em->merge($parentData);
+      $em->flush();
+    }
+
     return $this->render('DatabaseBundle:Default:editperson.html.twig', array(
                 'personalDataForm' => $personalDataForm->createView(),
                 'playerDataForm' => $playerDataForm->createView(),
                 'coachDataForm' => $coachDataForm->createView(),
+                'memberDataForm' => $memberDataForm->createView(),
+                'parentDataForm' => $parentDataForm->createView(),
+                'personalData' => $personalData,
     ));
   }
 

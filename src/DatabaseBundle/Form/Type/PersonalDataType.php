@@ -32,6 +32,22 @@ class PersonalDataType extends AbstractType
             )
           )
         )
+        ->add('isPlayer', 'checkbox', array(
+            'label' => 'Jugador',
+            'required' => false,)
+        )
+        ->add('isCoach', 'checkbox', array(
+            'label' => 'Entrenador',
+            'required' => false,)
+        )
+        ->add('isParent', 'checkbox', array(
+            'label' => 'Padre',
+            'required' => false,)
+        )
+        ->add('isMember', 'checkbox', array(
+            'label' => 'Socio',
+            'required' => false,)
+        )
         ->add('save', 'submit', array('label' => 'Guardar'));
   }
 
