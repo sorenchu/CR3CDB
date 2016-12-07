@@ -36,5 +36,20 @@ class ShowPeopleController extends Controller
     return $this->render('DatabaseBundle:Default:showplayers.html.twig', array(
                 'playerData' => $playerData));
   }
+
+  public function showSeniorAction()
+  {
+    $em = $this->getDoctrine()->getManager();
+    $query = $em->createQuery(
+        'SELECT playerdata
+         FROM DatabaseBundle:PlayerData playerdata
+         JOIN playerdata.personalData c
+         WHERE playerdata.category LIKE :senior')
+         ->setParameter('senior', 'Senior');
+
+    $playerData = $query->getResult();
+    return $this->render('DatabaseBundle:Default:showsenior.html.twig', array(
+                'playerData' => $playerData));
+  }
 }
 ?>
