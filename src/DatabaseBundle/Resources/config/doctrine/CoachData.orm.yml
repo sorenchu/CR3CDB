@@ -18,7 +18,6 @@ DatabaseBundle\Entity\CoachData:
             nullable: true
         season:
             type: integer
-            nullable: true
     lifecycleCallbacks: {  }
 
     manyToOne:

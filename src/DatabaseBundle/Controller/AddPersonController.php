@@ -58,12 +58,7 @@ class AddPersonController extends Controller
     $em = $this->getDoctrine()->getManager();
     $personalData = $em->getRepository('DatabaseBundle:PersonalData')->find($id);
 
-    $query = $em->createQuery(
-        'SELECT playerdata
-         FROM DatabaseBundle:Playerdata playerdata
-         JOIN playerdata.personalData person
-         WHERE person.id = :id')
-       ->setParameter('id', $id); 
+    $query = $this->processQuery($id, 0);
     if (NULL != $query->getOneOrNullResult())
     {
       $playerData = $query->getOneOrNullResult();
@@ -73,12 +68,7 @@ class AddPersonController extends Controller
       $playerData = new PlayerData();
     }
 
-    $query = $em->createQuery(
-        'SELECT coachdata
-         FROM DatabaseBundle:CoachData coachdata
-         JOIN coachdata.personalData person
-         WHERE person.id = :id')
-        ->setParameter('id', $id);
+    $query = $this->processQuery($id, 1);
     if (NULL != $query->getOneOrNullResult())
     {
       $coachData = $personalData->getCoachData();
@@ -88,12 +78,7 @@ class AddPersonController extends Controller
       $coachData = new CoachData();
     }
 
-    $query = $em->createQuery(
-        'SELECT memberdata
-         FROM DatabaseBundle:Memberdata memberdata
-         JOIN memberdata.personalData person
-         WHERE person.id = :id')
-        ->setParameter('id', $id);
+    $query = $this->processQuery($id, 2);
     if (NULL != $query->getOneOrNullResult())
     {
       $memberData = $personalData->getMemberData();
@@ -103,12 +88,7 @@ class AddPersonController extends Controller
       $memberData = new MemberData(); 
     }
 
-    $query = $em->createQuery(
-        'SELECT parentdata
-         FROM DatabaseBundle:Parentdata parentdata
-         JOIN parentdata.personalData person
-         WHERE person.id = :id')
-        ->setParameter('id', $id);
+    $query = $this->processQuery($id, 2);
     if (NULL != $query->getOneOrNullResult())
     {
       $parentData = $personalData->getParentData();
@@ -154,21 +134,21 @@ class AddPersonController extends Controller
 
     if($coachDataForm->isSubmitted())
     {
-      $coachData->setCoachData($personalData);
+      $coachData->setPersonalData($personalData);
       $em->merge($coachData);
       $em->flush();
     }
 
     if($memberDataForm->isSubmitted())
     {
-      $memberData->setMemberData($personalData);
+      $memberData->setPersonalData($personalData);
       $em->merge($memberData);
       $em->flush();
     }
 
     if($parentDataForm->isSubmitted())
     {
-      $parentData->setMemberData($personalData);
+      $parentData->setPersonalData($personalData);
       $em->merge($parentData);
       $em->flush();
     }
@@ -192,6 +172,40 @@ class AddPersonController extends Controller
     $personalData = $em->getRepository('DatabaseBundle:PersonalData')->findAll();
     return $this->render('DatabaseBundle:Default:showall.html.twig', array(
                 'personalData' => $personalData));
+  }
+
+  private function processQuery($id, $table)
+  {
+    switch($table)
+    {
+      case 0:
+          $tableName = 'DatabaseBundle:Playerdata';
+          $alias = 'playerdata';
+          break;
+      case 1:
+          $tableName = 'DatabaseBundle:Coachdata';
+          $alias = 'coachdata';
+          break;
+      case 2:
+          $tableName = 'DatabaseBundle:Memberdata';
+          $alias = 'memberdata';
+          break;
+      case 3:
+          $tableName = 'DatabaseBundle:Parentdata';
+          $alias = 'parentdata';
+          break;
+    //  default:
+    //      break;
+    }
+
+    $repository = $this->getDoctrine()->getRepository($tableName);
+    $query = $repository->createQueryBuilder($alias)
+        ->from($tableName, 'data')
+        ->join($alias.'.personalData', 'person')
+        ->where('person.id = :id')
+        ->setParameter('id', $id)
+        ->getQuery();
+    return $query;
   }
 }
 ?>

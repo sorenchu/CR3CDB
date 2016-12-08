@@ -13,6 +13,7 @@ DatabaseBundle\Entity\MemberData:
             type: integer
         payment:
             type: float
+            nullable: true
         memberId:
             type: integer
     lifecycleCallbacks: {  }
