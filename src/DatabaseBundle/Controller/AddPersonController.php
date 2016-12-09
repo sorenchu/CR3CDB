@@ -66,7 +66,7 @@ class AddPersonController extends Controller
     $coachData = $this->getQueryResult($query, 1);
 
     $query = $this->processQuery($id, 2);
-    $memberData = $this->getQueryResult($query, 1);
+    $memberData = $this->getQueryResult($query, 2);
 
     $query = $this->processQuery($id, 3);
     $parentData = $this->getQueryResult($query, 3);

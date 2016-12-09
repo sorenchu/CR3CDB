@@ -14,6 +14,10 @@ show_senior:
     path:   /person/showSenior
     defaults: { _controller: DatabaseBundle:ShowPeople:showSenior }
 
+show_alevin:
+    path:   /person/showAlevin
+    defaults: { _controller: DatabaseBundle:ShowPeople:showAlevin }
+
 edit_person:
     path:   /person/editPerson/{id}
     defaults: { _controller: DatabaseBundle:AddPerson:editPerson }

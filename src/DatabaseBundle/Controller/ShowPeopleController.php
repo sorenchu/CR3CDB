@@ -4,6 +4,7 @@
 namespace DatabaseBundle\Controller;
 
 use DatabaseBundle\Entity\PersonalData;
+use DatabaseBundle\Entity\PlayerData;
 use DatabaseBundle\Form\Type\PersonalDataType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -39,17 +40,37 @@ class ShowPeopleController extends Controller
 
   public function showSeniorAction()
   {
-    $em = $this->getDoctrine()->getManager();
-    $query = $em->createQuery(
-        'SELECT playerdata
-         FROM DatabaseBundle:PlayerData playerdata
-         JOIN playerdata.personalData c
-         WHERE playerdata.category LIKE :senior')
-         ->setParameter('senior', 'Senior');
-
-    $playerData = $query->getResult();
+    $playerData = $this->teamQuery('Senior')->getResult();
     return $this->render('DatabaseBundle:Default:showsenior.html.twig', array(
                 'playerData' => $playerData));
+  }
+
+  /*public function showFemaleAction()
+  {
+    $playerData = $this->
+  }*/
+
+  public function showAlevinAction()
+  {
+    $playerData = $this->teamQuery('Alevin')->getResult();
+    return $this->render('DatabaseBundle:Default:showalevin.html.twig', array(
+                'playerData' => $playerData));
+
+  }
+
+  private function teamQuery($name)
+  {
+    $tableName = 'DatabaseBundle:PlayerData';
+    $alias = 'playerdata';
+
+    $repository = $this->getDoctrine()
+              ->getRepository($tableName);
+    $query = $repository->createQueryBuilder($alias)
+        ->from($tableName, 'data')
+        ->where($alias.'.category LIKE :category')
+        ->setParameter('category', $name)
+        ->getQuery();
+    return $query;
   }
 }
 ?>
