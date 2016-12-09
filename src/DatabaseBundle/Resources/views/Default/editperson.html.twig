@@ -1,23 +1,8 @@
-<html>
-<head>
-  <title> Editar miembro </title>
-  <style>
-  table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    <!-- width: 100%; -->
-  }
+{% extends 'DatabaseBundle:base:base.html.twig' %}
 
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-  </style>
-</head>
+{% block title %}Editar miembro {% endblock %}
 
-<body>
-
+{% block body %}
 <h1>Editar miembro</h1>
 
 {# src/DatabaseBundle/Resources/views/Default/editperson.html.twig #}
@@ -81,5 +66,4 @@
       <a href="/person/showSenior"> Equipo Senior </a>
     </td>
   </tr>
-</body>
-</html>
+{% endblock %}
