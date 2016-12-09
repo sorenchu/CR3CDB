@@ -22,7 +22,7 @@ DatabaseBundle\Entity\MemberData:
         personalData:
             targetEntity: PersonalData
             inversedBy: memberData
-            joinColumn: 
+            joinColumn:
                 name: personalData_id
                 referencedColumnName: id
             cascade: ["persist"]

@@ -60,44 +60,16 @@ class AddPersonController extends Controller
     $personalData = $em->getRepository('DatabaseBundle:PersonalData')->find($id);
 
     $query = $this->processQuery($id, 0);
-    if (NULL != $query->getOneOrNullResult())
-    {
-      $playerData = $query->getOneOrNullResult();
-    }
-    else
-    {
-      $playerData = new PlayerData();
-    }
+    $playerData = $this->getQueryResult($query, 0);
 
     $query = $this->processQuery($id, 1);
-    if (NULL != $query->getOneOrNullResult())
-    {
-      $coachData = $personalData->getCoachData();
-    }
-    else
-    {
-      $coachData = new CoachData();
-    }
+    $coachData = $this->getQueryResult($query, 1);
 
     $query = $this->processQuery($id, 2);
-    if (NULL != $query->getOneOrNullResult())
-    {
-      $memberData = $personalData->getMemberData();
-    }
-    else
-    {
-      $memberData = new MemberData(); 
-    }
+    $memberData = $this->getQueryResult($query, 1);
 
-    $query = $this->processQuery($id, 2);
-    if (NULL != $query->getOneOrNullResult())
-    {
-      $parentData = $personalData->getParentData();
-    }
-    else
-    {
-      $parentData = new ParentData(); 
-    }
+    $query = $this->processQuery($id, 3);
+    $parentData = $this->getQueryResult($query, 3);
 
     if (!$personalData) 
     {
@@ -207,6 +179,37 @@ class AddPersonController extends Controller
         ->setParameter('id', $id)
         ->getQuery();
     return $query;
+  }
+
+  private function getQueryResult($query, $table)
+  {
+    if (NULL != $query->getOneOrNullResult())
+    {
+      $data = $query->getOneOrNullResult();
+    }
+    else
+    {
+      switch($table)
+      {
+        case 0:
+          $data = new PlayerData();
+          break;
+
+        case 1:
+          $data = new CoachData();
+          break;
+
+        case 2:
+          $data = new MemberData();
+          break; 
+
+        case 3:
+          $data = new ParentData(); 
+          break;
+      }
+    }
+
+    return $data;
   }
 }
 ?>
