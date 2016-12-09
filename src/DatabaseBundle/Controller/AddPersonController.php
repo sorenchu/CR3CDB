@@ -45,6 +45,7 @@ class AddPersonController extends Controller
                   'coachDataForm' => $coachDataForm->createView(),
                   'memberDataForm' => $memberDataForm->createView(),
                   'parentDataForm' => $parentDataForm->createView(),
+                  'personalData' => $personalData,
       ));
     }
 
