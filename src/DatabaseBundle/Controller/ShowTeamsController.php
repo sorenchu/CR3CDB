@@ -16,22 +16,49 @@ class ShowTeamsController extends Controller
   public function showSeniorAction()
   {
     $playerData = $this->teamQuery('Senior')->getResult();
-    return $this->render('DatabaseBundle:Teams:showsenior.html.twig', array(
-                'playerData' => $playerData));
-  }
-
-  public function showAlevinAction()
-  {
-    $playerData = $this->teamQuery('Alevin')->getResult();
-    return $this->render('DatabaseBundle:Teams:showalevin.html.twig', array(
-                'playerData' => $playerData));
+    return $this->render('DatabaseBundle:Teams:showteam.html.twig', array(
+                'playerData' => $playerData,
+                'teamName' => 'Senior'));
   }
 
   public function showFemaleAction()
   {
     $playerData = $this->teamQuery('Femenino')->getResult();
-    return $this->render('DatabaseBundle:Teams:showfemale.html.twig', array(
-                'playerData' => $playerData));
+    return $this->render('DatabaseBundle:Teams:showteam.html.twig', array(
+                'playerData' => $playerData,
+                'teamName' => 'Femenino'));
+  }
+
+  public function showCadeteAction()
+  {
+    $playerData = $this->teamQuery('Cadete')->getResult();
+    return $this->render('DatabaseBundle:Teams:showteam.html.twig', array(
+                'playerData' => $playerData,
+                'teamName' => 'Cadete'));
+  }
+
+  public function showAlevinAction()
+  {
+    $playerData = $this->teamQuery('Alevin')->getResult();
+    return $this->render('DatabaseBundle:Teams:showteam.html.twig', array(
+                'playerData' => $playerData,
+                'teamName' => 'Alevín'));
+  }
+
+  public function showBenjaminAction()
+  {
+    $playerData = $this->teamQuery('Benjamin')->getResult();
+    return $this->render('DatabaseBundle:Teams:showteam.html.twig', array(
+                'playerData' => $playerData,
+                'teamName' => 'Benjamín'));
+  }
+
+  public function showPrebenjaminAction()
+  {
+    $playerData = $this->teamQuery('Prebenjamin')->getResult();
+    return $this->render('DatabaseBundle:Teams:showteam.html.twig', array(
+                'playerData' => $playerData,
+                'teamName' => 'Prebenjamín'));
   }
 
   private function teamQuery($name)

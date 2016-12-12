@@ -1,6 +1,6 @@
 {% extends 'DatabaseBundle:base:base.html.twig' %}
 
-{% block title %}Editar miembro {% endblock %}
+{% block title %}Editar miembro{% endblock %}
 
 {% block head %}
 {% endblock %}
@@ -9,13 +9,12 @@
 <h1>Editar miembro</h1>
 
 {# src/DatabaseBundle/Resources/views/Default/editperson.html.twig #}
-<table width=100%>
+<table>
 <tr>
   <th>Datos personales</th>
   {% if true == personalData.getIsPlayer() %}
     <th>Jugador</th>
   {% endif %}
-  
   {% if true == personalData.getIsCoach() %}  
     <th>Entrenador</th>
   {% endif %}

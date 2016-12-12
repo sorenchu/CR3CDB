@@ -14,13 +14,25 @@ show_senior:
     path:   /person/showSenior
     defaults: { _controller: DatabaseBundle:ShowTeams:showSenior }
 
+show_female:
+    path:   /person/showFemale
+    defaults: { _controller: DatabaseBundle:ShowTeams:showFemale }
+
+show_cadete:
+    path:   /person/showCadete
+    defaults: { _controller: DatabaseBundle:ShowTeams:showCadete }
+
 show_alevin:
     path:   /person/showAlevin
     defaults: { _controller: DatabaseBundle:ShowTeams:showAlevin }
 
-show_female:
-    path:   /person/showFemale
-    defaults: { _controller: DatabaseBundle:ShowTeams:showFemale }
+show_benjamin:
+    path:   /person/showBenjamin
+    defaults: { _controller: DatabaseBundle:ShowTeams:showBenjamin }
+
+show_prebenjamin:
+    path:   /person/showPrebenjamin
+    defaults: { _controller: DatabaseBundle:ShowTeams:showPrebenjamin }
 
 edit_person:
     path:   /person/editPerson/{id}
