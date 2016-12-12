@@ -23,5 +23,5 @@ DatabaseBundle\Entity\ParentData:
                 name: personalData_id
                 referencedColumnName: id
                 nullable: true
-                onDelete: 'SET NULL'
+                onDelete: 'CASCADE'
             cascade: ["persist"]
