@@ -12,11 +12,15 @@ show_players:
 
 show_senior:
     path:   /person/showSenior
-    defaults: { _controller: DatabaseBundle:ShowPeople:showSenior }
+    defaults: { _controller: DatabaseBundle:ShowTeams:showSenior }
 
 show_alevin:
     path:   /person/showAlevin
-    defaults: { _controller: DatabaseBundle:ShowPeople:showAlevin }
+    defaults: { _controller: DatabaseBundle:ShowTeams:showAlevin }
+
+show_female:
+    path:   /person/showFemale
+    defaults: { _controller: DatabaseBundle:ShowTeams:showFemale }
 
 edit_person:
     path:   /person/editPerson/{id}

@@ -37,40 +37,5 @@ class ShowPeopleController extends Controller
     return $this->render('DatabaseBundle:Default:showplayers.html.twig', array(
                 'playerData' => $playerData));
   }
-
-  public function showSeniorAction()
-  {
-    $playerData = $this->teamQuery('Senior')->getResult();
-    return $this->render('DatabaseBundle:Default:showsenior.html.twig', array(
-                'playerData' => $playerData));
-  }
-
-  /*public function showFemaleAction()
-  {
-    $playerData = $this->
-  }*/
-
-  public function showAlevinAction()
-  {
-    $playerData = $this->teamQuery('Alevin')->getResult();
-    return $this->render('DatabaseBundle:Default:showalevin.html.twig', array(
-                'playerData' => $playerData));
-
-  }
-
-  private function teamQuery($name)
-  {
-    $tableName = 'DatabaseBundle:PlayerData';
-    $alias = 'playerdata';
-
-    $repository = $this->getDoctrine()
-              ->getRepository($tableName);
-    $query = $repository->createQueryBuilder($alias)
-        ->from($tableName, 'data')
-        ->where($alias.'.category LIKE :category')
-        ->setParameter('category', $name)
-        ->getQuery();
-    return $query;
-  }
 }
 ?>
