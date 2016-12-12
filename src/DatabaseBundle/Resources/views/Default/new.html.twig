@@ -1,23 +1,8 @@
-<html>
-<head>
-  <title> Nuevo miembro </title>
-  <style>
-  table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    <!-- width: 100%; -->
-  }
+{% extends 'DatabaseBundle:base:base.html.twig' %}
 
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-  </style>
-</head>
+{% block title %} Nuevo miembro {% endblock %}
 
-<body>
-
+{% block body %}
 <h1>Nuevo miembro</h1>
 
 {# src/DatabaseBundle/Resources/views/Default/new.html.twig #}
@@ -27,22 +12,5 @@
     {{ form(personalDataForm) }}
   </td>
 </table>
+{% endblock %}
 
-<table>
-  <tr>
-<!--
-    <td>
-      <a href="/person/new"> Añadir miembro </a>
-    </td>
--->
-    <td>
-      <a href="/person/showAll"> Mostrar todos </a>
-    </td>
-    <td>
-      <a href="/person/showPlayers"> Mostrar jugadores </a>
-    </td>
-    <td>
-      <a href="/person/showSenior"> Equipo Senior </a>
-    </td>
-</body>
-</html>

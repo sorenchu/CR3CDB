@@ -1,29 +1,54 @@
 <!DOCTYPE html>
   <html>
     <head>
+    {% block head %}
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>{% block title %}Test Application{% endblock %}</title>
+    <title>{% block title %}{% endblock %} - CR3C</title>
+    <style type="text/css">
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        <!-- width: 100%; -->
+      }
+
+      td, th {
+        border: 1px solid #dddddd;
+        ext-align: left;
+        adding: 8px;
+      }
+      </style>
+    {% endblock %}
     </head>
 
     <body>
-      <div id="left">
+      <div id="content">
+        {% block body %} 
+        {% endblock %}
+      </div>
+      <div id="sidebar">
           {% block sidebar %}
+          <br><br><br>
           <table>
-            <tl>
-              <a href="/person/new">Añadir Miembro</a>
-            </tl>
-            <tl>
-              <a href="/person/showAll">Mostrar todo</a>
-            </tl>
-            <tl>
-              <a href="/person/showSenior">Equipo Senior</a>
-            </tl>
+            <tr>
+              <th>
+                <a href="/person/new">Añadir Miembro</a>
+              </th>
+              <th>
+                <a href="/person/showAll">Mostrar todo</a>
+              </th>
+              <th>
+                <a href="/person/showSenior">Equipo Senior</a>
+              </th>
+              <th>
+                <a href="/person/showAlevin">Equipo Alevin</a>
+              </th>
+            </tr>
           </table>
           {% endblock %}
       </div>
-
-      <div id="center">
-        {% block body %} 
+      <div id="footer">
+        {% block footer %}
+          &copy; Copyright 2016 by Balmaservices
         {% endblock %}
       </div>
     </body>

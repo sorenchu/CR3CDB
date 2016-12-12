@@ -1,27 +1,10 @@
-<html>
-<head>
-  <title> Mostrando equipo senior </title>
-  <style>
-  table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    <!-- width: 100%; -->
-  }
+{% extends 'DatabaseBundle:base:base.html.twig' %}
 
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
+{% block title %}
+  Mostrando equipo senior
+{% endblock %}
 
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
-  </style>
-</head>
-
-<body>
-
+{% block body %}
 <h1>Miembros del senior</h1>
 <table style="width: 100%">
 <tr>
@@ -46,20 +29,4 @@
   {{ "\n" | nl2br }}
 {% endfor %}
 </table>
-
-<br><br><br>
-<table>
-  <tr>
-    <td>
-      <a href="/person/new"> Añadir miembro </a>
-    </td>
-    <td>
-      <a href="/person/showAll"> Mostrar todos </a>
-    </td>
-    <td>
-      <a href="/person/showAlevin"> Equipo Alevin </a>
-    </td>
-  </tr>
-</table>
-</body>
-</html>
+{% endblock %}

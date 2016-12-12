@@ -2,12 +2,14 @@
 
 {% block title %}Editar miembro {% endblock %}
 
+{% block head %}
+{% endblock %}
+
 {% block body %}
 <h1>Editar miembro</h1>
 
 {# src/DatabaseBundle/Resources/views/Default/editperson.html.twig #}
-
-<table style="width: 100%">
+<table width=100%>
 <tr>
   <th>Datos personales</th>
   {% if true == personalData.getIsPlayer() %}
@@ -50,20 +52,4 @@
   {% endif%}
 </tr>
 </table>
-
-<table>
-  <tr>
-    <td>
-      <a href="/person/new"> Añadir miembro </a>
-    </td>
-    <td>
-      <a href="/person/showAll"> Mostrar todos </a>
-    </td>
-    <td>
-      <a href="/person/showPlayers"> Mostrar jugadores </a>
-    </td>
-    <td>
-      <a href="/person/showSenior"> Equipo Senior </a>
-    </td>
-  </tr>
 {% endblock %}
