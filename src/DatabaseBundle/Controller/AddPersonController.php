@@ -29,24 +29,14 @@ class AddPersonController extends Controller
     $personalData = new PersonalData();
     $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
     $personalDataForm->handleRequest($request);
-    $playerDataForm = $this->createForm(new PlayerDataType(), new PlayerData());
-    $coachDataForm = $this->createForm(new CoachDataType(), new CoachData());
-    $memberDataForm = $this->createForm(new MemberDataType(), new MemberData());
-    $parentDataForm = $this->createForm(new ParentDataType(), new ParentData());
 
     if($personalDataForm->isSubmitted()) 
     {
       $em = $this->getDoctrine()->getManager();
       $em->persist($personalData);
       $em->flush();
-      return $this->render('DatabaseBundle:Default:editperson.html.twig', array(
-                  'personalDataForm' => $personalDataForm->createView(),
-                  'playerDataForm' => $playerDataForm->createView(),
-                  'coachDataForm' => $coachDataForm->createView(),
-                  'memberDataForm' => $memberDataForm->createView(),
-                  'parentDataForm' => $parentDataForm->createView(),
-                  'personalData' => $personalData,
-      ));
+      return $this->redirectToRoute('edit_person', 
+                    array('id' => $this->getNewPerson($personalData)->getId()));
     }
 
     return $this->render('DatabaseBundle:Default:new.html.twig', array(
@@ -210,6 +200,29 @@ class AddPersonController extends Controller
     }
 
     return $data;
+  }
+
+  private function getNewPerson($personalData) {
+    $em = $this->getDoctrine()->getManager();
+    $query = $em->createQuery(
+        'SELECT personaldata
+        FROM DatabaseBundle:PersonalData personaldata
+        WHERE personaldata.name LIKE :name
+        AND personaldata.surname LIKE :surname
+        AND personaldata.isPlayer = :isPlayer
+        AND personaldata.isCoach = :isCoach
+        AND personaldata.isMember = :isMember
+        AND personaldata.isParent = :isParent
+        AND personaldata.sex = :sex')
+        ->setParameter('name', $personalData->getName())
+        ->setParameter('surname', $personalData->getSurname())
+        ->setParameter('isPlayer', $personalData->getIsPlayer())
+        ->setParameter('isCoach', $personalData->getIsCoach())
+        ->setParameter('isMember', $personalData->getIsMember())
+        ->setParameter('isParent', $personalData->getIsParent())
+        ->setParameter('sex', $personalData->getSex());
+
+    return $query->getResult()[0];
   }
 }
 ?>

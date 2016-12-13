@@ -1,3 +1,7 @@
+index:
+    path:   /index
+    defaults: { _controller: DatabaseBundle:ShowPeople:showAll }
+
 new_person:
     path:   /person/new
     defaults: { _controller: DatabaseBundle:AddPerson:new }
