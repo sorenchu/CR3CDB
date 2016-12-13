@@ -23,14 +23,25 @@ DatabaseBundle\Entity\PlayerData:
     lifecycleCallbacks: {  }
 
     manyToOne:
-    #oneToOne:
         personalData:
             targetEntity: PersonalData
-            #mappedBy: playerData
             inversedBy: playerData
             joinColumn:
                 name: personalData_id
                 referencedColumnName: id
                 nullable: true
-                onDelete: 'SET NULL'
+                onDelete: 'CASCADE'
             cascade: ["persist"]
+            
+    manyToMany:
+        childrenParentData:
+            targetEntity: ParentData
+            inversedBy: parentChildrenData
+            joinTable:
+                name: parent_children
+                joinColumns:
+                  player_id:
+                    referencedColumnName: id
+                inverseJoinColumns:
+                  parent_id:
+                    referencedColumnName: id  

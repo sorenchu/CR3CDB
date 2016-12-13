@@ -80,4 +80,49 @@ class ParentData
     {
         return $this->personalData;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $playerData;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->playerData = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add playerData
+     *
+     * @param \DatabaseBundle\Entity\PlayerData $playerData
+     * @return ParentData
+     */
+    public function addPlayerDatum(\DatabaseBundle\Entity\PlayerData $playerData)
+    {
+        $this->playerData[] = $playerData;
+
+        return $this;
+    }
+
+    /**
+     * Remove playerData
+     *
+     * @param \DatabaseBundle\Entity\PlayerData $playerData
+     */
+    public function removePlayerDatum(\DatabaseBundle\Entity\PlayerData $playerData)
+    {
+        $this->playerData->removeElement($playerData);
+    }
+
+    /**
+     * Get playerData
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPlayerData()
+    {
+        return $this->playerData;
+    }
 }

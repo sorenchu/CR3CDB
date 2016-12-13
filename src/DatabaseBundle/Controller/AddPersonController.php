@@ -6,18 +6,6 @@ namespace DatabaseBundle\Controller;
 use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Form\Type\PersonalDataType;
 
-use DatabaseBundle\Entity\PlayerData;
-use DatabaseBundle\Form\Type\PlayerDataType;
-
-use DatabaseBundle\Entity\CoachData;
-use DatabaseBundle\Form\Type\CoachDataType;
-
-use DatabaseBundle\Entity\MemberData;
-use DatabaseBundle\Form\Type\MemberDataType;
-
-use DatabaseBundle\Entity\ParentData;
-use DatabaseBundle\Form\Type\ParentDataType;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,88 +29,6 @@ class AddPersonController extends Controller
 
     return $this->render('DatabaseBundle:Default:new.html.twig', array(
                 'personalDataForm' => $personalDataForm->createView(),
-    ));
-  }
-
-  public function editPersonAction($id, Request $request)
-  {
-    $em = $this->getDoctrine()->getManager();
-    $personalData = $em->getRepository('DatabaseBundle:PersonalData')->find($id);
-
-    $query = $this->processQuery($id, 0);
-    $playerData = $this->getQueryResult($query, 0);
-
-    $query = $this->processQuery($id, 1);
-    $coachData = $this->getQueryResult($query, 1);
-
-    $query = $this->processQuery($id, 2);
-    $memberData = $this->getQueryResult($query, 2);
-
-    $query = $this->processQuery($id, 3);
-    $parentData = $this->getQueryResult($query, 3);
-
-    if (!$personalData) 
-    {
-      throw $this->createNotFoundException(
-          'No hay miembro asociado a la identificación '.$id);
-    }
-
-    $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
-    $personalDataForm->handleRequest($request);
-
-    $playerDataForm = $this->createForm(new PlayerDataType(), $playerData);
-    $playerDataForm->handleRequest($request);
-
-    $coachDataForm = $this->createForm(new CoachDataType(), $coachData);
-    $coachDataForm->handleRequest($request);
-
-    $memberDataForm = $this->createForm(new MemberDataType(), $memberData);
-    $memberDataForm->handleRequest($request);
-
-    $parentDataForm = $this->createForm(new ParentDataType(), $parentData);
-    $parentDataForm->handleRequest($request);
-
-    if($personalDataForm->isSubmitted()) 
-    {
-      $em->persist($personalData);
-      $em->flush();
-    }
-
-    if($playerDataForm->isSubmitted())
-    {
-      $playerData->setPersonalData($personalData);
-      $em->merge($playerData);
-      $em->flush();
-    }
-
-    if($coachDataForm->isSubmitted())
-    {
-      $coachData->setPersonalData($personalData);
-      $em->merge($coachData);
-      $em->flush();
-    }
-
-    if($memberDataForm->isSubmitted())
-    {
-      $memberData->setPersonalData($personalData);
-      $em->merge($memberData);
-      $em->flush();
-    }
-
-    if($parentDataForm->isSubmitted())
-    {
-      $parentData->setPersonalData($personalData);
-      $em->merge($parentData);
-      $em->flush();
-    }
-
-    return $this->render('DatabaseBundle:Default:editperson.html.twig', array(
-                'personalDataForm' => $personalDataForm->createView(),
-                'playerDataForm' => $playerDataForm->createView(),
-                'coachDataForm' => $coachDataForm->createView(),
-                'memberDataForm' => $memberDataForm->createView(),
-                'parentDataForm' => $parentDataForm->createView(),
-                'personalData' => $personalData,
     ));
   }
 
@@ -157,8 +63,6 @@ class AddPersonController extends Controller
           $tableName = 'DatabaseBundle:Parentdata';
           $alias = 'parentdata';
           break;
-    //  default:
-    //      break;
     }
 
     $repository = $this->getDoctrine()->getRepository($tableName);
@@ -169,37 +73,6 @@ class AddPersonController extends Controller
         ->setParameter('id', $id)
         ->getQuery();
     return $query;
-  }
-
-  private function getQueryResult($query, $table)
-  {
-    if (NULL != $query->getOneOrNullResult())
-    {
-      $data = $query->getOneOrNullResult();
-    }
-    else
-    {
-      switch($table)
-      {
-        case 0:
-          $data = new PlayerData();
-          break;
-
-        case 1:
-          $data = new CoachData();
-          break;
-
-        case 2:
-          $data = new MemberData();
-          break; 
-
-        case 3:
-          $data = new ParentData(); 
-          break;
-      }
-    }
-
-    return $data;
   }
 
   private function getNewPerson($personalData) {
@@ -226,4 +99,3 @@ class AddPersonController extends Controller
   }
 }
 ?>
-

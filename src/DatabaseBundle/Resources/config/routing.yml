@@ -40,7 +40,7 @@ show_prebenjamin:
 
 edit_person:
     path:   /person/editPerson/{id}
-    defaults: { _controller: DatabaseBundle:AddPerson:editPerson }
+    defaults: { _controller: DatabaseBundle:EditPerson:editPerson }
 
 delete_person:
     path:   /person/deletePerson/{id}

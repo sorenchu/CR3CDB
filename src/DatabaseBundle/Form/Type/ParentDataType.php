@@ -26,5 +26,4 @@ class ParentDataType extends AbstractType
     return 'parentData';
   }
 }
-
 ?>
