@@ -36,12 +36,4 @@ DatabaseBundle\Entity\PlayerData:
     manyToMany:
         childrenParentData:
             targetEntity: ParentData
-            inversedBy: parentChildrenData
-            joinTable:
-                name: parent_children
-                joinColumns:
-                  player_id:
-                    referencedColumnName: id
-                inverseJoinColumns:
-                  parent_id:
-                    referencedColumnName: id  
+            mappedBy: parentToChildren

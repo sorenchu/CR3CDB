@@ -40,7 +40,8 @@ class EditPersonController extends Controller
 
     $query = $this->processQuery($id, 3);
     $parentData = $this->getQueryResult($query, 3);
-
+    // TODO: new query for getting children
+    
     $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
     $personalDataForm->handleRequest($request);
 
@@ -53,7 +54,7 @@ class EditPersonController extends Controller
     $memberDataForm = $this->createForm(new MemberDataType(), $memberData);
     $memberDataForm->handleRequest($request);
 
-    $parentDataForm = $this->createForm(new ParentDataType(), $parentData);
+    $parentDataForm = $this->createForm(new ParentDataType($this->allChildren()), $parentData);
     $parentDataForm->handleRequest($request);
 
     if($personalDataForm->isSubmitted()) 
@@ -65,7 +66,15 @@ class EditPersonController extends Controller
     $this->submittingForm($playerDataForm, $playerData, $personalData);
     $this->submittingForm($coachDataForm, $coachData, $personalData);
     $this->submittingForm($memberDataForm, $memberData, $personalData);
-    $this->submittingForm($parentDataForm, $parentData, $personalData);
+
+    if($parentDataForm->isSubmitted())
+    {
+      $test = $parentDataForm["playerdata"]->getData()[0];
+      $parentData->setPersonalData($personalData);
+      $parentData->addParentToChild($test);
+      $em->merge($parentData);
+      $em->flush();
+    }
 
     return $this->render('DatabaseBundle:Default:editperson.html.twig', array(
                 'personalDataForm' => $personalDataForm->createView(),
@@ -146,8 +155,20 @@ class EditPersonController extends Controller
       $data->setPersonalData($personalData);
       $em->merge($data);
       $em->flush();
+      return $data;
     }
-    return;
+    return NULL;
+  }
+
+  private function allChildren() {
+    $em = $this->getDoctrine()->getManager(); 
+    $query = $em->createQuery(
+        'SELECT playerdata
+        FROM DatabaseBundle:PlayerData playerdata
+        WHERE playerdata.category NOT LIKE :senior')
+        ->setParameter('senior', 'Senior');
+
+    return $query->getResult();
   }
 }
 ?>

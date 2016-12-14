@@ -125,4 +125,80 @@ class ParentData
     {
         return $this->playerData;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $parentChildrenData;
+
+
+    /**
+     * Add parentChildrenData
+     *
+     * @param \DatabaseBundle\Entity\PlayerData $parentChildrenData
+     * @return ParentData
+     */
+    public function addParentChildrenDatum(\DatabaseBundle\Entity\PlayerData $parentChildrenData)
+    {
+        $this->parentChildrenData[] = $parentChildrenData;
+
+        return $this;
+    }
+
+    /**
+     * Remove parentChildrenData
+     *
+     * @param \DatabaseBundle\Entity\PlayerData $parentChildrenData
+     */
+    public function removeParentChildrenDatum(\DatabaseBundle\Entity\PlayerData $parentChildrenData)
+    {
+        $this->parentChildrenData->removeElement($parentChildrenData);
+    }
+
+    /**
+     * Get parentChildrenData
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getParentChildrenData()
+    {
+        return $this->parentChildrenData;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $parentToChildren;
+
+
+    /**
+     * Add parentToChildren
+     *
+     * @param \DatabaseBundle\Entity\PlayerData $parentToChildren
+     * @return ParentData
+     */
+    public function addParentToChild(\DatabaseBundle\Entity\PlayerData $parentToChildren)
+    {
+        $this->parentToChildren[] = $parentToChildren;
+
+        return $this;
+    }
+
+    /**
+     * Remove parentToChildren
+     *
+     * @param \DatabaseBundle\Entity\PlayerData $parentToChildren
+     */
+    public function removeParentToChild(\DatabaseBundle\Entity\PlayerData $parentToChildren)
+    {
+        $this->parentToChildren->removeElement($parentToChildren);
+    }
+
+    /**
+     * Get parentToChildren
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getParentToChildren()
+    {
+        return $this->parentToChildren;
+    }
 }
