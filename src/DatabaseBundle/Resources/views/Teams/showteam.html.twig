@@ -11,15 +11,15 @@
       'DatabaseBundle:base:team_header.html.twig') }}
 {% for data in playerData %}
   <tr>
-  <td> {{ data.getPersonalData().getName() }} </td>
-  <td> {{ data.getPersonalData().getSurname() }} </td>
-  <td> {{ data.getPersonalData().getNickname() }} </td>
-  <td> {{ data.getPersonalData().getEmail() }} </td>
-  <td> {{ data.getPersonalData().getPhone() }} </td>
-  <td> {{ data.getPayment() }} </td>
-  <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}"> Editar </a> </td>
-  <td> <a href="/person/deletePerson/{{data.getPersonalData().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
-</tr>
+    <td> {{ data.getPersonalData().getName() }} </td>
+    <td> {{ data.getPersonalData().getSurname() }} </td>
+    <td> {{ data.getPersonalData().getNickname() }} </td>
+    <td> {{ data.getPersonalData().getEmail() }} </td>
+    <td> {{ data.getPersonalData().getPhone() }} </td>
+    <td> {{ data.getPayment() }} </td>
+    <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}"> Editar </a> </td>
+    <td> <a href="/person/deletePerson/{{data.getPersonalData().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+  </tr>
 {% endfor %}
 </table>
 {% endblock %}

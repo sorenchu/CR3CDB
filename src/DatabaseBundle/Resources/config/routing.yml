@@ -38,6 +38,10 @@ show_prebenjamin:
     path:   /person/showPrebenjamin
     defaults: { _controller: DatabaseBundle:ShowTeams:showPrebenjamin }
 
+show_parents:
+    path: /person/showParents
+    defaults: { _controller: DatabaseBundle:ShowPeople:showParents }
+
 edit_person:
     path:   /person/editPerson/{id}
     defaults: { _controller: DatabaseBundle:EditPerson:editPerson }

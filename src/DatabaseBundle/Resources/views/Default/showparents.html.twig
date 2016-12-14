@@ -1,0 +1,34 @@
+{% extends 'DatabaseBundle:base:base.html.twig' %}
+
+{% block title %}
+  Mostrando a todos los padres
+{% endblock %}
+
+{% block body %}
+<h1>Padres de la escuela</h1>
+<table style="width: 100%">
+<tr>
+  <th>Padre</th>
+  <th>Hijo</th>
+  <th>Categoría</th>
+  <th>Número de teléfono</th>
+  <th>Email</th>
+</tr>
+
+{% for data in parentData %}
+  {% for child in data.getParentToChildren() %}
+    <tr>
+      <td> {{ data.getPersonalData().getName() }}
+           {{ data.getPersonalData().getSurname() }} </td>
+      <td> {{ child.getPersonalData().getName() }}
+           {{ child.getPersonalData().getSurname() }} </td>
+      <td> {{ child.getCategory()}} </td>
+      <td> {{ data.getPersonalData().getPhone() }} </td>
+      <td> {{ data.getPersonalData().getEmail() }} </td>
+      <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}"> Editar </a> </td>
+      <td> <a href="/person/deletePerson/{{data.getPersonalData().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+    </tr>
+  {% endfor %}
+{% endfor %}
+</table>
+{% endblock %}
