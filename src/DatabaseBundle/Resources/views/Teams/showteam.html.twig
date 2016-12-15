@@ -11,8 +11,8 @@
       'DatabaseBundle:base:team_header.html.twig') }}
 {% for data in playerData %}
   <tr>
-    <td> {{ data.getPersonalData().getName() }} </td>
-    <td> {{ data.getPersonalData().getSurname() }} </td>
+    <td> {{ data.getPersonalData().getName() }}
+         {{ data.getPersonalData().getSurname() }} </td>
     <td> {{ data.getPersonalData().getNickname() }} </td>
     <td> {{ data.getPersonalData().getEmail() }} </td>
     <td> {{ data.getPersonalData().getPhone() }} </td>

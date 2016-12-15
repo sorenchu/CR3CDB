@@ -39,6 +39,7 @@ class ShowTeamsController extends Controller
     $coachData = $this->filterByCategory('Cadete', 'DatabaseBundle:CoachData')->getResult();
     return $this->render('DatabaseBundle:Teams:showteam.html.twig', array(
                 'playerData' => $playerData,
+                'coachData' => $coachData,
                 'teamName' => 'Cadete'));
   }
 

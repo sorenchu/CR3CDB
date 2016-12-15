@@ -46,5 +46,14 @@ class ShowPeopleController extends Controller
     return $this->render('DatabaseBundle:Default:showparents.html.twig', array(
                 'parentData' => $parentData));
   }
+
+  public function showMembersAction()
+  {
+    $memberData = $this->getDoctrine()
+            ->getRepository('DatabaseBundle:MemberData')
+            ->findAll();
+    return $this->render('DatabaseBundle:Default:showmembers.html.twig', array(
+                'memberData' => $memberData));
+  }
 }
 ?>
