@@ -15,23 +15,28 @@ class ShowTeamsController extends Controller
 {
   public function showSeniorAction()
   {
-    $playerData = $this->teamQuery('Senior')->getResult();
+    $playerData = $this->filterByCategory('Senior', 'DatabaseBundle:PlayerData')->getResult();
+    $coachData = $this->filterByCategory('Senior', 'DatabaseBundle:CoachData')->getResult();
     return $this->render('DatabaseBundle:Teams:showteam.html.twig', array(
                 'playerData' => $playerData,
+                'coachData' => $coachData,
                 'teamName' => 'Senior'));
   }
 
   public function showFemaleAction()
   {
-    $playerData = $this->teamQuery('Femenino')->getResult();
+    $playerData = $this->filterByCategory('Femenino', 'DatabaseBundle:PlayerData')->getResult();
+    $coachData = $this->filterByCategory('Femenino', 'DatabaseBundle:CoachData')->getResult();
     return $this->render('DatabaseBundle:Teams:showteam.html.twig', array(
                 'playerData' => $playerData,
+                'coachData' => $coachData,
                 'teamName' => 'Femenino'));
   }
 
   public function showCadeteAction()
   {
-    $playerData = $this->teamQuery('Cadete')->getResult();
+    $playerData = $this->filterByCategory('Cadete', 'DatabaseBundle:PlayerData')->getResult();
+    $coachData = $this->filterByCategory('Cadete', 'DatabaseBundle:CoachData')->getResult();
     return $this->render('DatabaseBundle:Teams:showteam.html.twig', array(
                 'playerData' => $playerData,
                 'teamName' => 'Cadete'));
@@ -39,33 +44,37 @@ class ShowTeamsController extends Controller
 
   public function showAlevinAction()
   {
-    $playerData = $this->teamQuery('Alevin')->getResult();
+    $playerData = $this->filterByCategory('Alevin', 'DatabaseBundle:PlayerData')->getResult();
+    $coachData = $this->filterByCategory('Alevin', 'DatabaseBundle:CoachData')->getResult();
     return $this->render('DatabaseBundle:Teams:showteam.html.twig', array(
                 'playerData' => $playerData,
+                'coachData' => $coachData,
                 'teamName' => 'Alevín'));
   }
 
   public function showBenjaminAction()
   {
-    $playerData = $this->teamQuery('Benjamin')->getResult();
+    $playerData = $this->filterByCategory('Benjamin', 'DatabaseBundle:PlayerData')->getResult();
+    $coachData = $this->filterByCategory('Benjamin', 'DatabaseBundle:CoachData')->getResult();
     return $this->render('DatabaseBundle:Teams:showteam.html.twig', array(
                 'playerData' => $playerData,
+                'coachData' => $coachData,
                 'teamName' => 'Benjamín'));
   }
 
   public function showPrebenjaminAction()
   {
-    $playerData = $this->teamQuery('Prebenjamin')->getResult();
+    $playerData = $this->filterByCategory('Prebenjamin', 'DatabaseBundle:PlayerData')->getResult();
+    $coachData = $this->filterByCategory('Prebenjamin', 'DatabaseBundle:CoachData')->getResult();
     return $this->render('DatabaseBundle:Teams:showteam.html.twig', array(
                 'playerData' => $playerData,
+                'coachData' => $coachData,
                 'teamName' => 'Prebenjamín'));
   }
 
-  private function teamQuery($name)
+  private function filterByCategory($name, $tableName)
   {
-    $tableName = 'DatabaseBundle:PlayerData';
-    $alias = 'playerdata';
-
+    $alias = 'aliastable';
     $repository = $this->getDoctrine()
               ->getRepository($tableName);
     $query = $repository->createQueryBuilder($alias)
