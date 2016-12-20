@@ -247,4 +247,9 @@ class PlayerData
     {
         return $this->childrenParentData;
     }
+
+    public function __toString() 
+    {
+        return (string) $this->getPersonalData()->getName().' '.$this->getPersonalData()->getSurname();
+    }
 }

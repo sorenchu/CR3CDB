@@ -10,8 +10,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class ParentDataType extends AbstractType
 {
   private $children;
-  private $om;
-  private $playerdata;
 
   public function __construct($children)
   {
@@ -33,9 +31,12 @@ class ParentDataType extends AbstractType
             'label' => 'Hijo',
             'class' => 'DatabaseBundle:PlayerData',
             'choices' => $this->children,
-            'choice_label' => 'personalData.surname',
             'required' => false,
             'multiple' => true,
+            'expanded' => false,
+            'group_by' => 'category',
+            // TODO: it needs to get the actual children of the parent
+            'preferred_choices' => array(),
             )
         )
         ->add('save', 'submit', array('label' => 'Guardar'));
@@ -44,18 +45,6 @@ class ParentDataType extends AbstractType
   public function getName()
   {
     return 'parentData';
-  }
-
-  private function getAllChildren() 
-  {
-/*    $query = $this->em->createQuery(
-        'SELECT playerdata
-        FROM DatabaseBundle:PlayerData playerdata
-        WHERE playerdata.category NOT LIKE :senior')
-        ->setParameter('senior', 'Senior');
-
-    return $query->getResult();*/
-    return;
   }
 }
 ?>

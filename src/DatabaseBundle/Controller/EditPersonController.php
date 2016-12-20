@@ -165,8 +165,10 @@ class EditPersonController extends Controller
     $query = $em->createQuery(
         'SELECT playerdata
         FROM DatabaseBundle:PlayerData playerdata
-        WHERE playerdata.category NOT LIKE :senior')
-        ->setParameter('senior', 'Senior');
+        WHERE playerdata.category NOT LIKE :senior
+        AND playerdata.category NOT LIKE :femenino')
+        ->setParameter('senior', 'Senior')
+        ->setParameter('femenino', 'Femenino');
 
     return $query->getResult();
   }

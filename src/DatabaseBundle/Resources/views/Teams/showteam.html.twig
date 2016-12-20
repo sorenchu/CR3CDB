@@ -23,8 +23,8 @@
 {% endfor %}
 {% for data in coachData %}
   <tr>
-    <td> {{ data.getPersonalData().getName() }} </td>
-    <td> {{ data.getPersonalData().getSurname() }} (Entrenador) </td>
+    <td> {{ data.getPersonalData().getName() }}
+         {{ data.getPersonalData().getSurname() }} (Entrenador) </td>
     <td> {{ data.getPersonalData().getNickname() }} </td>
     <td> {{ data.getPersonalData().getEmail() }} </td>
     <td> {{ data.getPersonalData().getPhone() }} </td>
