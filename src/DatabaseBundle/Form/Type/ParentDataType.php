@@ -7,7 +7,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class ParentDataType extends AbstractType
+use DatabaseBundle\Form\Type\FormFactory\DataFormCreation;
+
+class ParentDataType extends AbstractType implements DataFormCreation
 {
   private $children;
 

@@ -6,7 +6,9 @@ namespace DatabaseBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class MemberDataType extends AbstractType
+use DatabaseBundle\Form\Type\FormFactory\DataFormCreation;
+
+class MemberDataType extends AbstractType implements DataFormCreation
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {

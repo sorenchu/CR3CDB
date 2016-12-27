@@ -6,7 +6,9 @@ namespace DatabaseBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class PlayerDataType extends AbstractType
+use DatabaseBundle\Form\Type\FormFactory\DataFormCreation;
+
+class PlayerDataType extends AbstractType implements DataFormCreation
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {

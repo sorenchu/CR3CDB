@@ -4,28 +4,24 @@
 namespace DatabaseBundle\Controller;
 
 use DatabaseBundle\Entity\PersonalData;
-use DatabaseBundle\Form\Type\PersonalDataType;
-
 use DatabaseBundle\Entity\PlayerData;
-use DatabaseBundle\Form\Type\PlayerDataType;
-
 use DatabaseBundle\Entity\CoachData;
-use DatabaseBundle\Form\Type\CoachDataType;
-
 use DatabaseBundle\Entity\MemberData;
-use DatabaseBundle\Form\Type\MemberDataType;
-
 use DatabaseBundle\Entity\ParentData;
-use DatabaseBundle\Form\Type\ParentDataType;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use DatabaseBundle\Controller\DataFormFactoryController;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class EditPersonController extends Controller
 {
+
   public function editPersonAction($id, Request $request)
   {
+    $dataFormFactory = new DataFormFactoryController($this);
+
     $em = $this->getDoctrine()->getManager();
     $personalData = $em->getRepository('DatabaseBundle:PersonalData')->find($id);
 
@@ -42,19 +38,19 @@ class EditPersonController extends Controller
     $parentData = $this->getQueryResult($query, 3);
     // TODO: new query for getting children
     
-    $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
+    $personalDataForm = $dataFormFactory->getCreatedForm("personal", $personalData);
     $personalDataForm->handleRequest($request);
 
-    $playerDataForm = $this->createForm(new PlayerDataType(), $playerData);
+    $playerDataForm = $dataFormFactory->getCreatedForm("player", $playerData);
     $playerDataForm->handleRequest($request);
 
-    $coachDataForm = $this->createForm(new CoachDataType(), $coachData);
+    $coachDataForm = $dataFormFactory->getCreatedForm("coach", $coachData);
     $coachDataForm->handleRequest($request);
 
-    $memberDataForm = $this->createForm(new MemberDataType(), $memberData);
+    $memberDataForm = $dataFormFactory->getCreatedForm("member", $memberData);
     $memberDataForm->handleRequest($request);
 
-    $parentDataForm = $this->createForm(new ParentDataType($this->allChildren()), $parentData);
+    $parentDataForm = $dataFormFactory->getCreatedForm("parent", $parentData);
     $parentDataForm->handleRequest($request);
 
     if($personalDataForm->isSubmitted()) 
@@ -148,7 +144,8 @@ class EditPersonController extends Controller
     return $data;
   }
 
-  private function submittingForm($dataForm, $data, $personalData) {
+  private function submittingForm($dataForm, $data, $personalData)
+  {
     $em = $this->getDoctrine()->getManager();
     if($dataForm->isSubmitted())
     {
@@ -158,19 +155,6 @@ class EditPersonController extends Controller
       return $data;
     }
     return NULL;
-  }
-
-  private function allChildren() {
-    $em = $this->getDoctrine()->getManager(); 
-    $query = $em->createQuery(
-        'SELECT playerdata
-        FROM DatabaseBundle:PlayerData playerdata
-        WHERE playerdata.category NOT LIKE :senior
-        AND playerdata.category NOT LIKE :femenino')
-        ->setParameter('senior', 'Senior')
-        ->setParameter('femenino', 'Femenino');
-
-    return $query->getResult();
   }
 }
 ?>
