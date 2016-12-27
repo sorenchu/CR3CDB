@@ -7,51 +7,45 @@ use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Entity\PlayerData;
 use DatabaseBundle\Form\Type\PersonalDataType;
 
+use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ShowPeopleController extends Controller
 {
+  private $teamQueries;
+
+  public function __construct()
+  {
+    $this->teamQueries = new ShowTeamQueries($this);
+  }
+
   public function showAllAction()
   {
-    $personalData = $this->getDoctrine()
-              ->getRepository('DatabaseBundle:PersonalData')   
-              ->findAll();
+    $personalData = $this->teamQueries->getAllMembers();
     return $this->render('DatabaseBundle:Default:showall.html.twig', array(
                 'personalData' => $personalData));
   }
 
   public function showPlayersAction()
   {
-    $em = $this->getDoctrine()->getManager();
-    $query = $em->createQuery(
-        'SELECT playerdata
-         FROM DatabaseBundle:PlayerData playerdata
-         JOIN playerdata.personalData c
-         WHERE c.id <> :null
-         ORDER BY c.surname ASC')
-        ->setParameter('null', 'NULL');
-
-    $playerData = $query->getResult();
+    $playerData = $this->teamQueries->getPlayers();
     return $this->render('DatabaseBundle:Default:showplayers.html.twig', array(
                 'playerData' => $playerData));
   }
 
   public function showParentsAction()
   {
-    $parentData = $this->getDoctrine()
-            ->getRepository('DatabaseBundle:ParentData')
-            ->findAll();
+    $parentData = $this->teamQueries->getParents();
     return $this->render('DatabaseBundle:Default:showparents.html.twig', array(
                 'parentData' => $parentData));
   }
 
   public function showMembersAction()
   {
-    $memberData = $this->getDoctrine()
-            ->getRepository('DatabaseBundle:MemberData')
-            ->findAll();
+    $memberData = $this->teamQueries->getMembers();
     return $this->render('DatabaseBundle:Default:showmembers.html.twig', array(
                 'memberData' => $memberData));
   }

@@ -1,5 +1,5 @@
 <?php
-# src/DatabaseBundle/Controller/DBQuery/GetPeopleQueries.php
+# src/DatabaseBundle/Controller/DBQuery/GetEditionQueries.php
 
 namespace DatabaseBundle\Controller\DBQuery;
 
@@ -11,13 +11,13 @@ use DatabaseBundle\Entity\ParentData;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class GetPeopleQueries extends Controller
+class GetEditionQueries extends Controller
 {
-  private $editPersonController;
+  private $personController;
 
-  public function __construct($editPersonController)
+  public function __construct($personController)
   {
-    $this->editPersonController = $editPersonController;
+    $this->personController = $personController;
   }
 
   public function getPeopleByType($id, $table)
@@ -47,7 +47,7 @@ class GetPeopleQueries extends Controller
       return null;
     }
 
-    $repository = $this->editPersonController->
+    $repository = $this->personController->
                           getDoctrine()->getRepository($tableName);
     $query = $repository->createQueryBuilder($alias)
         ->from($tableName, 'data')
@@ -90,6 +90,30 @@ class GetPeopleQueries extends Controller
   {
     $query = $this->getPeopleByType($id, $table);
     return $this->getTypeOfPerson($query, $table);
+  }
+
+  public function getNewPerson($personalData)
+  {
+    $em = $this->personController->getDoctrine()->getManager();
+    $query = $em->createQuery(
+        'SELECT personaldata
+        FROM DatabaseBundle:PersonalData personaldata
+        WHERE personaldata.name LIKE :name
+        AND personaldata.surname LIKE :surname
+        AND personaldata.isPlayer = :isPlayer
+        AND personaldata.isCoach = :isCoach
+        AND personaldata.isMember = :isMember
+        AND personaldata.isParent = :isParent
+        AND personaldata.sex = :sex')
+        ->setParameter('name', $personalData->getName())
+        ->setParameter('surname', $personalData->getSurname())
+        ->setParameter('isPlayer', $personalData->getIsPlayer())
+        ->setParameter('isCoach', $personalData->getIsCoach())
+        ->setParameter('isMember', $personalData->getIsMember())
+        ->setParameter('isParent', $personalData->getIsParent())
+        ->setParameter('sex', $personalData->getSex());
+
+    return $query->getResult()[0];
   }
 }
 

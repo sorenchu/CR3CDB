@@ -10,7 +10,7 @@ use DatabaseBundle\Entity\MemberData;
 use DatabaseBundle\Entity\ParentData;
 
 use DatabaseBundle\Controller\DataFormFactoryController;
-use DatabaseBundle\Controller\DBQuery\GetPeopleQueries;
+use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +22,7 @@ class EditPersonController extends Controller
   public function editPersonAction($id, Request $request)
   {
     $dataFormFactory = new DataFormFactoryController($this);
-    $peopleQueries = new GetPeopleQueries($this);
+    $peopleQueries = new GetEditionQueries($this);
 
     $em = $this->getDoctrine()->getManager();
     $personalData = $em->getRepository('DatabaseBundle:PersonalData')->find($id);
