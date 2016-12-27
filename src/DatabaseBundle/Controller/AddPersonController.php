@@ -8,7 +8,7 @@ use DatabaseBundle\Form\PersonalDataType;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
-use DatabaseBundle\Controller\DataFormFactoryController;
+use DatabaseBundle\Controller\DataFormFactory\DataFormFactoryController;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +38,7 @@ class AddPersonController extends Controller
                                         ->getNewPerson($personalData)->getId()));
     }
 
-    return $this->render('DatabaseBundle:Default:new.html.twig', array(
+    return $this->render('DatabaseBundle:person:new.html.twig', array(
                 'personalDataForm' => $personalDataForm->createView(),
     ));
   }
@@ -48,7 +48,7 @@ class AddPersonController extends Controller
     $this->peopleQueries->deletePerson($id);
     $showAllQuery = new ShowTeamQueries($this);
     $personalData = $showAllQuery->getAllMembers();
-    return $this->render('DatabaseBundle:Default:showall.html.twig', array(
+    return $this->render('DatabaseBundle:people:showall.html.twig', array(
                 'personalData' => $personalData));
   }
 }

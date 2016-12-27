@@ -1,7 +1,7 @@
 <?php
-# src/DatabaseBundle/Controller/DataFormFactoryController.php
+# src/DatabaseBundle/Controller/DataFormFactory/DataFormFactoryController.php
 
-namespace DatabaseBundle\Controller;
+namespace DatabaseBundle\Controller\DataFormFactory;
 
 use DatabaseBundle\Form\PersonalDataType;
 use DatabaseBundle\Form\PlayerDataType;

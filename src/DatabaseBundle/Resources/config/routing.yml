@@ -1,3 +1,7 @@
+default:
+    path:   / 
+    defaults: { _controller: DatabaseBundle:ShowPeople:showAll }
+
 index:
     path:   /index
     defaults: { _controller: DatabaseBundle:ShowPeople:showAll }
@@ -7,43 +11,43 @@ new_person:
     defaults: { _controller: DatabaseBundle:AddPerson:new }
 
 show_all:
-    path:   /person/showAll
+    path:   /people/showAll
     defaults: { _controller: DatabaseBundle:ShowPeople:showAll }
 
 show_players:
-    path:   /person/showPlayers
+    path:   /people/showPlayers
     defaults: { _controller: DatabaseBundle:ShowPeople:showPlayers }
 
 show_senior:
-    path:   /person/showSenior
+    path:   /team/showSenior
     defaults: { _controller: DatabaseBundle:ShowTeams:showSenior }
 
 show_female:
-    path:   /person/showFemale
+    path:   /team/showFemale
     defaults: { _controller: DatabaseBundle:ShowTeams:showFemale }
 
 show_cadete:
-    path:   /person/showCadete
+    path:   /team/showCadete
     defaults: { _controller: DatabaseBundle:ShowTeams:showCadete }
 
 show_alevin:
-    path:   /person/showAlevin
+    path:   /team/showAlevin
     defaults: { _controller: DatabaseBundle:ShowTeams:showAlevin }
 
 show_benjamin:
-    path:   /person/showBenjamin
+    path:   /team/showBenjamin
     defaults: { _controller: DatabaseBundle:ShowTeams:showBenjamin }
 
 show_prebenjamin:
-    path:   /person/showPrebenjamin
+    path:   /team/showPrebenjamin
     defaults: { _controller: DatabaseBundle:ShowTeams:showPrebenjamin }
 
 show_parents:
-    path: /person/showParents
+    path: /people/showParents
     defaults: { _controller: DatabaseBundle:ShowPeople:showParents }
 
 show_members:
-    path: /person/showMembers
+    path: /people/showMembers
     defaults: { _controller: DatabaseBundle:ShowPeople:showMembers }
 
 edit_person:

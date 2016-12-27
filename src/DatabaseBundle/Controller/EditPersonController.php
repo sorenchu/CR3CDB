@@ -9,7 +9,7 @@ use DatabaseBundle\Entity\CoachData;
 use DatabaseBundle\Entity\MemberData;
 use DatabaseBundle\Entity\ParentData;
 
-use DatabaseBundle\Controller\DataFormFactoryController;
+use DatabaseBundle\Controller\DataFormFactory\DataFormFactoryController;
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -67,7 +67,7 @@ class EditPersonController extends Controller
       $em->flush();
     }
 
-    return $this->render('DatabaseBundle:Default:editperson.html.twig', array(
+    return $this->render('DatabaseBundle:person:editperson.html.twig', array(
                 'personalDataForm' => $personalDataForm->createView(),
                 'playerDataForm' => $playerDataForm->createView(),
                 'coachDataForm' => $coachDataForm->createView(),

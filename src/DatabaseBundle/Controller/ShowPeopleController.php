@@ -21,28 +21,28 @@ class ShowPeopleController extends Controller
   public function showAllAction()
   {
     $personalData = $this->teamQueries->getAllMembers();
-    return $this->render('DatabaseBundle:Default:showall.html.twig', array(
+    return $this->render('DatabaseBundle:people:showall.html.twig', array(
                 'personalData' => $personalData));
   }
 
   public function showPlayersAction()
   {
     $playerData = $this->teamQueries->getPlayers();
-    return $this->render('DatabaseBundle:Default:showplayers.html.twig', array(
+    return $this->render('DatabaseBundle:people:showplayers.html.twig', array(
                 'playerData' => $playerData));
   }
 
   public function showParentsAction()
   {
     $parentData = $this->teamQueries->getParents();
-    return $this->render('DatabaseBundle:Default:showparents.html.twig', array(
+    return $this->render('DatabaseBundle:people:showparents.html.twig', array(
                 'parentData' => $parentData));
   }
 
   public function showMembersAction()
   {
     $memberData = $this->teamQueries->getMembers();
-    return $this->render('DatabaseBundle:Default:showmembers.html.twig', array(
+    return $this->render('DatabaseBundle:people:showmembers.html.twig', array(
                 'memberData' => $memberData));
   }
 }
