@@ -1,14 +1,14 @@
 <?php
-# src/DatabaseBundle/Form/Type/PlayerDataType.php
+# src/DatabaseBundle/Form/CoachDataType.php
 
-namespace DatabaseBundle\Form\Type;
+namespace DatabaseBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use DatabaseBundle\Form\Type\FormFactory\DataFormCreation;
+use DatabaseBundle\Form\FormFactory\DataFormCreation;
 
-class PlayerDataType extends AbstractType implements DataFormCreation
+class CoachDataType extends AbstractType implements DataFormCreation
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
@@ -20,9 +20,9 @@ class PlayerDataType extends AbstractType implements DataFormCreation
             )
           )
         )
-        ->add('payment', 'money', array(
+        ->add('salary', 'money', array(
                                     'required' => false,
-                                    'label' => 'Pagos',))
+                                    'label' => 'Sueldo',))
         ->add('category', 'choice', array(
             'label' => 'Categoría',
             'choices' => array(
@@ -35,15 +35,15 @@ class PlayerDataType extends AbstractType implements DataFormCreation
               'prebenjamin' => 'Prebenjamín',
               //'jabato' => 'Jabato',
               //'lince' => 'Lince',
+              )
             )
           )
-        )
-        ->add('save', 'submit', array('label' => 'Guardar'));
+          ->add('save', 'submit', array('label' => 'Guardar'));
   }
-  
+
   public function getName()
   {
-    return 'playerData';
+    return 'coachData';
   }
 }
 ?>

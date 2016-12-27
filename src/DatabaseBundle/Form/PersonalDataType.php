@@ -1,12 +1,12 @@
 <?php
-# src/DatabaseBundle/Form/Type/PersonalDataType.php
+# src/DatabaseBundle/Form/PersonalDataType.php
 
-namespace DatabaseBundle\Form\Type;
+namespace DatabaseBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use DatabaseBundle\Form\Type\FormFactory\DataFormCreation;
+use DatabaseBundle\Form\FormFactory\DataFormCreation;
 
 class PersonalDataType extends AbstractType implements DataFormCreation
 {

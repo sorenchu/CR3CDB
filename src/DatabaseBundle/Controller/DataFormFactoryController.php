@@ -3,12 +3,11 @@
 
 namespace DatabaseBundle\Controller;
 
-use DatabaseBundle\Form\Type\PersonalDataType;
-use DatabaseBundle\Form\Type\PlayerDataType;
-use DatabaseBundle\Form\Type\CoachDataType;
-use DatabaseBundle\Form\Type\MemberDataType;
-use DatabaseBundle\Form\Type\ParentDataType;
- 
+use DatabaseBundle\Form\PersonalDataType;
+use DatabaseBundle\Form\PlayerDataType;
+use DatabaseBundle\Form\CoachDataType;
+use DatabaseBundle\Form\MemberDataType;
+use DatabaseBundle\Form\ParentDataType;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

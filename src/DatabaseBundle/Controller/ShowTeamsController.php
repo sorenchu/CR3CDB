@@ -3,10 +3,6 @@
 
 namespace DatabaseBundle\Controller;
 
-use DatabaseBundle\Entity\PersonalData;
-use DatabaseBundle\Entity\PlayerData;
-use DatabaseBundle\Form\Type\PersonalDataType;
-
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

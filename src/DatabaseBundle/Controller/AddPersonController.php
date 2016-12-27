@@ -4,7 +4,7 @@
 namespace DatabaseBundle\Controller;
 
 use DatabaseBundle\Entity\PersonalData;
-use DatabaseBundle\Form\Type\PersonalDataType;
+use DatabaseBundle\Form\PersonalDataType;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;

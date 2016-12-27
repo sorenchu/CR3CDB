@@ -1,12 +1,12 @@
 <?php
-# src/DatabaseBundle/Form/Type/MemberDataType.php
+# src/DatabaseBundle/Form/MemberDataType.php
 
-namespace DatabaseBundle\Form\Type;
+namespace DatabaseBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use DatabaseBundle\Form\Type\FormFactory\DataFormCreation;
+use DatabaseBundle\Form\FormFactory\DataFormCreation;
 
 class MemberDataType extends AbstractType implements DataFormCreation
 {

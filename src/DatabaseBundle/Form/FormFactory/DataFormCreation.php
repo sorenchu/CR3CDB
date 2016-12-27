@@ -1,7 +1,7 @@
 <?php
-# src/DatabaseBundle/Form/Type/FormFactory/DataFormCreation.php
+# src/DatabaseBundle/Form/FormFactory/DataFormCreation.php
 
-namespace DatabaseBundle\Form\Type\FormFactory;
+namespace DatabaseBundle\Form\FormFactory;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

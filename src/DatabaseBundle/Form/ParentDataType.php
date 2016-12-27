@@ -1,13 +1,13 @@
 <?php
-# src/DatabaseBundle/Form/Type/ParentDataType.php
+# src/DatabaseBundle/Form/ParentDataType.php
 
-namespace DatabaseBundle\Form\Type;
+namespace DatabaseBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-use DatabaseBundle\Form\Type\FormFactory\DataFormCreation;
+use DatabaseBundle\Form\FormFactory\DataFormCreation;
 
 class ParentDataType extends AbstractType implements DataFormCreation
 {
