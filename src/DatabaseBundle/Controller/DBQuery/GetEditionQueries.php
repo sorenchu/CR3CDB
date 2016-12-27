@@ -115,6 +115,22 @@ class GetEditionQueries extends Controller
 
     return $query->getResult()[0];
   }
+
+  public function savePerson($personalData)
+  {
+    $em = $this->personController->getDoctrine()->getManager();
+    $em->persist($personalData);
+    $em->flush();
+  }
+
+  public function deletePerson($id)
+  {
+    $em = $this->personController->getDoctrine()->getManager();
+    $personalData = $em->getRepository('DatabaseBundle:PersonalData')
+                      ->find($id);
+    $em->remove($personalData);
+    $em->flush();
+  }
 }
 
 ?>
