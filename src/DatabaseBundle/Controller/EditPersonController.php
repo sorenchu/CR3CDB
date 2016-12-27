@@ -10,6 +10,7 @@ use DatabaseBundle\Entity\MemberData;
 use DatabaseBundle\Entity\ParentData;
 
 use DatabaseBundle\Controller\DataFormFactoryController;
+use DatabaseBundle\Controller\DBQuery\GetPeopleQueries;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,21 +22,15 @@ class EditPersonController extends Controller
   public function editPersonAction($id, Request $request)
   {
     $dataFormFactory = new DataFormFactoryController($this);
+    $peopleQueries = new GetPeopleQueries($this);
 
     $em = $this->getDoctrine()->getManager();
     $personalData = $em->getRepository('DatabaseBundle:PersonalData')->find($id);
 
-    $query = $this->processQuery($id, 0);
-    $playerData = $this->getQueryResult($query, 0);
-
-    $query = $this->processQuery($id, 1);
-    $coachData = $this->getQueryResult($query, 1);
-
-    $query = $this->processQuery($id, 2);
-    $memberData = $this->getQueryResult($query, 2);
-
-    $query = $this->processQuery($id, 3);
-    $parentData = $this->getQueryResult($query, 3);
+    $playerData = $peopleQueries->getTableDataForPerson($id, "playerdata");
+    $coachData = $peopleQueries->getTableDataForPerson($id, "coachdata");
+    $memberData = $peopleQueries->getTableDataForPerson($id, "memberdata");
+    $parentData = $peopleQueries->getTableDataForPerson($id, "parentdata");
     // TODO: new query for getting children
     
     $personalDataForm = $dataFormFactory->getCreatedForm("personal", $personalData);
@@ -80,68 +75,6 @@ class EditPersonController extends Controller
                 'parentDataForm' => $parentDataForm->createView(),
                 'personalData' => $personalData,
     ));
-  }
-
-  private function processQuery($id, $table)
-  {
-    switch($table)
-    {
-      case 0:
-          $tableName = 'DatabaseBundle:Playerdata';
-          $alias = 'playerdata';
-          break;
-      case 1:
-          $tableName = 'DatabaseBundle:Coachdata';
-          $alias = 'coachdata';
-          break;
-      case 2:
-          $tableName = 'DatabaseBundle:Memberdata';
-          $alias = 'memberdata';
-          break;
-      case 3:
-          $tableName = 'DatabaseBundle:Parentdata';
-          $alias = 'parentdata';
-          break;
-    }
-
-    $repository = $this->getDoctrine()->getRepository($tableName);
-    $query = $repository->createQueryBuilder($alias)
-        ->from($tableName, 'data')
-        ->join($alias.'.personalData', 'person')
-        ->where('person.id = :id')
-        ->setParameter('id', $id)
-        ->getQuery();
-    return $query;
-  }
-
-  private function getQueryResult($query, $table)
-  {
-    if (NULL != $query->getOneOrNullResult())
-    {
-      $data = $query->getOneOrNullResult();
-    }
-    else
-    {
-      switch($table)
-      {
-        case 0:
-          $data = new PlayerData();
-          break;
-
-        case 1:
-          $data = new CoachData();
-          break;
-
-        case 2:
-          $data = new MemberData();
-          break; 
-
-        case 3:
-          $data = new ParentData(); 
-          break;
-      }
-    }
-    return $data;
   }
 
   private function submittingForm($dataForm, $data, $personalData)
