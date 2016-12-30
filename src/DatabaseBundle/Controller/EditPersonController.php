@@ -18,7 +18,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class EditPersonController extends Controller
 {
-
   public function editPersonAction($id, Request $request)
   {
     $dataFormFactory = new DataFormFactoryController($this);
@@ -60,9 +59,9 @@ class EditPersonController extends Controller
 
     if($parentDataForm->isSubmitted())
     {
-      $test = $parentDataForm["playerdata"]->getData()[0];
+      $kid = $parentDataForm["playerdata"]->getData()[0];
       $parentData->setPersonalData($personalData);
-      $parentData->addParentToChild($test);
+      $parentData->addParentToChild($kid);
       $em->merge($parentData);
       $em->flush();
     }

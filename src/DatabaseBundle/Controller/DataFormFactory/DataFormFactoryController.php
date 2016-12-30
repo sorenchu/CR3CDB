@@ -47,7 +47,9 @@ class DataFormFactoryController extends Controller
     else if (0 == strcmp("parent", $typeData))
     {
       return $this->editPersonController->
-                createForm(new ParentDataType($this->allChildren()), $data);
+                createForm(new ParentDataType(
+                      $this->allChildren(), 
+                      $data->getParentToChildren()), $data);
     }
     return null;
   }

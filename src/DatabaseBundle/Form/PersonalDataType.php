@@ -3,10 +3,10 @@
 
 namespace DatabaseBundle\Form;
 
+use DatabaseBundle\Form\FormFactory\DataFormCreation;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-
-use DatabaseBundle\Form\FormFactory\DataFormCreation;
 
 class PersonalDataType extends AbstractType implements DataFormCreation
 {
@@ -59,4 +59,3 @@ class PersonalDataType extends AbstractType implements DataFormCreation
   }
 }
 ?>
-

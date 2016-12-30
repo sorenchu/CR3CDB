@@ -12,10 +12,12 @@ use DatabaseBundle\Form\FormFactory\DataFormCreation;
 class ParentDataType extends AbstractType implements DataFormCreation
 {
   private $children;
+  private $parentToChildren;
 
-  public function __construct($children)
+  public function __construct($children, $parentToChildren)
   {
     $this->children = $children;
+    $this->parentToChildren = $parentToChildren;
   }
 
   public function buildForm(FormBuilderInterface $builder, array $options)
@@ -33,12 +35,11 @@ class ParentDataType extends AbstractType implements DataFormCreation
             'label' => 'Hijo',
             'class' => 'DatabaseBundle:PlayerData',
             'choices' => $this->children,
-            'required' => false,
+            'required' => true,
             'multiple' => true,
             'expanded' => false,
             'group_by' => 'category',
-            // TODO: it needs to get the actual children of the parent
-            'preferred_choices' => array(),
+            'data' => $this->parentToChildren,
             )
         )
         ->add('save', 'submit', array('label' => 'Guardar'));
