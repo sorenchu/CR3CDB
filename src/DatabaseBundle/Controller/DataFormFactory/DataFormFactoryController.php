@@ -49,7 +49,8 @@ class DataFormFactoryController extends Controller
       return $this->editPersonController->
                 createForm(new ParentDataType(
                       $this->allChildren(), 
-                      $data->getParentToChildren()), $data);
+                      $data->getPlayerData()),
+                     $data);
     }
     return null;
   }

@@ -25,18 +25,17 @@ DatabaseBundle\Entity\ParentData:
             cascade: ["persist"]
 
     manyToMany:
-        parentToChildren:
+        playerData:
             targetEntity: PlayerData
-            inversedBy: childrenToParent
+            inversedBy: parentData
             joinTable:
-                name: parentChildren
+                name: parentData_playerData
                 joinColumns:
                   parent_id:
                     referencedColumnName: id
-                    nullable: false
                 inverseJoinColumns:
                   player_id:
                     referencedColumnName: id
-                    nullable: false
+                onDelete: 'CASCADE'
             cascade: ["persist"]
                   

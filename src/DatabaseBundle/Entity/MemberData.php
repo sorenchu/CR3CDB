@@ -2,20 +2,18 @@
 
 namespace DatabaseBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * MemberData
  */
 class MemberData
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
     /**
-     * @var int
+     * @var integer
      */
     private $season;
 
@@ -24,11 +22,21 @@ class MemberData
      */
     private $payment;
 
+    /**
+     * @var integer
+     */
+    private $memberId;
+
+    /**
+     * @var \DatabaseBundle\Entity\PersonalData
+     */
+    private $personalData;
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -39,6 +47,7 @@ class MemberData
      * Set season
      *
      * @param integer $season
+     *
      * @return MemberData
      */
     public function setSeason($season)
@@ -51,7 +60,7 @@ class MemberData
     /**
      * Get season
      *
-     * @return integer 
+     * @return integer
      */
     public function getSeason()
     {
@@ -62,6 +71,7 @@ class MemberData
      * Set payment
      *
      * @param float $payment
+     *
      * @return MemberData
      */
     public function setPayment($payment)
@@ -74,22 +84,18 @@ class MemberData
     /**
      * Get payment
      *
-     * @return float 
+     * @return float
      */
     public function getPayment()
     {
         return $this->payment;
     }
-    /**
-     * @var integer
-     */
-    private $memberId;
-
 
     /**
      * Set memberId
      *
      * @param integer $memberId
+     *
      * @return MemberData
      */
     public function setMemberId($memberId)
@@ -102,22 +108,18 @@ class MemberData
     /**
      * Get memberId
      *
-     * @return integer 
+     * @return integer
      */
     public function getMemberId()
     {
         return $this->memberId;
     }
-    /**
-     * @var \DatabaseBundle\Entity\PersonalData
-     */
-    private $personalData;
-
 
     /**
      * Set personalData
      *
      * @param \DatabaseBundle\Entity\PersonalData $personalData
+     *
      * @return MemberData
      */
     public function setPersonalData(\DatabaseBundle\Entity\PersonalData $personalData = null)
@@ -130,7 +132,7 @@ class MemberData
     /**
      * Get personalData
      *
-     * @return \DatabaseBundle\Entity\PersonalData 
+     * @return \DatabaseBundle\Entity\PersonalData
      */
     public function getPersonalData()
     {

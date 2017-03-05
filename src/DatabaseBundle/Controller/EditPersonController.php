@@ -61,8 +61,11 @@ class EditPersonController extends Controller
     {
       $kid = $parentDataForm["playerdata"]->getData()[0];
       $parentData->setPersonalData($personalData);
-      $parentData->addParentToChild($kid);
-      $em->merge($parentData);
+      if (!$parentData->hasPlayerData($kid)) 
+      {
+        $parentData->addPlayerDatum($kid);
+      }
+      $em->persist($parentData);
       $em->flush();
     }
 

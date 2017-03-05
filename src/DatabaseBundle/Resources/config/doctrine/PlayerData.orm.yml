@@ -34,6 +34,7 @@ DatabaseBundle\Entity\PlayerData:
             cascade: ["persist"]
             
     manyToMany:
-        childrenParentData:
+        parentData:
             targetEntity: ParentData
-            mappedBy: parentToChildren
+            mappedBy: parentChildrenData
+            cascade: ["persist"]

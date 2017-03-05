@@ -15,7 +15,7 @@
   <th>Email</th>
 </tr>
 {% for data in parentData %}
-  {% for child in data.getParentToChildren() %}
+  {% for child in data.getPlayerData() %}
     <tr>
       <td> {{ data.getPersonalData().getName() }}
            {{ data.getPersonalData().getSurname() }} </td>

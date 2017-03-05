@@ -17,7 +17,6 @@ class ParentDataType extends AbstractType implements DataFormCreation
   public function __construct($children, $parentToChildren)
   {
     $this->children = $children;
-    $this->parentToChildren = $parentToChildren;
   }
 
   public function buildForm(FormBuilderInterface $builder, array $options)
@@ -39,7 +38,6 @@ class ParentDataType extends AbstractType implements DataFormCreation
             'multiple' => true,
             'expanded' => false,
             'group_by' => 'category',
-            'data' => $this->parentToChildren,
             )
         )
         ->add('save', 'submit', array('label' => 'Guardar'));

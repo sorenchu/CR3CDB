@@ -2,15 +2,13 @@
 
 namespace DatabaseBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * CoachData
  */
 class CoachData
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -25,15 +23,20 @@ class CoachData
     private $category;
 
     /**
-     * @var int
+     * @var integer
      */
     private $season;
+
+    /**
+     * @var \DatabaseBundle\Entity\PersonalData
+     */
+    private $personalData;
 
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -44,6 +47,7 @@ class CoachData
      * Set salary
      *
      * @param float $salary
+     *
      * @return CoachData
      */
     public function setSalary($salary)
@@ -56,7 +60,7 @@ class CoachData
     /**
      * Get salary
      *
-     * @return float 
+     * @return float
      */
     public function getSalary()
     {
@@ -67,6 +71,7 @@ class CoachData
      * Set category
      *
      * @param string $category
+     *
      * @return CoachData
      */
     public function setCategory($category)
@@ -79,7 +84,7 @@ class CoachData
     /**
      * Get category
      *
-     * @return string 
+     * @return string
      */
     public function getCategory()
     {
@@ -90,6 +95,7 @@ class CoachData
      * Set season
      *
      * @param integer $season
+     *
      * @return CoachData
      */
     public function setSeason($season)
@@ -102,22 +108,18 @@ class CoachData
     /**
      * Get season
      *
-     * @return integer 
+     * @return integer
      */
     public function getSeason()
     {
         return $this->season;
     }
-    /**
-     * @var \DatabaseBundle\Entity\PersonalData
-     */
-    private $personalData;
-
 
     /**
      * Set personalData
      *
      * @param \DatabaseBundle\Entity\PersonalData $personalData
+     *
      * @return CoachData
      */
     public function setPersonalData(\DatabaseBundle\Entity\PersonalData $personalData = null)
@@ -130,7 +132,7 @@ class CoachData
     /**
      * Get personalData
      *
-     * @return \DatabaseBundle\Entity\PersonalData 
+     * @return \DatabaseBundle\Entity\PersonalData
      */
     public function getPersonalData()
     {

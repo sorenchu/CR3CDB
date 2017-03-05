@@ -2,29 +2,23 @@
 
 namespace DatabaseBundle\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * PersonalData
  */
 class PersonalData
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
     /**
      * @var string
-     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @var string
-     * @Assert\NotBlank()
      */
     private $surname;
 
@@ -35,12 +29,11 @@ class PersonalData
 
     /**
      * @var string
-     * @Assert\Email()
      */
     private $email;
 
     /**
-     * @var int
+     * @var integer
      */
     private $phone;
 
@@ -50,21 +43,70 @@ class PersonalData
     private $dni;
 
     /**
-     * @var bool
+     * @var \DateTime
+     */
+    private $birthday;
+
+    /**
+     * @var string
      */
     private $sex;
 
     /**
-     * @var \DateTime
-     * @Assert\Type("\DateTime")
+     * @var boolean
      */
-    private $birthday;
+    private $isPlayer;
 
+    /**
+     * @var boolean
+     */
+    private $isCoach;
+
+    /**
+     * @var boolean
+     */
+    private $isMember;
+
+    /**
+     * @var boolean
+     */
+    private $isParent;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $playerData;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $coachData;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $memberData;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $parentData;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->playerData = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->coachData = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->memberData = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->parentData = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -75,6 +117,7 @@ class PersonalData
      * Set name
      *
      * @param string $name
+     *
      * @return PersonalData
      */
     public function setName($name)
@@ -87,7 +130,7 @@ class PersonalData
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -98,6 +141,7 @@ class PersonalData
      * Set surname
      *
      * @param string $surname
+     *
      * @return PersonalData
      */
     public function setSurname($surname)
@@ -110,7 +154,7 @@ class PersonalData
     /**
      * Get surname
      *
-     * @return string 
+     * @return string
      */
     public function getSurname()
     {
@@ -121,6 +165,7 @@ class PersonalData
      * Set nickname
      *
      * @param string $nickname
+     *
      * @return PersonalData
      */
     public function setNickname($nickname)
@@ -133,7 +178,7 @@ class PersonalData
     /**
      * Get nickname
      *
-     * @return string 
+     * @return string
      */
     public function getNickname()
     {
@@ -144,6 +189,7 @@ class PersonalData
      * Set email
      *
      * @param string $email
+     *
      * @return PersonalData
      */
     public function setEmail($email)
@@ -156,7 +202,7 @@ class PersonalData
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -167,6 +213,7 @@ class PersonalData
      * Set phone
      *
      * @param integer $phone
+     *
      * @return PersonalData
      */
     public function setPhone($phone)
@@ -179,7 +226,7 @@ class PersonalData
     /**
      * Get phone
      *
-     * @return integer 
+     * @return integer
      */
     public function getPhone()
     {
@@ -190,6 +237,7 @@ class PersonalData
      * Set dni
      *
      * @param string $dni
+     *
      * @return PersonalData
      */
     public function setDni($dni)
@@ -202,7 +250,7 @@ class PersonalData
     /**
      * Get dni
      *
-     * @return string 
+     * @return string
      */
     public function getDni()
     {
@@ -210,9 +258,34 @@ class PersonalData
     }
 
     /**
+     * Set birthday
+     *
+     * @param \DateTime $birthday
+     *
+     * @return PersonalData
+     */
+    public function setBirthday($birthday)
+    {
+        $this->birthday = $birthday;
+
+        return $this;
+    }
+
+    /**
+     * Get birthday
+     *
+     * @return \DateTime
+     */
+    public function getBirthday()
+    {
+        return $this->birthday;
+    }
+
+    /**
      * Set sex
      *
      * @param string $sex
+     *
      * @return PersonalData
      */
     public function setSex($sex)
@@ -233,223 +306,10 @@ class PersonalData
     }
 
     /**
-     * Set birthday
-     *
-     * @param \DateTime $birthday
-     * @return PersonalData
-     */
-    public function setBirthday(\DateTime $birthday)
-    {
-        $this->birthday = $birthday;
-
-        return $this;
-    }
-
-    /**
-     * Get birthday
-     *
-     * @return \DateTime 
-     */
-    public function getBirthday()
-    {
-        return $this->birthday;
-    }
-    /**
-     * @var \DatabaseBundle\Entity\PlayerData
-     */
-    private $playerData;
-
-
-    /**
-     * Set playerData
-     *
-     * @param \DatabaseBundle\Entity\PlayerData $playerData
-     * @return PersonalData
-     */
-    public function setPlayerData(\DatabaseBundle\Entity\PlayerData $playerData = null)
-    {
-        $this->playerData = $playerData;
-
-        return $this;
-    }
-
-    /**
-     * Get playerData
-     *
-     * @return \DatabaseBundle\Entity\PlayerData 
-     */
-    public function getPlayerData()
-    {
-        return $this->playerData;
-    }
-    /**
-     * @var \DatabaseBundle\Entity\CoachData
-     */
-    private $coachData;
-
-
-    /**
-     * Set coachData
-     *
-     * @param \DatabaseBundle\Entity\CoachData $coachData
-     * @return PersonalData
-     */
-    public function setCoachData(\DatabaseBundle\Entity\CoachData $coachData = null)
-    {
-        $this->coachData = $coachData;
-
-        return $this;
-    }
-
-    /**
-     * Get coachData
-     *
-     * @return \DatabaseBundle\Entity\CoachData 
-     */
-    public function getCoachData()
-    {
-        return $this->coachData;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->playerData = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->coachData = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add playerData
-     *
-     * @param \DatabaseBundle\Entity\PlayerData $playerData
-     * @return PersonalData
-     */
-    public function addPlayerDatum(\DatabaseBundle\Entity\PlayerData $playerData)
-    {
-        $this->playerData[] = $playerData;
-
-        return $this;
-    }
-
-    /**
-     * Remove playerData
-     *
-     * @param \DatabaseBundle\Entity\PlayerData $playerData
-     */
-    public function removePlayerDatum(\DatabaseBundle\Entity\PlayerData $playerData)
-    {
-        $this->playerData->removeElement($playerData);
-    }
-
-    /**
-     * Add coachData
-     *
-     * @param \DatabaseBundle\Entity\CoachData $coachData
-     * @return PersonalData
-     */
-    public function addCoachDatum(\DatabaseBundle\Entity\CoachData $coachData)
-    {
-        $this->coachData[] = $coachData;
-
-        return $this;
-    }
-
-    /**
-     * Remove coachData
-     *
-     * @param \DatabaseBundle\Entity\CoachData $coachData
-     */
-    public function removeCoachDatum(\DatabaseBundle\Entity\CoachData $coachData)
-    {
-        $this->coachData->removeElement($coachData);
-    }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $memberData;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $parentData;
-
-
-    /**
-     * Add memberData
-     *
-     * @param \DatabaseBundle\Entity\MemberData $memberData
-     * @return PersonalData
-     */
-    public function addMemberDatum(\DatabaseBundle\Entity\MemberData $memberData)
-    {
-        $this->memberData[] = $memberData;
-
-        return $this;
-    }
-
-    /**
-     * Remove memberData
-     *
-     * @param \DatabaseBundle\Entity\MemberData $memberData
-     */
-    public function removeMemberDatum(\DatabaseBundle\Entity\MemberData $memberData)
-    {
-        $this->memberData->removeElement($memberData);
-    }
-
-    /**
-     * Get memberData
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getMemberData()
-    {
-        return $this->memberData;
-    }
-
-    /**
-     * Add parentData
-     *
-     * @param \DatabaseBundle\Entity\ParentData $parentData
-     * @return PersonalData
-     */
-    public function addParentDatum(\DatabaseBundle\Entity\ParentData $parentData)
-    {
-        $this->parentData[] = $parentData;
-
-        return $this;
-    }
-
-    /**
-     * Remove parentData
-     *
-     * @param \DatabaseBundle\Entity\ParentData $parentData
-     */
-    public function removeParentDatum(\DatabaseBundle\Entity\ParentData $parentData)
-    {
-        $this->parentData->removeElement($parentData);
-    }
-
-    /**
-     * Get parentData
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getParentData()
-    {
-        return $this->parentData;
-    }
-    /**
-     * @var boolean
-     */
-    private $isPlayer;
-
-
-    /**
      * Set isPlayer
      *
      * @param boolean $isPlayer
+     *
      * @return PersonalData
      */
     public function setIsPlayer($isPlayer)
@@ -462,32 +322,18 @@ class PersonalData
     /**
      * Get isPlayer
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsPlayer()
     {
         return $this->isPlayer;
     }
-    /**
-     * @var boolean
-     */
-    private $isCoach;
-
-    /**
-     * @var boolean
-     */
-    private $isMember;
-
-    /**
-     * @var boolean
-     */
-    private $isParent;
-
 
     /**
      * Set isCoach
      *
      * @param boolean $isCoach
+     *
      * @return PersonalData
      */
     public function setIsCoach($isCoach)
@@ -500,7 +346,7 @@ class PersonalData
     /**
      * Get isCoach
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsCoach()
     {
@@ -511,6 +357,7 @@ class PersonalData
      * Set isMember
      *
      * @param boolean $isMember
+     *
      * @return PersonalData
      */
     public function setIsMember($isMember)
@@ -523,7 +370,7 @@ class PersonalData
     /**
      * Get isMember
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsMember()
     {
@@ -534,6 +381,7 @@ class PersonalData
      * Set isParent
      *
      * @param boolean $isParent
+     *
      * @return PersonalData
      */
     public function setIsParent($isParent)
@@ -546,10 +394,146 @@ class PersonalData
     /**
      * Get isParent
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsParent()
     {
         return $this->isParent;
+    }
+
+    /**
+     * Add playerDatum
+     *
+     * @param \DatabaseBundle\Entity\PlayerData $playerDatum
+     *
+     * @return PersonalData
+     */
+    public function addPlayerDatum(\DatabaseBundle\Entity\PlayerData $playerDatum)
+    {
+        $this->playerData[] = $playerDatum;
+
+        return $this;
+    }
+
+    /**
+     * Remove playerDatum
+     *
+     * @param \DatabaseBundle\Entity\PlayerData $playerDatum
+     */
+    public function removePlayerDatum(\DatabaseBundle\Entity\PlayerData $playerDatum)
+    {
+        $this->playerData->removeElement($playerDatum);
+    }
+
+    /**
+     * Get playerData
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlayerData()
+    {
+        return $this->playerData;
+    }
+
+    /**
+     * Add coachDatum
+     *
+     * @param \DatabaseBundle\Entity\CoachData $coachDatum
+     *
+     * @return PersonalData
+     */
+    public function addCoachDatum(\DatabaseBundle\Entity\CoachData $coachDatum)
+    {
+        $this->coachData[] = $coachDatum;
+
+        return $this;
+    }
+
+    /**
+     * Remove coachDatum
+     *
+     * @param \DatabaseBundle\Entity\CoachData $coachDatum
+     */
+    public function removeCoachDatum(\DatabaseBundle\Entity\CoachData $coachDatum)
+    {
+        $this->coachData->removeElement($coachDatum);
+    }
+
+    /**
+     * Get coachData
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCoachData()
+    {
+        return $this->coachData;
+    }
+
+    /**
+     * Add memberDatum
+     *
+     * @param \DatabaseBundle\Entity\MemberData $memberDatum
+     *
+     * @return PersonalData
+     */
+    public function addMemberDatum(\DatabaseBundle\Entity\MemberData $memberDatum)
+    {
+        $this->memberData[] = $memberDatum;
+
+        return $this;
+    }
+
+    /**
+     * Remove memberDatum
+     *
+     * @param \DatabaseBundle\Entity\MemberData $memberDatum
+     */
+    public function removeMemberDatum(\DatabaseBundle\Entity\MemberData $memberDatum)
+    {
+        $this->memberData->removeElement($memberDatum);
+    }
+
+    /**
+     * Get memberData
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMemberData()
+    {
+        return $this->memberData;
+    }
+
+    /**
+     * Add parentDatum
+     *
+     * @param \DatabaseBundle\Entity\ParentData $parentDatum
+     *
+     * @return PersonalData
+     */
+    public function addParentDatum(\DatabaseBundle\Entity\ParentData $parentDatum)
+    {
+        $this->parentData[] = $parentDatum;
+
+        return $this;
+    }
+
+    /**
+     * Remove parentDatum
+     *
+     * @param \DatabaseBundle\Entity\ParentData $parentDatum
+     */
+    public function removeParentDatum(\DatabaseBundle\Entity\ParentData $parentDatum)
+    {
+        $this->parentData->removeElement($parentDatum);
+    }
+
+    /**
+     * Get parentData
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getParentData()
+    {
+        return $this->parentData;
     }
 }
