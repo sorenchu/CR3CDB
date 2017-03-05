@@ -48,7 +48,7 @@ class ShowTeamsController extends Controller
                     ->getByCategory('Cadete', 'DatabaseBundle:PlayerData');
     $coachData = $this->teamQueries
                     ->getByCategory('Cadete', 'DatabaseBundle:CoachData');
-    return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
+    return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
                 'playerData' => $playerData,
                 'coachData' => $coachData,
                 'teamName' => 'Cadete'));
@@ -60,7 +60,7 @@ class ShowTeamsController extends Controller
                     ->getByCategory('Alevin', 'DatabaseBundle:PlayerData');
     $coachData = $this->teamQueries
                     ->getByCategory('Alevin', 'DatabaseBundle:CoachData');
-    return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
+    return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
                 'playerData' => $playerData,
                 'coachData' => $coachData,
                 'teamName' => 'Alevín'));
@@ -72,7 +72,7 @@ class ShowTeamsController extends Controller
                     ->getByCategory('Benjamin', 'DatabaseBundle:PlayerData');
     $coachData = $this->teamQueries
                     ->getByCategory('Benjamin', 'DatabaseBundle:CoachData');
-    return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
+    return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
                 'playerData' => $playerData,
                 'coachData' => $coachData,
                 'teamName' => 'Benjamín'));
@@ -84,7 +84,7 @@ class ShowTeamsController extends Controller
                     ->getByCategory('Prebenjamin', 'DatabaseBundle:PlayerData');
     $coachData = $this->teamQueries
                     ->getByCategory('Prebenjamin', 'DatabaseBundle:CoachData');
-    return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
+    return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
                 'playerData' => $playerData,
                 'coachData' => $coachData,
                 'teamName' => 'Prebenjamín'));
