@@ -36,7 +36,7 @@ class ParentDataType extends AbstractType implements DataFormCreation
             'choices' => $this->children,
             'required' => true,
             'multiple' => true,
-            'expanded' => false,
+            'expanded' => true,
             'group_by' => 'category',
             )
         )
