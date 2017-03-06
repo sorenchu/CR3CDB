@@ -39,7 +39,7 @@ class AddPersonController extends Controller
     }
 
     return $this->render('DatabaseBundle:person:new.html.twig', array(
-                'personalDataForm' => $personalDataForm->createView(),
+                'wholePersonForm' => $wholePersonForm->createView(),
     ));
   }
 

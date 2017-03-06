@@ -3,10 +3,12 @@
 
 namespace DatabaseBundle\Form;
 
+use DatabaseBundle\Entity\PlayerData;
+use DatabaseBundle\Form\FormFactory\DataFormCreation;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-
-use DatabaseBundle\Form\FormFactory\DataFormCreation;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PlayerDataType extends AbstractType implements DataFormCreation
 {
@@ -16,7 +18,8 @@ class PlayerDataType extends AbstractType implements DataFormCreation
         ->add('season', 'choice', array(
             'label' => 'Temporada',
             'choices' => array(
-              1 => '2016-2017',
+              2016 => '2016-2017',
+              2017 => '2017-2018',
             )
           )
         )
@@ -37,13 +40,20 @@ class PlayerDataType extends AbstractType implements DataFormCreation
               //'lince' => 'Lince',
             )
           )
-        )
-        ->add('save', 'submit', array('label' => 'Guardar'));
+        );
+        //->add('save', 'submit', array('label' => 'Guardar'));
   }
   
   public function getName()
   {
     return 'playerData';
+  }
+
+  public function configureOptions(OptionsResolver $resolver)
+  {
+    $resolver->setDefaults(array(
+              'data_class' => PlayerData::class,
+    ));
   }
 }
 ?>

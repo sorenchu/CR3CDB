@@ -8,6 +8,7 @@ use DatabaseBundle\Form\PlayerDataType;
 use DatabaseBundle\Form\CoachDataType;
 use DatabaseBundle\Form\MemberDataType;
 use DatabaseBundle\Form\ParentDataType;
+use DatabaseBundle\Form\WholePersonType;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,6 +52,11 @@ class DataFormFactoryController extends Controller
                       $this->allChildren(), 
                       $data->getPlayerData()),
                      $data);
+    }
+    else if (0 == strcmp("whole", $typeData))
+    {
+      return $this->editPersonController->
+                createForm(new WholePersonType(), $data);
     }
     return null;
   }

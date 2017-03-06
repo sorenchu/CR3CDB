@@ -3,11 +3,13 @@
 
 namespace DatabaseBundle\Form;
 
+use DatabaseBundle\Entity\ParentData;
+use DatabaseBundle\Form\FormFactory\DataFormCreation;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-
-use DatabaseBundle\Form\FormFactory\DataFormCreation;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ParentDataType extends AbstractType implements DataFormCreation
 {
@@ -25,8 +27,8 @@ class ParentDataType extends AbstractType implements DataFormCreation
         ->add('season', 'choice', array(
             'label' => 'Temporada',
             'choices' => array(
-              1 => '2016-2017',
-              2 => '2017-2018',
+              2016 => '2016-2017',
+              2017 => '2017-2018',
             )
           )
         )
@@ -39,13 +41,20 @@ class ParentDataType extends AbstractType implements DataFormCreation
             'expanded' => true,
             'group_by' => 'category',
             )
-        )
-        ->add('save', 'submit', array('label' => 'Guardar'));
+        );
+        //->add('save', 'submit', array('label' => 'Guardar'));
   }
 
   public function getName()
   {
     return 'parentData';
+  }
+
+  public function configureOptions(OptionsResolver $resolver)
+  {
+    $resolver->setDefaults(array(
+              'data_class' => ParentData::class,
+    ));
   }
 }
 ?>

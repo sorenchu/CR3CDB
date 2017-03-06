@@ -30,51 +30,19 @@ class EditPersonController extends Controller
     $coachData = $peopleQueries->getTableDataForPerson($id, "coachdata");
     $memberData = $peopleQueries->getTableDataForPerson($id, "memberdata");
     $parentData = $peopleQueries->getTableDataForPerson($id, "parentdata");
-    // TODO: new query for getting children
     
-    $personalDataForm = $dataFormFactory->getCreatedForm("personal", $personalData);
-    $personalDataForm->handleRequest($request);
+    $wholePersonForm = $dataFormFactory->getCreatedForm("whole", null);
+    $wholePersonForm->handleRequest($request);
 
-    $playerDataForm = $dataFormFactory->getCreatedForm("player", $playerData);
-    $playerDataForm->handleRequest($request);
-
-    $coachDataForm = $dataFormFactory->getCreatedForm("coach", $coachData);
-    $coachDataForm->handleRequest($request);
-
-    $memberDataForm = $dataFormFactory->getCreatedForm("member", $memberData);
-    $memberDataForm->handleRequest($request);
-
-    $parentDataForm = $dataFormFactory->getCreatedForm("parent", $parentData);
-    $parentDataForm->handleRequest($request);
-
-    if($personalDataForm->isSubmitted()) 
+    if ($wholePersonForm->isSubmitted())
     {
+      $em->persist($wholePerson);
       $em->persist($personalData);
       $em->flush();
     }
 
-    $this->submittingForm($playerDataForm, $playerData, $personalData);
-    $this->submittingForm($coachDataForm, $coachData, $personalData);
-    $this->submittingForm($memberDataForm, $memberData, $personalData);
-
-    if($parentDataForm->isSubmitted())
-    {
-      $kid = $parentDataForm["playerdata"]->getData()[0];
-      $parentData->setPersonalData($personalData);
-      if (!$parentData->hasPlayerData($kid)) 
-      {
-        $parentData->addPlayerDatum($kid);
-      }
-      $em->persist($parentData);
-      $em->flush();
-    }
-
     return $this->render('DatabaseBundle:person:editperson.html.twig', array(
-                'personalDataForm' => $personalDataForm->createView(),
-                'playerDataForm' => $playerDataForm->createView(),
-                'coachDataForm' => $coachDataForm->createView(),
-                'memberDataForm' => $memberDataForm->createView(),
-                'parentDataForm' => $parentDataForm->createView(),
+                'wholePersonForm' => $wholePersonForm->createView(),
                 'personalData' => $personalData,
     ));
   }

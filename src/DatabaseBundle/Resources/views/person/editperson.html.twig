@@ -24,28 +24,33 @@
 </tr>
 <tr>
   <td>
-    {{ form(personalDataForm) }}
+    {{ form_row(wholePersonForm.personalData) }}
   </td>
   {% if true == personalData.getIsPlayer() %}
     <td>
-      {{ form(playerDataForm) }}
+      {{ form_row(wholePersonForm.playerData) }}
     </td>
   {% endif %}
   {% if true == personalData.getIsCoach() %}  
     <td>
-      {{ form(coachDataForm) }} 
+      {{ form_row(wholePersonForm.coachData) }} 
     </td>
   {%endif %}
   {% if true == personalData.getIsMember() %}
     <td> 
-      {{ form(memberDataForm) }}
+      {{ form_row(wholePersonForm.memberData) }}
     </td>
   {% endif%}
   {% if true == personalData.getIsParent() %}
     <td> 
-      {{ form(parentDataForm) }}
+      {{ form_row(wholePersonForm.parentData) }}
     </td>
   {% endif%}
+</tr>
+<tr>
+  <td>
+      {{ form_row(wholePersonForm.save) }}
+  </td>
 </tr>
 </table>
 {% endblock %}

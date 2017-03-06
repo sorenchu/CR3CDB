@@ -73,6 +73,11 @@ class PersonalData
     private $isParent;
 
     /**
+     * @var \DatabaseBundle\Entity\WholePerson
+     */
+    private $wholePerson;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $playerData;
@@ -399,6 +404,30 @@ class PersonalData
     public function getIsParent()
     {
         return $this->isParent;
+    }
+
+    /**
+     * Set wholePerson
+     *
+     * @param \DatabaseBundle\Entity\WholePerson $wholePerson
+     *
+     * @return PersonalData
+     */
+    public function setWholePerson(\DatabaseBundle\Entity\WholePerson $wholePerson = null)
+    {
+        $this->wholePerson = $wholePerson;
+
+        return $this;
+    }
+
+    /**
+     * Get wholePerson
+     *
+     * @return \DatabaseBundle\Entity\WholePerson
+     */
+    public function getWholePerson()
+    {
+        return $this->wholePerson;
     }
 
     /**

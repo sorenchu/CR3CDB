@@ -3,10 +3,12 @@
 
 namespace DatabaseBundle\Form;
 
+use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Form\FormFactory\DataFormCreation;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PersonalDataType extends AbstractType implements DataFormCreation
 {
@@ -49,13 +51,20 @@ class PersonalDataType extends AbstractType implements DataFormCreation
         ->add('isMember', 'checkbox', array(
             'label' => 'Socio',
             'required' => false,)
-        )
-        ->add('save', 'submit', array('label' => 'Guardar'));
+        );
+//        ->add('save', 'submit', array('label' => 'Guardar'));
   }
 
   public function getName()
   {
     return 'personalData';
+  }
+
+  public function configureOptions(OptionsResolver $resolver)
+  {
+    $resolver->setDefaults(array(
+              'data_class' => PersonalData::class,
+    ));
   }
 }
 ?>

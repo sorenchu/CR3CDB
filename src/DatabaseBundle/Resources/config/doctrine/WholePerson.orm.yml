@@ -1,0 +1,14 @@
+# src/DatabaseBundle/Resources/config/doctrine/WholePerson.orm.yml
+DatabaseBundle\Entity\WholePerson:
+  type: entity
+  table: wholePerson
+  repositoryClass: DatabaseBundle\Repository\WholePersonRepository
+  id:
+    id:
+      type: integer
+      generator:  { strategy: AUTO }
+
+  oneToOne:
+    personalData:
+      targetEntity: PersonalData
+      mappedBy: wholePerson
