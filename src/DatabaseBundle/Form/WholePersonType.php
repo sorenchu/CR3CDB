@@ -12,17 +12,15 @@ use DatabaseBundle\Form\ParentDataType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use DatabaseBundle\Form\FormFactory\DataFormCreation;
-
-class WholePersonType extends AbstractType implements DataFormCreation
+class WholePersonType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
       ->add('personalData', PersonalDataType::class)
-      ->add('playerData', PlayerDataType::class)
-      ->add('coachData', CoachDataType::class)
-      ->add('memberData', MemberDataType::class)
+//      ->add('playerData', PlayerDataType::class)
+//      ->add('coachData', CoachDataType::class)
+//      ->add('memberData', MemberDataType::class)
 //      ->add('parentData', ParentDataType::class)
       ->add('save', 'submit', array('label' => 'Guardar'));
   }

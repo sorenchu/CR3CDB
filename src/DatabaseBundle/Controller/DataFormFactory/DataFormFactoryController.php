@@ -53,11 +53,6 @@ class DataFormFactoryController extends Controller
                       $data->getPlayerData()),
                      $data);
     }
-    else if (0 == strcmp("whole", $typeData))
-    {
-      return $this->editPersonController->
-                createForm(new WholePersonType(), $data);
-    }
     return null;
   }
 

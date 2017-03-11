@@ -78,3 +78,8 @@ DatabaseBundle\Entity\PersonalData:
       parentData:
           targetEntity: ParentData
           mappedBy: personalData
+
+  oneToOne:
+      wholePerson:
+        targetEntity: WholePerson
+        mappedBy: personalData

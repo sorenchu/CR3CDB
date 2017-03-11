@@ -3,12 +3,11 @@
 
 namespace DatabaseBundle\Controller;
 
-use DatabaseBundle\Entity\PersonalData;
-use DatabaseBundle\Form\PersonalDataType;
+use DatabaseBundle\Entity\WholePerson;
+use DatabaseBundle\Form\WholePersonType;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
-use DatabaseBundle\Controller\DataFormFactory\DataFormFactoryController;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,17 +24,16 @@ class AddPersonController extends Controller
 
   public function newAction(Request $request)
   {
-    $dataFormFactory = new DataFormFactoryController($this);
-    $personalData = new PersonalData();
-    $personalDataForm = $dataFormFactory->getCreatedForm("personal", $personalData);
-    $personalDataForm->handleRequest($request);
+    $wholePerson = new WholePerson();
+    $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);
+    $wholePersonForm->handleRequest($request);
 
-    if($personalDataForm->isSubmitted()) 
+    if($wholePersonForm->isSubmitted()) 
     {
-      $this->peopleQueries->savePerson($personalData);
-      return $this->redirectToRoute('edit_person', 
-                    array('id' => $this->peopleQueries
-                                        ->getNewPerson($personalData)->getId()));
+      $this->peopleQueries->savePerson($wholePerson);
+      //return $this->redirectToRoute('edit_person', 
+      //              array('id' => $this->peopleQueries
+      //                                  ->getNewPerson($wholePerson)->getId()));
     }
 
     return $this->render('DatabaseBundle:person:new.html.twig', array(
@@ -47,9 +45,9 @@ class AddPersonController extends Controller
   {
     $this->peopleQueries->deletePerson($id);
     $showAllQuery = new ShowTeamQueries($this);
-    $personalData = $showAllQuery->getAllMembers();
+    $wholePerson = $showAllQuery->getAllMembers();
     return $this->render('DatabaseBundle:people:showall.html.twig', array(
-                'personalData' => $personalData));
+                'wholePerson' => $wholePerson));
   }
 }
 ?>

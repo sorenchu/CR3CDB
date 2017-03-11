@@ -92,43 +92,31 @@ class GetEditionQueries extends Controller
     return $this->getTypeOfPerson($query, $table);
   }
 
-  public function getNewPerson($personalData)
+  public function getNewPerson($wholePerson)
   {
     $em = $this->personController->getDoctrine()->getManager();
     $query = $em->createQuery(
-        'SELECT personaldata
-        FROM DatabaseBundle:PersonalData personaldata
-        WHERE personaldata.name LIKE :name
-        AND personaldata.surname LIKE :surname
-        AND personaldata.isPlayer = :isPlayer
-        AND personaldata.isCoach = :isCoach
-        AND personaldata.isMember = :isMember
-        AND personaldata.isParent = :isParent
-        AND personaldata.sex = :sex')
-        ->setParameter('name', $personalData->getName())
-        ->setParameter('surname', $personalData->getSurname())
-        ->setParameter('isPlayer', $personalData->getIsPlayer())
-        ->setParameter('isCoach', $personalData->getIsCoach())
-        ->setParameter('isMember', $personalData->getIsMember())
-        ->setParameter('isParent', $personalData->getIsParent())
-        ->setParameter('sex', $personalData->getSex());
+        'SELECT wholeperson
+         FROM DatabaseBundle:WholePerson wholeperson
+         WHERE wholeperson.id = :id')
+         ->setParameter('id', $wholePerson->getId());
 
     return $query->getResult()[0];
   }
 
-  public function savePerson($personalData)
+  public function savePerson($wholePerson)
   {
     $em = $this->personController->getDoctrine()->getManager();
-    $em->persist($personalData);
+    $em->persist($wholePerson);
     $em->flush();
   }
 
   public function deletePerson($id)
   {
     $em = $this->personController->getDoctrine()->getManager();
-    $personalData = $em->getRepository('DatabaseBundle:PersonalData')
+    $wholePerson = $em->getRepository('DatabaseBundle:WholePerson')
                       ->find($id);
-    $em->remove($personalData);
+    $em->remove($wholePerson);
     $em->flush();
   }
 }

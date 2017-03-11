@@ -11,4 +11,9 @@ DatabaseBundle\Entity\WholePerson:
   oneToOne:
     personalData:
       targetEntity: PersonalData
-      mappedBy: wholePerson
+      inversedBy: wholePerson
+      joinColumn: 
+        name: personalData_id
+        referencedColumnName: id
+        onDelete: 'CASCADE'
+      cascade: ["persist"]

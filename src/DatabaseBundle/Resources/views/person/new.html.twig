@@ -7,10 +7,19 @@
 
 {# src/DatabaseBundle/Resources/views/Default/new.html.twig #}
 
+{{ form_start(wholePersonForm) }}
 <table style="width:100%">
-  <td>
-    {{ form_row(wholePersonForm.personalData) }}
-  </td>
+  <tr>
+    <td>
+      {{ form_row(wholePersonForm.personalData) }}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      {{ form_row(wholePersonForm.save) }}
+    </td>
+  </tr>
 </table>
+{{ form_end(wholePersonForm) }}
 {% endblock %}
 
