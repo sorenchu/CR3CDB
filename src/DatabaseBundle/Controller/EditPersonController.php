@@ -3,11 +3,8 @@
 
 namespace DatabaseBundle\Controller;
 
-use DatabaseBundle\Entity\PersonalData;
-use DatabaseBundle\Entity\PlayerData;
-use DatabaseBundle\Entity\CoachData;
-use DatabaseBundle\Entity\MemberData;
-use DatabaseBundle\Entity\ParentData;
+use DatabaseBundle\Form\WholePerson;
+use DatabaseBundle\Form\WholePersonType;
 
 use DatabaseBundle\Controller\DataFormFactory\DataFormFactoryController;
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
@@ -24,26 +21,21 @@ class EditPersonController extends Controller
     $peopleQueries = new GetEditionQueries($this);
 
     $em = $this->getDoctrine()->getManager();
-    $personalData = $em->getRepository('DatabaseBundle:PersonalData')->find($id);
+    $wholePerson = $em->getRepository('DatabaseBundle:WholePerson')->find($id);
 
-    $playerData = $peopleQueries->getTableDataForPerson($id, "playerdata");
-    $coachData = $peopleQueries->getTableDataForPerson($id, "coachdata");
-    $memberData = $peopleQueries->getTableDataForPerson($id, "memberdata");
-    $parentData = $peopleQueries->getTableDataForPerson($id, "parentdata");
-    
-    $wholePersonForm = $dataFormFactory->getCreatedForm("whole", null);
+    $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);
     $wholePersonForm->handleRequest($request);
 
     if ($wholePersonForm->isSubmitted())
     {
+      $em->merge($wholePerson);
       $em->persist($wholePerson);
-      $em->persist($personalData);
       $em->flush();
     }
 
     return $this->render('DatabaseBundle:person:editperson.html.twig', array(
                 'wholePersonForm' => $wholePersonForm->createView(),
-                'personalData' => $personalData,
+                'personalData' => $wholePerson->getPersonalData(),
     ));
   }
 

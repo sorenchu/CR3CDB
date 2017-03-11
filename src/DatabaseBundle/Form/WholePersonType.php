@@ -11,6 +11,8 @@ use DatabaseBundle\Form\ParentDataType;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class WholePersonType extends AbstractType
 {
@@ -18,7 +20,31 @@ class WholePersonType extends AbstractType
   {
     $builder
       ->add('personalData', PersonalDataType::class)
-//      ->add('playerData', PlayerDataType::class)
+      ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
+          $personalData = $event->getData()->getPersonalData();
+          $form = $event->getForm();
+
+          if ($personalData)
+          {
+            if ($personalData->getIsPlayer())
+            {
+              $personalData->setIsPlayer(true);
+              $form->add('playerData', PlayerDataType::class);
+            }
+            if ($personalData->getIsCoach())
+            {
+              $form->add('coachData', CoachDataType::class);
+            }
+            if ($personalData->getIsMember())
+            {
+              $form->add('memberData', MemberDataType::class);
+            }
+            if ($personalData->getIsParent())
+            {
+              $form->add('parentData', ParentDataType::class);
+            }
+          } 
+      })
 //      ->add('coachData', CoachDataType::class)
 //      ->add('memberData', MemberDataType::class)
 //      ->add('parentData', ParentDataType::class)

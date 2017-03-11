@@ -6,6 +6,7 @@
 <h1>Editar miembro</h1>
 
 {# src/DatabaseBundle/Resources/views/Default/editperson.html.twig #}
+{{ form_start(wholePersonForm) }}
 <table>
 <tr>
   <th>Datos personales</th>
@@ -53,4 +54,5 @@
   </td>
 </tr>
 </table>
+{{ form_end(wholePersonForm) }}
 {% endblock %}

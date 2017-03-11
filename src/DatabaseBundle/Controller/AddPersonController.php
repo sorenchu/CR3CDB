@@ -31,9 +31,9 @@ class AddPersonController extends Controller
     if($wholePersonForm->isSubmitted()) 
     {
       $this->peopleQueries->savePerson($wholePerson);
-      //return $this->redirectToRoute('edit_person', 
-      //              array('id' => $this->peopleQueries
-      //                                  ->getNewPerson($wholePerson)->getId()));
+      return $this->redirectToRoute('edit_person', 
+                    array('id' => $this->peopleQueries
+                                        ->getNewPerson($wholePerson)->getId()));
     }
 
     return $this->render('DatabaseBundle:person:new.html.twig', array(

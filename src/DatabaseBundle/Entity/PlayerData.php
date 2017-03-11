@@ -28,9 +28,9 @@ class PlayerData
     private $category;
 
     /**
-     * @var \DatabaseBundle\Entity\PersonalData
+     * @var \DatabaseBundle\Entity\WholePerson
      */
-    private $personalData;
+    private $wholePerson;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -128,27 +128,27 @@ class PlayerData
     }
 
     /**
-     * Set personalData
+     * Set wholePerson
      *
-     * @param \DatabaseBundle\Entity\PersonalData $personalData
+     * @param \DatabaseBundle\Entity\WholePerson $wholePerson
      *
      * @return PlayerData
      */
-    public function setPersonalData(\DatabaseBundle\Entity\PersonalData $personalData = null)
+    public function setWholePerson(\DatabaseBundle\Entity\WholePerson $wholePerson = null)
     {
-        $this->personalData = $personalData;
+        $this->wholePerson = $wholePerson;
 
         return $this;
     }
 
     /**
-     * Get personalData
+     * Get wholePerson
      *
-     * @return \DatabaseBundle\Entity\PersonalData
+     * @return \DatabaseBundle\Entity\WholePerson
      */
-    public function getPersonalData()
+    public function getWholePerson()
     {
-        return $this->personalData;
+        return $this->wholePerson;
     }
 
     /**
@@ -184,9 +184,5 @@ class PlayerData
     {
         return $this->parentData;
     }
-
-    public function __toString()
-    {
-        return $this->getPersonalData()->getName().' '.$this->getPersonalData()->getSurname();
-    }
 }
+

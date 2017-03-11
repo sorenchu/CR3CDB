@@ -62,23 +62,6 @@ DatabaseBundle\Entity\PersonalData:
         type: boolean
         default: false
 
-  oneToMany:
-      playerData:
-          targetEntity: PlayerData
-          mappedBy: personalData
-
-      coachData:
-          targetEntity: CoachData
-          mappedBy: personalData
-
-      memberData:
-          targetEntity: MemberData
-          mappedBy: personalData
-
-      parentData:
-          targetEntity: ParentData
-          mappedBy: personalData
-
   oneToOne:
       wholePerson:
         targetEntity: WholePerson

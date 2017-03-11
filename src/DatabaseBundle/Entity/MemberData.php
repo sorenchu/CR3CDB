@@ -28,9 +28,9 @@ class MemberData
     private $memberId;
 
     /**
-     * @var \DatabaseBundle\Entity\PersonalData
+     * @var \DatabaseBundle\Entity\WholePerson
      */
-    private $personalData;
+    private $wholePerson;
 
 
     /**
@@ -116,26 +116,27 @@ class MemberData
     }
 
     /**
-     * Set personalData
+     * Set wholePerson
      *
-     * @param \DatabaseBundle\Entity\PersonalData $personalData
+     * @param \DatabaseBundle\Entity\WholePerson $wholePerson
      *
      * @return MemberData
      */
-    public function setPersonalData(\DatabaseBundle\Entity\PersonalData $personalData = null)
+    public function setWholePerson(\DatabaseBundle\Entity\WholePerson $wholePerson)
     {
-        $this->personalData = $personalData;
+        $this->wholePerson = $wholePerson;
 
         return $this;
     }
 
     /**
-     * Get personalData
+     * Get wholePerson
      *
-     * @return \DatabaseBundle\Entity\PersonalData
+     * @return \DatabaseBundle\Entity\WholePerson
      */
-    public function getPersonalData()
+    public function getWholePerson()
     {
-        return $this->personalData;
+        return $this->wholePerson;
     }
 }
+

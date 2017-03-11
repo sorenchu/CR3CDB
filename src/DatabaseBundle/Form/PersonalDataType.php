@@ -46,13 +46,13 @@ class PersonalDataType extends AbstractType implements DataFormCreation
         )
         ->add('isParent', 'checkbox', array(
             'label' => 'Padre',
-            'required' => false,)
+            'required' => false,
+            'disabled' => true,)
         )
         ->add('isMember', 'checkbox', array(
             'label' => 'Socio',
             'required' => false,)
         );
-//        ->add('save', 'submit', array('label' => 'Guardar'));
   }
 
   public function getName()

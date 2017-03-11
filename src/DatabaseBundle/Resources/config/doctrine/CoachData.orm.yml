@@ -20,16 +20,7 @@ DatabaseBundle\Entity\CoachData:
             type: integer
     lifecycleCallbacks: {  }
 
-    manyToOne:
-    #oneToOne:
-        personalData:
-            targetEntity: PersonalData
-            #mappedBy: coachData
-            inversedBy: coachData
-            joinColumn:
-                name: personalData_id
-                referencedColumnName: id
-                nullable: true
-                onDelete: 'CASCADE'
-            cascade: ["persist"]
-
+    oneToOne:
+        wholePerson:
+            targetEntity: WholePerson
+            mappedBy: coachData

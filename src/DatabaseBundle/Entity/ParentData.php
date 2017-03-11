@@ -18,9 +18,9 @@ class ParentData
     private $season;
 
     /**
-     * @var \DatabaseBundle\Entity\PersonalData
+     * @var \DatabaseBundle\Entity\WholePerson
      */
-    private $personalData;
+    private $wholePerson;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -70,27 +70,27 @@ class ParentData
     }
 
     /**
-     * Set personalData
+     * Set wholePerson
      *
-     * @param \DatabaseBundle\Entity\PersonalData $personalData
+     * @param \DatabaseBundle\Entity\WholePerson $wholePerson
      *
      * @return ParentData
      */
-    public function setPersonalData(\DatabaseBundle\Entity\PersonalData $personalData = null)
+    public function setWholePerson(\DatabaseBundle\Entity\WholePerson $wholePerson)
     {
-        $this->personalData = $personalData;
+        $this->wholePerson = $wholePerson;
 
         return $this;
     }
 
     /**
-     * Get personalData
+     * Get wholePerson
      *
-     * @return \DatabaseBundle\Entity\PersonalData
+     * @return \DatabaseBundle\Entity\WholePerson
      */
-    public function getPersonalData()
+    public function getWholePerson()
     {
-        return $this->personalData;
+        return $this->wholePerson;
     }
 
     /**
@@ -102,7 +102,6 @@ class ParentData
      */
     public function addPlayerDatum(\DatabaseBundle\Entity\PlayerData $playerDatum)
     {
-        $playerDatum->addParentDatum($this);
         $this->playerData[] = $playerDatum;
 
         return $this;
@@ -127,9 +126,5 @@ class ParentData
     {
         return $this->playerData;
     }
-
-    public function hasPlayerData(\DatabaseBundle\Entity\PlayerData $playerDatum)
-    {
-        return $this->getPlayerData()->contains($playerDatum);
-    }
 }
+

@@ -14,13 +14,13 @@ DatabaseBundle\Entity\ParentData:
     lifecycleCallbacks: {  }
 
     manyToOne:
-        personalData:
-            targetEntity: PersonalData
+        wholePerson:
+            targetEntity: WholePerson
             inversedBy: parentData
             joinColumn:
-                name: personalData_id
+                name: wholePerson_id
                 referencedColumnName: id
-                nullable: true
+                nullable: false
                 onDelete: 'CASCADE'
             cascade: ["persist"]
 
