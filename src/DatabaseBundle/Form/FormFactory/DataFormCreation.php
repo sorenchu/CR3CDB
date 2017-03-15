@@ -10,6 +10,6 @@ interface DataFormCreation
 {
   public function buildForm(FormBuilderInterface $builder, array $options);
 
-  public function getName();
+  public function getBlockPrefix();
 }
 ?>

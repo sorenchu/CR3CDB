@@ -10,24 +10,31 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
 class PersonalDataType extends AbstractType implements DataFormCreation
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-        ->add('name', 'text', array('label' => 'Nombre'))
-        ->add('surname', 'text', array('label' => 'Apellidos'))
-        ->add('nickname', 'text', array(
+        ->add('name', TextType::class, array('label' => 'Nombre'))
+        ->add('surname', TextType::class, array('label' => 'Apellidos'))
+        ->add('nickname', TextType::class, array(
                                   'required' => false,
                                   'label' => 'Apodo',))
-        ->add('email', 'email', array(
+        ->add('email', EmailType::class, array(
                                   'required' => false,
                                   'label' => 'Correo Electrónico',))
-        ->add('phone', 'number', array(
+        ->add('phone', NumberType::class, array(
                                   'required' => false,
                                   'label' => 'Teléfono',))
-        ->add('dni', 'text', array('required' => false,))
-        ->add('birthday', 'birthday', array('label' => 'Fecha de Nacimiento'))
+        ->add('dni', TextType::class, array('required' => false,))
+        ->add('birthday', BirthdayType::class, array('label' => 'Fecha de Nacimiento'))
         ->add('sex', 'choice', array(
             'label' => 'Género',
             'choices' => array(
@@ -36,26 +43,26 @@ class PersonalDataType extends AbstractType implements DataFormCreation
             )
           )
         )
-        ->add('isPlayer', 'checkbox', array(
+        ->add('isPlayer', CheckboxType::class, array(
             'label' => 'Jugador',
             'required' => false,)
         )
-        ->add('isCoach', 'checkbox', array(
+        ->add('isCoach', CheckboxType::class, array(
             'label' => 'Entrenador',
             'required' => false,)
         )
-        ->add('isParent', 'checkbox', array(
+        ->add('isParent', CheckboxType::class, array(
             'label' => 'Padre',
             'required' => false,
             'disabled' => true,)
         )
-        ->add('isMember', 'checkbox', array(
+        ->add('isMember', CheckboxType::class, array(
             'label' => 'Socio',
             'required' => false,)
         );
   }
 
-  public function getName()
+  public function getBlockPrefix()
   {
     return 'personalData';
   }

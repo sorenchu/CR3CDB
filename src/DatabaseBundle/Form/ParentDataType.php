@@ -8,8 +8,11 @@ use DatabaseBundle\Form\FormFactory\DataFormCreation;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 class ParentDataType extends AbstractType implements DataFormCreation
 {
@@ -24,7 +27,7 @@ class ParentDataType extends AbstractType implements DataFormCreation
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-        ->add('season', 'choice', array(
+        ->add('season', ChoiceType::class, array(
             'label' => 'Temporada',
             'choices' => array(
               2016 => '2016-2017',
@@ -32,7 +35,7 @@ class ParentDataType extends AbstractType implements DataFormCreation
             )
           )
         )
-        ->add('playerdata', 'entity', array(
+        ->add('playerdata', EntityType::class, array(
             'label' => 'Hijo',
             'class' => 'DatabaseBundle:PlayerData',
             'choices' => $this->children,
@@ -42,10 +45,9 @@ class ParentDataType extends AbstractType implements DataFormCreation
             'group_by' => 'category',
             )
         );
-        //->add('save', 'submit', array('label' => 'Guardar'));
   }
 
-  public function getName()
+  public function getBlockPrefix()
   {
     return 'parentData';
   }

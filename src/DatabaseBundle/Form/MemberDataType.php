@@ -10,15 +10,19 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+
 class MemberDataType extends AbstractType implements DataFormCreation
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-        ->add('memberId', 'integer', array(
+        ->add('memberId', IntegerType::class, array(
             'required' => true,
             'label' => 'Número de socio'))
-        ->add('season', 'choice', array(
+        ->add('season', ChoiceType::class, array(
             'label' => 'Temporada',
             'choices' => array(
               2016 => '2016-2017',
@@ -26,13 +30,12 @@ class MemberDataType extends AbstractType implements DataFormCreation
             )
           )
         )
-        ->add('payment', 'money', array(
+        ->add('payment', MoneyType::class, array(
                                     'required' => false,
                                     'label' => 'Pagos',));
-        //->add('save', 'submit', array('label' => 'Guardar'));
   }
 
-  public function getName()
+  public function getBlockPrefix()
   {
     return 'memberData';
   }

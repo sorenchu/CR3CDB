@@ -13,6 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class WholePersonType extends AbstractType
 {
@@ -45,10 +46,12 @@ class WholePersonType extends AbstractType
             }
           } 
       })
-//      ->add('coachData', CoachDataType::class)
-//      ->add('memberData', MemberDataType::class)
-//      ->add('parentData', ParentDataType::class)
-      ->add('save', 'submit', array('label' => 'Guardar'));
+      ->add('save', SubmitType::class, array('label' => 'Guardar'));
+  }
+
+  public function getBlockPrefix()
+  {
+    return 'wholePerson';
   }
 }
 ?>
