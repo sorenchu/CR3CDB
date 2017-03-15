@@ -51,7 +51,7 @@ class GetEditionQueries extends Controller
                           getDoctrine()->getRepository($tableName);
     $query = $repository->createQueryBuilder($alias)
         ->from($tableName, 'data')
-        ->join($alias.'.personalData', 'person')
+        ->join($alias.'.wholePerson', 'person')
         ->where('person.id = :id')
         ->setParameter('id', $id)
         ->getQuery();

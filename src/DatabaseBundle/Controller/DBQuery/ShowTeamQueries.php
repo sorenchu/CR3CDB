@@ -18,7 +18,7 @@ class ShowTeamQueries extends Controller
   {
     return ($this->personController
        ->getDoctrine()
-         ->getRepository('DatabaseBundle:PersonalData')
+         ->getRepository('DatabaseBundle:WholePerson')
            ->findAll()); 
   }
 
@@ -30,9 +30,9 @@ class ShowTeamQueries extends Controller
     $query = $em->createQuery(
          'SELECT playerdata
           FROM DatabaseBundle:PlayerData playerdata
-          JOIN playerdata.personalData c
+          JOIN playerdata.wholePerson c
           WHERE c.id <> :null
-          ORDER BY c.surname ASC')
+          ORDER BY playerdata.category ASC')
           ->setParameter('null', 'NULL');
 
     return $query->getResult();
