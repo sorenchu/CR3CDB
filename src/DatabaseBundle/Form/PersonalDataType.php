@@ -53,8 +53,7 @@ class PersonalDataType extends AbstractType implements DataFormCreation
         )
         ->add('isParent', CheckboxType::class, array(
             'label' => 'Padre',
-            'required' => false,
-            'disabled' => true,)
+            'required' => false,)
         )
         ->add('isMember', CheckboxType::class, array(
             'label' => 'Socio',

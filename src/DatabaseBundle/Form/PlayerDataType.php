@@ -27,7 +27,7 @@ class PlayerDataType extends AbstractType implements DataFormCreation
           )
         )
         ->add('payment', MoneyType::class, array(
-                                    'required' => false,
+                                    'required' => true,
                                     'label' => 'Pagos',))
         ->add('category', ChoiceType::class, array(
             'label' => 'Categoría',

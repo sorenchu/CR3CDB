@@ -400,4 +400,3 @@ class PersonalData
         return $this->wholePerson;
     }
 }
-

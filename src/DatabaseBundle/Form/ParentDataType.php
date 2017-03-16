@@ -14,16 +14,10 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
+use Doctrine\ORM\EntityRepository;
+
 class ParentDataType extends AbstractType implements DataFormCreation
 {
-  private $children;
-  private $parentToChildren;
-
-  public function __construct($children, $parentToChildren)
-  {
-    $this->children = $children;
-  }
-
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
@@ -38,7 +32,13 @@ class ParentDataType extends AbstractType implements DataFormCreation
         ->add('playerdata', EntityType::class, array(
             'label' => 'Hijo',
             'class' => 'DatabaseBundle:PlayerData',
-            'choices' => $this->children,
+            'query_builder' => function (EntityRepository $er) {
+                  return $er->createQueryBuilder('player')
+                            ->where('player.category NOT LIKE :senior')
+                            ->andWhere('player.category NOT LIKE :femenino')
+                            ->setParameter('senior', 'Senior')
+                            ->setParameter('femenino', 'Femenino');
+            },
             'required' => true,
             'multiple' => true,
             'expanded' => true,

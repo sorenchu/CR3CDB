@@ -13,16 +13,10 @@ DatabaseBundle\Entity\ParentData:
             type: integer
     lifecycleCallbacks: {  }
 
-    manyToOne:
+    oneToOne:
         wholePerson:
             targetEntity: WholePerson
-            inversedBy: parentData
-            joinColumn:
-                name: wholePerson_id
-                referencedColumnName: id
-                nullable: false
-                onDelete: 'CASCADE'
-            cascade: ["persist"]
+            mappedBy: parentData
 
     manyToMany:
         playerData:

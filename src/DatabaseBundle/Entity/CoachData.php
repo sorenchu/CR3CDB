@@ -139,4 +139,3 @@ class CoachData
         return $this->wholePerson;
     }
 }
-

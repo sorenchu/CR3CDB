@@ -11,7 +11,7 @@
       'DatabaseBundle:base:young_team_header.html.twig') }}
 {% for data in playerData %}
   {% if not data.getParentData().isEmpty()  %}
-    {% for parent in data.getWholePerson().getParentData() %}
+    {% for parent in data.getParentData() %}
       <tr>
         <td> {{ data.getWholePerson().getPersonalData().getName() }}
              {{ data.getWholePerson().getPersonalData().getSurname() }} </td>

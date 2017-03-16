@@ -139,4 +139,3 @@ class MemberData
         return $this->wholePerson;
     }
 }
-

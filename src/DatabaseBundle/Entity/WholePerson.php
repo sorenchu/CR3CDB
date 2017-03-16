@@ -168,4 +168,3 @@ class WholePerson
         return $this->parentData;
     }
 }
-
