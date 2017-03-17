@@ -57,3 +57,11 @@ edit_person:
 delete_person:
     path:   /person/deletePerson/{id}
     defaults: { _controller: DatabaseBundle:AddPerson:deletePerson }
+
+login:
+    path:   /login
+    defaults: { _controller: DatabaseBundle:Default:login }
+
+admin_menu:
+    path:  /admin
+    defaults: { _controller: DatabaseBundle:Default:admin }
