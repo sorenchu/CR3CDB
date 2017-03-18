@@ -9,6 +9,3 @@ show_people:
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
-
-logout:
-    path: /logout

@@ -1,8 +1,6 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 security:
-
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory:
             memory:
@@ -15,7 +13,6 @@ security:
                         roles: 'ROLE_ADMIN'
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -27,15 +24,17 @@ security:
                 check_path: login
 
             http_basic: ~
-            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+            pattern:   ^/
 
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-
-       # secured_area:
-            #logout:
-            #    path:   /logout
-            #    target: /
+        secured_area:
+            anonymous: ~
+            logout: 
+                path: /logout
+                target: /
+                invalidate_session: true
+                delete_cookies:
+                    a: { path: null, domain: null }
+                    b: { path: null, domain: null }
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

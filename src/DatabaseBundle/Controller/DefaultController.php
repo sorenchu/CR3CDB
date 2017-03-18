@@ -29,5 +29,12 @@ class DefaultController extends Controller
   {
     return new Response('<html><body>Admin page!</body></html>');
   }
+
+  public function logoutAction()
+  {
+    $this->get('security.context')->setToken(null);
+    $this->get('request')->getSession()->invalidate();
+    return $this->redirectToRoute('show_all');
+  }
 } 
 ?>

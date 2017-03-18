@@ -68,3 +68,4 @@ admin_menu:
 
 logout:
     path: /logout
+    defaults: { _controller: DatabaseBundle:Default:logout }
