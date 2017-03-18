@@ -22,7 +22,6 @@ DatabaseBundle\Entity\PlayerData:
             
     lifecycleCallbacks: {  }
 
-    #manyToOne:
     oneToOne:
         wholePerson:
           targetEntity: WholePerson

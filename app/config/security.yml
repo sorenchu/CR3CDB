@@ -2,15 +2,10 @@
 # http://symfony.com/doc/current/book/security.html
 security:
     providers:
-        in_memory:
-            memory:
-                users:
-                    antonio:
-                        password: $2y$12$/Y9jkEE9hdCQOS2s/Q8Gt.UlLcTNkOYsubXWVx/GjRr8pp76dkIy.
-                        roles: 'ROLE_USER'
-                    admin:
-                        password: $2y$12$rlyCfeh5eUYy4Jcg8i2VAulgdJDEZDFzYJB1cseyTwuQrypQw9Tuu
-                        roles: 'ROLE_ADMIN'
+        our_db_provider: 
+            entity:
+                class: DatabaseBundle:User
+                property: username
 
     firewalls:
         dev:
@@ -22,9 +17,9 @@ security:
             form_login: 
                 login_path: login
                 check_path: login
-
             http_basic: ~
             pattern:   ^/
+            provider: our_db_provider
 
         secured_area:
             anonymous: ~
@@ -42,6 +37,8 @@ security:
         - { path: ^/, roles: [ROLE_USER, ROLE_ADMIN] }
 
     encoders:
-        Symfony\Component\Security\Core\User\User:
-            algorithm: bcrypt
-            cost: 12
+        Symfony\Component\Security\Core\User\User: plaintext
+        DatabaseBundle\Entity\User: plaintext
+        #Symfony\Component\Security\Core\User\User:
+        #    algorithm: bcrypt
+        #    cost: 12
