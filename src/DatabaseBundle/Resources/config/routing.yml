@@ -65,3 +65,6 @@ login:
 admin_menu:
     path:  /admin
     defaults: { _controller: DatabaseBundle:Default:admin }
+
+logout:
+    path: /logout
