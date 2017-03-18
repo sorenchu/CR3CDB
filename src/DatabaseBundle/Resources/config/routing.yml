@@ -69,3 +69,8 @@ admin_menu:
 logout:
     path: /logout
     defaults: { _controller: DatabaseBundle:Default:logout }
+
+new_user:
+    path:  /admin/newUser
+    defaults: { _controller: DatabaseBundle:Admin/Admin:createUser }
+

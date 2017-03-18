@@ -1,0 +1,18 @@
+{% extends 'DatabaseBundle:base:admin_base.html.twig' %}
+
+{% block title %} Añadir usuario {% endblock %}
+
+{% block body %}
+<h1>Añadir usuario</h1>
+
+{# src/DatabaseBundle/Resources/view/admin/newuser.html.twig #}
+
+<table style="width:100%">
+  <tr>
+    <td>
+      {{ form(userData) }}
+    </td>
+  </tr>
+</table>
+{{ form_end(userData) }}
+{% endblock %}

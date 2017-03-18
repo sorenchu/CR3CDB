@@ -26,11 +26,6 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @var string
-     */
-    private $roles;
-
-    /**
      * Get id
      *
      * @return integer
@@ -89,27 +84,13 @@ class User implements UserInterface
     }
 
     /**
-     * Set roles 
-     *
-     * @param string $roles
-     *
-     * @return User 
-     */
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
      * Get roles
      *
      * @return string
      */
     public function getRoles()
     {
-        return array($this->roles);
+        return array($this->role);
     }
 
     /**
@@ -129,5 +110,34 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
+    }
+    /**
+     * @var string
+     */
+    private $role;
+
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     *
+     * @return User
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 }

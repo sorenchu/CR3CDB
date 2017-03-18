@@ -18,9 +18,9 @@ DatabaseBundle\Entity\User:
             type: string
             length: 4096
             nullable: false 
-        roles:
+        role:
             type: string
-            length: 12
+            length: 30
             nullable: true 
 
     lifecycleCallbacks: {  }
