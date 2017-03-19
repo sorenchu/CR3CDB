@@ -74,3 +74,6 @@ new_user:
     path:  /admin/newUser
     defaults: { _controller: DatabaseBundle:Admin/Admin:createUser }
 
+show_user:
+    path: /admin/showUsers
+    defaults: { _controller: DatabaseBundle:Admin/Admin:showUsers }

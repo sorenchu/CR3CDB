@@ -23,4 +23,11 @@ class UserQueries extends Controller
     $em->flush();
   } 
 
+  public function getUsers()
+  {
+    return ($this->adminController
+        ->getDoctrine()
+          ->getRepository('DatabaseBundle:User')
+            ->findAll());
+  }
 }

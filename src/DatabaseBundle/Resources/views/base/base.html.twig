@@ -18,7 +18,10 @@
       }
       </style>
     {% endblock %}
-    <a href= "{{ path('logout') }}">Logout</a>
+    {% if is_granted("ROLE_ADMIN") %}
+      <a href="/admin/showUsers">Gestión de usuarios</a>
+    {% endif %}
+    <a href="{{ path('logout') }}">Logout</a>
     </head>
 
     <body>

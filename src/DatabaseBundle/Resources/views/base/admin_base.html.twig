@@ -18,7 +18,8 @@
       }
       </style>
     {% endblock %}
-    <a href= "{{ path('logout') }}">Logout</a>
+    <a href="/people/showAll">Gestión del equipo</a>
+    <a href="{{ path('logout') }}">Logout</a>
     </head>
 
     <body>
@@ -33,6 +34,9 @@
             <tr>
               <th>
                 <a href="/admin/newUser">Añadir usuario</a>
+              </th>
+              <th>
+                <a href="/admin/showUsers">Mostrar usuarios</a>
               </th>
             </tr>
           </table>

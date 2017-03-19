@@ -40,11 +40,11 @@ class AdminController extends Controller
     ));
   }
 
-  // TODO: fulfill this action
   public function showUsersAction()
   {
-
-    return null;
+    $users = $this->userQueries->getUsers();
+    return $this->render('DatabaseBundle:admin:showusers.html.twig', array(
+                'userData' => $users));
   }
 
   // TODO: fulfill this action
