@@ -77,3 +77,11 @@ new_user:
 show_user:
     path: /admin/showUsers
     defaults: { _controller: DatabaseBundle:Admin/Admin:showUsers }
+
+delete_user:
+    path: /admin/deleteUser/{id}
+    defaults: { _controller: DatabaseBundle:Admin/Admin:deleteUser }
+
+edit_user:
+    path: /admin/editUser/{id}
+    defaults: { _controller: DatabaseBundle:Admin/Admin:editUser }

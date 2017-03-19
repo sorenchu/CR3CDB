@@ -1,17 +1,39 @@
 {% extends 'DatabaseBundle:base:admin_base.html.twig' %}
 
-{% block title %} Añadir usuario {% endblock %}
+{% block title %}
+{% if edit %}
+  Editar usuario
+{% else %}
+  Añadir usuario
+{% endif %}
+{% endblock %}
 
 {% block body %}
-<h1>Añadir usuario</h1>
+{% if edit %}
+  <h1>Editar usuario</h1>
+{% else %}
+  <h1>Añadir usuario</h1>
+{% endif %}
 
 {# src/DatabaseBundle/Resources/view/admin/newuser.html.twig #}
 
+{{ form_start(userData) }}
 <table style="width:100%">
   <tr>
     <td>
-      {{ form(userData) }}
+      {{ form_row(userData.username) }}
     </td>
+  <tr>
+  <tr>
+    {#% if edit == false %#}
+    <td>
+      {{ form_row(userData.password) }}
+    </td>
+    {#% endif %#} 
+  <tr>
+    <td>
+      {{ form_row(userData.role) }}
+    </td> 
   </tr>
 </table>
 {{ form_end(userData) }}

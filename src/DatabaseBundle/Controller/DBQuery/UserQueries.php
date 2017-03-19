@@ -30,4 +30,26 @@ class UserQueries extends Controller
           ->getRepository('DatabaseBundle:User')
             ->findAll());
   }
+
+  public function getUserInfo($id)
+  {
+    $em = $this->adminController->getDoctrine()->getManager();
+    $user = $em->getRepository('DatabaseBundle:User')
+                ->find($id);
+    return $user;
+  }
+
+  public function deleteUser($id)
+  {
+    $em = $this->adminController->getDoctrine()->getManager();
+    $user = $em->getRepository('DatabaseBundle:User')
+                ->find($id);
+    if (0 == strcmp("admin", $user->getUsername())) 
+    {
+      return false;
+    }
+    $em->remove($user);
+    $em->flush();
+    return true;
+  }
 }

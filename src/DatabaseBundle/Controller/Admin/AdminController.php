@@ -32,11 +32,11 @@ class AdminController extends Controller
     {
       $this->userQueries->saveUser($user);
       return $this->redirectToRoute('edit_user', 
-                  array('id' => $this->userQueries
-                                      ->getNewUser($user)->getId()));
+                  array('id' => $user->getId()));
     }
     return $this->render('DatabaseBundle:admin:newuser.html.twig', array(
                 'userData' => $userData->createView(),
+                'edit' => false,
     ));
   }
 
@@ -47,17 +47,26 @@ class AdminController extends Controller
                 'userData' => $users));
   }
 
-  // TODO: fulfill this action
-  public function deleteUserAction()
+  public function deleteUserAction($id)
   {
-
-    return null;
+    $deleted = $this->userQueries->deleteUser($id);
+    return $this->showUsersAction();
   }
 
-  // TODO: fulfill this action
-  public function editUserAction()
+  public function editUserAction($id, Request $request)
   {
+    $user = $this->userQueries->getUserInfo($id);
+    $userData = $this->createForm(new UserDataType(), $user);
+    $userData->handleRequest($request);
 
+    if ($userData->isSubmitted())
+    {
+      $this->userQueries->saveUser($user);
+    }
+    return $this->render('DatabaseBundle:admin:newuser.html.twig', array(
+                'userData' => $userData->createView(),
+                'edit' => true,
+    ));
   }
 }
 ?>
