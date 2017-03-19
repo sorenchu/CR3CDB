@@ -1,7 +1,7 @@
 <?php
-# src/DatabaseBundle/Controller/AddPersonController.php
+# src/DatabaseBundle/Controller/People/AddPersonController.php
 
-namespace DatabaseBundle\Controller;
+namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Entity\WholePerson;
 use DatabaseBundle\Form\WholePersonType;

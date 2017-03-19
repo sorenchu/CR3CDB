@@ -1,7 +1,7 @@
 <?php
-# src/DatabaseBundle/Controller/ShowTeams.php
+# src/DatabaseBundle/Controller/People/ShowTeams.php
 
-namespace DatabaseBundle\Controller;
+namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
 

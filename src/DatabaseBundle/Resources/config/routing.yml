@@ -1,59 +1,59 @@
 default:
     path:   / 
-    defaults: { _controller: DatabaseBundle:ShowPeople:showAll }
+    defaults: { _controller: DatabaseBundle:People/ShowPeople:showAll }
 
 index:
     path:   /index
-    defaults: { _controller: DatabaseBundle:ShowPeople:showAll }
+    defaults: { _controller: DatabaseBundle:People/ShowPeople:showAll }
 
 new_person:
     path:   /person/new
-    defaults: { _controller: DatabaseBundle:AddPerson:new }
+    defaults: { _controller: DatabaseBundle:People/AddPerson:new }
 
 show_all:
     path:   /people/showAll
-    defaults: { _controller: DatabaseBundle:ShowPeople:showAll }
+    defaults: { _controller: DatabaseBundle:People/ShowPeople:showAll }
 
 show_players:
     path:   /people/showPlayers
-    defaults: { _controller: DatabaseBundle:ShowPeople:showPlayers }
+    defaults: { _controller: DatabaseBundle:People/ShowPeople:showPlayers }
 
 show_senior:
     path:   /team/showSenior
-    defaults: { _controller: DatabaseBundle:ShowTeams:showSenior }
+    defaults: { _controller: DatabaseBundle:People/ShowTeams:showSenior }
 
 show_female:
     path:   /team/showFemale
-    defaults: { _controller: DatabaseBundle:ShowTeams:showFemale }
+    defaults: { _controller: DatabaseBundle:People/ShowTeams:showFemale }
 
 show_cadete:
     path:   /team/showCadete
-    defaults: { _controller: DatabaseBundle:ShowTeams:showCadete }
+    defaults: { _controller: DatabaseBundle:People/ShowTeams:showCadete }
 
 show_alevin:
     path:   /team/showAlevin
-    defaults: { _controller: DatabaseBundle:ShowTeams:showAlevin }
+    defaults: { _controller: DatabaseBundle:People/ShowTeams:showAlevin }
 
 show_benjamin:
     path:   /team/showBenjamin
-    defaults: { _controller: DatabaseBundle:ShowTeams:showBenjamin }
+    defaults: { _controller: DatabaseBundle:People/ShowTeams:showBenjamin }
 
 show_prebenjamin:
     path:   /team/showPrebenjamin
-    defaults: { _controller: DatabaseBundle:ShowTeams:showPrebenjamin }
+    defaults: { _controller: DatabaseBundle:People/ShowTeams:showPrebenjamin }
 
 show_parents:
     path: /people/showParents
-    defaults: { _controller: DatabaseBundle:ShowPeople:showParents }
+    defaults: { _controller: DatabaseBundle:People/ShowPeople:showParents }
 
 show_members:
     path: /people/showMembers
-    defaults: { _controller: DatabaseBundle:ShowPeople:showMembers }
+    defaults: { _controller: DatabaseBundle:People/ShowPeople:showMembers }
 
 edit_person:
     path:   /person/editPerson/{id}
-    defaults: { _controller: DatabaseBundle:EditPerson:editPerson }
+    defaults: { _controller: DatabaseBundle:People/EditPerson:editPerson }
 
 delete_person:
     path:   /person/deletePerson/{id}
-    defaults: { _controller: DatabaseBundle:AddPerson:deletePerson }
+    defaults: { _controller: DatabaseBundle:People/AddPerson:deletePerson }
