@@ -3,8 +3,6 @@
 
 namespace DatabaseBundle\Controller\DBQuery;
 
-use DatabaseBundle\Entity\User;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class UserQueries extends Controller
@@ -19,6 +17,7 @@ class UserQueries extends Controller
   public function saveUser($user)
   {
     $em = $this->adminController->getDoctrine()->getManager();
+    $em->merge($user);
     $em->persist($user);
     $em->flush();
   } 
@@ -31,12 +30,19 @@ class UserQueries extends Controller
             ->findAll());
   }
 
-  public function getUserInfo($id)
+  public function getUserInfoById($id)
   {
     $em = $this->adminController->getDoctrine()->getManager();
     $user = $em->getRepository('DatabaseBundle:User')
                 ->find($id);
     return $user;
+  }
+
+  public function getUserInfoByUsername($username)
+  {
+    $em = $this->adminController->getDoctrine()->getManager();
+    $repository = $em->getRepository('DatabaseBundle:User');
+    return $repository->loadUserByUsername($username);
   }
 
   public function deleteUser($id)

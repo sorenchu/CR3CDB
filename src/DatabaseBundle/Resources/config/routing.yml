@@ -85,3 +85,7 @@ delete_user:
 edit_user:
     path: /admin/editUser/{id}
     defaults: { _controller: DatabaseBundle:Admin/Admin:editUser }
+
+change_password:
+    path: /user/changePassword
+    defaults: { _controller: DatabaseBundle:User/User:changePassword }

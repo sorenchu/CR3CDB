@@ -55,7 +55,7 @@ class AdminController extends Controller
 
   public function editUserAction($id, Request $request)
   {
-    $user = $this->userQueries->getUserInfo($id);
+    $user = $this->userQueries->getUserInfoById($id);
     $userData = $this->createForm(new UserDataType(), $user);
     $userData->handleRequest($request);
 

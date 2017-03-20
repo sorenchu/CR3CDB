@@ -1,0 +1,35 @@
+{% extends 'DatabaseBundle:base:base.html.twig' %}
+
+{% block title %}Cambiar contraseña{% endblock %}
+
+{% block body %}
+<h1>Cambiar contraseña</h1>
+
+{# src/DatabaseBundle/Resources/view/user/edituser.html.twig #}
+
+{{ form_start(userData) }}
+<table style="width:100%">
+  <tr>
+    <td>
+      {{ form_row(userData.username) }}
+    </td>
+  <tr>
+  <tr>
+    {#% if edit == false %#}
+    <td>
+      {{ form_row(userData.password) }}
+    </td>
+    {#% endif %#} 
+  <tr>
+    <td>
+      {{ form_row(userData.role) }}
+    </td> 
+  </tr>
+  <tr>
+    <td>
+      {{ form_row(userData.save) }}
+    </td>
+  </tr>
+</table>
+{{ form_end(userData) }}
+{% endblock %}

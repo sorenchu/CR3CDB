@@ -21,6 +21,7 @@
     {% if is_granted("ROLE_ADMIN") %}
       <a href="/admin/showUsers">Gestión de usuarios</a>
     {% endif %}
+    <a href="/user/changePassword">Cambiar contraseña</a>
     <a href="{{ path('logout') }}">Logout</a>
     </head>
 
