@@ -57,3 +57,35 @@ edit_person:
 delete_person:
     path:   /person/deletePerson/{id}
     defaults: { _controller: DatabaseBundle:People/AddPerson:deletePerson }
+
+login:
+    path:   /login
+    defaults: { _controller: DatabaseBundle:Default:login }
+
+admin_menu:
+    path:  /admin
+    defaults: { _controller: DatabaseBundle:Default:admin }
+
+logout:
+    path: /logout
+    defaults: { _controller: DatabaseBundle:Default:logout }
+
+new_user:
+    path:  /admin/newUser
+    defaults: { _controller: DatabaseBundle:Admin/Admin:createUser }
+
+show_user:
+    path: /admin/showUsers
+    defaults: { _controller: DatabaseBundle:Admin/Admin:showUsers }
+
+delete_user:
+    path: /admin/deleteUser/{id}
+    defaults: { _controller: DatabaseBundle:Admin/Admin:deleteUser }
+
+edit_user:
+    path: /admin/editUser/{id}
+    defaults: { _controller: DatabaseBundle:Admin/Admin:editUser }
+
+change_password:
+    path: /user/changePassword
+    defaults: { _controller: DatabaseBundle:User/User:changePassword }

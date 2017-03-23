@@ -18,9 +18,7 @@
       }
       </style>
     {% endblock %}
-    {% if is_granted("ROLE_ADMIN") %}
-      <a href="/admin/showUsers">Gestión de usuarios</a>
-    {% endif %}
+    <a href="/people/showAll">Gestión del equipo</a>
     <a href="/user/changePassword">Cambiar contraseña</a>
     <a href="{{ path('logout') }}">Logout</a>
     </head>
@@ -36,34 +34,10 @@
           <table>
             <tr>
               <th>
-                <a href="/person/new">Añadir Miembro</a>
+                <a href="/admin/newUser">Añadir usuario</a>
               </th>
               <th>
-                <a href="/people/showAll">Mostrar todo</a>
-              </th>
-              <th>
-                <a href="/team/showSenior">Equipo Senior</a>
-              </th>
-              <th>
-                <a href="/team/showFemale">Equipo Femenino</a>
-              </th>
-              <th>
-                <a href="/team/showCadete">Equipo Cadete</a>
-              </th>
-              <th>
-                <a href="/team/showAlevin">Equipo Alevín</a>
-              </th>
-              <th>
-                <a href="/team/showBenjamin">Equipo Benjamín</a>
-              </th>
-              <th>
-                <a href="/team/showPrebenjamin">Equipo Prebenjamín</a>
-              </th>
-              <th>
-                <a href="/people/showParents">Padres de la escuela</a>
-              </th>
-              <th>
-                <a href="/people/showMembers">Socios del club</a>
+                <a href="/admin/showUsers">Mostrar usuarios</a>
               </th>
             </tr>
           </table>
@@ -75,4 +49,4 @@
         {% endblock %}
       </div>
     </body>
-  </html>
+</html>

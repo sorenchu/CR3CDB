@@ -1,0 +1,27 @@
+{% extends 'DatabaseBundle:base:admin_base.html.twig' %}
+
+{% block title %} Mostrando usuarios {% endblock %}
+
+{%block body %}
+<h1>Usuarios</h1>
+
+{# src/DatabaseBundle/Resources/view/admin/showusers.html.twig #}
+
+<table style="width: 100%">
+<tr>
+  <th><strong>Usuario</strong></th>
+  {# TODO: password needs to be skipped #}
+  <th><strong>Password</strong></th>
+  <th><strong>Rol</strong></th>
+</tr>
+{% for user in userData %}
+  <tr>
+    <td> {{ user.getUsername() }} </td>
+    <td> {{ user.getPassword() }} </td>
+    <td> {{ user.getRole() }} </td>
+    <td> <a href="/admin/editUser/{{user.getId()}}">Editar</a></td>
+    <td> <a href="/admin/deleteUser/{{user.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este usuario?')"> Eliminar </a> </td>
+  </tr>
+{% endfor %}
+</table>
+{% endblock %}
