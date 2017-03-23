@@ -57,4 +57,12 @@ class UserQueries extends Controller
     $em->flush();
     return true;
   }
+
+  public function encodePassword($user, $password)
+  {
+    $encoder = $this->adminController->container->get('security.password_encoder');
+    $encoded = $encoder->encodePassword($user, $password);
+    $user->setPassword($encoded);
+    return $user;
+  }
 }

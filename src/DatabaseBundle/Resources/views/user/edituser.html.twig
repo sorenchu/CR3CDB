@@ -6,6 +6,9 @@
 <h1>Cambiar contraseña</h1>
 
 {# src/DatabaseBundle/Resources/view/user/edituser.html.twig #}
+{% if changed %}
+  La contraseña se ha cambiado correctamente
+{% endif %}
 
 {{ form_start(userData) }}
 <table style="width:100%">

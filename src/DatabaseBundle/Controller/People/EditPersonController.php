@@ -1,12 +1,11 @@
 <?php
-# src/DatabaseBundle/Controller/EditPersonController.php
+# src/DatabaseBundle/Controller/People/EditPersonController.php
 
-namespace DatabaseBundle\Controller;
+namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Form\WholePerson;
 use DatabaseBundle\Form\WholePersonType;
 
-use DatabaseBundle\Controller\DataFormFactory\DataFormFactoryController;
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +16,6 @@ class EditPersonController extends Controller
 {
   public function editPersonAction($id, Request $request)
   {
-    $dataFormFactory = new DataFormFactoryController($this);
     $peopleQueries = new GetEditionQueries($this);
 
     $em = $this->getDoctrine()->getManager();

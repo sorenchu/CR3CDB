@@ -32,22 +32,15 @@ class UserController extends Controller
     $editUserForm->handleRequest($request);
     if ($editUserForm->isSubmitted())
     {
-      $user = $this->encodePassword($user, $user->getPassword());
+      $user = $this->userQueries->encodePassword($user, $user->getPassword());
       // TODO: verify if old password matches.
       $this->userQueries->saveUser($user);
+      $changed = true;
     }
     return $this->render('DatabaseBundle:user:edituser.html.twig',
             array('userData' => $editUserForm->createView(),
               'changed' => $changed
     ));
-  }
-
-  public function encodePassword($user, $password)
-  {
-    $encoder = $this->container->get('security.password_encoder');
-    $encoded = $encoder->encodePassword($user, $password);
-    $user->setPassword($encoded);
-    return $user;
   }
 }
 ?>
