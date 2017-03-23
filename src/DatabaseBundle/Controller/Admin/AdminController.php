@@ -30,9 +30,10 @@ class AdminController extends Controller
 
     if ($userData->isSubmitted())
     {
+      $user = $this->encodePassword($user, $user->getPassword());
       $this->userQueries->saveUser($user);
-      return $this->redirectToRoute('edit_user', 
-                  array('id' => $user->getId()));
+      //return $this->redirectToRoute('edit_user', 
+      //            array('id' => $user->getId()));
     }
     return $this->render('DatabaseBundle:admin:newuser.html.twig', array(
                 'userData' => $userData->createView(),
@@ -61,12 +62,21 @@ class AdminController extends Controller
 
     if ($userData->isSubmitted())
     {
+      $user = $this->encodePassword($user, $user->getPassword());
       $this->userQueries->saveUser($user);
     }
     return $this->render('DatabaseBundle:admin:newuser.html.twig', array(
                 'userData' => $userData->createView(),
                 'edit' => true,
     ));
+  }
+
+  public function encodePassword($user, $password)
+  {
+    $encoder = $this->container->get('security.password_encoder');
+    $encoded = $encoder->encodePassword($user, $password);
+    $user->setPassword($encoded);
+    return $user;
   }
 }
 ?>

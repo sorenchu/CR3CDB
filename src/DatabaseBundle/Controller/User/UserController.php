@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-  private $currentUser;
+  private $user;
   private $userQueries;
 
   public function __construct()
@@ -26,19 +26,28 @@ class UserController extends Controller
   {
     $changed = false;
     $username = $this->get('security.token_storage')->getToken()->getUser()->getUsername();
-    $currentUser = $this->userQueries->getUserInfoByUsername($username);
+    $user = $this->userQueries->getUserInfoByUsername($username);
 
-    $editUserForm = $this->createForm(new EditUserType(), $currentUser);
+    $editUserForm = $this->createForm(new EditUserType(), $user);
     $editUserForm->handleRequest($request);
     if ($editUserForm->isSubmitted())
     {
+      $user = $this->encodePassword($user, $user->getPassword());
       // TODO: verify if old password matches.
-      $this->userQueries->saveUser($currentUser);
+      $this->userQueries->saveUser($user);
     }
     return $this->render('DatabaseBundle:user:edituser.html.twig',
             array('userData' => $editUserForm->createView(),
               'changed' => $changed
     ));
+  }
+
+  public function encodePassword($user, $password)
+  {
+    $encoder = $this->container->get('security.password_encoder');
+    $encoded = $encoder->encodePassword($user, $password);
+    $user->setPassword($encoded);
+    return $user;
   }
 }
 ?>

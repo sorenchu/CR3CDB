@@ -17,7 +17,6 @@ class UserQueries extends Controller
   public function saveUser($user)
   {
     $em = $this->adminController->getDoctrine()->getManager();
-    $em->merge($user);
     $em->persist($user);
     $em->flush();
   } 
