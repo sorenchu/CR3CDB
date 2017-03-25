@@ -15,12 +15,12 @@ class Season
     /**
      * @var integer
      */
-    private $startingYear;
+    private $startingyear;
 
     /**
      * @var string
      */
-    private $seasonText;
+    private $seasontext;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -64,51 +64,51 @@ class Season
     }
 
     /**
-     * Set startingYear
+     * Set startingyear
      *
-     * @param integer $startingYear
+     * @param integer $startingyear
      *
      * @return Season
      */
-    public function setStartingYear($startingYear)
+    public function setStartingyear($startingyear)
     {
-        $this->startingYear = $startingYear;
+        $this->startingyear = $startingyear;
 
         return $this;
     }
 
     /**
-     * Get startingYear
+     * Get startingyear
      *
      * @return integer
      */
-    public function getStartingYear()
+    public function getStartingyear()
     {
-        return $this->startingYear;
+        return $this->startingyear;
     }
 
     /**
-     * Set seasonText
+     * Set seasontext
      *
-     * @param string $seasonText
+     * @param string $seasontext
      *
      * @return Season
      */
-    public function setSeasonText($seasonText)
+    public function setSeasontext($seasontext)
     {
-        $this->seasonText = $seasonText;
+        $this->seasontext = $seasontext;
 
         return $this;
     }
 
     /**
-     * Get seasonText
+     * Get seasontext
      *
      * @return string
      */
-    public function getSeasonText()
+    public function getSeasontext()
     {
-        return $this->seasonText;
+        return $this->seasontext;
     }
 
     /**
@@ -249,6 +249,6 @@ class Season
 
     public function __toString()
     {
-        return $this->seasonText;
+        return $this->seasontext;
     }
 }

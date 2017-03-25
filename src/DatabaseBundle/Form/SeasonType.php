@@ -32,9 +32,7 @@ class SeasonType extends AbstractType
             'expanded' => false,
             )
         )
-        ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
-            $logger = $this->get('logger');
-            $logger->info("holi ".$event->getData());
+        ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
         })
         ->add('save', SubmitType::class, array('label' => 'Mostrar'));
   }

@@ -19,9 +19,14 @@ class ShowTeamsController extends Controller
     $this->teamQueries = new ShowTeamQueries($this);
   }
 
-  public function showSeniorAction()
+  public function showSeniorAction(Request $request)
   {
     $seasonForm = $this->createForm(new SeasonType);
+    $seasonForm->handleRequest($request);
+
+    // TODO: get season id from here and pass to query
+    $season = $seasonForm->get('season')->getData();
+
     $playerData = $this->teamQueries
                     ->getByCategory('Senior', 'DatabaseBundle:PlayerData');
     $coachData = $this->teamQueries
@@ -99,7 +104,7 @@ class ShowTeamsController extends Controller
     return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
                 'playerData' => $playerData,
                 'coachData' => $coachData,
-                'SEASONfORM' => $seasonForm->createView(),
+                'seasonForm' => $seasonForm->createView(),
                 'teamName' => 'Prebenjamín'));
   }
 }

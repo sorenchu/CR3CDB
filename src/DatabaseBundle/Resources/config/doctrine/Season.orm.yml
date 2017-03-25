@@ -11,10 +11,10 @@ DatabaseBundle\Entity\Season:
                 strategy: AUTO
 
     fields:
-        startingYear:
+        startingyear:
             type: integer
             nullable: false
-        seasonText:
+        seasontext:
             type: string
             length: '20'
             nullable: false
