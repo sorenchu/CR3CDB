@@ -4,6 +4,7 @@
 namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
+use DatabaseBundle\Form\SeasonType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,7 @@ class ShowTeamsController extends Controller
 
   public function showSeniorAction()
   {
+    $seasonForm = $this->createForm(new SeasonType);
     $playerData = $this->teamQueries
                     ->getByCategory('Senior', 'DatabaseBundle:PlayerData');
     $coachData = $this->teamQueries
@@ -27,11 +29,13 @@ class ShowTeamsController extends Controller
     return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
                 'playerData' => $playerData,
                 'coachData' => $coachData,
+                'seasonForm' => $seasonForm->createView(),
                 'teamName' => 'Senior'));
   }
 
   public function showFemaleAction()
   {
+    $seasonForm = $this->createForm(new SeasonType);
     $playerData = $this->teamQueries
                     ->getByCategory('Femenino', 'DatabaseBundle:PlayerData');
     $coachData = $this->teamQueries
@@ -39,11 +43,13 @@ class ShowTeamsController extends Controller
     return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
                 'playerData' => $playerData,
                 'coachData' => $coachData,
+                'seasonForm' => $seasonForm->createView(),
                 'teamName' => 'Femenino'));
   }
 
   public function showCadeteAction()
   {
+    $seasonForm = $this->createForm(new SeasonType);
     $playerData = $this->teamQueries
                     ->getByCategory('Cadete', 'DatabaseBundle:PlayerData');
     $coachData = $this->teamQueries
@@ -51,11 +57,13 @@ class ShowTeamsController extends Controller
     return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
                 'playerData' => $playerData,
                 'coachData' => $coachData,
+                'seasonForm' => $seasonForm->createView(),
                 'teamName' => 'Cadete'));
   }
 
   public function showAlevinAction()
   {
+    $seasonForm = $this->createForm(new SeasonType);
     $playerData = $this->teamQueries
                     ->getByCategory('Alevin', 'DatabaseBundle:PlayerData');
     $coachData = $this->teamQueries
@@ -63,11 +71,13 @@ class ShowTeamsController extends Controller
     return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
                 'playerData' => $playerData,
                 'coachData' => $coachData,
+                'seasonForm' => $seasonForm->createView(),
                 'teamName' => 'Alevín'));
   }
 
   public function showBenjaminAction()
   {
+    $seasonForm = $this->createForm(new SeasonType);
     $playerData = $this->teamQueries
                     ->getByCategory('Benjamin', 'DatabaseBundle:PlayerData');
     $coachData = $this->teamQueries
@@ -75,11 +85,13 @@ class ShowTeamsController extends Controller
     return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
                 'playerData' => $playerData,
                 'coachData' => $coachData,
+                'seasonForm' => $seasonForm->createView(),
                 'teamName' => 'Benjamín'));
   }
 
   public function showPrebenjaminAction()
   {
+    $seasonForm = $this->createForm(new SeasonType);
     $playerData = $this->teamQueries
                     ->getByCategory('Prebenjamin', 'DatabaseBundle:PlayerData');
     $coachData = $this->teamQueries
@@ -87,6 +99,7 @@ class ShowTeamsController extends Controller
     return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
                 'playerData' => $playerData,
                 'coachData' => $coachData,
+                'SEASONfORM' => $seasonForm->createView(),
                 'teamName' => 'Prebenjamín'));
   }
 }

@@ -6,6 +6,7 @@
 
 {% block body %}
 <h1>Miembros del {{teamName}}</h1>
+{{ form(seasonForm) }}
 <table style="width: 100%">
 {{ include(
       'DatabaseBundle:base:team_header.html.twig') }}
