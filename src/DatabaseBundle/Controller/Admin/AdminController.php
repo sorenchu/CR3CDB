@@ -32,8 +32,6 @@ class AdminController extends Controller
     {
       $user = $this->userQueries->encodePassword($user, $user->getPassword());
       $this->userQueries->saveUser($user);
-      //return $this->redirectToRoute('edit_user', 
-      //            array('id' => $user->getId()));
     }
     return $this->render('DatabaseBundle:admin:newuser.html.twig', array(
                 'userData' => $userData->createView(),
@@ -51,7 +49,10 @@ class AdminController extends Controller
   public function deleteUserAction($id)
   {
     $deleted = $this->userQueries->deleteUser($id);
-    return $this->showUsersAction();
+    $users = $this->userQueries->getUsers();
+    return $this->render('DatabaseBundle:admin:showusers.html.twig', array(
+                'userData' => $users,
+                'deleted' => $deleted));
   }
 
   public function editUserAction($id, Request $request)

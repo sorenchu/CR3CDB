@@ -6,6 +6,13 @@
 <h1>Usuarios</h1>
 
 {# src/DatabaseBundle/Resources/view/admin/showusers.html.twig #}
+{% if deleted is defined %}
+  {% if deleted == true %}
+    <span>El usuario se ha borrado correctamente</span>
+  {% else %}
+    <span>No se puede borrar el usuario <strong>admin</strong></span>
+  {% endif %}
+{% endif %}
 
 <table style="width: 100%">
 <tr>
@@ -17,7 +24,7 @@
 {% for user in userData %}
   <tr>
     <td> {{ user.getUsername() }} </td>
-    <td> {{ user.getPassword() }} </td>
+    <td> ***************** </td>
     <td> {{ user.getRole() }} </td>
     <td> <a href="/admin/editUser/{{user.getId()}}">Editar</a></td>
     <td> <a href="/admin/deleteUser/{{user.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este usuario?')"> Eliminar </a> </td>
