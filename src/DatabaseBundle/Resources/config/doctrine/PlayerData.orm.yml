@@ -31,4 +31,4 @@ DatabaseBundle\Entity\PlayerData:
         parentData:
             targetEntity: ParentData
             mappedBy: playerData
-            cascade: ["persist"]
+            cascade: ["persist", "remove"]

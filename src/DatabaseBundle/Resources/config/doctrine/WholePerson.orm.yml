@@ -16,7 +16,7 @@ DatabaseBundle\Entity\WholePerson:
         name: personalData_id
         referencedColumnName: id
         onDelete: 'CASCADE'
-      cascade: ["persist"]
+      cascade: ["persist", "remove"]
 
     playerData:
       targetEntity: PlayerData
@@ -25,7 +25,7 @@ DatabaseBundle\Entity\WholePerson:
         name: playerData_id
         referencedColumnName: id
         onDelete: 'CASCADE'
-      cascade: ["persist"]
+      cascade: ["persist", "remove"]
 
     coachData:
       targetEntity: CoachData
@@ -34,7 +34,7 @@ DatabaseBundle\Entity\WholePerson:
         name: coachData_id
         referencedColumnName: id
         onDelete: 'CASCADE'
-      cascade: ["persist"]
+      cascade: ["persist", "remove"]
 
     memberData:
       targetEntity: MemberData
@@ -43,7 +43,7 @@ DatabaseBundle\Entity\WholePerson:
         name: memberData_id
         referencedColumnName: id
         onDelete: 'CASCADE'
-      cascade: ["persist"]
+      cascade: ["persist", "remove"]
 
     parentData:
       targetEntity: ParentData
@@ -52,4 +52,4 @@ DatabaseBundle\Entity\WholePerson:
         name: parentData_id
         referencedColumnName: id
         onDelete: 'CASCADE'
-      cascade: ["persist"]
+      cascade: ["persist", "remove"]

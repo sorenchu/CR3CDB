@@ -47,7 +47,7 @@ class AddPersonController extends Controller
     $showAllQuery = new ShowTeamQueries($this);
     $wholePerson = $showAllQuery->getAllMembers();
     return $this->render('DatabaseBundle:people:showall.html.twig', array(
-                'wholePerson' => $wholePerson));
+                'personalData' => $wholePerson));
   }
 }
 ?>

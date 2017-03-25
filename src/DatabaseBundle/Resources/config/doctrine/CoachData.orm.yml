@@ -24,3 +24,4 @@ DatabaseBundle\Entity\CoachData:
         wholePerson:
             targetEntity: WholePerson
             mappedBy: coachData
+            cascade: ["persist", "remove"]

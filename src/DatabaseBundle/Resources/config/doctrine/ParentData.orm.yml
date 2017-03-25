@@ -31,5 +31,5 @@ DatabaseBundle\Entity\ParentData:
                   player_id:
                     referencedColumnName: id
                 onDelete: 'CASCADE'
-            cascade: ["persist"]
+            cascade: ["persist", "remove"]
                   
