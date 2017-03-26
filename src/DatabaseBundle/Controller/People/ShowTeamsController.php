@@ -37,7 +37,7 @@ class ShowTeamsController extends Controller
 
   public function showAlevinAction(Request $request)
   {
-    return $this->showJuniorTeam('alevina', $request);
+    return $this->showJuniorTeam('alevin', $request);
   }
 
   public function showBenjaminAction(Request $request)
