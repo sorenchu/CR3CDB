@@ -33,7 +33,7 @@ DatabaseBundle\Entity\PlayerData:
     manyToOne:
         season:
             targetEntity: Season
-            inversedBy: season
+            inversedBy: playerData
             joinColumn: 
                 name: season_id
                 referencedColumnName: id

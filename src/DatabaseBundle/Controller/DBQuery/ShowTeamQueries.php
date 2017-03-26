@@ -54,7 +54,7 @@ class ShowTeamQueries extends Controller
                  ->findAll();
   }
 
-  public function getByCategory($name, $tableName)
+  public function getByCategory($name, $tableName, $seasonId)
   {
     $alias = 'aliastable';
     $repository = $this->personController
@@ -62,10 +62,20 @@ class ShowTeamQueries extends Controller
                       ->getRepository($tableName);
     $query = $repository->createQueryBuilder($alias)
                   ->from($tableName, 'data')
+                  ->join($alias.'.season', 'season')
                   ->where($alias.'.category LIKE :category')
+                  ->andWhere('season.id = :seasonId')
                   ->setParameter('category', $name)
+                  ->setParameter('seasonId', $seasonId)
                   ->getQuery();
     return $query->getResult();
+  }
+
+  public function getSeasonById($id)
+  {
+    $em = $this->personController->getDoctrine()->getManager();
+    return $em->getRepository('DatabaseBundle:Season')
+              ->find($id);
   }
 }
 ?>

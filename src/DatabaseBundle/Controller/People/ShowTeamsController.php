@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ShowTeamsController extends Controller
 {
   private $teamQueries;
+  private $season;
 
   public function __construct()
   {
@@ -21,91 +22,78 @@ class ShowTeamsController extends Controller
 
   public function showSeniorAction(Request $request)
   {
+    return $this->showSeniorTeam('senior', $request);
+  }
+
+  public function showFemaleAction(Request $request)
+  {
+    return $this->showSeniorTeam('femenino', $request);
+  }
+
+  public function showCadeteAction(Request $request)
+  {
+    return $this->showJuniorTeam('cadete', $request);
+  }
+
+  public function showAlevinAction(Request $request)
+  {
+    return $this->showJuniorTeam('alevina', $request);
+  }
+
+  public function showBenjaminAction(Request $request)
+  {
+    return $this->showJuniorTeam('benjamin', $request);
+  }
+
+  public function showPrebenjaminAction(Request $request)
+  {
+    return $this->showJuniorTeam('prebenjamin', $request);
+  }
+
+  private function showSeniorTeam($specificTeam, $request)
+  {
+    // TODO: make this call configurable by user
+    $this->season = $this->teamQueries->getSeasonById(1);
     $seasonForm = $this->createForm(new SeasonType);
     $seasonForm->handleRequest($request);
-
-    // TODO: get season id from here and pass to query
     $season = $seasonForm->get('season')->getData();
+    if ($season != NULL)
+    {
+      $this->season = $season;
+    }
 
     $playerData = $this->teamQueries
-                    ->getByCategory('Senior', 'DatabaseBundle:PlayerData');
+                    ->getByCategory($specificTeam, 'DatabaseBundle:PlayerData', $this->season->getId());
     $coachData = $this->teamQueries
-                    ->getByCategory('Senior', 'DatabaseBundle:CoachData');
+                    ->getByCategory($specificTeam, 'DatabaseBundle:CoachData', $this->season->getId());
     return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
                 'playerData' => $playerData,
                 'coachData' => $coachData,
                 'seasonForm' => $seasonForm->createView(),
-                'teamName' => 'Senior'));
+                'teamName' => $specificTeam));
   }
 
-  public function showFemaleAction()
+  private function showJuniorTeam($specificTeam, $request)
   {
+    // TODO: make this call configurable by user
+    $this->season = $this->teamQueries->getSeasonById(1);
     $seasonForm = $this->createForm(new SeasonType);
-    $playerData = $this->teamQueries
-                    ->getByCategory('Femenino', 'DatabaseBundle:PlayerData');
-    $coachData = $this->teamQueries
-                    ->getByCategory('Femenino', 'DatabaseBundle:CoachData');
-    return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
-                'playerData' => $playerData,
-                'coachData' => $coachData,
-                'seasonForm' => $seasonForm->createView(),
-                'teamName' => 'Femenino'));
-  }
+    $seasonForm->handleRequest($request);
+    $season = $seasonForm->get('season')->getData();
+    if ($season != NULL)
+    {
+      $this->season = $season;
+    }
 
-  public function showCadeteAction()
-  {
-    $seasonForm = $this->createForm(new SeasonType);
     $playerData = $this->teamQueries
-                    ->getByCategory('Cadete', 'DatabaseBundle:PlayerData');
+                    ->getByCategory($specificTeam, 'DatabaseBundle:PlayerData', $this->season->getId());
     $coachData = $this->teamQueries
-                    ->getByCategory('Cadete', 'DatabaseBundle:CoachData');
+                    ->getByCategory($specificTeam, 'DatabaseBundle:CoachData', $this->season->getId());
     return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
                 'playerData' => $playerData,
                 'coachData' => $coachData,
                 'seasonForm' => $seasonForm->createView(),
-                'teamName' => 'Cadete'));
-  }
-
-  public function showAlevinAction()
-  {
-    $seasonForm = $this->createForm(new SeasonType);
-    $playerData = $this->teamQueries
-                    ->getByCategory('Alevin', 'DatabaseBundle:PlayerData');
-    $coachData = $this->teamQueries
-                    ->getByCategory('Alevin', 'DatabaseBundle:CoachData');
-    return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
-                'playerData' => $playerData,
-                'coachData' => $coachData,
-                'seasonForm' => $seasonForm->createView(),
-                'teamName' => 'Alevín'));
-  }
-
-  public function showBenjaminAction()
-  {
-    $seasonForm = $this->createForm(new SeasonType);
-    $playerData = $this->teamQueries
-                    ->getByCategory('Benjamin', 'DatabaseBundle:PlayerData');
-    $coachData = $this->teamQueries
-                    ->getByCategory('Benjamin', 'DatabaseBundle:CoachData');
-    return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
-                'playerData' => $playerData,
-                'coachData' => $coachData,
-                'seasonForm' => $seasonForm->createView(),
-                'teamName' => 'Benjamín'));
-  }
-
-  public function showPrebenjaminAction()
-  {
-    $seasonForm = $this->createForm(new SeasonType);
-    $playerData = $this->teamQueries
-                    ->getByCategory('Prebenjamin', 'DatabaseBundle:PlayerData');
-    $coachData = $this->teamQueries
-                    ->getByCategory('Prebenjamin', 'DatabaseBundle:CoachData');
-    return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
-                'playerData' => $playerData,
-                'coachData' => $coachData,
-                'seasonForm' => $seasonForm->createView(),
-                'teamName' => 'Prebenjamín'));
+                'teamName' => $specificTeam));
   }
 }
 ?>

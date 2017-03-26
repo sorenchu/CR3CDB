@@ -18,7 +18,6 @@ DatabaseBundle\Entity\Season:
             type: string
             length: '20'
             nullable: false
-
     lifecycleCallbacks: {  }
 
     oneToMany: 

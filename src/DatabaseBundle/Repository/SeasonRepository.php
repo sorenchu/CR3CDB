@@ -10,4 +10,12 @@ namespace DatabaseBundle\Repository;
  */
 class SeasonRepository extends \Doctrine\ORM\EntityRepository
 {
+  public function getIdFromText($seasontext)
+  {
+    return $this->createQueryBuilder('s')
+        ->where('s.seasontext = :seasontext')
+        ->setParameter('seasontext', $seasontext)
+        ->getQuery()
+        ->getOneOrNullResult();
+  }
 }
