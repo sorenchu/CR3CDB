@@ -1,13 +1,13 @@
 <?php
-# src/DatabaseBundle/Form/WholePersonType.php
+# src/DatabaseBundle/Form/Person/WholePersonType.php
 
-namespace DatabaseBundle\Form;
+namespace DatabaseBundle\Form\Person;
 
-use DatabaseBundle\Form\PersonalDataType;
-use DatabaseBundle\Form\PlayerDataType;
-use DatabaseBundle\Form\CoachDataType;
-use DatabaseBundle\Form\MemberDataType;
-use DatabaseBundle\Form\ParentDataType;
+use DatabaseBundle\Form\Person\PersonalDataType;
+use DatabaseBundle\Form\Person\PlayerDataType;
+use DatabaseBundle\Form\Person\CoachDataType;
+use DatabaseBundle\Form\Person\MemberDataType;
+use DatabaseBundle\Form\Person\ParentDataType;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -1,9 +1,9 @@
 <?php
-# src/DatabaseBundle/Form/CoachDataType.php
+# src/DatabaseBundle/Form/Person/PlayerDataType.php
 
-namespace DatabaseBundle\Form;
+namespace DatabaseBundle\Form\Person;
 
-use DatabaseBundle\Entity\CoachData;
+use DatabaseBundle\Entity\PlayerData;
 use DatabaseBundle\Form\FormFactory\DataFormCreation;
 
 use Symfony\Component\Form\AbstractType;
@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
-class CoachDataType extends AbstractType implements DataFormCreation
+class PlayerDataType extends AbstractType implements DataFormCreation
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
@@ -26,9 +26,9 @@ class CoachDataType extends AbstractType implements DataFormCreation
             )
           )
         )
-        ->add('salary', MoneyType::class, array(
-                                    'required' => false,
-                                    'label' => 'Sueldo',))
+        ->add('payment', MoneyType::class, array(
+                                    'required' => true,
+                                    'label' => 'Pagos',))
         ->add('category', ChoiceType::class, array(
             'label' => 'Categoría',
             'choices' => array(
@@ -41,20 +41,20 @@ class CoachDataType extends AbstractType implements DataFormCreation
               'prebenjamin' => 'Prebenjamín',
               //'jabato' => 'Jabato',
               //'lince' => 'Lince',
-              )
             )
-          );
+          )
+        );
   }
-
+  
   public function getBlockPrefix()
   {
-    return 'coachData';
+    return 'playerData';
   }
 
   public function configureOptions(OptionsResolver $resolver)
   {
     $resolver->setDefaults(array(
-              'data_class' => CoachData::class,
+              'data_class' => PlayerData::class,
     ));
   }
 }

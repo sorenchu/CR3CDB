@@ -3,8 +3,7 @@
 
 namespace DatabaseBundle\Controller\People;
 
-use DatabaseBundle\Form\WholePerson;
-use DatabaseBundle\Form\WholePersonType;
+use DatabaseBundle\Form\Person\WholePersonType;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 

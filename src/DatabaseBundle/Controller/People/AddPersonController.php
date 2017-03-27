@@ -4,7 +4,7 @@
 namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Entity\WholePerson;
-use DatabaseBundle\Form\WholePersonType;
+use DatabaseBundle\Form\Person\WholePersonType;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;

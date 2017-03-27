@@ -1,7 +1,7 @@
 <?php
-# src/DatabaseBundle/Form/PersonalDataType.php
+# src/DatabaseBundle/Form/Person/PersonalDataType.php
 
-namespace DatabaseBundle\Form;
+namespace DatabaseBundle\Form\Person;
 
 use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Form\FormFactory\DataFormCreation;

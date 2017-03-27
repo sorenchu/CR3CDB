@@ -1,7 +1,7 @@
 <?php
-# src/DatabaseBundle/Form/ParentDataType.php
+# src/DatabaseBundle/Form/Person/ParentDataType.php
 
-namespace DatabaseBundle\Form;
+namespace DatabaseBundle\Form\Person;
 
 use DatabaseBundle\Entity\ParentData;
 use DatabaseBundle\Form\FormFactory\DataFormCreation;
