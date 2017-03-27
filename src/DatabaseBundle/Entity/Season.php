@@ -251,4 +251,33 @@ class Season
     {
         return $this->seasontext;
     }
+    /**
+     * @var boolean
+     */
+    private $default;
+
+
+    /**
+     * Set default
+     *
+     * @param boolean $default
+     *
+     * @return Season
+     */
+    public function setDefault($default)
+    {
+        $this->default = $default;
+
+        return $this;
+    }
+
+    /**
+     * Get default
+     *
+     * @return boolean
+     */
+    public function getDefault()
+    {
+        return $this->default;
+    }
 }

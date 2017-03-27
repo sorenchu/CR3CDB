@@ -1,0 +1,25 @@
+{% extends 'DatabaseBundle:base:base.html.twig' %}
+
+{% block title %}
+    Mostrando todas las temporadas
+{% endblock %}
+
+{% block body %}
+<h1>Temporadas existentes</h1>
+{% if seasons|length == 0 %}
+  <span> No se han añadido temporadas todavía. <a href="#">Añade una</a></span>
+{% else %}
+  <table>
+  <tr>
+    <th><strong>Temporada</strong></th>
+    <th><strong>Predeterminada</strong></th>
+  <tr>
+  {% for season in seasons %}
+    <tr>
+      <td> {{ season.getSeasonText() }} </td>
+      <td> {{ season.getDefault() }} </td>
+    </tr>
+  {% endfor %}
+{% endif %}
+
+{% endblock %}
