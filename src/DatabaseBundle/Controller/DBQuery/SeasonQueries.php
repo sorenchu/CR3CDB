@@ -44,5 +44,14 @@ class SeasonQueries extends Controller
     return $repository->getIdFromText($season->getSeasontext());
   }
 
+  public function deleteSeason($id)
+  {
+    $em = $this->seasonController->getDoctrine()->getManager();
+    $season = $em->getRepository('DatabaseBundle:Season')
+                  ->find($id);
+    $em->remove($season);
+    $em->flush();
+    return true;
+  }
 }
 ?>

@@ -6,6 +6,9 @@
 
 {% block body %}
 <h1>Temporadas existentes</h1>
+{% if deleted is defined %}
+  <span>La temporada se ha borrado correctamente</span>
+{% endif %}
 {% if seasons|length == 0 %}
   <span> No se han añadido temporadas todavía. <a href="/season/newSeason">Añade una</a></span>
 {% else %}
@@ -21,6 +24,7 @@
            {% else %} {% endif %}
       </td>
       <td><a href="/season/editSeason/{{season.getId()}}">Editar</a></td>
+      <td><a href="/season/deleteSeason/{{season.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar esta temporada? Eliminará todos los datos relacionados con ella')">Borrar</a></td>
     </tr>
   {% endfor %}
 {% endif %}

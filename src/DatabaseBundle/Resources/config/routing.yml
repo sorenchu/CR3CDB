@@ -101,3 +101,7 @@ edit_season:
 view_seasons:
     path: /season/showSeasons
     defaults: { _controller: DatabaseBundle:User/Season:showSeasons } 
+
+delete_season:
+    path:  /season/deleteSeason/{id}
+    defaults: { _controller: DatabaseBundle:User/Season:deleteSeason }

@@ -49,9 +49,13 @@ class SeasonController extends Controller
     ));
   }
 
-  public function deleteSeasonAction() 
+  public function deleteSeasonAction($id) 
   {
-
+    $deleted = $this->seasonQueries->deleteSeason($id);
+    $seasons = $this->seasonQueries->getAllSeasons();
+    return $this->render('DatabaseBundle:season:showseasons.html.twig', array(
+                'seasons' => $seasons,
+                'deleted' => $deleted));
   }
 
   public function editSeasonAction($id, Request $request) 
