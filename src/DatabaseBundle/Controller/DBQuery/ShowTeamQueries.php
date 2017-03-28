@@ -81,6 +81,7 @@ class ShowTeamQueries extends Controller
     return $query->getResult();
   }
 
+  // TODO: refactor this
   public function getSeasonById($id)
   {
     $em = $this->personController->getDoctrine()->getManager();

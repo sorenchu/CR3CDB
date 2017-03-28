@@ -34,12 +34,14 @@ class SeasonController extends Controller
     $seasonForm = $this->createForm(new AddSeasonType(), $season);
     $seasonForm->handleRequest($request);
 
-    if($seasonForm->isSubmitted())
+    if ($seasonForm->isSubmitted())
     {
       $seasonText = $this->getSeasonTextFormatted($season);
       $season->setSeasontext($seasonText);
       $this->seasonQueries->saveSeason($season);
-      // TODO: redirect
+      return $this->redirectToRoute('edit_season',
+                    array('id' => $this->seasonQueries
+                                        ->getSeasonByText($season)->getId()));
     }
     return $this->render('DatabaseBundle:season:new.html.twig', array(
                 'seasonForm' => $seasonForm->createView(),
@@ -52,9 +54,22 @@ class SeasonController extends Controller
 
   }
 
-  public function editSeasonAction() 
+  public function editSeasonAction($id, Request $request) 
   {
+    $season = $this->seasonQueries->getSeason($id);
+    $seasonForm = $this->createForm(new AddSeasonType(), $season);
+    $seasonForm->handleRequest($request);
 
+    if ($seasonForm->isSubmitted())
+    {
+      $seasonText = $this->getSeasonTextFormatted($season);
+      $season->setSeasontext($seasonText);
+      $this->seasonQueries->saveSeason($season);
+    }
+    return $this->render('DatabaseBundle:season:new.html.twig', array(
+                'seasonForm' => $seasonForm->createView(),
+                'edit' => true,
+    ));
   }
 
   private function getSeasonTextFormatted($season)

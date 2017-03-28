@@ -18,4 +18,9 @@ class SeasonRepository extends \Doctrine\ORM\EntityRepository
         ->getQuery()
         ->getOneOrNullResult();
   }
+
+  public function findAll()
+  {
+    return $this->findBy(array(), array('startingyear' => 'ASC'));
+  }
 }

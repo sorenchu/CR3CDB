@@ -29,5 +29,20 @@ class SeasonQueries extends Controller
                   ->findAll(); 
   }
 
+  public function getSeason($id)
+  {
+    $em = $this->seasonController->getDoctrine()->getManager();
+    $season = $em->getRepository('DatabaseBundle:Season')->find($id);
+    return $season;
+  }
+
+  public function getSeasonByText($season)
+  {
+    $repository = $this->seasonController
+                      ->getDoctrine()
+                        ->getRepository('DatabaseBundle:Season');
+    return $repository->getIdFromText($season->getSeasontext());
+  }
+
 }
 ?>
