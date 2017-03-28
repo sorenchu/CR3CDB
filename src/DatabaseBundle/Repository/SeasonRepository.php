@@ -23,4 +23,13 @@ class SeasonRepository extends \Doctrine\ORM\EntityRepository
   {
     return $this->findBy(array(), array('startingyear' => 'ASC'));
   }
+
+  public function getDefaultSeason()
+  {
+    return $this->createQueryBuilder('s')
+        ->where('s.defaultseason = :true')
+        ->setParameter('true', 1)
+        ->getQuery()
+        ->getOneOrNullResult();
+  }
 }

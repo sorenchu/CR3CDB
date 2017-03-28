@@ -53,5 +53,14 @@ class SeasonQueries extends Controller
     $em->flush();
     return true;
   }
+
+  // TODO: necessary to implement mechanism for not having more than one default season
+  public function getDefaultSeason()
+  {
+    $repository = $this->seasonController
+                      ->getDoctrine()
+                        ->getRepository('DatabaseBundle:Season');
+    return $repository->getDefaultSeason();
+  }
 }
 ?>

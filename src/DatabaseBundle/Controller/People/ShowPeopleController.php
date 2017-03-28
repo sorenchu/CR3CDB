@@ -4,6 +4,7 @@
 namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
+use DatabaseBundle\Controller\DBQuery\SeasonQueries;
 use DatabaseBundle\Form\SeasonType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,11 +14,13 @@ use Symfony\Component\HttpFoundation\Response;
 class ShowPeopleController extends Controller
 {
   private $teamQueries;
+  private $seasonQueries;
   private $season;
 
   public function __construct()
   {
     $this->teamQueries = new ShowTeamQueries($this);
+    $this->seasonQueries = new SeasonQueries($this);
   }
 
   public function showAllAction()
@@ -36,7 +39,7 @@ class ShowPeopleController extends Controller
 
   public function showParentsAction(Request $request)
   {
-    $this->season = $this->teamQueries->getSeasonById(1);
+    $this->season = $this->seasonQueries->getDefaultSeason();
     $seasonForm = $this->createForm(new SeasonType);
     $seasonForm->handleRequest($request);
     $season = $seasonForm->get('season')->getData();
@@ -54,7 +57,7 @@ class ShowPeopleController extends Controller
 
   public function showMembersAction(Request $request)
   {
-    $this->season = $this->teamQueries->getSeasonById(1);
+    $this->season = $this->seasonQueries->getDefaultSeason();
     $seasonForm = $this->createForm(new SeasonType);
     $seasonForm->handleRequest($request);
     $season = $seasonForm->get('season')->getData();

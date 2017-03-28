@@ -4,6 +4,7 @@
 namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
+use DatabaseBundle\Controller\DBQuery\SeasonQueries;
 use DatabaseBundle\Form\SeasonType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,11 +14,13 @@ use Symfony\Component\HttpFoundation\Response;
 class ShowTeamsController extends Controller
 {
   private $teamQueries;
+  private $seasonQueries;
   private $season;
 
   public function __construct()
   {
     $this->teamQueries = new ShowTeamQueries($this);
+    $this->seasonQueries = new SeasonQueries($this);
   }
 
   public function showSeniorAction(Request $request)
@@ -52,8 +55,8 @@ class ShowTeamsController extends Controller
 
   private function showSeniorTeam($specificTeam, $request)
   {
-    // TODO: make this call configurable by user
-    $this->season = $this->teamQueries->getSeasonById(1);
+    // TODO: error handling when there are no seasons
+    $this->season = $this->seasonQueries->getDefaultSeason();
     $seasonForm = $this->createForm(new SeasonType);
     $seasonForm->handleRequest($request);
     $season = $seasonForm->get('season')->getData();
@@ -75,8 +78,8 @@ class ShowTeamsController extends Controller
 
   private function showJuniorTeam($specificTeam, $request)
   {
-    // TODO: make this call configurable by user
-    $this->season = $this->teamQueries->getSeasonById(1);
+    // TODO: error handling when there are no seasons
+    $this->season = $this->seasonQueries->getDefaultSeason();
     $seasonForm = $this->createForm(new SeasonType);
     $seasonForm->handleRequest($request);
     $season = $seasonForm->get('season')->getData();
