@@ -18,7 +18,8 @@ DatabaseBundle\Entity\Season:
             type: string
             length: '20'
             nullable: false
-        default:
+            unique: true
+        defaultseason:
             type: boolean
             nullable: false
 

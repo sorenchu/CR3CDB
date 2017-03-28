@@ -90,6 +90,10 @@ change_password:
     path: /user/changePassword
     defaults: { _controller: DatabaseBundle:User/User:changePassword }
 
+add_season:
+    path: /season/newSeason
+    defaults: { _controller: DatabaseBundle:User/Season:addSeason }
+
 view_seasons:
     path: /season/showSeasons
     defaults: { _controller: DatabaseBundle:User/Season:showSeasons } 

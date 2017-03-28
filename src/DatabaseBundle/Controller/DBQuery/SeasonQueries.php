@@ -14,6 +14,13 @@ class SeasonQueries extends Controller
     $this->seasonController = $seasonController;
   }
 
+  public function saveSeason($season)
+  {
+    $em = $this->seasonController->getDoctrine()->getManager();
+    $em->persist($season);
+    $em->flush(); 
+  }
+
   public function getAllSeasons()
   {
     return $this->seasonController

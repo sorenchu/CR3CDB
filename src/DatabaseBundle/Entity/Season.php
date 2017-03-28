@@ -280,4 +280,33 @@ class Season
     {
         return $this->default;
     }
+    /**
+     * @var boolean
+     */
+    private $defaultseason;
+
+
+    /**
+     * Set defaultseason
+     *
+     * @param boolean $defaultseason
+     *
+     * @return Season
+     */
+    public function setDefaultseason($defaultseason)
+    {
+        $this->defaultseason = $defaultseason;
+
+        return $this;
+    }
+
+    /**
+     * Get defaultseason
+     *
+     * @return boolean
+     */
+    public function getDefaultseason()
+    {
+        return $this->defaultseason;
+    }
 }
