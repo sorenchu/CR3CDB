@@ -32,4 +32,12 @@ class SeasonRepository extends \Doctrine\ORM\EntityRepository
         ->getQuery()
         ->getOneOrNullResult();
   }
+
+  public function countSeasons()
+  {
+    return $this->createQueryBuilder('s')
+        ->select('count(s.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
+  }
 }

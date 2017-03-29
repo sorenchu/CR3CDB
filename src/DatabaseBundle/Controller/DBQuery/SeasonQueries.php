@@ -62,5 +62,18 @@ class SeasonQueries extends Controller
                         ->getRepository('DatabaseBundle:Season');
     return $repository->getDefaultSeason();
   }
+
+  public function setDefaultSeason($id)
+  {
+    // TODO: 
+  }
+
+  public function countSeasons()
+  {
+    $repository = $this->seasonController
+                      ->getDoctrine()
+                        ->getRepository('DatabaseBundle:Season');
+    return $repository->countSeasons();
+  }
 }
 ?>

@@ -55,8 +55,6 @@ class ShowTeamsController extends Controller
 
   private function showSeniorTeam($specificTeam, $request)
   {
-    // TODO: error handling when there are no seasons
-    $this->season = $this->seasonQueries->getDefaultSeason();
     $seasonForm = $this->createForm(new SeasonType);
     $seasonForm->handleRequest($request);
     $season = $seasonForm->get('season')->getData();
@@ -64,22 +62,32 @@ class ShowTeamsController extends Controller
     {
       $this->season = $season;
     }
+    else 
+    {
+      $this->season = $this->seasonQueries->getDefaultSeason();
+    }
 
-    $playerData = $this->teamQueries
-                    ->getByCategory($specificTeam, 'DatabaseBundle:PlayerData', $this->season->getId());
-    $coachData = $this->teamQueries
-                    ->getByCategory($specificTeam, 'DatabaseBundle:CoachData', $this->season->getId());
+    $seasonNumber = $this->seasonQueries->countSeasons();
+    if (0 < $seasonNumber)
+    {
+      $playerData = $this->teamQueries
+                      ->getByCategory($specificTeam, 'DatabaseBundle:PlayerData', $this->season->getId());
+      $coachData = $this->teamQueries
+                      ->getByCategory($specificTeam, 'DatabaseBundle:CoachData', $this->season->getId());
+      return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
+                  'playerData' => $playerData,
+                  'coachData' => $coachData,
+                  'seasonForm' => $seasonForm->createView(),
+                  'teamName' => $specificTeam,
+                  'seasonNumber' => $seasonNumber));
+    }
     return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
-                'playerData' => $playerData,
-                'coachData' => $coachData,
-                'seasonForm' => $seasonForm->createView(),
-                'teamName' => $specificTeam));
+                'teamName' => $specificTeam,
+                'seasonNumber' => $seasonNumber));
   }
 
   private function showJuniorTeam($specificTeam, $request)
   {
-    // TODO: error handling when there are no seasons
-    $this->season = $this->seasonQueries->getDefaultSeason();
     $seasonForm = $this->createForm(new SeasonType);
     $seasonForm->handleRequest($request);
     $season = $seasonForm->get('season')->getData();
@@ -87,16 +95,32 @@ class ShowTeamsController extends Controller
     {
       $this->season = $season;
     }
+    else 
+    {
+      $this->season = $this->seasonQueries->getDefaultSeason();
+    }
 
-    $playerData = $this->teamQueries
-                    ->getByCategory($specificTeam, 'DatabaseBundle:PlayerData', $this->season->getId());
-    $coachData = $this->teamQueries
-                    ->getByCategory($specificTeam, 'DatabaseBundle:CoachData', $this->season->getId());
-    return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
-                'playerData' => $playerData,
-                'coachData' => $coachData,
-                'seasonForm' => $seasonForm->createView(),
-                'teamName' => $specificTeam));
+    $seasonNumber = $this->seasonQueries->countSeasons();
+    if (0 < $seasonNumber)
+    {
+      $playerData = $this->teamQueries
+                      ->getByCategory($specificTeam, 'DatabaseBundle:PlayerData', $this->season->getId());
+      $coachData = $this->teamQueries
+                      ->getByCategory($specificTeam, 'DatabaseBundle:CoachData', $this->season->getId());
+      return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
+                  'playerData' => $playerData,
+                  'coachData' => $coachData,
+                  'seasonForm' => $seasonForm->createView(),
+                  'teamName' => $specificTeam,
+                  'seasonNumber' => $seasonNumber));
+    }
+    else
+    {
+      return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
+                  'seasonForm' => $seasonForm->createView(),
+                  'teamName' => $specificTeam,
+                  'seasonNumber' => $seasonNumber));
+    }
   }
 }
 ?>
