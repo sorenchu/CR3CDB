@@ -1,0 +1,41 @@
+# src/DatabaseBundle/Resources/config/doctrine/Season.orm.yml
+DatabaseBundle\Entity\Season:
+    type: entity
+    table: season
+    repositoryClass: DatabaseBundle\Repository\SeasonRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        startingyear:
+            type: integer
+            nullable: false
+        seasontext:
+            type: string
+            length: '20'
+            nullable: false
+            unique: true
+        defaultseason:
+            type: boolean
+            nullable: false
+
+    lifecycleCallbacks: {  }
+
+    oneToMany: 
+        playerData:
+            targetEntity: PlayerData
+            mappedBy: season
+        coachData:
+            targetEntity: CoachData
+            mappedBy: season
+        memberData:
+            targetEntity: MemberData
+            mappedBy: season
+        parentData:
+            targetEntity: ParentData
+            mappedBy: season
+

@@ -1,0 +1,38 @@
+{% extends 'DatabaseBundle:base:base.html.twig' %}
+
+{% block title %}
+    Mostrando todas las temporadas
+{% endblock %}
+
+{% block body %}
+<h1>Temporadas existentes</h1>
+{% if deleted is defined %}
+  {% if deleted %}
+    <span>La temporada se ha borrado correctamente</span>
+  {% else %}
+    <span>No es posible borrar la temporada marcada como por defecto</span>
+  {% endif %}
+{% endif %}
+{% if seasons|length == 0 %}
+  <span> No se han añadido temporadas todavía. <a href="/season/newSeason">Añade una</a></span>
+{% else %}
+  <table>
+  <tr>
+    <th><strong>Temporada</strong></th>
+    <th><strong>Predeterminada</strong></th>
+  <tr>
+  {% for season in seasons %}
+    <tr>
+      <td> {{ season.getSeasonText() }} </td>
+      <td> {% if season.getDefaultseason() == 1 %} X
+           {% else %} {% endif %}
+      </td>
+      <td><a href="/season/editSeason/{{season.getId()}}">Editar</a></td>
+      <td><a href="/season/deleteSeason/{{season.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar esta temporada? Eliminará todos los datos relacionados con ella')">Borrar</a></td>
+    </tr>
+  {% endfor %}
+{% endif %}
+<table>
+</table>
+
+{% endblock %}

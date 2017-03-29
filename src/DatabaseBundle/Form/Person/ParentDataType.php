@@ -21,12 +21,15 @@ class ParentDataType extends AbstractType implements DataFormCreation
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-        ->add('season', ChoiceType::class, array(
+        ->add('season', EntityType::class, array(
             'label' => 'Temporada',
-            'choices' => array(
-              2016 => '2016-2017',
-              2017 => '2017-2018',
-            )
+            'class' => 'DatabaseBundle:Season',
+            'query_builder' => function (EntityRepository $er) {
+                  return $er->createQueryBuilder('season');
+          },
+          'required' => true,
+          'multiple' => false,
+          'expanded' => false,
           )
         )
         ->add('playerdata', EntityType::class, array(

@@ -9,8 +9,6 @@ DatabaseBundle\Entity\ParentData:
             generator:
                 strategy: AUTO
     fields:
-        season:
-            type: integer
     lifecycleCallbacks: {  }
 
     oneToOne:
@@ -33,3 +31,11 @@ DatabaseBundle\Entity\ParentData:
                 onDelete: 'CASCADE'
             cascade: ["persist", "remove"]
                   
+    manyToOne:
+        season:
+            targetEntity: Season
+            inversedBy: parentData
+            joinColumn: 
+                name: season_id
+                referencedColumnName: id
+            cascade: ["persist"]

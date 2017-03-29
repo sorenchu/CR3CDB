@@ -18,14 +18,18 @@
       }
       </style>
     {% endblock %}
-    {% if is_granted("ROLE_ADMIN") %}
-      <a href="/admin/showUsers">Gestión de usuarios</a>
-    {% endif %}
-    <a href="/user/changePassword">Cambiar contraseña</a>
-    <a href="{{ path('logout') }}">Logout</a>
+    <table>
+      {% if is_granted("ROLE_ADMIN") %}
+        <td><a href="/admin/showUsers">Gestión de usuarios</a></td>
+      {% endif %}
+      <td><a href="/user/changePassword">Cambiar contraseña</a></td>
+      <td><a href="{{ path('logout') }}">Logout</a></td>
+    </table>
     </head>
 
     <body>
+    {{ include(
+        'DatabaseBundle:season:template.html.twig') }}
       <div id="content">
         {% block body %} 
         {% endblock %}

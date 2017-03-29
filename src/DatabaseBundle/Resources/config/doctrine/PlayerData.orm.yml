@@ -10,9 +10,6 @@ DatabaseBundle\Entity\PlayerData:
             generator:
                 strategy: AUTO
     fields:
-        season:
-            type: integer
-            nullable: true
         payment:
             type: float
             nullable: true
@@ -32,3 +29,12 @@ DatabaseBundle\Entity\PlayerData:
             targetEntity: ParentData
             mappedBy: playerData
             cascade: ["persist", "remove"]
+
+    manyToOne:
+        season:
+            targetEntity: Season
+            inversedBy: playerData
+            joinColumn: 
+                name: season_id
+                referencedColumnName: id
+            cascade: ["persist"]

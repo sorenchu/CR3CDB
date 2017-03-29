@@ -89,3 +89,19 @@ edit_user:
 change_password:
     path: /user/changePassword
     defaults: { _controller: DatabaseBundle:User/User:changePassword }
+
+add_season:
+    path: /season/newSeason
+    defaults: { _controller: DatabaseBundle:User/Season:addSeason }
+
+edit_season:
+    path: /season/editSeason/{id}
+    defaults: { _controller: DatabaseBundle:User/Season:editSeason }
+
+view_seasons:
+    path: /season/showSeasons
+    defaults: { _controller: DatabaseBundle:User/Season:showSeasons } 
+
+delete_season:
+    path:  /season/deleteSeason/{id}
+    defaults: { _controller: DatabaseBundle:User/Season:deleteSeason }

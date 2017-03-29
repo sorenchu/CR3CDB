@@ -1,0 +1,33 @@
+{% extends 'DatabaseBundle:base:base.html.twig' %}
+
+{% block title %}
+{% if edit %}
+  Editar temporada
+{% else %}
+  Nueva temporada
+{% endif %}
+{% endblock %}
+
+{% block body %}
+{% if edit %}
+    <h1>Editar temporada</h1>
+{% else %}
+    <h1>Nueva temporada</h1>
+{% endif %}
+
+{# src/DatabaseBundle/Resources/views/season/new.html.twig #}
+{{ form_start(seasonForm) }}
+<table>
+  <tr>
+    <td>
+      {{ form_row(seasonForm.startingyear) }}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      {{ form_row(seasonForm.defaultseason) }}
+    </td>
+  </tr>
+</table>
+{{ form_end(seasonForm) }}
+{% endblock %}

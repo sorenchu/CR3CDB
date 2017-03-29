@@ -38,23 +38,33 @@ class ShowTeamQueries extends Controller
     return $query->getResult();
   }
 
-  public function getParents()
+  public function getParents($seasonId)
   {
     return $this->personController
              ->getDoctrine()
                ->getRepository('DatabaseBundle:ParentData')
-                 ->findAll();
+                ->createQueryBuilder('parents')
+                  ->join('parents.season', 'season')
+                  ->where('season.id = :seasonId')
+                  ->setParameter('seasonId', $seasonId)
+                  ->getQuery()
+                  ->getResult();
   }
 
-  public function getMembers()
+  public function getMembers($seasonId)
   {
-    return $this->personController
-             ->getDoctrine()
-               ->getRepository('DatabaseBundle:MemberData')
-                 ->findAll();
+    return $this->personController                                                                            
+              ->getDoctrine()
+                ->getRepository('DatabaseBundle:MemberData')
+                  ->createQueryBuilder('members')
+                    ->join('members.season', 'season')
+                    ->where('season.id = :seasonId')
+                    ->setParameter('seasonId', $seasonId)
+                    ->getQuery()
+                    ->getResult();
   }
 
-  public function getByCategory($name, $tableName)
+  public function getByCategory($name, $tableName, $seasonId)
   {
     $alias = 'aliastable';
     $repository = $this->personController
@@ -62,8 +72,11 @@ class ShowTeamQueries extends Controller
                       ->getRepository($tableName);
     $query = $repository->createQueryBuilder($alias)
                   ->from($tableName, 'data')
+                  ->join($alias.'.season', 'season')
                   ->where($alias.'.category LIKE :category')
+                  ->andWhere('season.id = :seasonId')
                   ->setParameter('category', $name)
+                  ->setParameter('seasonId', $seasonId)
                   ->getQuery();
     return $query->getResult();
   }

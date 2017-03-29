@@ -10,20 +10,26 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+
+use Doctrine\ORM\EntityRepository;
 
 class CoachDataType extends AbstractType implements DataFormCreation
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-        ->add('season', ChoiceType::class, array(
+        ->add('season', EntityType::class, array(
             'label' => 'Temporada',
-            'choices' => array(
-              2016 => '2016-2017',
-              2017 => '2017-2018',
-            )
+            'class' => 'DatabaseBundle:Season',
+            'query_builder' => function (EntityRepository $er) {
+                  return $er->createQueryBuilder('season');
+          },
+          'required' => true,
+          'multiple' => false,
+          'expanded' => false,
           )
         )
         ->add('salary', MoneyType::class, array(

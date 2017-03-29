@@ -4,6 +4,8 @@
 namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
+use DatabaseBundle\Controller\DBQuery\SeasonQueries;
+use DatabaseBundle\Form\SeasonType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,10 +14,13 @@ use Symfony\Component\HttpFoundation\Response;
 class ShowPeopleController extends Controller
 {
   private $teamQueries;
+  private $seasonQueries;
+  private $season;
 
   public function __construct()
   {
     $this->teamQueries = new ShowTeamQueries($this);
+    $this->seasonQueries = new SeasonQueries($this);
   }
 
   public function showAllAction()
@@ -32,18 +37,68 @@ class ShowPeopleController extends Controller
                 'playerData' => $playerData));
   }
 
-  public function showParentsAction()
+  public function showParentsAction(Request $request)
   {
-    $parentData = $this->teamQueries->getParents();
-    return $this->render('DatabaseBundle:people:showparents.html.twig', array(
-                'parentData' => $parentData));
+    $seasonForm = $this->createForm(new SeasonType);
+    $seasonForm->handleRequest($request);
+    $season = $seasonForm->get('season')->getData();
+    if ($season != NULL)
+    {
+      $this->season = $season;
+    }  
+    else
+    {
+      $this->season = $this->seasonQueries->getDefaultSeason();
+    }
+
+    $seasonNumber = $this->seasonQueries->countSeasons();
+    if (0 < $seasonNumber)
+    {
+      $parentData = $this->teamQueries->getParents($this->season->getId());
+      return $this->render('DatabaseBundle:people:showparents.html.twig', array(
+                  'parentData' => $parentData,
+                  'seasonForm' => $seasonForm->createView(),
+                  'seasonNumber' => $seasonNumber
+      ));
+    }
+    else
+    {
+      return $this->render('DatabaseBundle:people:showparents.html.twig', array(
+                  'seasonNumber' => $seasonNumber
+      ));
+    }
   }
 
-  public function showMembersAction()
+  public function showMembersAction(Request $request)
   {
-    $memberData = $this->teamQueries->getMembers();
-    return $this->render('DatabaseBundle:people:showmembers.html.twig', array(
-                'memberData' => $memberData));
+    $seasonForm = $this->createForm(new SeasonType);
+    $seasonForm->handleRequest($request);
+    $season = $seasonForm->get('season')->getData();
+    if ($season != NULL)
+    {
+      $this->season = $season;
+    }
+    else
+    {
+      $this->season = $this->seasonQueries->getDefaultSeason();
+    } 
+  
+    $seasonNumber = $this->seasonQueries->countSeasons();
+    if (0 < $seasonNumber)
+    {
+      $memberData = $this->teamQueries->getMembers($this->season->getId());
+      return $this->render('DatabaseBundle:people:showmembers.html.twig', array(
+                  'memberData' => $memberData,
+                  'seasonForm' => $seasonForm->createView(),
+                  'seasonNumber' => $seasonNumber,
+      ));
+    }
+    else
+    {
+      return $this->render('DatabaseBundle:people:showmembers.html.twig', array(
+                  'seasonNumber' => $seasonNumber,
+      ));
+    }
   }
 }
 ?>

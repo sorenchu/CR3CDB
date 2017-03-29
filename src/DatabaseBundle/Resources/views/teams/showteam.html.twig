@@ -6,32 +6,37 @@
 
 {% block body %}
 <h1>Miembros del {{teamName}}</h1>
-<table style="width: 100%">
-{{ include(
+{% if seasonNumber == 0 %}
+    <span> No se han añadido temporadas todavía. <a href="/season/newSeason">Añade una</a></span>
+{% else %}
+  {{ form(seasonForm) }}
+  <table style="width: 100%">
+  {{ include(
       'DatabaseBundle:base:team_header.html.twig') }}
-{% for data in playerData %}
-  <tr>
-    <td> {{ data.getWholePerson().getPersonalData().getName() }}
+  {% for data in playerData %}
+    <tr>
+      <td> {{ data.getWholePerson().getPersonalData().getName() }}
          {{ data.getWholePerson().getPersonalData().getSurname() }} </td>
-    <td> {{ data.getWholePerson().getPersonalData().getNickname() }} </td>
-    <td> {{ data.getWholePerson().getPersonalData().getEmail() }} </td>
-    <td> {{ data.getWholePerson().getPersonalData().getPhone() }} </td>
-    <td> {{ data.getPayment() }} </td>
-    <td> <a href="/person/editPerson/{{data.getWholePerson().getId()}}"> Editar </a> </td>
-    <td> <a href="/person/deletePerson/{{data.getWholePerson().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
-  </tr>
-{% endfor %}
-{% for data in coachData %}
-  <tr>
-    <td> {{ data.getWholePerson().getPersonalData().getName() }}
-         {{ data.getWholePerson().getPersonalData().getSurname() }} (Entrenador) </td>
-    <td> {{ data.getWholePerson().getPersonalData().getNickname() }} </td>
-    <td> {{ data.getWholePerson().getPersonalData().getEmail() }} </td>
-    <td> {{ data.getWholePerson().getPersonalData().getPhone() }} </td>
-    <td> {{ data.getSalary() }} </td>
-    <td> <a href="/person/editPerson/{{data.getWholePerson().getId()}}"> Editar </a> </td>
-    <td> <a href="/person/deletePerson/{{data.getWholePerson().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
-  </tr>
-{% endfor %}
-</table>
+      <td> {{ data.getWholePerson().getPersonalData().getNickname() }} </td>
+      <td> {{ data.getWholePerson().getPersonalData().getEmail() }} </td>
+      <td> {{ data.getWholePerson().getPersonalData().getPhone() }} </td>
+      <td> {{ data.getPayment() }} </td>
+      <td> <a href="/person/editPerson/{{data.getWholePerson().getId()}}"> Editar </a> </td>
+      <td> <a href="/person/deletePerson/{{data.getWholePerson().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+    </tr>
+  {% endfor %}
+  {% for data in coachData %}
+    <tr>
+      <td> {{ data.getWholePerson().getPersonalData().getName() }}
+           {{ data.getWholePerson().getPersonalData().getSurname() }} (Entrenador) </td>
+      <td> {{ data.getWholePerson().getPersonalData().getNickname() }} </td>
+      <td> {{ data.getWholePerson().getPersonalData().getEmail() }} </td>
+      <td> {{ data.getWholePerson().getPersonalData().getPhone() }} </td>
+      <td> {{ data.getSalary() }} </td>
+      <td> <a href="/person/editPerson/{{data.getWholePerson().getId()}}"> Editar </a> </td>
+      <td> <a href="/person/deletePerson/{{data.getWholePerson().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+    </tr>
+  {% endfor %}
+  </table>
+{% endif %}
 {% endblock %}
