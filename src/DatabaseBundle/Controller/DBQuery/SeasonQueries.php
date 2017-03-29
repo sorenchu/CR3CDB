@@ -54,7 +54,6 @@ class SeasonQueries extends Controller
     return true;
   }
 
-  // TODO: necessary to implement mechanism for not having more than one default season
   public function getDefaultSeason()
   {
     $repository = $this->seasonController
@@ -63,9 +62,10 @@ class SeasonQueries extends Controller
     return $repository->getDefaultSeason();
   }
 
-  public function setDefaultSeason($id)
+  public function setAsNotDefault($season)
   {
-    // TODO: 
+    $season->setDefaultseason(false);  
+    $this->saveSeason($season);
   }
 
   public function countSeasons()

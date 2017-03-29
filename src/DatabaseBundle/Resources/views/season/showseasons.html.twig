@@ -7,7 +7,11 @@
 {% block body %}
 <h1>Temporadas existentes</h1>
 {% if deleted is defined %}
-  <span>La temporada se ha borrado correctamente</span>
+  {% if deleted %}
+    <span>La temporada se ha borrado correctamente</span>
+  {% else %}
+    <span>No es posible borrar la temporada marcada como por defecto</span>
+  {% endif %}
 {% endif %}
 {% if seasons|length == 0 %}
   <span> No se han añadido temporadas todavía. <a href="/season/newSeason">Añade una</a></span>

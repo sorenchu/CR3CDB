@@ -34,6 +34,16 @@ class SeasonController extends Controller
     $seasonForm = $this->createForm(new AddSeasonType(), $season);
     $seasonForm->handleRequest($request);
 
+    if ($this->seasonQueries->countSeasons() == 0)
+    {
+      $season->setDefaultseason(true);
+    }
+    else if ($season->getDefaultseason())
+    {
+      $currentDefaultSeason = $this->seasonQueries->getDefaultSeason();
+      $this->seasonQueries->setAsNotDefault($currentDefaultSeason);
+    }
+
     if ($seasonForm->isSubmitted())
     {
       $seasonText = $this->getSeasonTextFormatted($season);
@@ -51,7 +61,14 @@ class SeasonController extends Controller
 
   public function deleteSeasonAction($id) 
   {
-    $deleted = $this->seasonQueries->deleteSeason($id);
+    if ($id == $this->seasonQueries->getDefaultSeason()->getId())
+    {
+      $deleted = false;
+    }
+    else 
+    {
+      $deleted = $this->seasonQueries->deleteSeason($id);
+    }
     $seasons = $this->seasonQueries->getAllSeasons();
     return $this->render('DatabaseBundle:season:showseasons.html.twig', array(
                 'seasons' => $seasons,
@@ -63,6 +80,16 @@ class SeasonController extends Controller
     $season = $this->seasonQueries->getSeason($id);
     $seasonForm = $this->createForm(new AddSeasonType(), $season);
     $seasonForm->handleRequest($request);
+
+    if ($this->seasonQueries->countSeasons() == 1)
+    {
+      $season->setDefaultseason(true);
+    }
+    else if ($season->getDefaultseason())
+    {
+      $currentDefaultSeason = $this->seasonQueries->getDefaultSeason();
+      $this->seasonQueries->setAsNotDefault($currentDefaultSeason);
+    }
 
     if ($seasonForm->isSubmitted())
     {
