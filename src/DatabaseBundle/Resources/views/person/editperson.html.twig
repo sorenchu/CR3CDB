@@ -6,6 +6,13 @@
 <h1>Editar miembro</h1>
 
 {# src/DatabaseBundle/Resources/views/Default/editperson.html.twig #}
+{{ form_start(seasonForm) }}
+<table>
+  <td> {{ form_row(seasonForm.season) }} </td>
+  <td> {{ form_row(seasonForm.save) }} </td>
+</table>
+{{ form_end(seasonForm) }}
+
 {{ form_start(wholePersonForm) }}
 <table>
 <tr>

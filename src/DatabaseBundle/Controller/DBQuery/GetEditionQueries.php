@@ -110,9 +110,11 @@ class GetEditionQueries extends Controller
     return $query->getResult()[0];
   }
 
-  public function savePerson($wholePerson)
+  public function savePerson($wholePerson, $edit)
   {
     $em = $this->personController->getDoctrine()->getManager();
+    if ($edit)
+      $em->merge($wholePerson);
     $em->persist($wholePerson);
     $em->flush();
   }

@@ -30,7 +30,7 @@ class AddPersonController extends Controller
 
     if($wholePersonForm->isSubmitted()) 
     {
-      $this->peopleQueries->savePerson($wholePerson);
+      $this->peopleQueries->savePerson($wholePerson, false);
       return $this->redirectToRoute('edit_person', 
                     array('id' => $this->peopleQueries
                                         ->getNewPerson($wholePerson)->getId()));
