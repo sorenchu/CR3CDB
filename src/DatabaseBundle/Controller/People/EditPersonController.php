@@ -17,9 +17,7 @@ class EditPersonController extends Controller
   {
     $peopleQueries = new GetEditionQueries($this);
 
-    // TODO: refactor this. It's a query
-    $em = $this->getDoctrine()->getManager();
-    $wholePerson = $em->getRepository('DatabaseBundle:WholePerson')->find($id);
+    $wholePerson = $peopleQueries->getPerson($id);
 
     $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);
     $wholePersonForm->handleRequest($request);

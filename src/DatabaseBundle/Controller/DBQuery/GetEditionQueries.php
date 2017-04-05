@@ -20,6 +20,12 @@ class GetEditionQueries extends Controller
     $this->personController = $personController;
   }
 
+  public function getPerson($id)
+  {
+    $em = $this->personController->getDoctrine()->getManager();
+    return $em->getRepository('DatabaseBundle:WholePerson')->find($id);
+  }
+
   public function getPeopleByType($id, $table)
   {
     if (0 == strcmp("playerdata", $table))
