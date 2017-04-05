@@ -23,6 +23,8 @@ class EditPersonController extends Controller
     $seasonForm = $this->createForm(new SeasonType);
     $seasonForm->handleRequest($request);
     $season = $seasonForm->get('season')->getData();
+    if ($season == null)
+      $season = $seasonQueries->getDefaultSeason();
 
     $wholePerson = $peopleQueries->getPerson($id);
     $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);
@@ -30,30 +32,15 @@ class EditPersonController extends Controller
 
     if ($wholePersonForm->isSubmitted())
     {
-      /*$em->merge($wholePerson);
-      $em->persist($wholePerson);
-      $em->flush();*/
       $peopleQueries->savePerson($wholePerson, true);
+      $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);
     }
-
+  
     return $this->render('DatabaseBundle:person:editperson.html.twig', array(
-                'wholePersonForm' => $wholePersonForm->createView(),
                 'personalData' => $wholePerson->getPersonalData(),
+                'wholePersonForm' => $wholePersonForm->createView(),
                 'seasonForm' => $seasonForm->createView(),
     ));
-  }
-
-  private function submittingForm($dataForm, $data, $personalData)
-  {
-    $em = $this->getDoctrine()->getManager();
-    if($dataForm->isSubmitted())
-    {
-      $data->setPersonalData($personalData);
-      $em->merge($data);
-      $em->flush();
-      return $data;
-    }
-    return NULL;
   }
 }
 ?>

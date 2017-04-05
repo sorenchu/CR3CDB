@@ -29,7 +29,6 @@ class WholePersonType extends AbstractType
           {
             if ($personalData->getIsPlayer())
             {
-              $personalData->setIsPlayer(true);
               $form->add('playerData', PlayerDataType::class);
             }
             if ($personalData->getIsCoach())

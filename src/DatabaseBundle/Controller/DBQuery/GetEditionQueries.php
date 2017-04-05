@@ -66,7 +66,7 @@ class GetEditionQueries extends Controller
 
   public function getTypeOfPerson($query, $table)
   {
-    if (NULL != $query->getOneOrNullResult())
+    if (null != $query->getOneOrNullResult())
     {
       $data = $query->getOneOrNullResult();
     }

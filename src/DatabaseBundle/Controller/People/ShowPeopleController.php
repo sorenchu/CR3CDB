@@ -42,7 +42,7 @@ class ShowPeopleController extends Controller
     $seasonForm = $this->createForm(new SeasonType);
     $seasonForm->handleRequest($request);
     $season = $seasonForm->get('season')->getData();
-    if ($season != NULL)
+    if ($season != null)
     {
       $this->season = $season;
     }  
@@ -74,7 +74,7 @@ class ShowPeopleController extends Controller
     $seasonForm = $this->createForm(new SeasonType);
     $seasonForm->handleRequest($request);
     $season = $seasonForm->get('season')->getData();
-    if ($season != NULL)
+    if ($season != null)
     {
       $this->season = $season;
     }
