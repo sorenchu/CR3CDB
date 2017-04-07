@@ -37,27 +37,27 @@ VALUES ("Pedrito", "González", "male", FALSE, TRUE, FALSE, FALSE);
 /***************************
 ***      WHOLE PERSON    ***
 ***************************/
-INSERT INTO wholePerson(personalData_id, playerData_id, coachData_id, memberData_id, parentData_id)
-VALUES (1, NULL, NULL, NULL, NULL);
+INSERT INTO wholePerson(personalData_id,  coachData_id, memberData_id, parentData_id)
+VALUES (1, NULL, NULL, NULL);
 
-INSERT INTO wholePerson(personalData_id, playerData_id, coachData_id, memberData_id, parentData_id)
-VALUES (2, NULL, NULL, NULL, NULL);
+INSERT INTO wholePerson(personalData_id,  coachData_id, memberData_id, parentData_id)
+VALUES (2, NULL, NULL, NULL);
 
-INSERT INTO wholePerson(personalData_id, playerData_id, coachData_id, memberData_id, parentData_id)
-VALUES (3, NULL, NULL, NULL, NULL);
+INSERT INTO wholePerson(personalData_id,  coachData_id, memberData_id, parentData_id)
+VALUES (3, NULL, NULL, NULL);
 
-INSERT INTO wholePerson(personalData_id, playerData_id, coachData_id, memberData_id, parentData_id)
-VALUES (4, NULL, NULL, NULL, NULL);
+INSERT INTO wholePerson(personalData_id,  coachData_id, memberData_id, parentData_id)
+VALUES (4, NULL, NULL, NULL);
 
-INSERT INTO wholePerson(personalData_id, playerData_id, coachData_id, memberData_id, parentData_id)
-VALUES (5, NULL, NULL, NULL, NULL);
+INSERT INTO wholePerson(personalData_id,  coachData_id, memberData_id, parentData_id)
+VALUES (5, NULL, NULL, NULL);
 
-INSERT INTO wholePerson(personalData_id, playerData_id, coachData_id, memberData_id, parentData_id)
-VALUES (6, NULL, NULL, NULL, NULL);
+INSERT INTO wholePerson(personalData_id,  coachData_id, memberData_id, parentData_id)
+VALUES (6, NULL, NULL, NULL);
 
-INSERT INTO wholePerson(personalData_id, playerData_id, coachData_id, memberData_id, parentData_id)
-VALUES (7, NULL, NULL, NULL, NULL);
+INSERT INTO wholePerson(personalData_id,  coachData_id, memberData_id, parentData_id)
+VALUES (7, NULL, NULL, NULL);
 
-INSERT INTO wholePerson(personalData_id, playerData_id, coachData_id, memberData_id, parentData_id)
-VALUES (8, NULL, NULL, NULL, NULL);
+INSERT INTO wholePerson(personalData_id,  coachData_id, memberData_id, parentData_id)
+VALUES (8, NULL, NULL, NULL);
 

@@ -1,9 +1,9 @@
 {% extends 'DatabaseBundle:base:base.html.twig' %}
 
-{% block title %}Editar miembro{% endblock %}
+{% block title %}{{ personalData.name }} {{ personalData.surname }} {% endblock %}
 
 {% block body %}
-<h1>Editar miembro</h1>
+<h1>{{ personalData.name }} {{ personalData.surname }}</h1>
 
 {# src/DatabaseBundle/Resources/views/Default/editperson.html.twig #}
 {{ form_start(seasonForm) }}
@@ -17,16 +17,16 @@
 <table>
 <tr>
   <th>Datos personales</th>
-  {% if true == personalData.getIsPlayer() %}
+  {% if personalData.getIsPlayer() %}
     <th>Jugador</th>
   {% endif %}
-  {% if true == personalData.getIsCoach() %}  
+  {% if personalData.getIsCoach() %}  
     <th>Entrenador</th>
   {% endif %}
-  {% if true == personalData.getIsMember() %}
+  {% if personalData.getIsMember() %}
     <th>Socio</th>
   {% endif %}
-  {% if true == personalData.getIsParent() %}
+  {% if personalData.getIsParent() %}
     <th>Padre</th>
   {%endif %}
 </tr>
@@ -34,22 +34,22 @@
   <td>
     {{ form_row(wholePersonForm.personalData) }}
   </td>
-  {% if true == personalData.getIsPlayer() %}
+  {% if personalData.getIsPlayer() %}
     <td>
       {{ form_row(wholePersonForm.playerData) }}
     </td>
   {% endif %}
-  {% if true == personalData.getIsCoach() %}  
+  {% if personalData.getIsCoach() %}  
     <td>
       {{ form_row(wholePersonForm.coachData) }} 
     </td>
   {%endif %}
-  {% if true == personalData.getIsMember() %}
+  {% if personalData.getIsMember() %}
     <td> 
       {{ form_row(wholePersonForm.memberData) }}
     </td>
   {% endif%}
-  {% if true == personalData.getIsParent() %}
+  {% if personalData.getIsParent() %}
     <td> 
       {{ form_row(wholePersonForm.parentData) }}
     </td>

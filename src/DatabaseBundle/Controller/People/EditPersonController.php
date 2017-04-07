@@ -5,6 +5,7 @@ namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Form\Person\WholePersonType;
 use DatabaseBundle\Form\SeasonType;
+use DatabaseBundle\Entity\PlayerData;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
@@ -27,6 +28,16 @@ class EditPersonController extends Controller
       $season = $seasonQueries->getDefaultSeason();
 
     $wholePerson = $peopleQueries->getPerson($id);
+
+    if ($wholePerson->getPersonalData()->getIsPlayer())
+    {
+      $playerData = new PlayerData();
+      $playerData->setWholePerson($wholePerson);
+      $playerData->setSeason($seasonQueries->getDefaultSeason());
+      $wholePerson->getPlayerData()->add($playerData);
+    }
+
+    // TODO: getPersonByIdAndSeason($id, $season);
     $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);
     $wholePersonForm->handleRequest($request);
 

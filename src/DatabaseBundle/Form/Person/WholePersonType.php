@@ -9,6 +9,8 @@ use DatabaseBundle\Form\Person\CoachDataType;
 use DatabaseBundle\Form\Person\MemberDataType;
 use DatabaseBundle\Form\Person\ParentDataType;
 
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -29,7 +31,8 @@ class WholePersonType extends AbstractType
           {
             if ($personalData->getIsPlayer())
             {
-              $form->add('playerData', PlayerDataType::class);
+              //$form->add('playerData', PlayerDataType::class);
+              $form->add('playerData', CollectionType::class, array('entry_type' => PlayerDataType::class));
             }
             if ($personalData->getIsCoach())
             {

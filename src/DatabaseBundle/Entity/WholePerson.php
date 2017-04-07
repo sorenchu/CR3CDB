@@ -73,30 +73,6 @@ class WholePerson
     }
 
     /**
-     * Set playerData
-     *
-     * @param \DatabaseBundle\Entity\PlayerData $playerData
-     *
-     * @return WholePerson
-     */
-    public function setPlayerData(\DatabaseBundle\Entity\PlayerData $playerData = null)
-    {
-        $this->playerData = $playerData;
-
-        return $this;
-    }
-
-    /**
-     * Get playerData
-     *
-     * @return \DatabaseBundle\Entity\PlayerData
-     */
-    public function getPlayerData()
-    {
-        return $this->playerData;
-    }
-
-    /**
      * Set coachData
      *
      * @param \DatabaseBundle\Entity\CoachData $coachData
@@ -166,5 +142,60 @@ class WholePerson
     public function getParentData()
     {
         return $this->parentData;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->playerData = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add playerDatum
+     *
+     * @param \DatabaseBundle\Entity\PlayerData $playerDatum
+     *
+     * @return WholePerson
+     */
+    public function addPlayerDatum(\DatabaseBundle\Entity\PlayerData $playerDatum)
+    {
+        $this->playerData[] = $playerDatum;
+
+        return $this;
+    }
+
+    /**
+     * Remove playerDatum
+     *
+     * @param \DatabaseBundle\Entity\PlayerData $playerDatum
+     */
+    public function removePlayerDatum(\DatabaseBundle\Entity\PlayerData $playerDatum)
+    {
+        $this->playerData->removeElement($playerDatum);
+    }
+
+    /**
+     * Get playerData
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlayerData()
+    {
+        return $this->playerData;
+    }
+
+    /**
+     * Set playerData
+     *
+     * @param \DatabaseBundle\Entity\PlayerData $playerData
+     *
+     * @return WholePerson
+     */
+    public function setPlayerData(\DatabaseBundle\Entity\PlayerData $playerData = null)
+    {
+        $this->playerData = $playerData;
+
+        return $this;
     }
 }
