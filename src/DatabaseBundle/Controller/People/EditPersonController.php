@@ -28,29 +28,31 @@ class EditPersonController extends Controller
       $season = $seasonQueries->getDefaultSeason();
 
     $wholePerson = $peopleQueries->getPerson($id);
-
     if ($wholePerson->getPersonalData()->getIsPlayer())
     {
       $playerData = new PlayerData();
       $playerData->setWholePerson($wholePerson);
-      $playerData->setSeason($seasonQueries->getDefaultSeason());
-      $wholePerson->getPlayerData()->add($playerData);
+      $playerData->setSeason($season);
+
+      if (!$wholePerson->setInCurrentSeason($season))
+      {
+        $wholePerson->getPlayerData()->add($playerData);
+      }
     }
 
-    // TODO: getPersonByIdAndSeason($id, $season);
     $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);
     $wholePersonForm->handleRequest($request);
-
     if ($wholePersonForm->isSubmitted())
     {
       $peopleQueries->savePerson($wholePerson, true);
       $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);
     }
-  
     return $this->render('DatabaseBundle:person:editperson.html.twig', array(
-                'personalData' => $wholePerson->getPersonalData(),
                 'wholePersonForm' => $wholePersonForm->createView(),
                 'seasonForm' => $seasonForm->createView(),
+                'wholePerson' => $wholePerson,
+                'personalData' => $wholePerson->getPersonalData(),
+                'currentSeason' => $season,
     ));
   }
 }

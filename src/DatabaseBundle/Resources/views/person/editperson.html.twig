@@ -36,7 +36,20 @@
   </td>
   {% if personalData.getIsPlayer() %}
     <td>
-      {{ form_row(wholePersonForm.playerData) }}
+      {% if wholePerson.getPlayerData()|length == 1 %}
+
+      {% else %}
+      {% for formData in wholePersonForm.playerData %}
+        {% if loop.index < wholePerson.getPlayerData()|length and
+                 wholePerson.getPlayerData()[loop.index].getSeason() == currentSeason %} 
+          {{ form_start(formData) }}
+            {{ form_row(formData.payment) }}
+            {{ form_row(formData.category) }} 
+          {{ form_end(formData) }}
+        {% else %}
+        {% endif %}
+      {% endfor %}
+      {% endif %}
     </td>
   {% endif %}
   {% if personalData.getIsCoach() %}  

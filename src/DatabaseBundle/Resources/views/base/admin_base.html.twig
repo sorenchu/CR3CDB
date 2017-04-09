@@ -18,9 +18,11 @@
       }
       </style>
     {% endblock %}
-    <a href="/people/showAll">Gestión del equipo</a>
-    <a href="/user/changePassword">Cambiar contraseña</a>
-    <a href="{{ path('logout') }}">Logout</a>
+    <table>
+      <td><a href="/people/showAll">Gestión del equipo</a></td>
+      <td><a href="/user/changePassword">Cambiar contraseña</a></td>
+      <td><a href="{{ path('logout') }}">Logout</a></td>
+    </table>
     </head>
 
     <body>

@@ -20,16 +20,19 @@ class PlayerDataType extends AbstractType implements DataFormCreation
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
+    $this->season = $options['current_season'];
     $builder
         ->add('season', EntityType::class, array(
             'label' => 'Temporada',
             'class' => 'DatabaseBundle:Season',
-            'query_builder' => function (EntityRepository $er) {
+            /*'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('season');
-          },
-          'required' => true,
-          'multiple' => false,
-          'expanded' => false,
+            },*/
+            'choices' => $this->season,
+            'required' => true,
+            'multiple' => false,
+            'expanded' => false,
+            'disabled' => true,
           )
         )
         ->add('payment', MoneyType::class, array(
@@ -61,6 +64,7 @@ class PlayerDataType extends AbstractType implements DataFormCreation
   {
     $resolver->setDefaults(array(
               'data_class' => PlayerData::class,
+              'current_season' => null,
     ));
   }
 }
