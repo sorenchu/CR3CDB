@@ -198,4 +198,21 @@ class WholePerson
 
         return $this;
     }
+
+    /**
+     * Ask if it is present in the season
+     *
+     * @param $season
+     *
+     * @return boolean
+     */
+    public function isInCurrentSeason($season) 
+    {
+      foreach ($this->playerData as $pd)
+      {
+        if ($pd->getSeason() == $season)
+          return $pd;
+      }
+      return null;
+    }
 }
