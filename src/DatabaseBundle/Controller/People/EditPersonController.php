@@ -34,8 +34,7 @@ class EditPersonController extends Controller
       $playerData->setWholePerson($wholePerson);
       $playerData->setSeason($season);
 
-      $pd = $wholePerson->isInCurrentSeason($season);
-      if (null == $pd)
+      if (null == $wholePerson->isInCurrentSeason($season))
       {
         $wholePerson->getPlayerData()->add($playerData);
       }
@@ -53,7 +52,7 @@ class EditPersonController extends Controller
                 'seasonForm' => $seasonForm->createView(),
                 'wholePerson' => $wholePerson,
                 'personalData' => $wholePerson->getPersonalData(),
-                'pd' => $pd,
+                'curSeason' => $season,
     ));
   }
 }
