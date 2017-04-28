@@ -38,10 +38,8 @@ class WholePersonType extends AbstractType
             {
               $form->add('playerData', CollectionType::class,
                          array('entry_type' => PlayerDataType::class,
-                               'entry_options' => array(
-                                  'attr' => array('class' => 'season')
-                                 )
-                               )
+                               'allow_add' => true,
+                               'by_reference' => false,)
                         );
             }
             if ($personalData->getIsCoach())

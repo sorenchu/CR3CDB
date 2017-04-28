@@ -16,10 +16,11 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class SeasonType extends AbstractType
+class SeasonType extends AbstractType 
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
+    $this->season = $options['current_season'];
     $builder
         ->add('season', EntityType::class, array(
             'label' => 'Temporada',
@@ -27,6 +28,7 @@ class SeasonType extends AbstractType
             'query_builder' => function (EntityRepository $er) {
               return $er->createQueryBuilder('season');
             },
+            'choices' => $this->season,
             'required' => true,
             'multiple' => false,
             'expanded' => false,
@@ -35,6 +37,19 @@ class SeasonType extends AbstractType
         ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
         })
         ->add('save', SubmitType::class, array('label' => 'Mostrar'));
+  }
+
+  public function getBlockPrefix()
+  {
+     return 'season';
+  }
+
+  public function configureOptions(OptionsResolver $resolver)
+  {
+    $resolver->setDefaults(array(
+                'data_class' => Season::class,
+                'current_season' => null,
+    ));  
   }
 }
 ?>

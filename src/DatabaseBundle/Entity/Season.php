@@ -309,4 +309,14 @@ class Season
     {
         return $this->defaultseason;
     }
+
+    /**
+     * Get season
+     *
+     * @return this
+     */ 
+    public function getSeason()
+    {
+        return $this;
+    }
 }

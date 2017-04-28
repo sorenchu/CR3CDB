@@ -51,7 +51,7 @@ show_members:
     defaults: { _controller: DatabaseBundle:People/ShowPeople:showMembers }
 
 edit_person:
-    path:   /person/editPerson/{id}
+    path:   /person/editPerson/{id}/{seasonId}
     defaults: { _controller: DatabaseBundle:People/EditPerson:editPerson }
 
 delete_person:

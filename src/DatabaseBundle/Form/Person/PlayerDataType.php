@@ -4,7 +4,6 @@
 namespace DatabaseBundle\Form\Person;
 
 use DatabaseBundle\Entity\PlayerData;
-use DatabaseBundle\Form\FormFactory\DataFormCreation;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 use Doctrine\ORM\EntityRepository;
 
-class PlayerDataType extends AbstractType implements DataFormCreation
+class PlayerDataType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
@@ -25,9 +24,9 @@ class PlayerDataType extends AbstractType implements DataFormCreation
         ->add('season', EntityType::class, array(
             'label' => 'Temporada',
             'class' => 'DatabaseBundle:Season',
-            /*'query_builder' => function (EntityRepository $er) {
+            'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('season');
-            },*/
+            },
             'choices' => $this->season,
             'required' => true,
             'multiple' => false,
