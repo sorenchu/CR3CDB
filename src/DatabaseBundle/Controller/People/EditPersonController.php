@@ -24,6 +24,14 @@ class EditPersonController extends Controller
     $season = $seasonQueries->getSeason($seasonId);
     $seasonForm = $this->createForm(new SeasonType(), $season);
     $seasonForm->handleRequest($request);
+    if ($seasonForm->isSubmitted())
+    {
+      return $this->redirectToRoute('edit_person',
+                    array('id' => $id,
+                          'seasonId' => $seasonForm->get('season')
+                                          ->getData()->getId()
+      ));
+    }
 
     $wholePerson = $peopleQueries->getPerson($id);
     if ($wholePerson->getPersonalData()->getIsPlayer())
@@ -41,6 +49,7 @@ class EditPersonController extends Controller
     $wholePersonForm->handleRequest($request);
     if ($wholePersonForm->isSubmitted())
     {
+$logger->info("holi");
       $seasonForm = $this->createForm(new SeasonType(), $season);
       $peopleQueries->savePerson($wholePerson, true);
       $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);

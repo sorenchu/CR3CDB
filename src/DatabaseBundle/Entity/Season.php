@@ -319,4 +319,16 @@ class Season
     {
         return $this;
     }
+
+    /**
+     * Set season
+     *
+     * @param Season $season
+     *
+     * @return this
+     */
+    public function setSeason($season)
+    {
+        $this->id = $season->getId();
+    }
 }
