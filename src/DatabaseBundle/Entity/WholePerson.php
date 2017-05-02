@@ -73,30 +73,6 @@ class WholePerson
     }
 
     /**
-     * Set memberData
-     *
-     * @param \DatabaseBundle\Entity\MemberData $memberData
-     *
-     * @return WholePerson
-     */
-    public function setMemberData(\DatabaseBundle\Entity\MemberData $memberData = null)
-    {
-        $this->memberData = $memberData;
-
-        return $this;
-    }
-
-    /**
-     * Get memberData
-     *
-     * @return \DatabaseBundle\Entity\MemberData
-     */
-    public function getMemberData()
-    {
-        return $this->memberData;
-    }
-
-    /**
      * Set parentData
      *
      * @param \DatabaseBundle\Entity\ParentData $parentData
@@ -126,6 +102,7 @@ class WholePerson
     {
         $this->playerData = new \Doctrine\Common\Collections\ArrayCollection();
         $this->coachData = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->memberData = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -251,6 +228,71 @@ class WholePerson
     public function coachIsInCurrentSeason($season)
     {
       foreach ($this->coachData as $pd)
+      {
+        if ($pd->getSeason() == $season)
+          return $pd;
+      }
+      return null;
+    }
+
+    /**
+     * Add memberDatum
+     *
+     * @param \DatabaseBundle\Entity\MemberData $memberDatum
+     *
+     * @return WholePerson
+     */
+    public function addMemberDatum(\DatabaseBundle\Entity\MemberData $memberDatum)
+    {
+        $this->memberData[] = $memberDatum;
+
+        return $this;
+    }
+
+    /**
+     * Remove memberDatum
+     *
+     * @param \DatabaseBundle\Entity\MemberData $memberDatum
+     */
+    public function removeMemberDatum(\DatabaseBundle\Entity\MemberData $memberDatum)
+    {
+        $this->memberData->removeElement($memberDatum);
+    }
+
+    /**
+     * Get memberData
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMemberData()
+    {
+        return $this->memberData;
+    }
+
+    /**
+     * Set memberData
+     *
+     * @param \DatabaseBundle\Entity\MemberData $memberData
+     *
+     * @return WholePerson
+     */
+    public function setMemberData(\DatabaseBundle\Entity\MemberData $memberData = null)
+    {
+        $this->memberData = $memberData;
+
+        return $this;
+    }
+
+    /**
+     * Ask if member is present in the season
+     *
+     * @param $season
+     *
+     * @return boolean
+     */
+    public function memberIsInCurrentSeason($season)
+    {
+      foreach ($this->memberData as $pd)
       {
         if ($pd->getSeason() == $season)
           return $pd;

@@ -16,11 +16,6 @@ DatabaseBundle\Entity\MemberData:
             type: integer
     lifecycleCallbacks: {  }
 
-    oneToOne:
-        wholePerson:
-            targetEntity: WholePerson
-            mappedBy: memberData
-
     manyToOne:
         season:
             targetEntity: Season
@@ -29,3 +24,10 @@ DatabaseBundle\Entity\MemberData:
                 name: season_id
                 referencedColumnName: id
             cascade: ["persist"]
+
+        wholePerson:
+            targetEntity: WholePerson
+            inversedBy: memberData
+            joinColumn:
+                name: wholePerson_id
+                referencedColumnName: id

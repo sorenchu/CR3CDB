@@ -52,7 +52,11 @@ class WholePersonType extends AbstractType
             }
             if ($personalData->getIsMember())
             {
-              $form->add('memberData', MemberDataType::class);
+              $form->add('memberData', CollectionType::class,
+                         array('entry_type' => MemberDataType::class,
+                               'allow_add' => true,
+                               'by_reference' => false,)
+                        );
             }
             if ($personalData->getIsParent())
             {
