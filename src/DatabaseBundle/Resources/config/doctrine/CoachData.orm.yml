@@ -18,12 +18,6 @@ DatabaseBundle\Entity\CoachData:
             nullable: true
     lifecycleCallbacks: {  }
 
-    oneToOne:
-        wholePerson:
-            targetEntity: WholePerson
-            mappedBy: coachData
-            cascade: ["persist", "remove"]
-
     manyToOne:
         season:
             targetEntity: Season
@@ -32,3 +26,10 @@ DatabaseBundle\Entity\CoachData:
                 name: season_id
                 referencedColumnName: id
             cascade: ["persist"]
+
+        wholePerson:
+            targetEntity: WholePerson
+            inversedBy: coachData
+            joinColumn:
+                name: wholePerson_id
+                referencedColumnName: id

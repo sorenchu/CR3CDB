@@ -73,30 +73,6 @@ class WholePerson
     }
 
     /**
-     * Set coachData
-     *
-     * @param \DatabaseBundle\Entity\CoachData $coachData
-     *
-     * @return WholePerson
-     */
-    public function setCoachData(\DatabaseBundle\Entity\CoachData $coachData = null)
-    {
-        $this->coachData = $coachData;
-
-        return $this;
-    }
-
-    /**
-     * Get coachData
-     *
-     * @return \DatabaseBundle\Entity\CoachData
-     */
-    public function getCoachData()
-    {
-        return $this->coachData;
-    }
-
-    /**
      * Set memberData
      *
      * @param \DatabaseBundle\Entity\MemberData $memberData
@@ -149,6 +125,7 @@ class WholePerson
     public function __construct()
     {
         $this->playerData = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->coachData = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -200,15 +177,80 @@ class WholePerson
     }
 
     /**
-     * Ask if it is present in the season
+     * Ask if player is present in the season
      *
      * @param $season
      *
      * @return boolean
      */
-    public function isInCurrentSeason($season) 
+    public function playerIsInCurrentSeason($season) 
     {
       foreach ($this->playerData as $pd)
+      {
+        if ($pd->getSeason() == $season)
+          return $pd;
+      }
+      return null;
+    }
+
+    /**
+     * Add coachDatum
+     *
+     * @param \DatabaseBundle\Entity\CoachData $coachDatum
+     *
+     * @return WholePerson
+     */
+    public function addCoachDatum(\DatabaseBundle\Entity\CoachData $coachDatum)
+    {
+        $this->coachData[] = $coachDatum;
+
+        return $this;
+    }
+
+    /**
+     * Remove coachDatum
+     *
+     * @param \DatabaseBundle\Entity\CoachData $coachDatum
+     */
+    public function removeCoachDatum(\DatabaseBundle\Entity\CoachData $coachDatum)
+    {
+        $this->coachData->removeElement($coachDatum);
+    }
+
+    /**
+     * Get coachData
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCoachData()
+    {
+        return $this->coachData;
+    }
+
+    /**
+     * Set coachData
+     *
+     * @param \DatabaseBundle\Entity\CoachData $coachData
+     *
+     * @return WholePerson
+     */
+    public function setCoachData(\DatabaseBundle\Entity\CoachData $coachData = null)
+    {
+        $this->coachData = $coachData;
+
+        return $this;
+    }
+
+    /**
+     * Ask if coach is present in the season
+     *
+     * @param $season
+     *
+     * @return boolean
+     */
+    public function coachIsInCurrentSeason($season)
+    {
+      foreach ($this->coachData as $pd)
       {
         if ($pd->getSeason() == $season)
           return $pd;

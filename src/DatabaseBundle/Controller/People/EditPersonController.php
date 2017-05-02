@@ -6,6 +6,7 @@ namespace DatabaseBundle\Controller\People;
 use DatabaseBundle\Form\Person\WholePersonType;
 use DatabaseBundle\Form\SeasonType;
 use DatabaseBundle\Entity\PlayerData;
+use DatabaseBundle\Entity\CoachData;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
@@ -39,9 +40,20 @@ class EditPersonController extends Controller
       $playerData = new PlayerData();
       $playerData->setWholePerson($wholePerson);
       $playerData->setSeason($season);
-      if (null == $wholePerson->isInCurrentSeason($season))
+      if (null == $wholePerson->playerIsInCurrentSeason($season))
       {
         $wholePerson->getPlayerData()->add($playerData);
+      }
+    }
+
+    if ($wholePerson->getPersonalData()->getIsCoach())
+    {
+      $coachData = new CoachData();
+      $coachData->setWholePerson($wholePerson);
+      $coachData->setSeason($season);
+      if (null == $wholePerson->coachIsInCurrentSeason($season))
+      {
+        $wholePerson->getCoachData()->add($coachData);
       }
     }
 
@@ -49,7 +61,6 @@ class EditPersonController extends Controller
     $wholePersonForm->handleRequest($request);
     if ($wholePersonForm->isSubmitted())
     {
-$logger->info("holi");
       $seasonForm = $this->createForm(new SeasonType(), $season);
       $peopleQueries->savePerson($wholePerson, true);
       $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);

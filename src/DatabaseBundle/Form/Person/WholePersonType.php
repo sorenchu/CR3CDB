@@ -44,7 +44,11 @@ class WholePersonType extends AbstractType
             }
             if ($personalData->getIsCoach())
             {
-              $form->add('coachData', CoachDataType::class);
+              $form->add('coachData', CollectionType::class,
+                         array('entry_type' => CoachDataType::class,
+                               'allow_add' => true,
+                               'by_reference' => false,)
+                        );
             }
             if ($personalData->getIsMember())
             {
