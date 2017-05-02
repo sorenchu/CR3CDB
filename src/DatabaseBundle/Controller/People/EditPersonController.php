@@ -8,6 +8,7 @@ use DatabaseBundle\Form\SeasonType;
 use DatabaseBundle\Entity\PlayerData;
 use DatabaseBundle\Entity\CoachData;
 use DatabaseBundle\Entity\MemberData;
+use DatabaseBundle\Entity\ParentData;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
@@ -66,6 +67,17 @@ class EditPersonController extends Controller
       if (null == $wholePerson->memberIsInCurrentSeason($season))
       {
         $wholePerson->getMemberData()->add($memberData);
+      }
+    }
+
+    if ($wholePerson->getPersonalData()->getIsParent())
+    {
+      $parentData = new ParentData();
+      $parentData->setWholePerson($wholePerson);
+      $parentData->setSeason($season);
+      if (null == $wholePerson->parentIsInCurrentSeason($season))
+      {
+        $wholePerson->getParentData()->add($parentData);
       }
     }
 

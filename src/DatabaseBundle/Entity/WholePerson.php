@@ -73,29 +73,6 @@ class WholePerson
     }
 
     /**
-     * Set parentData
-     *
-     * @param \DatabaseBundle\Entity\ParentData $parentData
-     *
-     * @return WholePerson
-     */
-    public function setParentData(\DatabaseBundle\Entity\ParentData $parentData = null)
-    {
-        $this->parentData = $parentData;
-
-        return $this;
-    }
-
-    /**
-     * Get parentData
-     *
-     * @return \DatabaseBundle\Entity\ParentData
-     */
-    public function getParentData()
-    {
-        return $this->parentData;
-    }
-    /**
      * Constructor
      */
     public function __construct()
@@ -103,6 +80,7 @@ class WholePerson
         $this->playerData = new \Doctrine\Common\Collections\ArrayCollection();
         $this->coachData = new \Doctrine\Common\Collections\ArrayCollection();
         $this->memberData = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->parentData = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -293,6 +271,71 @@ class WholePerson
     public function memberIsInCurrentSeason($season)
     {
       foreach ($this->memberData as $pd)
+      {
+        if ($pd->getSeason() == $season)
+          return $pd;
+      }
+      return null;
+    }
+
+    /**
+     * Add parentDatum
+     *
+     * @param \DatabaseBundle\Entity\ParentData $parentDatum
+     *
+     * @return WholePerson
+     */
+    public function addParentDatum(\DatabaseBundle\Entity\ParentData $parentDatum)
+    {
+        $this->parentData[] = $parentDatum;
+
+        return $this;
+    }
+
+    /**
+     * Remove parentDatum
+     *
+     * @param \DatabaseBundle\Entity\ParentData $parentDatum
+     */
+    public function removeParentDatum(\DatabaseBundle\Entity\ParentData $parentDatum)
+    {
+        $this->parentData->removeElement($parentDatum);
+    }
+
+    /**
+     * Set parentData
+     *
+     * @param \DatabaseBundle\Entity\ParentData $parentData
+     *
+     * @return WholePerson
+     */
+    public function setParentData(\DatabaseBundle\Entity\ParentData $parentData = null)
+    {
+        $this->parentData = $parentData;
+
+        return $this;
+    }
+
+    /**
+     * Get parentData
+     *
+     * @return \DatabaseBundle\Entity\ParentData
+     */
+    public function getParentData()
+    {
+        return $this->parentData;
+    }
+    
+    /**
+     * Ask if parent is present in the season
+     *
+     * @param $season
+     *
+     * @return boolean
+     */
+    public function parentIsInCurrentSeason($season)
+    {
+      foreach ($this->parentData as $pd)
       {
         if ($pd->getSeason() == $season)
           return $pd;

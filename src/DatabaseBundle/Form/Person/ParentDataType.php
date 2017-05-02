@@ -4,7 +4,6 @@
 namespace DatabaseBundle\Form\Person;
 
 use DatabaseBundle\Entity\ParentData;
-use DatabaseBundle\Form\FormFactory\DataFormCreation;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,10 +15,11 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 use Doctrine\ORM\EntityRepository;
 
-class ParentDataType extends AbstractType implements DataFormCreation
+class ParentDataType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
+    $this->season = $options['current_season'];
     $builder
         ->add('season', EntityType::class, array(
             'label' => 'Temporada',
@@ -27,9 +27,11 @@ class ParentDataType extends AbstractType implements DataFormCreation
             'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('season');
           },
+          'choices' => $this->season,
           'required' => true,
           'multiple' => false,
           'expanded' => false,
+          'disabled' => true,
           )
         )
         ->add('playerdata', EntityType::class, array(
@@ -59,6 +61,7 @@ class ParentDataType extends AbstractType implements DataFormCreation
   {
     $resolver->setDefaults(array(
               'data_class' => ParentData::class,
+              'current_season' => null,
     ));
   }
 }

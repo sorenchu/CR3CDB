@@ -41,8 +41,7 @@
           {{ form_start(formData) }}
             {{ form_row(formData.payment) }}
             {{ form_row(formData.category) }} 
-            {{ form_row(formData.season,
-                { 'attr': {'class': 'hidden-row'}} ) }}
+            {{ form_row(formData.season) }}
           {{ form_end(formData) }}
         {% else %} 
           {{ form_widget(formData, 
@@ -59,8 +58,7 @@
           {{ form_start(formData) }}
             {{ form_row(formData.salary) }}
             {{ form_row(formData.category) }} 
-            {{ form_row(formData.season,
-                { 'attr': {'class': 'hidden-row'}} ) }}
+            {{ form_row(formData.season) }}
           {{ form_end(formData) }}
         {% else %} 
           {{ form_widget(formData, 
@@ -77,8 +75,7 @@
           {{ form_start(formData) }}
             {{ form_row(formData.memberId) }}
             {{ form_row(formData.payment) }} 
-            {{ form_row(formData.season,
-                { 'attr': {'class': 'hidden-row'}} ) }}
+            {{ form_row(formData.season) }}
           {{ form_end(formData) }}
         {% else %} 
           {{ form_widget(formData, 
@@ -90,7 +87,18 @@
   {% endif%}
   {% if personalData.getIsParent() %}
     <td> 
-      {{ form_row(wholePersonForm.parentData) }}
+      {% for formData in wholePersonForm.parentData %}
+        {% if formData.vars.value.season.seasontext == curSeason %}
+          {{ form_start(formData) }}
+            {{ form_row(formData.season) }}
+            {{ form_row(formData.playerdata) }}
+          {{ form_end(formData) }}
+        {% else %} 
+          {{ form_widget(formData, 
+              { 'attr': {'style': 'display:none'} })
+          }}
+        {% endif %}
+      {% endfor %}
     </td>
   {% endif%}
 </tr>

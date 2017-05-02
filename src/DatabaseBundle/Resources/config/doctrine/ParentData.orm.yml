@@ -11,11 +11,6 @@ DatabaseBundle\Entity\ParentData:
     fields:
     lifecycleCallbacks: {  }
 
-    oneToOne:
-        wholePerson:
-            targetEntity: WholePerson
-            mappedBy: parentData
-
     manyToMany:
         playerData:
             targetEntity: PlayerData
@@ -39,3 +34,10 @@ DatabaseBundle\Entity\ParentData:
                 name: season_id
                 referencedColumnName: id
             cascade: ["persist"]
+
+        wholePerson:
+            targetEntity: WholePerson
+            inversedBy: parentData
+            joinColumn:
+                name: wholePerson_id
+                referencedColumnName: id

@@ -40,4 +40,3 @@ DatabaseBundle\Entity\PlayerData:
             joinColumn:
                 name: wholePerson_id
                 referencedColumnName: id
-            #cascade: ["persist", "remove"]
