@@ -14,6 +14,7 @@ DatabaseBundle\Entity\MemberData:
             nullable: true
         memberId:
             type: integer
+            nullable: true
     lifecycleCallbacks: {  }
 
     manyToOne:
