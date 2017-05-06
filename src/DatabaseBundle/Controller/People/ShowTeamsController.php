@@ -79,6 +79,7 @@ class ShowTeamsController extends Controller
                   'coachData' => $coachData,
                   'seasonForm' => $seasonForm->createView(),
                   'teamName' => $specificTeam,
+                  'season' => $this->season,
                   'seasonNumber' => $seasonNumber));
     }
     return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
@@ -112,12 +113,12 @@ class ShowTeamsController extends Controller
                   'coachData' => $coachData,
                   'seasonForm' => $seasonForm->createView(),
                   'teamName' => $specificTeam,
+                  'season' => $this->season,
                   'seasonNumber' => $seasonNumber));
     }
     else
     {
       return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
-                  'seasonForm' => $seasonForm->createView(),
                   'teamName' => $specificTeam,
                   'seasonNumber' => $seasonNumber));
     }
