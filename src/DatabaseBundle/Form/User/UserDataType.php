@@ -1,7 +1,7 @@
 <?php
-# src/DatabaseBundle/Form/UserDataType.php
+# src/DatabaseBundle/Form/User/UserDataType.php
 
-namespace DatabaseBundle\Form;
+namespace DatabaseBundle\Form\User;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
