@@ -27,7 +27,8 @@ class ShowPeopleController extends Controller
   {
     $wholePerson = $this->teamQueries->getAllMembers();
     return $this->render('DatabaseBundle:people:showall.html.twig', array(
-                'personalData' => $wholePerson));
+                'personalData' => $wholePerson,
+                'season' => $this->seasonQueries->getDefaultSeason()));
   }
 
   public function showPlayersAction()
@@ -58,7 +59,8 @@ class ShowPeopleController extends Controller
       return $this->render('DatabaseBundle:people:showparents.html.twig', array(
                   'parentData' => $parentData,
                   'seasonForm' => $seasonForm->createView(),
-                  'seasonNumber' => $seasonNumber
+                  'seasonNumber' => $seasonNumber,
+                  'season' => $this->season,
       ));
     }
     else
@@ -91,6 +93,7 @@ class ShowPeopleController extends Controller
                   'memberData' => $memberData,
                   'seasonForm' => $seasonForm->createView(),
                   'seasonNumber' => $seasonNumber,
+                  'season' => $this->season,
       ));
     }
     else
