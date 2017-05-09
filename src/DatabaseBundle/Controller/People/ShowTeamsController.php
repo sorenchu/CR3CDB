@@ -5,7 +5,7 @@ namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
-use DatabaseBundle\Form\SeasonType;
+use DatabaseBundle\Form\Season\SeasonType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

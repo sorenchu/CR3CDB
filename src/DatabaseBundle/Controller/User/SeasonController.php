@@ -5,7 +5,7 @@
 namespace DatabaseBundle\Controller\User;
 
 use DatabaseBundle\Entity\Season;
-use DatabaseBundle\Form\AddSeasonType;
+use DatabaseBundle\Form\Season\AddSeasonType;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

@@ -5,7 +5,7 @@
 namespace DatabaseBundle\Controller\User;
 
 use DatabaseBundle\Entity\User;
-use DatabaseBundle\Form\EditUserType;
+use DatabaseBundle\Form\User\EditUserType;
 use DatabaseBundle\Controller\DBQuery\UserQueries;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
