@@ -4,7 +4,6 @@
 namespace DatabaseBundle\Form\Person;
 
 use DatabaseBundle\Entity\PersonalData;
-use DatabaseBundle\Form\FormFactory\DataFormCreation;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class PersonalDataType extends AbstractType implements DataFormCreation
+class PersonalDataType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
