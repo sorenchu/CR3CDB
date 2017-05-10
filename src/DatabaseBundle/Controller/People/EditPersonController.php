@@ -4,7 +4,7 @@
 namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Form\Person\WholePersonType;
-use DatabaseBundle\Form\SeasonType;
+use DatabaseBundle\Form\Season\SeasonType;
 use DatabaseBundle\Entity\PlayerData;
 use DatabaseBundle\Entity\CoachData;
 use DatabaseBundle\Entity\MemberData;

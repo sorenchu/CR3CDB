@@ -5,7 +5,7 @@
 namespace DatabaseBundle\Controller\Admin;
 
 use DatabaseBundle\Entity\User;
-use DatabaseBundle\Form\UserDataType;
+use DatabaseBundle\Form\User\UserDataType;
 
 use DatabaseBundle\Controller\DBQuery\UserQueries;
 

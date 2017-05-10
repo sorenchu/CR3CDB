@@ -4,7 +4,6 @@
 namespace DatabaseBundle\Form\Person;
 
 use DatabaseBundle\Entity\MemberData;
-use DatabaseBundle\Form\FormFactory\DataFormCreation;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 use Doctrine\ORM\EntityRepository;
 
-class MemberDataType extends AbstractType implements DataFormCreation
+class MemberDataType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {

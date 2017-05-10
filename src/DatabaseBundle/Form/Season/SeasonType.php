@@ -1,7 +1,7 @@
 <?php
-# src/DatabaseBundle/Form/SeasonType.php
+# src/DatabaseBundle/Form/Season/SeasonType.php
 
-namespace DatabaseBundle\Form;
+namespace DatabaseBundle\Form\Season;
 
 Use DatabaseBundle\Entity\Season;
 

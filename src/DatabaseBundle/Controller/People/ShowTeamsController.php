@@ -5,7 +5,7 @@ namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
-use DatabaseBundle\Form\SeasonType;
+use DatabaseBundle\Form\Season\SeasonType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,8 +79,9 @@ class ShowTeamsController extends Controller
                   'coachData' => $coachData,
                   'seasonForm' => $seasonForm->createView(),
                   'teamName' => $specificTeam,
+                  'seasonNumber' => $seasonNumber,
                   'season' => $this->season,
-                  'seasonNumber' => $seasonNumber));
+        ));
     }
     return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
                 'teamName' => $specificTeam,
@@ -113,8 +114,9 @@ class ShowTeamsController extends Controller
                   'coachData' => $coachData,
                   'seasonForm' => $seasonForm->createView(),
                   'teamName' => $specificTeam,
+                  'seasonNumber' => $seasonNumber,
                   'season' => $this->season,
-                  'seasonNumber' => $seasonNumber));
+        ));
     }
     else
     {
