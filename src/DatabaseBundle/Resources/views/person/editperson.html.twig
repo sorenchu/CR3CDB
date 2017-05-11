@@ -32,7 +32,18 @@
 </tr>
 <tr>
   <td>
-    {{ form_row(wholePersonForm.personalData) }}
+    {{ form_row(wholePersonForm.personalData.name) }}
+    {{ form_row(wholePersonForm.personalData.surname) }}
+    {{ form_row(wholePersonForm.personalData.nickname) }}
+    {{ form_row(wholePersonForm.personalData.email) }}
+    {{ form_row(wholePersonForm.personalData.dni) }}
+    {{ form_row(wholePersonForm.personalData.phone) }}
+    {{ form_row(wholePersonForm.personalData.birthday) }}
+    {{ form_row(wholePersonForm.personalData.sex) }}
+    {{ form_row(wholePersonForm.personalData.isPlayer) }}
+    {{ form_row(wholePersonForm.personalData.isCoach) }}
+    {{ form_row(wholePersonForm.personalData.isMember) }}
+    {{ form_row(wholePersonForm.personalData.isParent) }}
   </td>
   {% if personalData.getIsPlayer() %}
     <td>
