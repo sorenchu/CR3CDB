@@ -112,5 +112,13 @@ class AddPersonController extends Controller
               array()
             );
   }
+
+  public function deleteFromParentAction($id, $season)
+  {
+    $this->peopleQueries->deleteFromParent($id, $season);
+    return $this->redirectToRoute('show_parents',
+              array()
+            );
+  }
 }
 ?>

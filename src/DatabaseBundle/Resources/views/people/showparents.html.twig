@@ -34,7 +34,7 @@
         <td> {{ data.getWholePerson().getPersonalData().getPhone() }} </td>
         <td> {{ data.getWholePerson().getPersonalData().getEmail() }} </td>
         <td> <a href="/person/editPerson/{{data.getWholePerson().getId()}}/{{season.getId()}}"> Editar </a> </td>
-        <td> <a href="/person/deletePerson/{{data.getWholePerson().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+        <td> <a href="/person/deletePerson/{{data.getId()}}/{{season.getId()}}" onclick="return confirm('¿Estás seguro de querer eliminar a este padre?')"> Eliminar </a> </td>
       </tr>
     {% endfor %}
   {% endfor %}

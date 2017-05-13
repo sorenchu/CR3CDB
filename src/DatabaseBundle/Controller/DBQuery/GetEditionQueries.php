@@ -186,5 +186,21 @@ class GetEditionQueries extends Controller
     $em->remove($member);
     $em->flush();
   }
+
+  public function deleteFromParent($id, $seasonId)
+  {
+    $em = $this->personController->getDoctrine()->getManager();
+    $parent = $em->getRepository('DatabaseBundle:ParentData')
+                  ->createQueryBuilder('parents')
+                  ->join('parents.season', 'season')
+                  ->where('season.id = := seasonId')
+                  ->andWhere('parents.id = :id')
+                  ->setParameter('seasonId', $seasonId)
+                  ->setParameter('id', $id)
+                  ->getQuery()
+                  ->getResult()[0];
+    $em->remove($parent);
+    $em->flush();
+  }
 }
 ?>
