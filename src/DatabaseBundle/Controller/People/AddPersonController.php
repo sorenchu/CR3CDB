@@ -104,5 +104,13 @@ class AddPersonController extends Controller
         break;
     }
   }
+
+  public function deleteFromMemberAction($id, $season)
+  {
+    $this->peopleQueries->deleteFromMember($id, $season);
+    return $this->redirectToRoute('show_members',
+              array()
+            );
+  }
 }
 ?>

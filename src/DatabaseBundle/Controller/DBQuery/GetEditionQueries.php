@@ -170,5 +170,21 @@ class GetEditionQueries extends Controller
     $em->remove($teamMember);
     $em->flush();
   }
+
+  public function deleteFromMember($id, $seasonId)
+  {
+    $em = $this->personController->getDoctrine()->getManager();
+    $member = $em->getRepository('DatabaseBundle:MemberData')
+                  ->createQueryBuilder('members')
+                  ->join('members.season', 'season')
+                  ->where('season.id = :seasonId')
+                  ->andWhere('members.id = :id')
+                  ->setParameter('seasonId', $seasonId)
+                  ->setParameter('id', $id)
+                  ->getQuery()
+                  ->getResult()[0];
+    $em->remove($member);
+    $em->flush();
+  }
 }
 ?>
