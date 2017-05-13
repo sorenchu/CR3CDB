@@ -58,6 +58,10 @@ delete_person:
     path:   /person/deletePerson/{id}
     defaults: { _controller: DatabaseBundle:People/AddPerson:deletePerson }
 
+delete_from_team:
+    path:   /person/deleteFromTeam/{id}/{season}/{table}
+    defaults: { _controller: DatabaseBundle:People/AddPerson:deleteFromTeam }
+
 login:
     path:   /login
     defaults: { _controller: DatabaseBundle:Default:login }

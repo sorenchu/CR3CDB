@@ -27,7 +27,7 @@
       <td> {{ data.getWholePerson().getPersonalData().getPhone() }} </td>
       <td> {{ data.getPayment() }} </td>
       <td> <a href="/person/editPerson/{{data.getWholePerson().getId()}}/{{season.getId()}}"> Editar </a> </td>
-      <td> <a href="/person/deletePerson/{{data.getWholePerson().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+      <td> <a href="/person/deleteFromTeam/{{data.getId()}}/{{season.getId()}}/0" onclick="return confirm('¿Estás seguro de querer eliminar al jugardor de este equipo?')"> Eliminar </a> </td>
     </tr>
   {% endfor %}
   {% for data in coachData %}
@@ -39,7 +39,7 @@
       <td> {{ data.getWholePerson().getPersonalData().getPhone() }} </td>
       <td> {{ data.getSalary() }} </td>
       <td> <a href="/person/editPerson/{{data.getWholePerson().getId()}}/{{season.getId()}}"> Editar </a> </td>
-      <td> <a href="/person/deletePerson/{{data.getWholePerson().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+      <td> <a href="/person/deletePerson/{{data.getId()}}/{{season.getId()}}/1" onclick="return confirm('¿Estás seguro de querer eliminar al entrenador de este equipo?')"> Eliminar </a> </td>
     </tr>
   {% endfor %}
   </table>

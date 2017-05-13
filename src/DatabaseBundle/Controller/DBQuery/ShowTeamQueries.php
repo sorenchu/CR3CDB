@@ -53,7 +53,7 @@ class ShowTeamQueries extends Controller
 
   public function getMembers($seasonId)
   {
-    return $this->personController                                                                            
+    return $this->personController
               ->getDoctrine()
                 ->getRepository('DatabaseBundle:MemberData')
                   ->createQueryBuilder('members')

@@ -127,6 +127,48 @@ class GetEditionQueries extends Controller
     $em->remove($wholePerson);
     $em->flush();
   }
-}
 
+  public function getCategoryFromPerson($id, $table)
+  {
+    $em = $this->personController->getDoctrine()->getManager();
+    if (0 == $table)
+      return $em->getRepository('DatabaseBundle:PlayerData')
+                ->find($id)
+                ->getCategory();
+    return $em->getRepository('DatabaseBundle:CoachData')
+                ->find($id)
+                ->getCategory();
+  }
+
+  public function deleteFromTeam($id, $seasonId, $table)
+  {
+    $em = $this->personController->getDoctrine()->getManager();
+    if (0 == $table) 
+    {
+      $teamMember = $em->getRepository('DatabaseBundle:PlayerData')
+                        ->createQueryBuilder('players')
+                        ->join('players.season', 'season')
+                        ->where('season.id = :seasonId')
+                        ->andWhere('players.id = :id')
+                        ->setParameter('seasonId', $seasonId)
+                        ->setParameter('id', $id)
+                        ->getQuery()
+                        ->getResult()[0];
+    }
+    else
+    {
+      $teamMember = $em->getRepository('DatabaseBundle:CoachData')
+                        ->createQueryBuilder('coaches')
+                        ->join('coaches.season', 'season')
+                        ->where('season.id = :seasonId')
+                        ->andWhere('coaches.id = :id')
+                        ->setParameter('seasonId', $seasonId)
+                        ->setParameter('id', $id)
+                        ->getQuery()
+                        ->getResult()[0];
+    }
+    $em->remove($teamMember);
+    $em->flush();
+  }
+}
 ?>

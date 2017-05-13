@@ -8,6 +8,7 @@ use DatabaseBundle\Form\Person\WholePersonType;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
+use DatabaseBundle\Controller\DBQuery\SeasonQueries;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,8 +47,62 @@ class AddPersonController extends Controller
     $this->peopleQueries->deletePerson($id);
     $showAllQuery = new ShowTeamQueries($this);
     $wholePerson = $showAllQuery->getAllMembers();
+    $seasonQueries = new SeasonQueries($this);
+    
     return $this->render('DatabaseBundle:people:showall.html.twig', array(
-                'personalData' => $wholePerson));
+                'personalData' => $wholePerson,
+                'season' => $seasonQueries->getDefaultSeason(),
+                )
+          );
+  }
+
+  public function deleteFromTeamAction($id, $season, $table)
+  {
+    $category = $this->peopleQueries->getCategoryFromPerson($id, $table);
+    $this->peopleQueries->deleteFromTeam($id, $season, $table);
+    return $this->redirectToTeam($category, $season);
+  }
+
+  private function redirectToTeam($category)
+  {
+    switch($category)
+    {
+      case 'senior':
+        return $this->redirectToRoute('show_senior',
+                  array()
+               );
+        break;
+
+      case 'female':
+        return $this->redirectToRoute('show_female',
+                  array()
+               );
+        break;
+
+      case 'cadete':
+        return $this->redirectToRoute('show_cadete',
+                  array()
+               );
+        break;
+
+      case 'alevin':
+        return $this->redirectToRoute('show_alevin',
+                  array()
+               );
+        break;
+
+      case 'benjamin':
+        return $this->redirectToRoute('show_benjamin',
+                  array()
+               );
+        break;
+
+      case 'prebenjamin':
+        return $this->redirectToRoute('show_prebenjamin',
+                  array()
+               );
+        break;
+    }
   }
 }
 ?>

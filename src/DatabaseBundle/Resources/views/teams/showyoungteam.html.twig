@@ -30,7 +30,7 @@
           <td> {{ data.getWholePerson().getPersonalData().getPhone() }} </td>
           <td> {{ data.getPayment() }} </td>
           <td> <a href="/person/editPerson/{{data.getWholePerson().getId()}}/{{season.getId()}}"> Editar </a> </td>
-          <td> <a href="/person/deletePerson/{{data.getWholePerson().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+          <td> <a href="/person/deletePerson/{{data.getWholePerson().getId()}}" onclick="return confirm('¿Estás seguro de querer eliminar al jugador de este equipo?')"> Eliminar </a> </td>
         </tr>
       {% endfor %}
     {% else %}
@@ -42,7 +42,7 @@
         <td> {{ data.getWholePerson().getPersonalData().getPhone() }} </td>
         <td> {{ data.getPayment() }} </td>
         <td> <a href="/person/editPerson/{{data.getWholePerson().getId()}}/{{season.getId()}}"> Editar </a> </td>
-        <td> <a href="/person/deletePerson/{{data.getWholePerson().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+        <td> <a href="/person/deletePerson/{{data.getWholePerson().getId()}}" onclick="return confirm('¿Estás seguro de querer al entrenador de este equipo?')"> Eliminar </a> </td>
     {% endif %}
   {% endfor %}
   {% for data in coachData %}
