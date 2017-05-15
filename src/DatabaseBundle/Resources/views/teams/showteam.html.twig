@@ -23,6 +23,7 @@
       <td> {{ data.getWholePerson().getPersonalData().getName() }}
          {{ data.getWholePerson().getPersonalData().getSurname() }} </td>
       <td> {{ data.getWholePerson().getPersonalData().getNickname() }} </td>
+      <td> {{ data.getNumber() }} </td>
       <td> {{ data.getWholePerson().getPersonalData().getEmail() }} </td>
       <td> {{ data.getWholePerson().getPersonalData().getPhone() }} </td>
       <td> {{ data.getPayment() }} </td>
@@ -35,11 +36,12 @@
       <td> {{ data.getWholePerson().getPersonalData().getName() }}
            {{ data.getWholePerson().getPersonalData().getSurname() }} (Entrenador) </td>
       <td> {{ data.getWholePerson().getPersonalData().getNickname() }} </td>
+      <td> {{ data.getNumber() }} </td>
       <td> {{ data.getWholePerson().getPersonalData().getEmail() }} </td>
       <td> {{ data.getWholePerson().getPersonalData().getPhone() }} </td>
       <td> {{ data.getSalary() }} </td>
       <td> <a href="/person/editPerson/{{data.getWholePerson().getId()}}/{{season.getId()}}"> Editar </a> </td>
-      <td> <a href="/person/deletePerson/{{data.getId()}}/{{season.getId()}}/1" onclick="return confirm('¿Estás seguro de querer eliminar al entrenador de este equipo?')"> Eliminar </a> </td>
+      <td> <a href="/person/deleteFromTeam/{{data.getId()}}/{{season.getId()}}/1" onclick="return confirm('¿Estás seguro de querer eliminar al entrenador de este equipo?')"> Eliminar </a> </td>
     </tr>
   {% endfor %}
   </table>
