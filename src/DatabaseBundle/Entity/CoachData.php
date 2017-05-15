@@ -138,4 +138,33 @@ class CoachData
     {
         return $this->wholePerson;
     }
+    /**
+     * @var integer
+     */
+    private $number;
+
+
+    /**
+     * Set number
+     *
+     * @param integer $number
+     *
+     * @return CoachData
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
+    }
+
+    /**
+     * Get number
+     *
+     * @return integer
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
 }

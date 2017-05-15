@@ -16,6 +16,10 @@ DatabaseBundle\Entity\CoachData:
             type: string
             length: '20'
             nullable: true
+        number:
+            type: integer
+            nullable: true
+
     lifecycleCallbacks: {  }
 
     manyToOne:

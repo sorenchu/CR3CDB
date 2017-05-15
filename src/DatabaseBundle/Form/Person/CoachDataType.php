@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
@@ -21,6 +22,11 @@ class CoachDataType extends AbstractType
   {
     $this->season = $options['current_season'];
     $builder
+        ->add('number', TextType::class, array(
+            'label' => 'Número de ficha',
+            'required' => false,
+            )
+        )
         ->add('season', EntityType::class, array(
             'label' => 'Temporada',
             'class' => 'DatabaseBundle:Season',

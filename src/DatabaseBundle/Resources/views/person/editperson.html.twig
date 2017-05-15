@@ -38,6 +38,7 @@
     <td>
       {% for formData in wholePersonForm.playerData %}
         {% if formData.vars.value.season.seasontext == curSeason %}
+            {{ form_row(formData.number) }}
             {{ form_row(formData.payment) }}
             {{ form_row(formData.category) }} 
             {{ form_row(formData.season) }}
@@ -53,6 +54,7 @@
     <td>
       {% for formData in wholePersonForm.coachData %}
         {% if formData.vars.value.season.seasontext == curSeason %}
+            {{ form_row(formData.number) }}
             {{ form_row(formData.salary) }}
             {{ form_row(formData.category) }} 
             {{ form_row(formData.season) }}

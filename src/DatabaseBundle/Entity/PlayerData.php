@@ -191,4 +191,33 @@ class PlayerData
         return $this->getWholePerson()->getPersonalData()->getName().' '
                   .$this->getWholePerson()->getPersonalData()->getSurname();
     }
+    /**
+     * @var integer
+     */
+    private $number;
+
+
+    /**
+     * Set number
+     *
+     * @param integer $number
+     *
+     * @return PlayerData
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
+    }
+
+    /**
+     * Get number
+     *
+     * @return integer
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
 }
