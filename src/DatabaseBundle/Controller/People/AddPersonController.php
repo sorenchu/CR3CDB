@@ -73,7 +73,7 @@ class AddPersonController extends Controller
                );
         break;
 
-      case 'female':
+      case 'femenino':
         return $this->redirectToRoute('show_female',
                   array()
                );
@@ -101,6 +101,12 @@ class AddPersonController extends Controller
         return $this->redirectToRoute('show_prebenjamin',
                   array()
                );
+        break;
+
+      default:
+        return $this->redirectToRoute('show_all',
+                  array()
+              );
         break;
     }
   }
