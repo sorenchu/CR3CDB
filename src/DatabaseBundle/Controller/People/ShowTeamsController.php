@@ -55,7 +55,7 @@ class ShowTeamsController extends Controller
 
   private function showSeniorTeam($specificTeam, $request)
   {
-    $seasonForm = $this->createForm(new SeasonType);
+    $seasonForm = $this->createForm(new SeasonType());
     $seasonForm->handleRequest($request);
     $season = $seasonForm->get('season')->getData();
     if ($season != null)
@@ -66,6 +66,7 @@ class ShowTeamsController extends Controller
     {
       $this->season = $this->seasonQueries->getDefaultSeason();
     }
+    $seasonForm->get('season')->setData($this->season);
 
     $seasonNumber = $this->seasonQueries->countSeasons();
     if (0 < $seasonNumber)
@@ -101,6 +102,7 @@ class ShowTeamsController extends Controller
     {
       $this->season = $this->seasonQueries->getDefaultSeason();
     }
+    $seasonForm->get('season')->setData($this->season);
 
     $seasonNumber = $this->seasonQueries->countSeasons();
     if (0 < $seasonNumber)

@@ -51,6 +51,7 @@ class ShowPeopleController extends Controller
     {
       $this->season = $this->seasonQueries->getDefaultSeason();
     }
+    $seasonForm->get('season')->setData($this->season);
 
     $seasonNumber = $this->seasonQueries->countSeasons();
     if (0 < $seasonNumber)
@@ -84,6 +85,7 @@ class ShowPeopleController extends Controller
     {
       $this->season = $this->seasonQueries->getDefaultSeason();
     } 
+    $seasonForm->get('season')->setData($this->season);
   
     $seasonNumber = $this->seasonQueries->countSeasons();
     if (0 < $seasonNumber)
