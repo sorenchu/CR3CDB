@@ -1,0 +1,10 @@
+{% block season_form %}
+<table>
+  {{ form_start(seasonForm) }}
+    <td>
+       {{ form_row(seasonForm.season, 
+            {'attr': {'onchange': 'return submit();'}})
+       }} </td>
+  {{ form_end(seasonForm) }}
+</table>
+{% endblock %}
