@@ -9,12 +9,8 @@
 {% if seasonNumber == 0%}
     <span> No se han añadido temporadas todavía. <a href="/season/newSeason">Añade una</a></span>
 {% else %}
-  {{ form_start(seasonForm) }}
-  <table>
-    <td> {{ form_row(seasonForm.season) }} </td>
-    <td> {{ form_row(seasonForm.save) }} </td>
-  </table>
-  {{ form_end(seasonForm) }}
+  {{ include ('DatabaseBundle:season:seasonform.html.twig') }}
+
   <table style="width: 100%">
   <tr>
     <th>Nombre y apellidos </th>

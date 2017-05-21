@@ -29,7 +29,6 @@ class WholePersonType extends AbstractType
       ->add('personalData', PersonalDataType::class)
       ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
           $personalData = $event->getData()->getPersonalData();
-          $playerData = $event->getData()->getPlayerData();
           $form = $event->getForm();
 
           if ($personalData)

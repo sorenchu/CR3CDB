@@ -3,7 +3,9 @@
 
 namespace DatabaseBundle\Form\Season;
 
-Use DatabaseBundle\Entity\Season;
+use DatabaseBundle\Entity\Season;
+
+use DatabaseBundle\Form\EventListener\SeasonChangeSubscriber;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,10 +35,7 @@ class SeasonType extends AbstractType
             'multiple' => false,
             'expanded' => false,
             )
-        )
-        ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) {
-        })
-        ->add('save', SubmitType::class, array('label' => 'Mostrar'));
+        );
   }
 
   public function getBlockPrefix()
