@@ -35,9 +35,7 @@ class SeasonType extends AbstractType
             'multiple' => false,
             'expanded' => false,
             )
-        )
-        ->addEventSubscriber(new SeasonChangeSubscriber())
-        ->add('save', SubmitType::class, array('label' => 'Mostrar'));
+        );
   }
 
   public function getBlockPrefix()
