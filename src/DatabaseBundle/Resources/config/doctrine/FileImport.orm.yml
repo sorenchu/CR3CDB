@@ -1,0 +1,23 @@
+# src/DatabaseBundle/Resources/config/doctrine/FileImport.orm.yml
+DatabaseBundle\Entity\FileImport:
+  type: entity
+  table: fileImport
+  repositoryClass: DatabaseBundle\Repository\FileImportRepository
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+
+  fields:
+    importedDate:
+      type: datetime
+      nullable: true
+      
+  manyToOne:
+    user:
+      targetEntity: User
+      inversedBy: user
+      joinColumn:
+          name: user_id
+          referencedColumnName: id
+      cascade: ["persist"]

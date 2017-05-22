@@ -140,4 +140,64 @@ class User implements UserInterface
     {
         return $this->role;
     }
+    /**
+     * @var \DatabaseBundle\Entity\FileImport
+     */
+    private $fileImport;
+
+
+    /**
+     * Set fileImport
+     *
+     * @param \DatabaseBundle\Entity\FileImport $fileImport
+     *
+     * @return User
+     */
+    public function setFileImport(\DatabaseBundle\Entity\FileImport $fileImport = null)
+    {
+        $this->fileImport = $fileImport;
+
+        return $this;
+    }
+
+    /**
+     * Get fileImport
+     *
+     * @return \DatabaseBundle\Entity\FileImport
+     */
+    public function getFileImport()
+    {
+        return $this->fileImport;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->fileImport = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add fileImport
+     *
+     * @param \DatabaseBundle\Entity\FileImport $fileImport
+     *
+     * @return User
+     */
+    public function addFileImport(\DatabaseBundle\Entity\FileImport $fileImport)
+    {
+        $this->fileImport[] = $fileImport;
+
+        return $this;
+    }
+
+    /**
+     * Remove fileImport
+     *
+     * @param \DatabaseBundle\Entity\FileImport $fileImport
+     */
+    public function removeFileImport(\DatabaseBundle\Entity\FileImport $fileImport)
+    {
+        $this->fileImport->removeElement($fileImport);
+    }
 }
