@@ -12,6 +12,10 @@ DatabaseBundle\Entity\FileImport:
     importedDate:
       type: datetime
       nullable: true
+
+    pathToFile:
+      type: string
+      nullable: false
       
   manyToOne:
     user:

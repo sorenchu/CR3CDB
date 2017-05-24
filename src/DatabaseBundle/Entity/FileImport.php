@@ -80,4 +80,33 @@ class FileImport
     {
         return $this->user;
     }
+    /**
+     * @var string
+     */
+    private $pathToFile;
+
+
+    /**
+     * Set pathToFile
+     *
+     * @param string $pathToFile
+     *
+     * @return FileImport
+     */
+    public function setPathToFile($pathToFile)
+    {
+        $this->pathToFile = $pathToFile;
+
+        return $this;
+    }
+
+    /**
+     * Get pathToFile
+     *
+     * @return string
+     */
+    public function getPathToFile()
+    {
+        return $this->pathToFile;
+    }
 }
