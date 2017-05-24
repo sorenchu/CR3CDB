@@ -6,6 +6,9 @@ namespace DatabaseBundle\Controller\People;
 use DatabaseBundle\Entity\WholePerson;
 use DatabaseBundle\Form\Person\WholePersonType;
 
+use DatabaseBundle\Entity\FileImport;
+use DatabaseBundle\Form\Import\FileImportType;
+
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
@@ -29,6 +32,10 @@ class AddPersonController extends Controller
     $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);
     $wholePersonForm->handleRequest($request);
 
+    $fileImport = new FileImport();
+    $fileImportForm = $this->createForm(new FileImportType(), $fileImport);
+    $fileImportForm->handleRequest($request);
+
     if($wholePersonForm->isSubmitted()) 
     {
       $this->peopleQueries->savePerson($wholePerson, false);
@@ -39,6 +46,7 @@ class AddPersonController extends Controller
 
     return $this->render('DatabaseBundle:person:new.html.twig', array(
                 'wholePersonForm' => $wholePersonForm->createView(),
+                'fileImportForm' => $fileImportForm->createView(),
     ));
   }
 

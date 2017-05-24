@@ -7,19 +7,33 @@
 
 {# src/DatabaseBundle/Resources/views/person/new.html.twig #}
 
-{{ form_start(wholePersonForm) }}
 <table style="width:100%">
+  {{ form_start(wholePersonForm) }}
   <tr>
     <td>
       {{ form_row(wholePersonForm.personalData) }}
     </td>
-  </tr>
   <tr>
     <td>
       {{ form_row(wholePersonForm.save) }}
     </td>
   </tr>
+  {{ form_end(wholePersonForm) }}
+  {{ form_start(fileImportForm) }}
 </table>
-{{ form_end(wholePersonForm) }}
+<table>
+  <tr>
+    <td>
+      {{ form_row(fileImportForm.pathToFile) }}
+    </td>
+    <td>
+      {{ form_row(fileImportForm.upload) }}
+    </td>
+    <td>
+      {{ form_row(fileImportForm.reset) }}
+    </td>
+  </tr>
+  {{ form_end(fileImportForm) }}
+</table>
 {% endblock %}
 
