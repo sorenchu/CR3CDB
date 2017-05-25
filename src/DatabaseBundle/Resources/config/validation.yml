@@ -17,7 +17,7 @@ DatabaseBundle\Entity\PersonalData:
           choices: [male, female]
     birthday:
       
-DatabaseBundle\Entity\FileImport:
-  properties:
-    pathToFile:
-      - File: "application/csv"
+#DatabaseBundle\Entity\FileImport:
+#  properties:
+#    pathToFile:
+#      - File: "application/csv"

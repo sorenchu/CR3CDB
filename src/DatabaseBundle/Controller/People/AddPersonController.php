@@ -44,6 +44,11 @@ class AddPersonController extends Controller
                                         ->getNewPerson($wholePerson)->getId()));
     }
 
+    if($fileImportForm->isSubmitted())
+    {
+      $this->mapCsvToTables($fileImport);
+    }
+
     return $this->render('DatabaseBundle:person:new.html.twig', array(
                 'wholePersonForm' => $wholePersonForm->createView(),
                 'fileImportForm' => $fileImportForm->createView(),
@@ -133,6 +138,22 @@ class AddPersonController extends Controller
     return $this->redirectToRoute('show_parents',
               array()
             );
+  }
+
+  private function uploadFile($fileImport)
+  {
+    $file = $fileImport->getPathToFile();
+    $fileName = md5(uniqid().'.'.$file->guessExtension());
+
+    $file->move($this->getParameter('imported_directory'),
+              $fileName);
+    $fileImport->setPathToFile($fileName);
+  }
+
+  private function mapCsvToTables($fileImport)
+  {
+    $this->uploadFile($fileImport);
+    // TODO: handle file
   }
 }
 ?>
