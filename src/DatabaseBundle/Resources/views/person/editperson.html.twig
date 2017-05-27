@@ -13,7 +13,7 @@
 </table>
 {{ form_end(seasonForm) }}
 
-{{ form_start(wholePersonForm) }}
+{{ form_start(personalDataForm) }}
 <table>
 <tr>
   <th>Datos personales</th>
@@ -32,11 +32,22 @@
 </tr>
 <tr>
   <td>
-    {{ form_row(wholePersonForm.personalData) }}
+    {{ form_row(personalDataForm.name) }}
+    {{ form_row(personalDataForm.surname) }}
+    {{ form_row(personalDataForm.nickname) }}
+    {{ form_row(personalDataForm.email) }}
+    {{ form_row(personalDataForm.phone) }}
+    {{ form_row(personalDataForm.dni) }}
+    {{ form_row(personalDataForm.birthday) }}
+    {{ form_row(personalDataForm.sex) }}
+    {{ form_row(personalDataForm.isPlayer) }}
+    {{ form_row(personalDataForm.isCoach) }}
+    {{ form_row(personalDataForm.isParent) }}
+    {{ form_row(personalDataForm.isMember) }}
   </td>
   {% if personalData.getIsPlayer() %}
     <td>
-      {% for formData in wholePersonForm.playerData %}
+      {% for formData in personalDataForm.playerData %}
         {% if formData.vars.value.season.seasontext == curSeason %}
           {{ form_start(formData) }}
             {{ form_row(formData.payment) }}
@@ -53,7 +64,7 @@
   {% endif %}
   {% if personalData.getIsCoach() %}  
     <td>
-      {% for formData in wholePersonForm.coachData %}
+      {% for formData in personalDataForm.coachData %}
         {% if formData.vars.value.season.seasontext == curSeason %}
           {{ form_start(formData) }}
             {{ form_row(formData.salary) }}
@@ -70,7 +81,7 @@
   {%endif %}
   {% if personalData.getIsMember() %}
     <td> 
-      {% for formData in wholePersonForm.memberData %}
+      {% for formData in personalDataForm.memberData %}
         {% if formData.vars.value.season.seasontext == curSeason %}
           {{ form_start(formData) }}
             {{ form_row(formData.memberId) }}
@@ -87,7 +98,7 @@
   {% endif%}
   {% if personalData.getIsParent() %}
     <td> 
-      {% for formData in wholePersonForm.parentData %}
+      {% for formData in personalDataForm.parentData %}
         {% if formData.vars.value.season.seasontext == curSeason %}
           {{ form_start(formData) }}
             {{ form_row(formData.season) }}
@@ -104,9 +115,9 @@
 </tr>
 <tr>
   <td>
-      {{ form_row(wholePersonForm.save) }}
+      {{ form_row(personalDataForm.save) }}
   </td>
 </tr>
 </table>
-{{ form_end(wholePersonForm) }}
+{{ form_end(personalDataForm) }}
 {% endblock %}

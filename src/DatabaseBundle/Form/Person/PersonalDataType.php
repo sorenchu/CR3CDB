@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -62,6 +63,47 @@ class PersonalDataType extends AbstractType
             'label' => 'Socio',
             'required' => false,)
         )
+        ->addEventListener(FormEvents::POST_SET_DATA,
+                           function (FormEvent $event) {
+            $personalData = $event->getData();
+            $form = $event->getForm();
+
+            if ($personalData)
+            {
+              if ($personalData->getIsPlayer())
+              {
+                $form->add('playerData', CollectionType::class,
+                           array('entry_type' => PlayerDataType::class,
+                                 'allow_add' => true,
+                                 'by_reference' => false,)
+                          );
+              }
+              if ($personalData->getIsCoach())
+              {
+                $form->add('coachData', CollectionType::class,
+                           array('entry_type' => CoachDataType::class,
+                                 'allow_add' => true,
+                                 'by_reference' => false,)
+                          );
+              }
+              if ($personalData->getIsMember())
+              {
+                $form->add('memberData', CollectionType::class,
+                           array('entry_type' => MemberDataType::class,
+                                 'allow_add' => true,
+                                 'by_reference' => false,)
+                          );
+              }
+              if ($personalData->getIsParent())
+              {
+                $form->add('parentData', CollectionType::class,
+                           array('entry_type' => ParentDataType::class,
+                                 'allow_add' => true,
+                                 'by_reference' => false,)
+                          );
+              }
+            } 
+        })
         ->add('save', SubmitType::class, array(
             'label' => 'Guardar'));
   }

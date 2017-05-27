@@ -3,7 +3,7 @@
 
 namespace DatabaseBundle\Controller\People;
 
-use DatabaseBundle\Form\Person\WholePersonType;
+use DatabaseBundle\Form\Person\PersonalDataType;
 use DatabaseBundle\Form\Season\SeasonType;
 use DatabaseBundle\Entity\PlayerData;
 use DatabaseBundle\Entity\CoachData;
@@ -36,64 +36,63 @@ class EditPersonController extends Controller
       ));
     }
 
-    $wholePerson = $peopleQueries->getPerson($id);
-    if ($wholePerson->getPersonalData()->getIsPlayer())
+    $personalData = $peopleQueries->getPerson($id);
+    if ($personalData->getIsPlayer())
     {
       $playerData = new PlayerData();
-      $playerData->setWholePerson($wholePerson);
+      $playerData->setPersonalData($personalData);
       $playerData->setSeason($season);
-      if (null == $wholePerson->playerIsInCurrentSeason($season))
+      if (null == $personalData->playerIsInCurrentSeason($season))
       {
-        $wholePerson->getPlayerData()->add($playerData);
+        $personalData->getPlayerData()->add($playerData);
       }
     }
 
-    if ($wholePerson->getPersonalData()->getIsCoach())
+    if ($personalData->getIsCoach())
     {
       $coachData = new CoachData();
-      $coachData->setWholePerson($wholePerson);
+      $coachData->setPersonalData($personalData);
       $coachData->setSeason($season);
-      if (null == $wholePerson->coachIsInCurrentSeason($season))
+      if (null == $personalData->coachIsInCurrentSeason($season))
       {
-        $wholePerson->getCoachData()->add($coachData);
+        $personalData->getCoachData()->add($coachData);
       }
     }
 
-    if ($wholePerson->getPersonalData()->getIsMember())
+    if ($personalData->getIsMember())
     {
       $memberData = new MemberData();
-      $memberData->setWholePerson($wholePerson);
+      $memberData->setPersonalData($personalData);
       $memberData->setSeason($season);
-      if (null == $wholePerson->memberIsInCurrentSeason($season))
+      if (null == $personalData->memberIsInCurrentSeason($season))
       {
-        $wholePerson->getMemberData()->add($memberData);
+        $personalData->getMemberData()->add($memberData);
       }
     }
 
-    if ($wholePerson->getPersonalData()->getIsParent())
+    if ($personalData->getIsParent())
     {
       $parentData = new ParentData();
-      $parentData->setWholePerson($wholePerson);
+      $parentData->setPersonalData($personalData);
       $parentData->setSeason($season);
-      if (null == $wholePerson->parentIsInCurrentSeason($season))
+      if (null == $personalData->parentIsInCurrentSeason($season))
       {
-        $wholePerson->getParentData()->add($parentData);
+        $personalData->getParentData()->add($parentData);
       }
     }
 
-    $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);
-    $wholePersonForm->handleRequest($request);
-    if ($wholePersonForm->isSubmitted())
+    $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
+    $personalDataForm->handleRequest($request);
+    if ($personalDataForm->isSubmitted())
     {
       $seasonForm = $this->createForm(new SeasonType(), $season);
-      $peopleQueries->savePerson($wholePerson, true);
-      $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);
+      $peopleQueries->savePerson($personalData, true);
+      $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
     }
     return $this->render('DatabaseBundle:person:editperson.html.twig', array(
-                'wholePersonForm' => $wholePersonForm->createView(),
+                'personalDataForm' => $personalDataForm->createView(),
                 'seasonForm' => $seasonForm->createView(),
-                'wholePerson' => $wholePerson,
-                'personalData' => $wholePerson->getPersonalData(),
+                'personalData' => $personalData,
                 'curSeason' => $season,
     ));
   }

@@ -73,10 +73,35 @@ class PersonalData
     private $isParent;
 
     /**
-     * @var \DatabaseBundle\Entity\WholePerson
+     * @var \Doctrine\Common\Collections\Collection
      */
-    private $wholePerson;
+    private $playerData;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $coachData;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $memberData;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $parentData;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->playerData = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->coachData = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->memberData = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->parentData = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -377,60 +402,6 @@ class PersonalData
     }
 
     /**
-     * Set wholePerson
-     *
-     * @param \DatabaseBundle\Entity\WholePerson $wholePerson
-     *
-     * @return PersonalData
-     */
-    public function setWholePerson(\DatabaseBundle\Entity\WholePerson $wholePerson = null)
-    {
-        $this->wholePerson = $wholePerson;
-
-        return $this;
-    }
-
-    /**
-     * Get wholePerson
-     *
-     * @return \DatabaseBundle\Entity\WholePerson
-     */
-    public function getWholePerson()
-    {
-        return $this->wholePerson;
-    }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $playerData;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $coachData;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $memberData;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $parentData;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->playerData = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->coachData = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->memberData = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->parentData = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Add playerDatum
      *
      * @param \DatabaseBundle\Entity\PlayerData $playerDatum
@@ -462,6 +433,37 @@ class PersonalData
     public function getPlayerData()
     {
         return $this->playerData;
+    }
+
+    /**
+     * Set playerData
+     *
+     * @param \DatabaseBundle\Entity\PlayerData $playerData
+     *
+     * @return PersonalData
+     */
+    public function setPlayerData(\DatabaseBundle\Entity\PlayerData $playerData = null)
+    {
+        $this->playerData = $playerData;
+
+        return $this;
+    }
+
+    /**
+     * Ask if player is present in the season
+     *
+     * @param $season
+     *
+     * @return boolean
+     */
+    public function playerIsInCurrentSeason($season) 
+    {
+      foreach ($this->playerData as $pd)
+      {
+        if ($pd->getSeason() == $season)
+          return $pd;
+      }
+      return null;
     }
 
     /**
@@ -499,6 +501,37 @@ class PersonalData
     }
 
     /**
+     * Set coachData
+     *
+     * @param \DatabaseBundle\Entity\CoachData $coachData
+     *
+     * @return WholePerson
+     */
+    public function setCoachData(\DatabaseBundle\Entity\CoachData $coachData = null)
+    {
+        $this->coachData = $coachData;
+
+        return $this;
+    }
+
+    /**
+     * Ask if coach is present in the season
+     *
+     * @param $season
+     *
+     * @return boolean
+     */
+    public function coachIsInCurrentSeason($season)
+    {
+      foreach ($this->coachData as $pd)
+      {
+        if ($pd->getSeason() == $season)
+          return $pd;
+      }
+      return null;
+    }
+
+    /**
      * Add memberDatum
      *
      * @param \DatabaseBundle\Entity\MemberData $memberDatum
@@ -533,6 +566,37 @@ class PersonalData
     }
 
     /**
+     * Set memberData
+     *
+     * @param \DatabaseBundle\Entity\MemberData $memberData
+     *
+     * @return WholePerson
+     */
+    public function setMemberData(\DatabaseBundle\Entity\MemberData $memberData = null)
+    {
+        $this->memberData = $memberData;
+
+        return $this;
+    }
+
+    /**
+     * Ask if member is present in the season
+     *
+     * @param $season
+     *
+     * @return boolean
+     */
+    public function memberIsInCurrentSeason($season)
+    {
+      foreach ($this->memberData as $pd)
+      {
+        if ($pd->getSeason() == $season)
+          return $pd;
+      }
+      return null;
+    }
+
+    /**
      * Add parentDatum
      *
      * @param \DatabaseBundle\Entity\ParentData $parentDatum
@@ -564,5 +628,36 @@ class PersonalData
     public function getParentData()
     {
         return $this->parentData;
+    }
+
+    /**
+     * Set parentData
+     *
+     * @param \DatabaseBundle\Entity\ParentData $parentData
+     *
+     * @return WholePerson
+     */
+    public function setParentData(\DatabaseBundle\Entity\ParentData $parentData = null)
+    {
+        $this->parentData = $parentData;
+
+        return $this;
+    }
+
+    /**
+     * Ask if parent is present in the season
+     *
+     * @param $season
+     *
+     * @return boolean
+     */
+    public function parentIsInCurrentSeason($season)
+    {
+      foreach ($this->parentData as $pd)
+      {
+        if ($pd->getSeason() == $season)
+          return $pd;
+      }
+      return null;
     }
 }
