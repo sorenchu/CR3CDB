@@ -146,8 +146,8 @@ class AddPersonController extends Controller
     $fileName = md5(uniqid().'.'.$file->guessExtension());
 
     $file->move($this->getParameter('imported_directory'),
-              $fileName);
-    $fileImport->setPathToFile($fileName);
+                  $fileName);
+    $fileImport->setPathToFile($this->getParameter('imported_directory').'/'.$fileName);
   }
 
   private function mapCsvToTables($fileImport)
