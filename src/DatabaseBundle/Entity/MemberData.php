@@ -28,12 +28,6 @@ class MemberData
     private $memberId;
 
     /**
-     * @var \DatabaseBundle\Entity\WholePerson
-     */
-    private $wholePerson;
-
-
-    /**
      * Get id
      *
      * @return integer
@@ -115,29 +109,6 @@ class MemberData
         return $this->memberId;
     }
 
-    /**
-     * Set wholePerson
-     *
-     * @param \DatabaseBundle\Entity\WholePerson $wholePerson
-     *
-     * @return MemberData
-     */
-    public function setWholePerson(\DatabaseBundle\Entity\WholePerson $wholePerson)
-    {
-        $this->wholePerson = $wholePerson;
-
-        return $this;
-    }
-
-    /**
-     * Get wholePerson
-     *
-     * @return \DatabaseBundle\Entity\WholePerson
-     */
-    public function getWholePerson()
-    {
-        return $this->wholePerson;
-    }
     /**
      * @var \DatabaseBundle\Entity\PersonalData
      */
