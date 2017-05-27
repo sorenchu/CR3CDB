@@ -16,6 +16,10 @@ use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 class PersonalDataType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
@@ -57,7 +61,9 @@ class PersonalDataType extends AbstractType
         ->add('isMember', CheckboxType::class, array(
             'label' => 'Socio',
             'required' => false,)
-        );
+        )
+        ->add('save', SubmitType::class, array(
+            'label' => 'Guardar'));
   }
 
   public function getBlockPrefix()

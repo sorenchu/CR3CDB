@@ -8,33 +8,3 @@ DatabaseBundle\Entity\WholePerson:
       type: integer
       generator:  { strategy: AUTO }
 
-  oneToMany:
-    playerData:
-      targetEntity: PlayerData
-      mappedBy: wholePerson
-      cascade: ["persist", "remove"]
-
-    coachData:
-      targetEntity: CoachData
-      mappedBy: wholePerson
-      cascade: ["persist", "remove"]
-
-    memberData:
-      targetEntity: MemberData
-      mappedBy: wholePerson
-      cascade: ["persist", "remove"]
-
-    parentData:
-      targetEntity: ParentData
-      mappedBy: wholePerson
-      cascade: ["persist", "remove"]
-
-  oneToOne:
-    personalData:
-      targetEntity: PersonalData
-      inversedBy: wholePerson
-      joinColumn: 
-        name: personalData_id
-        referencedColumnName: id
-        onDelete: 'CASCADE'
-      cascade: ["persist", "remove"]

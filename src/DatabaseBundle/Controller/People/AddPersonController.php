@@ -3,8 +3,8 @@
 
 namespace DatabaseBundle\Controller\People;
 
-use DatabaseBundle\Entity\WholePerson;
-use DatabaseBundle\Form\Person\WholePersonType;
+use DatabaseBundle\Entity\PersonalData;
+use DatabaseBundle\Form\Person\PersonalDataType;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
@@ -24,20 +24,20 @@ class AddPersonController extends Controller
 
   public function newAction(Request $request)
   {
-    $wholePerson = new WholePerson();
-    $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);
-    $wholePersonForm->handleRequest($request);
+    $personalData = new PersonalData();
+    $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
+    $personalDataForm->handleRequest($request);
 
-    if($wholePersonForm->isSubmitted()) 
+    if($personalDataForm->isSubmitted()) 
     {
-      $this->peopleQueries->savePerson($wholePerson, false);
+      $this->peopleQueries->savePerson($personalData, false);
       return $this->redirectToRoute('edit_person', 
                     array('id' => $this->peopleQueries
-                                        ->getNewPerson($wholePerson)->getId()));
+                                        ->getNewPerson($personalData)->getId()));
     }
 
     return $this->render('DatabaseBundle:person:new.html.twig', array(
-                'wholePersonForm' => $wholePersonForm->createView(),
+                'personalDataForm' => $personalDataForm->createView(),
     ));
   }
 
@@ -45,9 +45,9 @@ class AddPersonController extends Controller
   {
     $this->peopleQueries->deletePerson($id);
     $showAllQuery = new ShowTeamQueries($this);
-    $wholePerson = $showAllQuery->getAllMembers();
+    $personalData = $showAllQuery->getAllMembers();
     return $this->render('DatabaseBundle:people:showall.html.twig', array(
-                'personalData' => $wholePerson));
+                'personalData' => $personalData));
   }
 }
 ?>
