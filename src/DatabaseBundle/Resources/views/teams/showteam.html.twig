@@ -20,26 +20,26 @@
       'DatabaseBundle:base:team_header.html.twig') }}
   {% for data in playerData %}
     <tr>
-      <td> {{ data.getWholePerson().getPersonalData().getName() }}
-         {{ data.getWholePerson().getPersonalData().getSurname() }} </td>
-      <td> {{ data.getWholePerson().getPersonalData().getNickname() }} </td>
-      <td> {{ data.getWholePerson().getPersonalData().getEmail() }} </td>
-      <td> {{ data.getWholePerson().getPersonalData().getPhone() }} </td>
+      <td> {{ data.getPersonalData().getName() }}
+         {{ data.getPersonalData().getSurname() }} </td>
+      <td> {{ data.getPersonalData().getNickname() }} </td>
+      <td> {{ data.getPersonalData().getEmail() }} </td>
+      <td> {{ data.getPersonalData().getPhone() }} </td>
       <td> {{ data.getPayment() }} </td>
-      <td> <a href="/person/editPerson/{{data.getWholePerson().getId()}}/{{season.getId()}}"> Editar </a> </td>
-      <td> <a href="/person/deletePerson/{{data.getWholePerson().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+      <td> <a href="/person/editPerson/{{data.getId()}}/{{season.getId()}}"> Editar </a> </td>
+      <td> <a href="/person/deletePerson/{{data.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
     </tr>
   {% endfor %}
   {% for data in coachData %}
     <tr>
-      <td> {{ data.getWholePerson().getPersonalData().getName() }}
-           {{ data.getWholePerson().getPersonalData().getSurname() }} (Entrenador) </td>
-      <td> {{ data.getWholePerson().getPersonalData().getNickname() }} </td>
-      <td> {{ data.getWholePerson().getPersonalData().getEmail() }} </td>
-      <td> {{ data.getWholePerson().getPersonalData().getPhone() }} </td>
+      <td> {{ data.getPersonalData().getName() }}
+           {{ data.getPersonalData().getSurname() }} (Entrenador) </td>
+      <td> {{ data.getPersonalData().getNickname() }} </td>
+      <td> {{ data.getPersonalData().getEmail() }} </td>
+      <td> {{ data.getPersonalData().getPhone() }} </td>
       <td> {{ data.getSalary() }} </td>
-      <td> <a href="/person/editPerson/{{data.getWholePerson().getId()}}/{{season.getId()}}"> Editar </a> </td>
-      <td> <a href="/person/deletePerson/{{data.getWholePerson().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+      <td> <a href="/person/editPerson/{{data.getId()}}/{{season.getId()}}"> Editar </a> </td>
+      <td> <a href="/person/deletePerson/{{data.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
     </tr>
   {% endfor %}
   </table>
