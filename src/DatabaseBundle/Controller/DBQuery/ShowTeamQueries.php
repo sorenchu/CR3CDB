@@ -18,24 +18,8 @@ class ShowTeamQueries extends Controller
   {
     return ($this->personController
        ->getDoctrine()
-         ->getRepository('DatabaseBundle:WholePerson')
+         ->getRepository('DatabaseBundle:PersonalData')
            ->findAll()); 
-  }
-
-  public function getPlayers()
-  {
-    $em = $this->personController
-              ->getDoctrine()
-                ->getManager();
-    $query = $em->createQuery(
-         'SELECT playerdata
-          FROM DatabaseBundle:PlayerData playerdata
-          JOIN playerdata.wholePerson c
-          WHERE c.id <> :null
-          ORDER BY playerdata.category ASC')
-          ->setParameter('null', 'NULL');
-
-    return $query->getResult();
   }
 
   public function getParents($seasonId)

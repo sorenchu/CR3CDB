@@ -188,8 +188,8 @@ class PlayerData
 
     public function __toString()
     {
-        return $this->getWholePerson()->getPersonalData()->getName().' '
-                  .$this->getWholePerson()->getPersonalData()->getSurname();
+        return $this->getPersonalData()->getName().' '
+                  .$this->getPersonalData()->getSurname();
     }
     /**
      * @var \DatabaseBundle\Entity\PersonalData

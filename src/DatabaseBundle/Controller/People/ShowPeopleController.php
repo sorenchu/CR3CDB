@@ -25,17 +25,10 @@ class ShowPeopleController extends Controller
 
   public function showAllAction()
   {
-    $wholePerson = $this->teamQueries->getAllMembers();
+    $personalData = $this->teamQueries->getAllMembers();
     return $this->render('DatabaseBundle:people:showall.html.twig', array(
-                'personalData' => $wholePerson,
+                'personalData' => $personalData,
                 'season' => $this->seasonQueries->getDefaultSeason()));
-  }
-
-  public function showPlayersAction()
-  {
-    $playerData = $this->teamQueries->getPlayers();
-    return $this->render('DatabaseBundle:people:showplayers.html.twig', array(
-                'playerData' => $playerData));
   }
 
   public function showParentsAction(Request $request)
