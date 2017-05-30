@@ -28,11 +28,6 @@ class PlayerData
     private $category;
 
     /**
-     * @var \DatabaseBundle\Entity\WholePerson
-     */
-    private $wholePerson;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $parentData;
@@ -128,30 +123,6 @@ class PlayerData
     }
 
     /**
-     * Set wholePerson
-     *
-     * @param \DatabaseBundle\Entity\WholePerson $wholePerson
-     *
-     * @return PlayerData
-     */
-    public function setWholePerson(\DatabaseBundle\Entity\WholePerson $wholePerson = null)
-    {
-        $this->wholePerson = $wholePerson;
-
-        return $this;
-    }
-
-    /**
-     * Get wholePerson
-     *
-     * @return \DatabaseBundle\Entity\WholePerson
-     */
-    public function getWholePerson()
-    {
-        return $this->wholePerson;
-    }
-
-    /**
      * Add parentDatum
      *
      * @param \DatabaseBundle\Entity\ParentData $parentDatum
@@ -188,8 +159,37 @@ class PlayerData
 
     public function __toString()
     {
-        return $this->getWholePerson()->getPersonalData()->getName().' '
-                  .$this->getWholePerson()->getPersonalData()->getSurname();
+        return $this->getPersonalData()->getName().' '
+                  .$this->getPersonalData()->getSurname();
+    }
+    /**
+     * @var \DatabaseBundle\Entity\PersonalData
+     */
+    private $personalData;
+
+
+    /**
+     * Set personalData
+     *
+     * @param \DatabaseBundle\Entity\PersonalData $personalData
+     *
+     * @return PlayerData
+     */
+    public function setPersonalData(\DatabaseBundle\Entity\PersonalData $personalData = null)
+    {
+        $this->personalData = $personalData;
+
+        return $this;
+    }
+
+    /**
+     * Get personalData
+     *
+     * @return \DatabaseBundle\Entity\PersonalData
+     */
+    public function getPersonalData()
+    {
+        return $this->personalData;
     }
     /**
      * @var integer

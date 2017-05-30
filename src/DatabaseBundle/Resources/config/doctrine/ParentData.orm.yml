@@ -35,9 +35,9 @@ DatabaseBundle\Entity\ParentData:
                 referencedColumnName: id
             cascade: ["persist"]
 
-        wholePerson:
-            targetEntity: WholePerson
+        personalData:
+            targetEntity: PersonalData
             inversedBy: parentData
             joinColumn:
-                name: wholePerson_id
+                name: personalData_id
                 referencedColumnName: id

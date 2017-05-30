@@ -3,8 +3,8 @@
 
 namespace DatabaseBundle\Controller\People;
 
-use DatabaseBundle\Entity\WholePerson;
-use DatabaseBundle\Form\Person\WholePersonType;
+use DatabaseBundle\Entity\PersonalData;
+use DatabaseBundle\Form\Person\PersonalDataType;
 
 use DatabaseBundle\Entity\FileImport;
 use DatabaseBundle\Form\Import\FileImportType;
@@ -28,20 +28,20 @@ class AddPersonController extends Controller
 
   public function newAction(Request $request)
   {
-    $wholePerson = new WholePerson();
-    $wholePersonForm = $this->createForm(new WholePersonType(), $wholePerson);
-    $wholePersonForm->handleRequest($request);
+    $personalData = new PersonalData();
+    $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
+    $personalDataForm->handleRequest($request);
 
     $fileImport = new FileImport();
     $fileImportForm = $this->createForm(new FileImportType(), $fileImport);
     $fileImportForm->handleRequest($request);
 
-    if($wholePersonForm->isSubmitted()) 
+    if($personalDataForm->isSubmitted()) 
     {
-      $this->peopleQueries->savePerson($wholePerson, false);
+      $this->peopleQueries->savePerson($personalData, false);
       return $this->redirectToRoute('edit_person', 
                     array('id' => $this->peopleQueries
-                                        ->getNewPerson($wholePerson)->getId()));
+                                        ->getNewPerson($personalData)->getId()));
     }
 
     if($fileImportForm->isSubmitted())
@@ -50,7 +50,7 @@ class AddPersonController extends Controller
     }
 
     return $this->render('DatabaseBundle:person:new.html.twig', array(
-                'wholePersonForm' => $wholePersonForm->createView(),
+                'personalDataForm' => $personalDataForm->createView(),
                 'fileImportForm' => $fileImportForm->createView(),
     ));
   }
@@ -59,11 +59,11 @@ class AddPersonController extends Controller
   {
     $this->peopleQueries->deletePerson($id);
     $showAllQuery = new ShowTeamQueries($this);
-    $wholePerson = $showAllQuery->getAllMembers();
+    $personalData = $showAllQuery->getAllMembers();
     $seasonQueries = new SeasonQueries($this);
     
     return $this->render('DatabaseBundle:people:showall.html.twig', array(
-                'personalData' => $wholePerson,
+                'personalData' => $personalData,
                 'season' => $seasonQueries->getDefaultSeason(),
                 )
           );

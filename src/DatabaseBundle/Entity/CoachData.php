@@ -28,12 +28,6 @@ class CoachData
     private $season;
 
     /**
-     * @var \DatabaseBundle\Entity\WholePerson
-     */
-    private $wholePerson;
-
-
-    /**
      * Get id
      *
      * @return integer
@@ -116,27 +110,33 @@ class CoachData
     }
 
     /**
-     * Set wholePerson
+     * @var \DatabaseBundle\Entity\PersonalData
+     */
+    private $personalData;
+
+
+    /**
+     * Set personalData
      *
-     * @param \DatabaseBundle\Entity\WholePerson $wholePerson
+     * @param \DatabaseBundle\Entity\PersonalData $personalData
      *
      * @return CoachData
      */
-    public function setWholePerson(\DatabaseBundle\Entity\WholePerson $wholePerson = null)
+    public function setPersonalData(\DatabaseBundle\Entity\PersonalData $personalData = null)
     {
-        $this->wholePerson = $wholePerson;
+        $this->personalData = $personalData;
 
         return $this;
     }
 
     /**
-     * Get wholePerson
+     * Get personalData
      *
-     * @return \DatabaseBundle\Entity\WholePerson
+     * @return \DatabaseBundle\Entity\PersonalData
      */
-    public function getWholePerson()
+    public function getPersonalData()
     {
-        return $this->wholePerson;
+        return $this->personalData;
     }
     /**
      * @var integer
