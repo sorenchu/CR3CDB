@@ -62,7 +62,23 @@ DatabaseBundle\Entity\PersonalData:
         type: boolean
         default: false
 
-  oneToOne:
-      wholePerson:
-        targetEntity: WholePerson
-        mappedBy: personalData
+  oneToMany:
+    playerData:
+      targetEntity: PlayerData
+      mappedBy: personalData
+      cascade: ["persist", "remove"]
+
+    coachData:
+      targetEntity: CoachData
+      mappedBy: personalData
+      cascade: ["persist", "remove"]
+
+    memberData:
+      targetEntity: MemberData
+      mappedBy: personalData
+      cascade: ["persist", "remove"]
+
+    parentData:
+      targetEntity: ParentData
+      mappedBy: personalData
+      cascade: ["persist", "remove"]

@@ -7,19 +7,26 @@
 
 {# src/DatabaseBundle/Resources/views/person/new.html.twig #}
 
-{{ form_start(wholePersonForm) }}
+{{ form_start(personalDataForm) }}
 <table style="width:100%">
   <tr>
     <td>
-      {{ form_row(wholePersonForm.personalData) }}
-    </td>
-  </tr>
-  <tr>
-    <td>
-      {{ form_row(wholePersonForm.save) }}
+      {{ form_row(personalDataForm.name) }}
+      {{ form_row(personalDataForm.surname) }}
+      {{ form_row(personalDataForm.nickname) }}
+      {{ form_row(personalDataForm.email) }}
+      {{ form_row(personalDataForm.phone) }}
+      {{ form_row(personalDataForm.dni) }}
+      {{ form_row(personalDataForm.birthday) }}
+      {{ form_row(personalDataForm.sex) }}
+      {{ form_row(personalDataForm.isPlayer) }}
+      {{ form_row(personalDataForm.isCoach) }}
+      {{ form_row(personalDataForm.isParent) }}
+      {{ form_row(personalDataForm.isMember) }}
+      {{ form_row(personalDataForm.save) }}
     </td>
   </tr>
 </table>
-{{ form_end(wholePersonForm) }}
+{{ form_end(personalDataForm) }}
 {% endblock %}
 

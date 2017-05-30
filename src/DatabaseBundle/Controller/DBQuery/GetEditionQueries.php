@@ -23,7 +23,7 @@ class GetEditionQueries extends Controller
   public function getPerson($id)
   {
     $em = $this->personController->getDoctrine()->getManager();
-    return $em->getRepository('DatabaseBundle:WholePerson')->find($id);
+    return $em->getRepository('DatabaseBundle:PersonalData')->find($id);
   }
 
   public function getPeopleByType($id, $table)
@@ -57,7 +57,7 @@ class GetEditionQueries extends Controller
                           getDoctrine()->getRepository($tableName);
     $query = $repository->createQueryBuilder($alias)
         ->from($tableName, 'data')
-        ->join($alias.'.wholePerson', 'person')
+        ->join($alias.'.personalData', 'person')
         ->where('person.id = :id')
         ->setParameter('id', $id)
         ->getQuery();
@@ -98,33 +98,33 @@ class GetEditionQueries extends Controller
     return $this->getTypeOfPerson($query, $table);
   }
 
-  public function getNewPerson($wholePerson)
+  public function getNewPerson($personalData)
   {
     $em = $this->personController->getDoctrine()->getManager();
     $query = $em->createQuery(
         'SELECT wholeperson
-         FROM DatabaseBundle:WholePerson wholeperson
-         WHERE wholeperson.id = :id')
-         ->setParameter('id', $wholePerson->getId());
+         FROM DatabaseBundle:PersonalData personaldata
+         WHERE personaldata.id = :id')
+         ->setParameter('id', $personalData->getId());
 
     return $query->getResult()[0];
   }
 
-  public function savePerson($wholePerson, $edit)
+  public function savePerson($personalData, $edit)
   {
     $em = $this->personController->getDoctrine()->getManager();
     if ($edit)
-      $em->merge($wholePerson);
-    $em->persist($wholePerson);
+      $em->merge($personalData);
+    $em->persist($personalData);
     $em->flush();
   }
 
   public function deletePerson($id)
   {
     $em = $this->personController->getDoctrine()->getManager();
-    $wholePerson = $em->getRepository('DatabaseBundle:WholePerson')
+    $personalData = $em->getRepository('DatabaseBundle:PersonalData')
                       ->find($id);
-    $em->remove($wholePerson);
+    $em->remove($personalData);
     $em->flush();
   }
 

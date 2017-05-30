@@ -18,11 +18,6 @@ class ParentData
     private $season;
 
     /**
-     * @var \DatabaseBundle\Entity\WholePerson
-     */
-    private $wholePerson;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $playerData;
@@ -70,30 +65,6 @@ class ParentData
     }
 
     /**
-     * Set wholePerson
-     *
-     * @param \DatabaseBundle\Entity\WholePerson $wholePerson
-     *
-     * @return ParentData
-     */
-    public function setWholePerson(\DatabaseBundle\Entity\WholePerson $wholePerson)
-    {
-        $this->wholePerson = $wholePerson;
-
-        return $this;
-    }
-
-    /**
-     * Get wholePerson
-     *
-     * @return \DatabaseBundle\Entity\WholePerson
-     */
-    public function getWholePerson()
-    {
-        return $this->wholePerson;
-    }
-
-    /**
      * Add playerDatum
      *
      * @param \DatabaseBundle\Entity\PlayerData $playerDatum
@@ -125,5 +96,34 @@ class ParentData
     public function getPlayerData()
     {
         return $this->playerData;
+    }
+    /**
+     * @var \DatabaseBundle\Entity\PersonalData
+     */
+    private $personalData;
+
+
+    /**
+     * Set personalData
+     *
+     * @param \DatabaseBundle\Entity\PersonalData $personalData
+     *
+     * @return ParentData
+     */
+    public function setPersonalData(\DatabaseBundle\Entity\PersonalData $personalData = null)
+    {
+        $this->personalData = $personalData;
+
+        return $this;
+    }
+
+    /**
+     * Get personalData
+     *
+     * @return \DatabaseBundle\Entity\PersonalData
+     */
+    public function getPersonalData()
+    {
+        return $this->personalData;
     }
 }
