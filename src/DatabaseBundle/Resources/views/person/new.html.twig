@@ -26,9 +26,10 @@
       {{ form_row(personalDataForm.save) }}
     </td>
   </tr>
-  {{ form_start(fileImportForm) }}
 </table>
+{{ form_end(personalDataForm) }}
 <table>
+  {{ form_start(fileImportForm) }}
   <tr>
     <td>
       {{ form_row(fileImportForm.pathToFile) }}
@@ -42,6 +43,5 @@
   </tr>
   {{ form_end(fileImportForm) }}
 </table>
-{{ form_end(personalDataForm) }}
 {% endblock %}
 

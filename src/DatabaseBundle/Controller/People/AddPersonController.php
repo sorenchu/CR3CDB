@@ -17,6 +17,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+
 class AddPersonController extends Controller
 {
   private $peopleQueries;
@@ -150,10 +153,22 @@ class AddPersonController extends Controller
     $fileImport->setPathToFile($this->getParameter('imported_directory').'/'.$fileName);
   }
 
+  private function executeParser($fileImport)
+  {
+    // TODO: get relative path
+    $pathToScript = '/home/antonio/Projects/CR3CDB/src/DatabaseBundle/Controller/Import/parser.py';
+    $script = 'python '.$pathToScript;
+    $process = new Process($script.' '.$fileImport->getPathToFile());
+    $process->run();
+
+    if ($process->isSuccessful()) {
+    }
+  }
+
   private function mapCsvToTables($fileImport)
   {
     $this->uploadFile($fileImport);
-    // TODO: handle file
+    $this->executeParser($fileImport); 
   }
 }
 ?>

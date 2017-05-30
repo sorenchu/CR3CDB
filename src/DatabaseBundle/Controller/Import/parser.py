@@ -91,7 +91,7 @@ def main():
     closeFile(fileGenerated)
     fileGenerated = readFile(pathOfFileGenerated)
     populateDB(fileGenerated)
-    #deleteFile(pathOfFileToParse)
+    deleteFile(pathOfFileToParse)
     deleteFile(pathOfFileGenerated)
     return 1
   closeFile(fileToParse)
