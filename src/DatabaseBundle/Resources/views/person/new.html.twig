@@ -27,21 +27,5 @@
     </td>
   </tr>
 </table>
-{{ form_end(personalDataForm) }}
-<table>
-  {{ form_start(fileImportForm) }}
-  <tr>
-    <td>
-      {{ form_row(fileImportForm.pathToFile) }}
-    </td>
-    <td>
-      {{ form_row(fileImportForm.upload) }}
-    </td>
-    <td>
-      {{ form_row(fileImportForm.reset) }}
-    </td>
-  </tr>
-  {{ form_end(fileImportForm) }}
-</table>
 {% endblock %}
 

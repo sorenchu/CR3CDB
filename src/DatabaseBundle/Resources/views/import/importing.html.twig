@@ -1,0 +1,34 @@
+{% extends 'DatabaseBundle:base:base.html.twig' %}
+
+{% block title %} Importar archivo {% endblock %}
+
+{% block body %}
+<h1>Importar archivo</h1>
+
+<table>
+  {{ form_start(fileImportForm) }}
+  <tr>
+    <td>
+      {{ form_row(fileImportForm.pathToFile) }}
+    </td>
+    <td>
+      {{ form_row(fileImportForm.upload) }}
+    </td>
+    <td>
+      {{ form_row(fileImportForm.reset) }}
+    </td>
+  </tr>
+  {% if success != null %}
+  <tr>
+    <td>
+    {% if success %}
+        Archivo importado con éxito
+    {% else %}
+        Ha habido algún problema importando el archivo
+    {% endif %}
+    </td>
+  </tr>
+  {% endif %}
+  {{ form_end(fileImportForm) }}
+</table>
+{% endblock %}

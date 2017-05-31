@@ -1,12 +1,4 @@
 /***************************
-***      SEASONS         ***
-***************************/
-INSERT INTO season(startingyear, seasontext, defaultseason)
-VALUES (2016, "2016/2017", 1);
-INSERT INTO season(startingyear, seasontext, defaultseason)
-VALUES (2017, "2017/2018", 0);
-
-/***************************
 ***      PERSONAL DATA   ***
 ***************************/
 INSERT INTO personalData (name, surname, nickname, sex, is_player, is_coach, is_member, is_parent)

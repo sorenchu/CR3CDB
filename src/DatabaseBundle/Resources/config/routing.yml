@@ -10,6 +10,10 @@ new_person:
     path:   /person/new
     defaults: { _controller: DatabaseBundle:People/AddPerson:new }
 
+import:
+    path: /people/new
+    defaults: { _controller: DatabaseBundle:Import/ImportFile:import }
+
 show_all:
     path:   /people/showAll
     defaults: { _controller: DatabaseBundle:People/ShowPeople:showAll }

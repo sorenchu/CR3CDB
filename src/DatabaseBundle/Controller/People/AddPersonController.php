@@ -6,9 +6,6 @@ namespace DatabaseBundle\Controller\People;
 use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Form\Person\PersonalDataType;
 
-use DatabaseBundle\Entity\FileImport;
-use DatabaseBundle\Form\Import\FileImportType;
-
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
@@ -16,9 +13,6 @@ use DatabaseBundle\Controller\DBQuery\SeasonQueries;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class AddPersonController extends Controller
 {
@@ -35,10 +29,6 @@ class AddPersonController extends Controller
     $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
     $personalDataForm->handleRequest($request);
 
-    $fileImport = new FileImport();
-    $fileImportForm = $this->createForm(new FileImportType(), $fileImport);
-    $fileImportForm->handleRequest($request);
-
     if($personalDataForm->isSubmitted()) 
     {
       $this->peopleQueries->savePerson($personalData, false);
@@ -47,14 +37,8 @@ class AddPersonController extends Controller
                                         ->getNewPerson($personalData)->getId()));
     }
 
-    if($fileImportForm->isSubmitted())
-    {
-      $this->mapCsvToTables($fileImport);
-    }
-
     return $this->render('DatabaseBundle:person:new.html.twig', array(
                 'personalDataForm' => $personalDataForm->createView(),
-                'fileImportForm' => $fileImportForm->createView(),
     ));
   }
 
@@ -141,34 +125,6 @@ class AddPersonController extends Controller
     return $this->redirectToRoute('show_parents',
               array()
             );
-  }
-
-  private function uploadFile($fileImport)
-  {
-    $file = $fileImport->getPathToFile();
-    $fileName = md5(uniqid().'.'.$file->guessExtension());
-
-    $file->move($this->getParameter('imported_directory'),
-                  $fileName);
-    $fileImport->setPathToFile($this->getParameter('imported_directory').'/'.$fileName);
-  }
-
-  private function executeParser($fileImport)
-  {
-    // TODO: get relative path
-    $pathToScript = '/home/antonio/Projects/CR3CDB/src/DatabaseBundle/Controller/Import/parser.py';
-    $script = 'python '.$pathToScript;
-    $process = new Process($script.' '.$fileImport->getPathToFile());
-    $process->run();
-
-    if ($process->isSuccessful()) {
-    }
-  }
-
-  private function mapCsvToTables($fileImport)
-  {
-    $this->uploadFile($fileImport);
-    $this->executeParser($fileImport); 
   }
 }
 ?>
