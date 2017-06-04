@@ -16,6 +16,10 @@ DatabaseBundle\Entity\FileImport:
     pathToFile:
       type: string
       nullable: false
+
+    content:
+      type: string
+      nullable: false
       
   manyToOne:
     user:

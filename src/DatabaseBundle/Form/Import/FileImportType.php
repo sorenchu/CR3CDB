@@ -12,6 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class FileImportType extends AbstractType
 {
@@ -20,6 +21,14 @@ class FileImportType extends AbstractType
       $builder
         ->add('pathToFile', FileType::class, array(
             'label' => 'Archivo a importar'))
+        ->add('content', ChoiceType::class, array(
+                        'label' => 'Contenido',
+                        'choices' => array(
+                            'personalData' => 'Datos personales',
+                            'playerData' => 'Fichas federativas',
+                        )
+                      )
+        )
         ->add('upload', SubmitType::class, array('label' => 'Subir'))
         ->add('reset', ResetType::class, array('label' => 'Cancelar'));
   }

@@ -109,4 +109,33 @@ class FileImport
     {
         return $this->pathToFile;
     }
+    /**
+     * @var string
+     */
+    private $content;
+
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return FileImport
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
 }
