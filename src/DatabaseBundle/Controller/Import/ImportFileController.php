@@ -26,8 +26,6 @@ class ImportFileController extends Controller
     if($fileImportForm->isSubmitted())
     {
       $success = $this->mapCsvToTables($fileImport);
-$logger = $this->get('logger');
-$logger->info("is it succeded? ".$success);
     }
 
     return $this->render('DatabaseBundle:import:importing.html.twig', array(
@@ -49,7 +47,14 @@ $logger->info("is it succeded? ".$success);
   private function executeParser($fileImport)
   {
     // TODO: get relative path
-    $pathToScript = '/home/antonio/Projects/CR3CDB/src/DatabaseBundle/Controller/Import/parser.py';
+    if ('personalData' == $fileImport->getContent()) 
+    {
+      $pathToScript = '/home/antonio/Projects/CR3CDB/src/DatabaseBundle/Controller/Import/personalData.py';
+    }
+    else
+    {
+      $pathToScript = '/home/antonio/Projects/CR3CDB/src/DatabaseBundle/Controller/Import/playerData.py';
+    }
     $script = 'python '.$pathToScript;
     $process = new Process($script.' '.$fileImport->getPathToFile());
     $process->run();

@@ -59,8 +59,8 @@ def getSql(string):
   return query
 
 def parsingFile(source, destiny):
-  regularExpression = '^\d{7},'
-  pattern = re.compile(regularExpression)
+  frmIdNumber = '^\d{7},'
+  pattern = re.compile(frmIdNumber)
   for line in source:
     if pattern.search(line):
       sqlQuery = getSql(line)
