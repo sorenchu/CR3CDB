@@ -30,21 +30,33 @@ show_female:
     path:   /team/showFemale
     defaults: { _controller: DatabaseBundle:People/ShowTeams:showFemale }
 
-show_cadete:
-    path:   /team/showCadete
-    defaults: { _controller: DatabaseBundle:People/ShowTeams:showCadete }
+show_sub18:
+    path:   /team/showSub18
+    defaults: { _controller: DatabaseBundle:People/ShowTeams:showSub18 }
 
-show_alevin:
-    path:   /team/showAlevin
-    defaults: { _controller: DatabaseBundle:People/ShowTeams:showAlevin }
+show_sub16:
+    path:   /team/showSub16
+    defaults: { _controller: DatabaseBundle:People/ShowTeams:showSub16 }
 
-show_benjamin:
-    path:   /team/showBenjamin
-    defaults: { _controller: DatabaseBundle:People/ShowTeams:showBenjamin }
+show_sub14:
+    path:   /team/showSub14
+    defaults: { _controller: DatabaseBundle:People/ShowTeams:showSub14 }
 
-show_prebenjamin:
-    path:   /team/showPrebenjamin
-    defaults: { _controller: DatabaseBundle:People/ShowTeams:showPrebenjamin }
+show_sub12:
+    path:   /team/showSub12
+    defaults: { _controller: DatabaseBundle:People/ShowTeams:showSub12 }
+
+show_sub10:
+    path:   /team/showSub10
+    defaults: { _controller: DatabaseBundle:People/ShowTeams:showSub10 }
+
+show_sub8:
+    path:   /team/showSub8
+    defaults: { _controller: DatabaseBundle:People/ShowTeams:showSub8 }
+
+show_sub6:
+    path:   /team/showSub6
+    defaults: { _controller: DatabaseBundle:People/ShowTeams:showSub6 }
 
 show_parents:
     path: /people/showParents
