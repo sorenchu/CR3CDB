@@ -83,7 +83,19 @@ def getCategory(string):
   if 'Sub 21' == string:
     return 'senior'
   elif 'Sub 18' == string:
-    return 'cadete'
+    return 'sub18'
+  elif 'Sub 16' == string:
+    return 'sub16'
+  elif 'Sub 14' == string:
+    return 'sub14'
+  elif 'Sub 12' == string:
+    return 'sub12'
+  elif 'Sub 10' == string:
+    return 'sub10'
+  elif 'Sub 8' == string:
+    return 'sub8'
+  elif 'Sub 6' == string:
+    return 'sub6'
   else: 
     return 'senior'
 
@@ -116,14 +128,14 @@ def insertIntoPlayerOrCoachData(string):
     if 'player' == getPlayerOrCoach(string):
       exists = existsAsPlayerOrCoachData(personalDataId, defaultSeason, 'playerData')
       if -1 != exists:
-        query = 'UPDATE playerData SET category = \"' + getCategory(arrayForQuery[7]) + '\", number = ' + arrayForQuery[0] + ', personalData_id= ' + str(personalDataId) + ', season_id = ' + str(defaultSeason) + ' WHERE id = ' + str(exists) + ';\n'
+        query = 'UPDATE playerData SET category = \"' + getCategory(arrayForQuery[6]) + '\", number = ' + arrayForQuery[0] + ', personalData_id= ' + str(personalDataId) + ', season_id = ' + str(defaultSeason) + ' WHERE id = ' + str(exists) + ';\n'
       else:
         query = 'INSERT INTO playerData(category, number, personalData_id, season_id) '
-        query += 'VALUES(\"' + getCategory(arrayForQuery[7]) + '\", ' + arrayForQuery[0] + ', ' + str(personalDataId) + ', ' + defaultSeason + ');\n'
+        query += 'VALUES(\"' + getCategory(arrayForQuery[6]) + '\", ' + arrayForQuery[0] + ', ' + str(personalDataId) + ', ' + defaultSeason + ');\n'
     else:
       exists = existsAsPlayerOrCoachData(personalDataId, defaultSeason, 'playerData')
       if -1 != exists:
-        query = 'UPDATE coachData SET category = \"' + getCategory(arrayForQuery[7]) + '\", number = ' + arrayForQuery[0] + ', personalData_id= ' + str(personalDataId) + ', season_id = ' + str(defaultSeason) + ' WHERE id = ' + str(exists) + ';\n'
+        query = 'UPDATE coachData SET category = \"' + getCategory(arrayForQuery[6]) + '\", number = ' + arrayForQuery[0] + ', personalData_id= ' + str(personalDataId) + ', season_id = ' + str(defaultSeason) + ' WHERE id = ' + str(exists) + ';\n'
       else:
         query = 'INSERT INTO coachData(category, number, personalData_id, season_id) '
         query += 'VALUES(' + '\"senior\"' + ', ' + arrayForQuery[0] + ', ' + str(personalDataId) + ', ' + defaultSeason + ');\n'
