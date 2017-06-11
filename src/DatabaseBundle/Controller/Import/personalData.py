@@ -50,6 +50,7 @@ def getSql(string):
 
 def parsingFile(source, destiny):
   # This regex checks for a single number and them it has three choices: empty string, Spanish id or Non-Spanish id
+  # TODO: not working with empty strings
   properLine = '^\d{1,7},(,|\d{8}[A-Z]|[A-Z]\d{7}[A-Z])'
   pattern = re.compile(properLine)
   correctFile = 0

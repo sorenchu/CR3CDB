@@ -46,19 +46,38 @@ def getId(arrayForQuery):
   connection = openDatabase()
   cursor = connection.cursor()
   cursor.execute(query)
-  result = cursor.fetchall()[0][0]
+  result = -1 
+  if 0 < cursor.rowcount:
+    result = cursor.fetchone()[0]
+    cursor.close()
+    connection.close()
   return result
+
+def exists(id):
+  query = 'SELECT id FROM playerData WHERE personalData_id = ' + str(id) + ';'
+  connection = openDatabase()
+  cursor = connection.cursor()
+  cursor.execute(query)
+  if 0 < cursor.rowcount:
+    cursor.close()
+    connection.close()
+    return 1
+  cursor.close()
+  connection.close()
+  return 0
 
 def alterPersonalData(string):
   splitting = ','
   arrayForQuery = string.split(splitting)
   personalDataId = getId(arrayForQuery)
-  if 'player' == getPlayerOrCoach(string):
-    query = 'UPDATE personalData SET is_player'
-  else:
-    query = 'UPDATE personalData SET is_coach'
-  query += '=1 WHERE id = ' + str(personalDataId) + ';\n'
-  return query
+  if -1 != personalDataId:
+    if 'player' == getPlayerOrCoach(string):
+      query = 'UPDATE personalData SET is_player'
+    else:
+      query = 'UPDATE personalData SET is_coach'
+    query += '=1 WHERE id = ' + str(personalDataId) + ';\n'
+    return query
+  return ''
 
 def getCategory(string):
   if 'Sub 21' == string:
@@ -73,8 +92,18 @@ def getDefaultSeason():
   connection = openDatabase()
   cursor = connection.cursor()
   cursor.execute(query)
-  result = cursor.fetchall()[0][0]
+  result = cursor.fetchone()[0]
+  cursor.close()
   return str(result)
+
+def existsAsPlayerOrCoachData(id, season, table):
+  query = 'SELECT id FROM ' + table + ' WHERE personalData_id = ' + str(id) + ' AND season_id = ' + str(season) + ';'
+  connection = openDatabase()
+  cursor = connection.cursor()
+  cursor.execute(query)
+  if 0 < cursor.rowcount:
+    return cursor.fetchone()[0]
+  return -1
 
 
 # TODO: it is needed to include an option for updating tables instead inserting
@@ -83,13 +112,23 @@ def insertIntoPlayerOrCoachData(string):
   arrayForQuery = string.split(splitting)
   personalDataId = getId(arrayForQuery)
   defaultSeason = getDefaultSeason()
-  if 'player' == getPlayerOrCoach(string):
-    query = 'INSERT INTO playerData(category, number, personalData_id, season_id) '
-    query += 'VALUES(\"' + getCategory(arrayForQuery[7]) + '\", ' + arrayForQuery[0] + ', ' + str(personalDataId) + ', ' + defaultSeason + ');\n'
-  else:
-    query = 'INSERT INTO coachData(category, number, personalData_id) '
-    query += 'VALUES(' + 'senior' + ', ' + arrayForQuery[0] + ', ' + str(personalDataId) + ');\n'
-  return query
+  if -1 != personalDataId:
+    if 'player' == getPlayerOrCoach(string):
+      exists = existsAsPlayerOrCoachData(personalDataId, defaultSeason, 'playerData')
+      if -1 != exists:
+        query = 'UPDATE playerData SET category = \"' + getCategory(arrayForQuery[7]) + '\", number = ' + arrayForQuery[0] + ', personalData_id= ' + str(personalDataId) + ', season_id = ' + str(defaultSeason) + ' WHERE id = ' + str(exists) + ';\n'
+      else:
+        query = 'INSERT INTO playerData(category, number, personalData_id, season_id) '
+        query += 'VALUES(\"' + getCategory(arrayForQuery[7]) + '\", ' + arrayForQuery[0] + ', ' + str(personalDataId) + ', ' + defaultSeason + ');\n'
+    else:
+      exists = existsAsPlayerOrCoachData(personalDataId, defaultSeason, 'playerData')
+      if -1 != exists:
+        query = 'UPDATE coachData SET category = \"' + getCategory(arrayForQuery[7]) + '\", number = ' + arrayForQuery[0] + ', personalData_id= ' + str(personalDataId) + ', season_id = ' + str(defaultSeason) + ' WHERE id = ' + str(exists) + ';\n'
+      else:
+        query = 'INSERT INTO coachData(category, number, personalData_id, season_id) '
+        query += 'VALUES(' + '\"senior\"' + ', ' + arrayForQuery[0] + ', ' + str(personalDataId) + ', ' + defaultSeason + ');\n'
+    return query
+  return ''
 
 def parsingFile(source, destiny):
   frmIdNumber = '^\d{7},'
