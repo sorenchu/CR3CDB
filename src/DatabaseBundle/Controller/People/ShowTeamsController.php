@@ -33,24 +33,39 @@ class ShowTeamsController extends Controller
     return $this->showSeniorTeam('femenino', $request);
   }
 
-  public function showCadeteAction(Request $request)
+  public function showSub18Action(Request $request)
   {
-    return $this->showJuniorTeam('cadete', $request);
+    return $this->showJuniorTeam('sub18', $request);
   }
 
-  public function showAlevinAction(Request $request)
+  public function showSub16Action(Request $request)
   {
-    return $this->showJuniorTeam('alevin', $request);
+    return $this->showJuniorTeam('sub16', $request);
   }
 
-  public function showBenjaminAction(Request $request)
+  public function showSub14Action(Request $request)
   {
-    return $this->showJuniorTeam('benjamin', $request);
+    return $this->showJuniorTeam('sub14', $request);
   }
 
-  public function showPrebenjaminAction(Request $request)
+  public function showSub12Action(Request $request)
   {
-    return $this->showJuniorTeam('prebenjamin', $request);
+    return $this->showJuniorTeam('sub12', $request);
+  }
+
+  public function showSub10Action(Request $request)
+  {
+    return $this->showJuniorTeam('sub10', $request);
+  }
+
+  public function showSub8Action(Request $request)
+  {
+    return $this->showJuniorTeam('sub8', $request);
+  }
+
+  public function showSub6Action(Request $request)
+  {
+    return $this->showJuniorTeam('sub6', $request);
   }
 
   private function showSeniorTeam($specificTeam, $request)
