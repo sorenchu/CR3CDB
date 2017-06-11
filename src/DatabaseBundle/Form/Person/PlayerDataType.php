@@ -42,13 +42,13 @@ class PlayerDataType extends AbstractType
             'choices' => array(
               'senior' => 'Senior',
               'femenino' => 'Femenino',
-              'cadete' => 'Cadete',
-              //'infantil' => 'Infantil',
-              'alevin' => 'Alevín',
-              'benjamin' => 'Benjamín',
-              'prebenjamin' => 'Prebenjamín',
-              //'jabato' => 'Jabato',
-              //'lince' => 'Lince',
+              'sub18' => 'Sub-18',
+              'sub16' => 'Sub-16',
+              'sub14' => 'Sub-14',
+              'sub12' => 'Sub-12',
+              'sub10' => 'Sub-10',
+              'sub8' => 'Sub-8',
+              'sub6' => 'Sub-6',
             )
           )
         );
