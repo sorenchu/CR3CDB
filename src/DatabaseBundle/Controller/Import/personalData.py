@@ -44,8 +44,11 @@ def getSex(string):
 def getSql(string):
   splitting = ','
   arrayForQuery = string.split(splitting)
+  dni = arrayForQuery[1]
+  if '' == dni: 
+    dni = str(random.randint(0,150000))
   query = 'INSERT INTO personalData(name, surname, sex, dni, is_player, is_coach, is_parent, is_member)'
-  query += 'VALUES(\"' + arrayForQuery[2] + '\", \"' + arrayForQuery[3] + '\", \"' + getSex(string) + '\", \"' + arrayForQuery[1] + '\", 0, 0, 0, 0);\n'
+  query += 'VALUES(\"' + arrayForQuery[2] + '\", \"' + arrayForQuery[3] + '\", \"' + getSex(string) + '\", \"' + dni + '\", 0, 0, 0, 0);\n'
   return query
 
 def parsingFile(source, destiny):
