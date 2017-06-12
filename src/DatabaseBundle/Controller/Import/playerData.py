@@ -5,12 +5,7 @@ import sys
 import string
 import random
 import re
-import MySQLdb
-
-DB_HOST = 'localhost'
-DB_USER = 'root'
-DB_PASS = 'A.O.egm3sag'
-DB_NAME = 'CR3C'
+from SqlHandling import SqlHandling
 
 def generateName():
   numOfChars = 10
@@ -43,28 +38,25 @@ def getPlayerOrCoach(string):
 
 def getId(arrayForQuery):
   query = 'SELECT id FROM personalData WHERE name = \"' + arrayForQuery[3] + '\" AND surname = \"' + arrayForQuery[4] + '\";'
-  connection = openDatabase()
-  cursor = connection.cursor()
-  cursor.execute(query)
+  sqlHandling = SqlHandling()
+  sqlHandling.establishConnection()
+  sqlHandling.sendQuery(query)
   result = -1 
-  if 0 < cursor.rowcount:
-    result = cursor.fetchone()[0]
-    cursor.close()
-    connection.close()
+  if 0 < sqlHandling.getRowCount():
+    result = sqlHandling.fetchOneData()
+  sqlHandling.closeConnection()
   return result
 
 def exists(id):
   query = 'SELECT id FROM playerData WHERE personalData_id = ' + str(id) + ';'
-  connection = openDatabase()
-  cursor = connection.cursor()
-  cursor.execute(query)
-  if 0 < cursor.rowcount:
-    cursor.close()
-    connection.close()
-    return 1
-  cursor.close()
-  connection.close()
-  return 0
+  sqlHandling = SqlHandling()
+  sqlHandling.establishConnection()
+  sqlHandling.sendQuery(query)
+  exists = 0
+  if 0 < sqlHandling.getRowCount():
+    exists = 1
+  sqlHandling.closeConnection()
+  return exists
 
 def alterPersonalData(string):
   splitting = ','
@@ -101,20 +93,20 @@ def getCategory(string):
 
 def getDefaultSeason():
   query = 'SELECT id FROM season WHERE defaultseason = 1;'
-  connection = openDatabase()
-  cursor = connection.cursor()
-  cursor.execute(query)
-  result = cursor.fetchone()[0]
-  cursor.close()
+  sqlHandling = SqlHandling()
+  sqlHandling.establishConnection()
+  sqlHandling.sendQuery(query)
+  result = sqlHandling.fetchOneData()
+  sqlHandling.closeConnection()
   return str(result)
 
 def existsAsPlayerOrCoachData(id, season, table):
   query = 'SELECT id FROM ' + table + ' WHERE personalData_id = ' + str(id) + ' AND season_id = ' + str(season) + ';'
-  connection = openDatabase()
-  cursor = connection.cursor()
-  cursor.execute(query)
-  if 0 < cursor.rowcount:
-    return cursor.fetchone()[0]
+  sqlHandling = SqlHandling()
+  sqlHandling.establishConnection()
+  sqlHandling.sendQuery(query)
+  if 0 < sqlHandling.getRowCount():
+    return sqlHandling.fetchOneData()
   return -1
 
 
@@ -153,17 +145,9 @@ def parsingFile(source, destiny):
       putIntoFile(destiny, sqlQuery)
   return 1 
 
-def openDatabase():
-  return MySQLdb.connect(DB_HOST, DB_USER, DB_PASS, DB_NAME)
-
 def populateDB(fileGenerated):
-  connection = openDatabase()
-  cursor = connection.cursor()
-  for line in fileGenerated:
-    cursor.execute(line)
-  connection.commit()
-  cursor.close()
-  connection.close()
+  sqlHandling = SqlHandling()
+  sqlHandling.populateDB(fileGenerated)
 
 def main():
   if len(sys.argv) < 2:

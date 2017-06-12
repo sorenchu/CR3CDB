@@ -5,12 +5,7 @@ import sys
 import string
 import random
 import re
-import MySQLdb
-
-DB_HOST = 'localhost'
-DB_USER = 'root'
-DB_PASS = 'A.O.egm3sag'
-DB_NAME = 'CR3C'
+from SqlHandling import SqlHandling
 
 def generateName():
   numOfChars = 10
@@ -48,7 +43,7 @@ def getSql(string):
   if '' == dni: 
     dni = str(random.randint(0,150000))
   query = 'INSERT INTO personalData(name, surname, sex, dni, is_player, is_coach, is_parent, is_member)'
-  query += 'VALUES(\"' + arrayForQuery[2] + '\", \"' + arrayForQuery[3] + '\", \"' + getSex(string) + '\", \"' + dni + '\", 0, 0, 0, 0);\n'
+  query += ' VALUES(\"' + arrayForQuery[2] + '\", \"' + arrayForQuery[3] + '\", \"' + getSex(string) + '\", \"' + dni + '\", 0, 0, 0, 0);\n'
   return query
 
 def parsingFile(source, destiny):
@@ -64,20 +59,9 @@ def parsingFile(source, destiny):
       putIntoFile(destiny, sqlQuery)
   return correctFile 
 
-def openDatabase():
-  return MySQLdb.connect(DB_HOST, DB_USER, DB_PASS, DB_NAME)
-
 def populateDB(fileGenerated):
-  connection = openDatabase()
-  cursor = connection.cursor()
-  for line in fileGenerated:
-    try:
-      cursor.execute(line)
-    except cursor.IntegrityError as err:
-      print 'Error: {}'.format(err)
-  connection.commit()
-  cursor.close()
-  connection.close()
+  sqlHandling = SqlHandling()
+  sqlHandling.populateDB(fileGenerated)
 
 def main():
   if len(sys.argv) < 2:
