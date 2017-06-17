@@ -6,28 +6,14 @@ import string
 import random
 import re
 from SqlHandling import SqlHandling
+from FileTreatment import FileTreatment
 
-def generateName():
+def generateName(extension):
   numOfChars = 10
-  return ''.join(random.choice(string.ascii_uppercase) for _ in range(numOfChars))
+  return ''.join(random.choice(string.ascii_uppercase) for _ in range(numOfChars)) + extension
 
 def readFile(pathToFile):
   return open(pathToFile,'r')
-
-def writeFile():
-  extension = '.sql'
-  name = generateName() + extension
-  return open(name,'a')
-
-def putIntoFile(destiny, string):
-  destiny.write(string)
-
-def closeFile(pathToFile):
-  return pathToFile.close()
-
-def deleteFile(pathToFile):
-  print pathToFile 
-  os.remove(pathToFile)
 
 def getSex(string):
   isMale = 'Masculino'
@@ -40,7 +26,7 @@ def getSql(string):
   splitting = ','
   arrayForQuery = string.split(splitting)
   dni = arrayForQuery[1]
-  if '' == dni: 
+  if '' == dni:
     dni = str(random.randint(0,150000))
   query = 'INSERT INTO personalData(name, surname, sex, dni, is_player, is_coach, is_parent, is_member)'
   query += ' VALUES(\"' + arrayForQuery[2] + '\", \"' + arrayForQuery[3] + '\", \"' + getSex(string) + '\", \"' + dni + '\", 0, 0, 0, 0);\n'
@@ -52,12 +38,14 @@ def parsingFile(source, destiny):
   properLine = '^\d{1,7},(,|\d{8}[A-Z]|[A-Z]\d{7}[A-Z])'
   pattern = re.compile(properLine)
   correctFile = 0
-  for line in source:
+  source.readFile()
+  destiny.editFile()
+  for line in source.file:
     if pattern.search(line):
       correctFile = 1
       sqlQuery = getSql(line)
-      putIntoFile(destiny, sqlQuery)
-  return correctFile 
+      destiny.writeIntoFile(sqlQuery)
+  return correctFile
 
 def populateDB(fileGenerated):
   sqlHandling = SqlHandling()
@@ -67,21 +55,21 @@ def main():
   if len(sys.argv) < 2:
     print "error! Not enough arguments"
     return -1
+
   pathOfFileToParse = sys.argv[1]
-  fileToParse = readFile(pathOfFileToParse)
-  fileGenerated = writeFile();
+  fileToParse = FileTreatment(pathOfFileToParse)
+  pathOfFileGenerated = os.getcwd() + '/' + generateName('.sql')
+  fileGenerated = FileTreatment(pathOfFileGenerated)
+
   if 1 == parsingFile(fileToParse, fileGenerated):
-    pathOfFileGenerated = os.getcwd() + '/' + fileGenerated.name
-    closeFile(fileGenerated)
-    fileGenerated = readFile(pathOfFileGenerated)
-    populateDB(fileGenerated)
-    deleteFile(pathOfFileToParse)
-    deleteFile(pathOfFileGenerated)
+    fileGenerated.closeFile()
+    fileGenerated.readFile()
+    populateDB(fileGenerated.file)
+    #fileToParse.deleteFile()
+    fileGenerated.deleteFile()
     return 1
   else:
     print 'error! Wrong file'
-  closeFile(fileToParse)
-  closeFile(fileGenerated)
   return -1
-  
+
 main()
