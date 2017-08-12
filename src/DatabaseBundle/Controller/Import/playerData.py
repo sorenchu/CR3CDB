@@ -125,7 +125,6 @@ def parsingFile(source, destiny):
     if pattern.search(line):
       sqlQuery = alterPersonalData(line)
       destiny.writeIntoFile(sqlQuery)
-    else: 
       sqlQuery = insertIntoPlayerOrCoachData(line)
       destiny.writeIntoFile(sqlQuery)
   source.closeFile()
@@ -145,7 +144,7 @@ def main():
   pathOfFileGenerated = os.getcwd() + '/' + generateName('.sql')
   fileGenerated = FileTreatment(pathOfFileGenerated)
 
-  if 1 == parsingFile(fileToParse, fileGenerated):
+  if parsingFile(fileToParse, fileGenerated):
     fileGenerated.readFile()
     populateDB(fileGenerated.file)
     fileToParse.deleteFile()
