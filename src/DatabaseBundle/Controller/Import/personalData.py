@@ -20,19 +20,38 @@ def getSex(string):
     return 'male'
   return 'female'
 
+def existPersonInDatabase(name, surname):
+  sqlHandling = SqlHandling()
+  sqlHandling.establishConnection()
+  query = 'SELECT name, surname FROM personalData WHERE name = \"'  + name + '\" AND surname = \"' + surname + '\";\n'
+  sqlHandling.sendQuery(query)
+  data = sqlHandling.getRowCount()
+  if data > 0:
+    return 0
+  return 1
+
 def getSql(string):
   splitting = ','
   arrayForQuery = string.split(splitting)
   dni = arrayForQuery[1]
-  # TODO: check if person exists and has random dni
-  if '' == dni:
+  name = arrayForQuery[2]
+  surname = arrayForQuery[3]
+  # If there is no dni for a person, we check if he or she exists
+  # with name and surname. If it does, we consider that already exists
+  if '' == dni and 1 == existPersonInDatabase(name, surname):
     dni = str(random.randint(0,150000))
-  query = 'INSERT INTO personalData(name, surname, sex, dni, is_player, is_coach, is_parent, is_member)'
-  query += ' VALUES(\"' + arrayForQuery[2] + '\", \"' + arrayForQuery[3] + '\", \"' + getSex(string) + '\", \"' + dni + '\", 0, 0, 0, 0);\n'
+
+  query = ''
+  if '' != dni:
+    query = 'INSERT INTO personalData(name, surname, sex, dni, is_player, is_coach, is_parent, is_member)'
+    query += ' VALUES(\"' + name + '\", \"' + surname + '\", \"' + getSex(string) + '\", \"' + dni + '\", 0, 0, 0, 0);\n'
+  else:
+    print 'Error! Duplicated person for ' + name + ' ' + surname
   return query
 
 def parsingFile(source, destiny):
-  # This regex checks for a single number and them it has three choices: empty string, Spanish id or Non-Spanish id
+  # This regex checks for a single number and them 
+  # it has three choices: empty string, Spanish id or Non-Spanish id
   properLine = '^\d{1,7},(,|\d{8}[A-Z]|[A-Z]\d{7}[A-Z])'
   pattern = re.compile(properLine)
   correctFile = 0
