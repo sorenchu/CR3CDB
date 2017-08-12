@@ -5,29 +5,13 @@ import sys
 import string
 import random
 import re
+
 from SqlHandling import SqlHandling
+from FileTreatment import FileTreatment
 
-def generateName():
+def generateName(extension):
   numOfChars = 10
-  return ''.join(random.choice(string.ascii_uppercase) for _ in range(numOfChars))
-
-def readFile(pathToFile):
-  return open(pathToFile,'r')
-
-def writeFile():
-  extension = '.sql'
-  name = generateName() + extension
-  return open(name,'a')
-
-def putIntoFile(destiny, string):
-  destiny.write(string)
-
-def closeFile(pathToFile):
-  return pathToFile.close()
-
-def deleteFile(pathToFile):
-  print pathToFile 
-  os.remove(pathToFile)
+  return ''.join(random.choice(string.ascii_uppercase) for _ in range(numOfChars)) + extension
 
 def getPlayerOrCoach(string):
   isSportman = 'Deportista'
@@ -109,8 +93,6 @@ def existsAsPlayerOrCoachData(id, season, table):
     return sqlHandling.fetchOneData()
   return -1
 
-
-# TODO: it is needed to include an option for updating tables instead inserting
 def insertIntoPlayerOrCoachData(string):
   splitting = ','
   arrayForQuery = string.split(splitting)
@@ -137,12 +119,17 @@ def insertIntoPlayerOrCoachData(string):
 def parsingFile(source, destiny):
   frmIdNumber = '^\d{7},'
   pattern = re.compile(frmIdNumber)
-  for line in source:
+  source.readFile()
+  destiny.editFile()
+  for line in source.file:
     if pattern.search(line):
       sqlQuery = alterPersonalData(line)
-      putIntoFile(destiny, sqlQuery)
+      destiny.writeIntoFile(sqlQuery)
+    else: 
       sqlQuery = insertIntoPlayerOrCoachData(line)
-      putIntoFile(destiny, sqlQuery)
+      destiny.writeIntoFile(sqlQuery)
+  source.closeFile()
+  destiny.closeFile()
   return 1 
 
 def populateDB(fileGenerated):
@@ -154,18 +141,18 @@ def main():
     print "error! Not enough arguments"
     return -1
   pathOfFileToParse = sys.argv[1]
-  fileToParse = readFile(pathOfFileToParse)
-  fileGenerated = writeFile();
-  if parsingFile(fileToParse, fileGenerated):
-    pathOfFileGenerated = os.getcwd() + '/' + fileGenerated.name
-    closeFile(fileGenerated)
-    fileGenerated = readFile(pathOfFileGenerated)
-    populateDB(fileGenerated)
-    deleteFile(pathOfFileToParse)
-    deleteFile(pathOfFileGenerated)
+  fileToParse = FileTreatment(pathOfFileToParse)
+  pathOfFileGenerated = os.getcwd() + '/' + generateName('.sql')
+  fileGenerated = FileTreatment(pathOfFileGenerated)
+
+  if 1 == parsingFile(fileToParse, fileGenerated):
+    fileGenerated.readFile()
+    populateDB(fileGenerated.file)
+    fileToParse.deleteFile()
+    fileGenerated.deleteFile()
     return 1
-  closeFile(fileToParse)
-  closeFile(fileGenerated)
+  else:
+    print 'error! Wrong file'
   return -1
   
 main()

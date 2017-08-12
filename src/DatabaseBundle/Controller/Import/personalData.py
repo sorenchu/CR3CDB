@@ -5,15 +5,13 @@ import sys
 import string
 import random
 import re
+
 from SqlHandling import SqlHandling
 from FileTreatment import FileTreatment
 
 def generateName(extension):
   numOfChars = 10
   return ''.join(random.choice(string.ascii_uppercase) for _ in range(numOfChars)) + extension
-
-def readFile(pathToFile):
-  return open(pathToFile,'r')
 
 def getSex(string):
   isMale = 'Masculino'
@@ -26,6 +24,7 @@ def getSql(string):
   splitting = ','
   arrayForQuery = string.split(splitting)
   dni = arrayForQuery[1]
+  # TODO: check if person exists and has random dni
   if '' == dni:
     dni = str(random.randint(0,150000))
   query = 'INSERT INTO personalData(name, surname, sex, dni, is_player, is_coach, is_parent, is_member)'
@@ -34,7 +33,6 @@ def getSql(string):
 
 def parsingFile(source, destiny):
   # This regex checks for a single number and them it has three choices: empty string, Spanish id or Non-Spanish id
-  # TODO: not working with empty strings
   properLine = '^\d{1,7},(,|\d{8}[A-Z]|[A-Z]\d{7}[A-Z])'
   pattern = re.compile(properLine)
   correctFile = 0
@@ -45,6 +43,8 @@ def parsingFile(source, destiny):
       correctFile = 1
       sqlQuery = getSql(line)
       destiny.writeIntoFile(sqlQuery)
+  source.closeFile()
+  destiny.closeFile()
   return correctFile
 
 def populateDB(fileGenerated):
@@ -62,10 +62,9 @@ def main():
   fileGenerated = FileTreatment(pathOfFileGenerated)
 
   if 1 == parsingFile(fileToParse, fileGenerated):
-    fileGenerated.closeFile()
     fileGenerated.readFile()
     populateDB(fileGenerated.file)
-    #fileToParse.deleteFile()
+    fileToParse.deleteFile()
     fileGenerated.deleteFile()
     return 1
   else:
