@@ -10,9 +10,6 @@ DatabaseBundle\Entity\PlayerData:
             generator:
                 strategy: AUTO
     fields:
-        payment:
-            type: float
-            nullable: true
         category:
             type: string
             length: '150'
@@ -43,3 +40,9 @@ DatabaseBundle\Entity\PlayerData:
             joinColumn:
                 name: personalData_id
                 referencedColumnName: id
+
+    oneToMany:
+        payment:
+            targetEntity: Payment
+            mappedBy: playerData
+            

@@ -220,4 +220,28 @@ class PlayerData
     {
         return $this->number;
     }
+
+    /**
+     * Add payment
+     *
+     * @param \DatabaseBundle\Entity\Payment $payment
+     *
+     * @return PlayerData
+     */
+    public function addPayment(\DatabaseBundle\Entity\Payment $payment)
+    {
+        $this->payment[] = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Remove payment
+     *
+     * @param \DatabaseBundle\Entity\Payment $payment
+     */
+    public function removePayment(\DatabaseBundle\Entity\Payment $payment)
+    {
+        $this->payment->removeElement($payment);
+    }
 }

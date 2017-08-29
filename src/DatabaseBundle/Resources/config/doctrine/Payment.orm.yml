@@ -1,0 +1,36 @@
+# src/DatabaseBundle/Resources/config/doctrine/Payment.orm.yml
+DatabaseBundle\Entity\Payment:
+  type: entity
+  table: payment
+  repositoryClass: DatabaseBundle\Repository\PaymentRepository
+  id:
+      id:
+          type: integer
+          id: true
+          generator:
+              strategy: AUTO
+
+  fields:
+      wayOfPay:
+          type: string
+          nullable: false
+          length: 20
+      amountOwned:
+          type: float 
+          nullable: true
+      amountPayed:
+          type: float
+          nullable: true
+      paymentDate:
+          type: datetime
+          nullable: false
+
+
+  manyToOne:
+      playerData:
+          targetEntity: PlayerData
+          inversedBy: payment
+          joinColumn:
+              name: playerData_id
+              referencedColumnName: id
+          cascade: ["persist"]
