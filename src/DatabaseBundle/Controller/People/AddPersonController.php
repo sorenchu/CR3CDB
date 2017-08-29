@@ -26,6 +26,7 @@ class AddPersonController extends Controller
   public function newAction(Request $request)
   {
     $personalData = new PersonalData();
+    $seasonQueries = new SeasonQueries($this);
     $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
     $personalDataForm->handleRequest($request);
 
@@ -33,8 +34,10 @@ class AddPersonController extends Controller
     {
       $this->peopleQueries->savePerson($personalData, false);
       return $this->redirectToRoute('edit_person', 
-                    array('id' => $this->peopleQueries
-                                        ->getNewPerson($personalData)->getId()));
+                    array(
+                      'id' => $personalData->getId(),
+                      'seasonId' => $seasonQueries->getDefaultSeason()->getId(),
+                    ));
     }
 
     return $this->render('DatabaseBundle:person:new.html.twig', array(

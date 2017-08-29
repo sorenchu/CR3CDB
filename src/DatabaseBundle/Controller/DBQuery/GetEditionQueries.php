@@ -98,18 +98,6 @@ class GetEditionQueries extends Controller
     return $this->getTypeOfPerson($query, $table);
   }
 
-  public function getNewPerson($personalData)
-  {
-    $em = $this->personController->getDoctrine()->getManager();
-    $query = $em->createQuery(
-        'SELECT wholeperson
-         FROM DatabaseBundle:PersonalData personaldata
-         WHERE personaldata.id = :id')
-         ->setParameter('id', $personalData->getId());
-
-    return $query->getResult()[0];
-  }
-
   public function savePerson($personalData, $edit)
   {
     $em = $this->personController->getDoctrine()->getManager();
