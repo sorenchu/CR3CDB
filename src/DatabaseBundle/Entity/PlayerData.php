@@ -18,11 +18,6 @@ class PlayerData
     private $season;
 
     /**
-     * @var float
-     */
-    private $payment;
-
-    /**
      * @var string
      */
     private $category;
@@ -32,12 +27,15 @@ class PlayerData
      */
     private $parentData;
 
+    private $payment;
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->parentData = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->payment = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -72,30 +70,6 @@ class PlayerData
     public function getSeason()
     {
         return $this->season;
-    }
-
-    /**
-     * Set payment
-     *
-     * @param float $payment
-     *
-     * @return PlayerData
-     */
-    public function setPayment($payment)
-    {
-        $this->payment = $payment;
-
-        return $this;
-    }
-
-    /**
-     * Get payment
-     *
-     * @return float
-     */
-    public function getPayment()
-    {
-        return $this->payment;
     }
 
     /**
@@ -243,5 +217,10 @@ class PlayerData
     public function removePayment(\DatabaseBundle\Entity\Payment $payment)
     {
         $this->payment->removeElement($payment);
+    }
+
+    public function getPayment() 
+    {
+        return $this->payment;
     }
 }
