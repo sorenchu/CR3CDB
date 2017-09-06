@@ -21,9 +21,9 @@ class PaymentType extends AbstractType
                   array(
                     'label' => 'Modo de pago',
                     'choices' => array(
-                        'Domiciliación bancaria',
-                        'Transferencia',
-                        'Efectivo',
+                        'bank' => 'Domiciliación bancaria',
+                        'transfer' => 'Transferencia',
+                        'cash' => 'Efectivo',
           )))
           ->add('amountOwned', MoneyType::class, 
                   array(
@@ -35,7 +35,7 @@ class PaymentType extends AbstractType
                     'required' => false,
                     'label' => 'Pagado',
           ))
-          ->add('paymentData', DateType::class,
+          ->add('paymentDate', DateType::class,
                   array(
                     'required' => false,
                     'label' => 'Fecha de pago',

@@ -45,4 +45,5 @@ DatabaseBundle\Entity\PlayerData:
         payment:
             targetEntity: Payment
             mappedBy: playerData
+            cascade: ["persist"]
             

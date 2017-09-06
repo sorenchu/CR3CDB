@@ -1,13 +1,13 @@
 {% extends 'DatabaseBundle:base:base.html.twig' %}
-
 {% block title %}{{ personalData.name }} {{ personalData.surname }} {% endblock %}
 
 {% block body %}
 <h1>{{ personalData.name }} {{ personalData.surname }}</h1>
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/newpayment.js') }}"></script>
 
 {# src/DatabaseBundle/Resources/views/Default/editperson.html.twig #}
 {{ include('DatabaseBundle:season:seasonform.html.twig') }}
-
 {{ form_start(personalDataForm) }}
 <table>
 <tr>
@@ -45,9 +45,17 @@
       {% for formData in personalDataForm.playerData %}
         {% if formData.vars.value.season.seasontext == curSeason %}
             {{ form_row(formData.number) }}
-            {{ form_row(formData.payment) }}
             {{ form_row(formData.category) }} 
             {{ form_row(formData.season) }}
+            <ul class="payments" data-prototype="{{ form_widget(formData.payment.vars.prototype)|e('html_attr') }}">
+            {% for payment in formData.payment %}
+              <li>{{ form_row(payment.wayOfPay) }}
+              {{ form_row(payment.amountOwned) }}
+              {{ form_row(payment.amountPayed) }}
+              {{ form_row(payment.paymentDate) }}</li>
+              <br>
+            {% endfor %}
+            </ul>
         {% else %} 
           {{ form_widget(formData, 
               { 'attr': {'style': 'display:none'} })
