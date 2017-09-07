@@ -31,15 +31,12 @@ function addPaymentForm($collectionHolder, $addPaymentLink) {
     $addPaymentLink.before($newFormLi);
 }
 
-function addPaymentFormDeleteLink($tagFormLi) {
+function addPaymentFormDeleteLink($paymentFormLi) {
     var $removeFormA = $('<a href="#">Borrar pago</a>');
-    $tagFormLi.append($removeFormA);
+    $paymentFormLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {
-        // prevent the link from creating a "#" on the URL
         e.preventDefault();
-
-        // remove the li for the tag form
-        $tagFormLi.remove();
+        $paymentFormLi.remove();
     });
 }

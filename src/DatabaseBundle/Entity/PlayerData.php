@@ -219,8 +219,35 @@ class PlayerData
         $this->payment->removeElement($payment);
     }
 
+
+    /**
+     * Get payment
+     *
+     * @return Integer
+     */
     public function getPayment() 
     {
         return $this->payment;
+    }
+
+    /**
+     * Set payment
+     *
+     * @param \DatabaseBundle\Entity\Payment $payment
+     */
+    public function setPayment(\DatabaseBundle\Entity\Payment $payment = null)
+    {
+      $this->payment = $payment;
+
+      return $this;
+    }
+
+    public function getAmountPayed()
+    {
+        $amountPayed = 0;
+        foreach($this->payment as $payment) {
+            $amountPayed += $payment->getAmountPayed();
+        }
+        return $amountPayed;
     }
 }

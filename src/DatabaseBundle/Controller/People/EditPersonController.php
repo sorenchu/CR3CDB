@@ -5,10 +5,7 @@ namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Form\Person\PersonalDataType;
 use DatabaseBundle\Form\Season\SeasonType;
-use DatabaseBundle\Entity\PlayerData;
-use DatabaseBundle\Entity\CoachData;
-use DatabaseBundle\Entity\MemberData;
-use DatabaseBundle\Entity\ParentData;
+use DatabaseBundle\Entity\Payment;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
@@ -39,18 +36,18 @@ class EditPersonController extends Controller
     $personalData = $peopleQueries->getPerson($id);
     if ($personalData->getIsPlayer())
     {
-      $playerData = new PlayerData();
+      $playerData = new HandlingData($this, "player");
       $playerData->setPersonalData($personalData);
       $playerData->setSeason($season);
       if (null == $personalData->playerIsInCurrentSeason($season))
       {
-        $personalData->getPlayerData()->add($playerData);
+        $personalData->getPlayerData()->add($playerData->getChildData());
       }
     }
 
     if ($personalData->getIsCoach())
     {
-      $coachData = new CoachData();
+      $coachData = new HandlingData($this, "coach");
       $coachData->setPersonalData($personalData);
       $coachData->setSeason($season);
       if (null == $personalData->coachIsInCurrentSeason($season))
@@ -61,7 +58,7 @@ class EditPersonController extends Controller
 
     if ($personalData->getIsMember())
     {
-      $memberData = new MemberData();
+      $memberData = new HandlingData($this, "member");
       $memberData->setPersonalData($personalData);
       $memberData->setSeason($season);
       if (null == $personalData->memberIsInCurrentSeason($season))
@@ -72,7 +69,7 @@ class EditPersonController extends Controller
 
     if ($personalData->getIsParent())
     {
-      $parentData = new ParentData();
+      $parentData = new HandlingData($this, "parent");
       $parentData->setPersonalData($personalData);
       $parentData->setSeason($season);
       if (null == $personalData->parentIsInCurrentSeason($season))
