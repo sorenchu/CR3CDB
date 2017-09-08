@@ -37,7 +37,6 @@ class Payment
      */
     private $playerData;
 
-
     /**
      * Get id
      *

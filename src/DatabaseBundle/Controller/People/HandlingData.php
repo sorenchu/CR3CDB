@@ -8,6 +8,8 @@ use DatabaseBundle\Entity\CoachData;
 use DatabaseBundle\Entity\MemberData;
 use DatabaseBundle\Entity\ParentData;
 
+use DatabaseBundle\Entity\Payment;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HandlingData extends Controller

@@ -34,20 +34,23 @@ class EditPersonController extends Controller
     }
 
     $personalData = $peopleQueries->getPerson($id);
+    $log = $this->get('logger');
     if ($personalData->getIsPlayer())
     {
-      $playerData = new HandlingData($this, "player");
+      $handlingData = new HandlingData($this, "player");
+      $playerData = $handlingData->getChildData();
       $playerData->setPersonalData($personalData);
       $playerData->setSeason($season);
       if (null == $personalData->playerIsInCurrentSeason($season))
       {
-        $personalData->getPlayerData()->add($playerData->getChildData());
+        $personalData->getPlayerData()->add($playerData);
       }
     }
 
     if ($personalData->getIsCoach())
     {
-      $coachData = new HandlingData($this, "coach");
+      $handlingData = new HandlingData($this, "coach");
+      $coachData = $handlingData->getChildData();
       $coachData->setPersonalData($personalData);
       $coachData->setSeason($season);
       if (null == $personalData->coachIsInCurrentSeason($season))
@@ -58,7 +61,8 @@ class EditPersonController extends Controller
 
     if ($personalData->getIsMember())
     {
-      $memberData = new HandlingData($this, "member");
+      $handlingData = new HandlingData($this, "member");
+      $memberData = $handlingData->getChildData();
       $memberData->setPersonalData($personalData);
       $memberData->setSeason($season);
       if (null == $personalData->memberIsInCurrentSeason($season))
@@ -69,7 +73,8 @@ class EditPersonController extends Controller
 
     if ($personalData->getIsParent())
     {
-      $parentData = new HandlingData($this, "parent");
+      $handlingData = new HandlingData($this, "parent");
+      $parentData = $handlingData->getChildData();
       $parentData->setPersonalData($personalData);
       $parentData->setSeason($season);
       if (null == $personalData->parentIsInCurrentSeason($season))
@@ -83,6 +88,7 @@ class EditPersonController extends Controller
     if ($personalDataForm->isSubmitted())
     {
       $seasonForm = $this->createForm(new SeasonType(), $season);
+      $this->checkPayment($personalData, $personalDataForm);
       $peopleQueries->savePerson($personalData, true);
       $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
     }
@@ -92,6 +98,30 @@ class EditPersonController extends Controller
                 'personalData' => $personalData,
                 'curSeason' => $season,
     ));
+  }
+
+  private function checkPayment($personalData, $personalDataForm) 
+  {
+    foreach ($personalData->getPlayerData() as $pd) {
+      foreach($personalDataForm->get("playerData") as $subForm) {
+        $data = $this->getFormDataArray($subForm);
+        foreach($data["payment"] as $dt) {
+          if ($dt->getPlayerData() == NULL) {
+            $dt->setPlayerData($pd);
+          }
+        }
+      }
+    }
+  }
+
+  private function getFormDataArray($form)
+  {
+    $data = [];
+    $logger = $this->get('logger');
+    foreach($form as $key => $value) {
+        $data[$key] = $value->getData();
+    }
+    return $data;
   }
 }
 ?>

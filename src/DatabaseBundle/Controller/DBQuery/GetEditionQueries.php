@@ -28,28 +28,19 @@ class GetEditionQueries extends Controller
 
   public function getPeopleByType($id, $table)
   {
-    if (0 == strcmp("playerdata", $table))
-    {
+    if (0 == strcmp("playerdata", $table)) {
       $tableName = 'DatabaseBundle:Playerdata';
       $alias = 'playerdata';
-    }
-    else if (0 == strcmp("coachdata", $table))
-    {
+    } else if (0 == strcmp("coachdata", $table)) {
       $tableName = 'DatabaseBundle:Coachdata';
       $alias = 'coachdata';
-    }
-    else if (0 == strcmp("memberdata", $table))
-    {
+    } else if (0 == strcmp("memberdata", $table)) {
       $tableName = 'DatabaseBundle:Memberdata';
       $alias = 'memberdata';
-    }
-    else if (0 == strcmp("parentdata", $table))
-    {
+    } else if (0 == strcmp("parentdata", $table)) {
       $tableName = 'DatabaseBundle:Parentdata';
       $alias = 'parentdata';
-    }
-    else 
-    {
+    } else {
       return null;
     }
 
@@ -62,40 +53,6 @@ class GetEditionQueries extends Controller
         ->setParameter('id', $id)
         ->getQuery();
     return $query;
-  }
-
-  public function getTypeOfPerson($query, $table)
-  {
-    if (null != $query->getOneOrNullResult())
-    {
-      $data = $query->getOneOrNullResult();
-    }
-    else
-    {
-      if (0 == strcmp("playerdata", $table))
-      {
-        $data = new PlayerData();
-      }
-      else if (0 == strcmp("coachdata", $table))
-      {
-        $data = new CoachData();
-      }
-      else if (0 == strcmp("memberdata", $table))
-      {
-        $data = new MemberData();
-      }
-      else if (0 == strcmp("parentdata", $table))
-      {
-        $data = new ParentData();
-      }
-    }
-    return $data;
-  }
-
-  public function getTableDataForPerson($id, $table)
-  {
-    $query = $this->getPeopleByType($id, $table);
-    return $this->getTypeOfPerson($query, $table);
   }
 
   public function savePerson($personalData, $edit)
@@ -131,8 +88,7 @@ class GetEditionQueries extends Controller
   public function deleteFromTeam($id, $seasonId, $table)
   {
     $em = $this->personController->getDoctrine()->getManager();
-    if (0 == $table) 
-    {
+    if (0 == $table) {
       $teamMember = $em->getRepository('DatabaseBundle:PlayerData')
                         ->createQueryBuilder('players')
                         ->join('players.season', 'season')
@@ -142,9 +98,7 @@ class GetEditionQueries extends Controller
                         ->setParameter('id', $id)
                         ->getQuery()
                         ->getResult()[0];
-    }
-    else
-    {
+    } else {
       $teamMember = $em->getRepository('DatabaseBundle:CoachData')
                         ->createQueryBuilder('coaches')
                         ->join('coaches.season', 'season')

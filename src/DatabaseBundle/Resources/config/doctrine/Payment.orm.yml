@@ -33,4 +33,3 @@ DatabaseBundle\Entity\Payment:
           joinColumn:
               name: playerData_id
               referencedColumnName: id
-          cascade: ["persist"]
