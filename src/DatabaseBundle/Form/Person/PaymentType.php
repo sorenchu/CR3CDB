@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -17,18 +18,14 @@ class PaymentType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options) {
       $builder
-          ->add('wayOfPay', ChoiceType::class, 
+          ->add('person', TextType::class, 
                   array(
-                    'label' => 'Modo de pago',
-                    'choices' => array(
-                        'bank' => 'Domiciliación bancaria',
-                        'transfer' => 'Transferencia',
-                        'cash' => 'Efectivo',
-          )))
-          ->add('amountOwned', MoneyType::class, 
+                    'label' => 'Titular de la cuenta',
+                    'required' => false))
+          ->add('accountNumber', TextType::class, 
                   array(
                     'required' => false,
-                    'label' => 'Debe',
+                    'label' => 'Número de cuenta',
           ))
           ->add('amountPayed', MoneyType::class,
                   array(
@@ -41,6 +38,14 @@ class PaymentType extends AbstractType
                     'label' => 'Fecha de pago',
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy'
+          ))
+          ->add('status', ChoiceType::class,
+                  array(
+                    'label' => 'Estado',
+                    'choices' => array(
+                        'pending' => 'Pendiente de cobro',
+                        'charged' => 'Cobrado',
+                        'returned' => 'Devuelto')
           ));
   }
 

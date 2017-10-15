@@ -13,7 +13,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -41,12 +40,7 @@ class PlayerDataType extends AbstractType
             'disabled' => true,
           )
         )
-        ->add('payment', CollectionType::class, 
-                    array(
-                      'entry_type' => PaymentType::class,
-                      'allow_add' => true,
-                      'by_reference' => false,
-        ))
+        ->add('pay', PayType::class, array('label' => 'Pagos'))
         ->add('category', ChoiceType::class, array(
             'label' => 'Categoría',
             'choices' => array(

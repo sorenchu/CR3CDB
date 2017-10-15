@@ -30,11 +30,17 @@
     {{ form_row(personalDataForm.name) }}
     {{ form_row(personalDataForm.surname) }}
     {{ form_row(personalDataForm.nickname) }}
-    {{ form_row(personalDataForm.email) }}
-    {{ form_row(personalDataForm.phone) }}
     {{ form_row(personalDataForm.dni) }}
     {{ form_row(personalDataForm.birthday) }}
     {{ form_row(personalDataForm.sex) }}
+  <hr>
+    {{ form_row(personalDataForm.contactData.phone) }}
+    {{ form_row(personalDataForm.contactData.email) }}
+    {{ form_row(personalDataForm.contactData.address) }}
+    {{ form_row(personalDataForm.contactData.city) }}
+    {{ form_row(personalDataForm.contactData.zipcode) }}
+    {{ form_row(personalDataForm.contactData.province) }}
+  <hr>
     {{ form_row(personalDataForm.isPlayer) }}
     {{ form_row(personalDataForm.isCoach) }}
     {{ form_row(personalDataForm.isParent) }}
@@ -47,10 +53,12 @@
             {{ form_row(formData.number) }}
             {{ form_row(formData.category) }} 
             {{ form_row(formData.season) }}
-            <ul class="payments" data-prototype="{{ form_widget(formData.payment.vars.prototype)|e('html_attr') }}">
-            {% for payment in formData.payment %}
-              <li>{{ form_row(payment.wayOfPay) }}
-              {{ form_row(payment.amountOwned) }}
+            {{ form_row(formData.pay.wayOfPay) }}
+            {{ form_row(formData.pay.totalAmount) }}
+            <ul class="payments" data-prototype="{{ form_widget(formData.pay.payment.vars.prototype)|e('html_attr') }}">
+            {% for payment in formData.pay.payment %}
+              <li>{{ form_row(payment.person) }}
+              {{ form_row(payment.accountNumber) }}
               {{ form_row(payment.amountPayed) }}
               {{ form_row(payment.paymentDate) }}</li>
               <br>
