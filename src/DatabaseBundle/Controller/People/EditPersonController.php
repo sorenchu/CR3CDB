@@ -85,10 +85,11 @@ class EditPersonController extends Controller
 
     $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
     $personalDataForm->handleRequest($request);
+    $bank = $this->getWayOfPayment($personalData, $personalDataForm);
     if ($personalDataForm->isSubmitted())
     {
       $seasonForm = $this->createForm(new SeasonType(), $season);
-      $this->checkPayment($personalData, $personalDataForm);
+      $bank = $this->checkPayment($personalData, $personalDataForm);
       $peopleQueries->savePerson($personalData, true);
       $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
     }
@@ -97,26 +98,49 @@ class EditPersonController extends Controller
                 'seasonForm' => $seasonForm->createView(),
                 'personalData' => $personalData,
                 'curSeason' => $season,
+                'isBank' => $bank,
     ));
   }
 
   private function checkPayment($personalData, $personalDataForm) 
   {
-    $this->addPayment($personalData, $personalDataForm);
+    return $this->addPayment($personalData, $personalDataForm);
+  }
+
+  private function getWayOfPayment($personalData, $personalDataForm)
+  {
+    $bank = false;
+    foreach ($personalData->getPlayerData() as $pd) {
+      foreach($personalDataForm->get("playerData") as $subForm) {
+        $data = $this->getFormDataArray($subForm)["pay"];
+        if ($data && $data->getWayOfPayment() == 'bank') {
+          $bank = true;
+        }
+      }
+    }
+    return $bank;
   }
 
   private function addPayment($personalData, $personalDataForm) 
   {
+    $bank = false;
     foreach ($personalData->getPlayerData() as $pd) {
       foreach($personalDataForm->get("playerData") as $subForm) {
-        $data = $this->getFormDataArray($subForm);
-        foreach($data["payment"] as $dt) {
-          if ($dt->getPlayerData() == NULL) {
-            $dt->setPlayerData($pd);
+        $data = $this->getFormDataArray($subForm)["pay"];
+        if ($data->getPlayerData() == NULL) {
+          $data->setPlayerData($pd);
+        }
+        foreach($data->getPayment() as $pay) {
+          if ($pay->getPay() == NULL) {
+            $pay->setPay($data);
           }
+        }
+        if ($data->getWayOfPayment() == 'bank') {
+          $bank = true;
         }
       }
     }
+    return $bank;
   }
 
   private function getFormDataArray($form)

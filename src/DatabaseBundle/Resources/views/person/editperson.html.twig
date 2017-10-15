@@ -53,12 +53,15 @@
             {{ form_row(formData.number) }}
             {{ form_row(formData.category) }} 
             {{ form_row(formData.season) }}
-            {{ form_row(formData.pay.wayOfPay) }}
+            {{ form_row(formData.pay.wayOfPayment) }}
             {{ form_row(formData.pay.totalAmount) }}
+              {% if isBank %}
+                {{ form_row(formData.pay.person) }}
+                {{ form_row(formData.pay.accountNumber) }}
+              {% endif %}
             <ul class="payments" data-prototype="{{ form_widget(formData.pay.payment.vars.prototype)|e('html_attr') }}">
             {% for payment in formData.pay.payment %}
-              <li>{{ form_row(payment.person) }}
-              {{ form_row(payment.accountNumber) }}
+              <li>
               {{ form_row(payment.amountPayed) }}
               {{ form_row(payment.paymentDate) }}</li>
               <br>

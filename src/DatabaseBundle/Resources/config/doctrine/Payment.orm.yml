@@ -11,12 +11,6 @@ DatabaseBundle\Entity\Payment:
               strategy: AUTO
 
   fields:
-      person:
-          type: string
-          lenght: 150
-      accountNumber:
-          type: bigint
-          nullable: true
       paymentDate:
           type: datetime
           nullable: false
@@ -30,7 +24,7 @@ DatabaseBundle\Entity\Payment:
   manyToOne:
       pay:
           targetEntity: Pay 
-          inversedBy: pay
+          inversedBy: payment
           joinColumn:
               name: pay_id
               referencedColumnName: id

@@ -166,15 +166,6 @@ class Payment
     {
         return $this->playerData;
     }
-    /**
-     * @var string
-     */
-    private $person;
-
-    /**
-     * @var integer
-     */
-    private $accountNumber;
 
     /**
      * @var string
@@ -185,55 +176,6 @@ class Payment
      * @var \DatabaseBundle\Entity\Pay
      */
     private $pay;
-
-
-    /**
-     * Set person
-     *
-     * @param string $person
-     *
-     * @return Payment
-     */
-    public function setPerson($person)
-    {
-        $this->person = $person;
-
-        return $this;
-    }
-
-    /**
-     * Get person
-     *
-     * @return string
-     */
-    public function getPerson()
-    {
-        return $this->person;
-    }
-
-    /**
-     * Set accountNumber
-     *
-     * @param integer $accountNumber
-     *
-     * @return Payment
-     */
-    public function setAccountNumber($accountNumber)
-    {
-        $this->accountNumber = $accountNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get accountNumber
-     *
-     * @return integer
-     */
-    public function getAccountNumber()
-    {
-        return $this->accountNumber;
-    }
 
     /**
      * Set status

@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -17,7 +18,7 @@ class PayType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options) {
       $builder
-          ->add('wayOfPay', ChoiceType::class, 
+          ->add('wayOfPayment', ChoiceType::class, 
                   array(
                     'label' => 'Modo de pago',
                     'choices' => array(
@@ -30,6 +31,16 @@ class PayType extends AbstractType
                   array(
                     'required' => false,
                     'label' => 'Coste'
+          ))
+          ->add('person', TextType::class,
+                  array(
+                    'required' => false,  
+                    'label' => 'Titular de la cuenta'
+          ))
+          ->add('accountNumber', TextType::class,
+                  array(
+                    'required' => false,
+                    'label' => 'Número de cuenta'
           ))
           ->add('payment', CollectionType::class, 
                     array(

@@ -33,6 +33,16 @@ class Pay
     private $payment;
 
     /**
+     * @var string
+     */
+    private $person;
+
+    /**
+     * @var integer
+     */
+    private $accountNumber;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -154,5 +164,53 @@ class Pay
     public function getPayment()
     {
         return $this->payment;
+    }
+
+    /**
+     * Set person
+     *
+     * @param string $person
+     *
+     * @return Pay
+     */
+    public function setPerson($person)
+    {
+        $this->person = $person;
+
+        return $this;
+    }
+
+    /**
+     * Get person
+     *
+     * @return string
+     */
+    public function getPerson()
+    {
+        return $this->person;
+    }
+
+    /**
+     * Set accountNumber
+     *
+     * @param integer $accountNumber
+     *
+     * @return Pay
+     */
+    public function setAccountNumber($accountNumber)
+    {
+        $this->accountNumber = $accountNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get accountNumber
+     *
+     * @return integer
+     */
+    public function getAccountNumber()
+    {
+        return $this->accountNumber;
     }
 }
