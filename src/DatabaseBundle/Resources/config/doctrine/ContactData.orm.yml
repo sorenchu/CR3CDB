@@ -1,0 +1,44 @@
+# src/DatabaseBundle/Resources/config/doctrine/ContactData.orm.yml
+DatabaseBundle\Entity\ContactData:
+  type: entity
+  table:  contactData
+  repositoryClass: DatabaseBundle\Repository\ContactDataRepository
+  id:
+    id:
+        type: integer
+        generator: { strategy: AUTO }
+
+  fields:
+    address:
+        type: string
+        length: 255
+        nullable: true
+
+    city:
+        type: string
+        length: 50
+        nullable: true
+    
+    zipcode:
+        type: integer
+        nullable: true
+
+    province:
+        type: string
+        lenght: 50
+        nullable: true
+
+    phone:
+        type: bigint
+        nullable: true
+
+    email:
+        type: string
+        lengtlh: 255
+        nullable: true
+
+  oneToMany:
+    personalData:
+      targetEntity: PersonalData
+      mappedBy: contactData
+      cascade: ["persist"]

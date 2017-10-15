@@ -166,5 +166,120 @@ class Payment
     {
         return $this->playerData;
     }
-}
+    /**
+     * @var string
+     */
+    private $person;
 
+    /**
+     * @var integer
+     */
+    private $accountNumber;
+
+    /**
+     * @var string
+     */
+    private $status;
+
+    /**
+     * @var \DatabaseBundle\Entity\Pay
+     */
+    private $pay;
+
+
+    /**
+     * Set person
+     *
+     * @param string $person
+     *
+     * @return Payment
+     */
+    public function setPerson($person)
+    {
+        $this->person = $person;
+
+        return $this;
+    }
+
+    /**
+     * Get person
+     *
+     * @return string
+     */
+    public function getPerson()
+    {
+        return $this->person;
+    }
+
+    /**
+     * Set accountNumber
+     *
+     * @param integer $accountNumber
+     *
+     * @return Payment
+     */
+    public function setAccountNumber($accountNumber)
+    {
+        $this->accountNumber = $accountNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get accountNumber
+     *
+     * @return integer
+     */
+    public function getAccountNumber()
+    {
+        return $this->accountNumber;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return Payment
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set pay
+     *
+     * @param \DatabaseBundle\Entity\Pay $pay
+     *
+     * @return Payment
+     */
+    public function setPay(\DatabaseBundle\Entity\Pay $pay = null)
+    {
+        $this->pay = $pay;
+
+        return $this;
+    }
+
+    /**
+     * Get pay
+     *
+     * @return \DatabaseBundle\Entity\Pay
+     */
+    public function getPay()
+    {
+        return $this->pay;
+    }
+}

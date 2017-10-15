@@ -250,4 +250,33 @@ class PlayerData
         }
         return $amountPayed;
     }
+    /**
+     * @var \DatabaseBundle\Entity\Pay
+     */
+    private $pay;
+
+
+    /**
+     * Set pay
+     *
+     * @param \DatabaseBundle\Entity\Pay $pay
+     *
+     * @return PlayerData
+     */
+    public function setPay(\DatabaseBundle\Entity\Pay $pay = null)
+    {
+        $this->pay = $pay;
+
+        return $this;
+    }
+
+    /**
+     * Get pay
+     *
+     * @return \DatabaseBundle\Entity\Pay
+     */
+    public function getPay()
+    {
+        return $this->pay;
+    }
 }

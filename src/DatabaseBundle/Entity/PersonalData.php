@@ -660,4 +660,62 @@ class PersonalData
       }
       return null;
     }
+    /**
+     * @var \DatabaseBundle\Entity\Authorization
+     */
+    private $authorization;
+
+    /**
+     * @var \DatabaseBundle\Entity\ContactData
+     */
+    private $contactData;
+
+
+    /**
+     * Set authorization
+     *
+     * @param \DatabaseBundle\Entity\Authorization $authorization
+     *
+     * @return PersonalData
+     */
+    public function setAuthorization(\DatabaseBundle\Entity\Authorization $authorization = null)
+    {
+        $this->authorization = $authorization;
+
+        return $this;
+    }
+
+    /**
+     * Get authorization
+     *
+     * @return \DatabaseBundle\Entity\Authorization
+     */
+    public function getAuthorization()
+    {
+        return $this->authorization;
+    }
+
+    /**
+     * Set contactData
+     *
+     * @param \DatabaseBundle\Entity\ContactData $contactData
+     *
+     * @return PersonalData
+     */
+    public function setContactData(\DatabaseBundle\Entity\ContactData $contactData = null)
+    {
+        $this->contactData = $contactData;
+
+        return $this;
+    }
+
+    /**
+     * Get contactData
+     *
+     * @return \DatabaseBundle\Entity\ContactData
+     */
+    public function getContactData()
+    {
+        return $this->contactData;
+    }
 }

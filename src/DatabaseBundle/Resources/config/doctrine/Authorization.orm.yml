@@ -1,0 +1,24 @@
+# src/DatabaseBundle/Resources/config/doctrine/Authorization.orml.yml
+DatabaseBundle\Entity\Authorization:
+  type: entity
+  table:  authorization
+  repositoryClass: DatabaseBundle\Repository\AuthorizationRepository
+  id:
+    id:
+        type: integer
+        generator:  { strategy: AUTO }
+
+  fields:
+    authorized:
+        type: boolean
+        default: false
+
+  oneToOne:
+    personalData:
+      targetEntity: PersonalData
+      inversedBy: authorization
+      joinColumn: 
+          name: personalData_id
+          referencedColumnName: id
+      cascade: ["persist"]
+      

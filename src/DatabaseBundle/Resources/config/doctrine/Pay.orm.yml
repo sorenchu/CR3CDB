@@ -1,0 +1,29 @@
+# src/DatabaseBundle/Resources/config/doctrine/Pay.orm.yml
+DatabaseBundle\Entity\Pay:
+  type: entity
+  table: pay
+  repositoryClass: DatabaseBundle\Repository\PayRepository
+  id:
+    id:
+        type: integer
+        generator:  { strategy: AUTO }
+
+  fields:
+    wayOfPayment:
+      type: string
+      nullable: false
+      length: 20
+
+    totalAmount:
+      type: integer
+
+  oneToOne:
+    playerData:
+      targetEntity: PlayerData
+      inversedBy: pay
+
+  oneToMany:
+     payment:
+        targetEntity: Payment 
+        mappedBy: payment
+        cascade: ["persist", "remove"]

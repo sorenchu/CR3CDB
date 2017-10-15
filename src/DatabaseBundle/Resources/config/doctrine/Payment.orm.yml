@@ -11,25 +11,26 @@ DatabaseBundle\Entity\Payment:
               strategy: AUTO
 
   fields:
-      wayOfPay:
+      person:
           type: string
-          nullable: false
-          length: 20
-      amountOwned:
-          type: float 
-          nullable: true
-      amountPayed:
-          type: float
+          lenght: 150
+      accountNumber:
+          type: bigint
           nullable: true
       paymentDate:
           type: datetime
           nullable: false
-
+      amountPayed:
+          type: integer
+          nullable: false
+      status:
+          type: string
+          nullable: true
 
   manyToOne:
-      playerData:
-          targetEntity: PlayerData
-          inversedBy: payment
+      pay:
+          targetEntity: Pay 
+          inversedBy: pay
           joinColumn:
-              name: playerData_id
+              name: pay_id
               referencedColumnName: id

@@ -24,15 +24,6 @@ DatabaseBundle\Entity\PersonalData:
         length: 30
         nullable: true
 
-    email:
-        type: string
-        lengtlh: 255
-        nullable: true
-
-    phone:
-        type: bigint
-        nullable: true
-
     dni:
         type: string
         length: 10
@@ -62,6 +53,12 @@ DatabaseBundle\Entity\PersonalData:
         type: boolean
         default: false
 
+  oneToOne:
+    authorization:
+      targetEntity: Authorization
+      mappedBy: personalData
+      cascade: ["persist"]
+
   oneToMany:
     playerData:
       targetEntity: PlayerData
@@ -82,3 +79,12 @@ DatabaseBundle\Entity\PersonalData:
       targetEntity: ParentData
       mappedBy: personalData
       cascade: ["persist", "remove"]
+
+  manyToOne:
+    contactData:
+      targetEntity: ContactData
+      inversedBy: personalData
+      joinColumn:
+          name: contactData_id
+          referencedColumnName: id
+      cascade: ["persist"]

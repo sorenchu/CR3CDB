@@ -102,6 +102,11 @@ class EditPersonController extends Controller
 
   private function checkPayment($personalData, $personalDataForm) 
   {
+    $this->addPayment($personalData, $personalDataForm);
+  }
+
+  private function addPayment($personalData, $personalDataForm) 
+  {
     foreach ($personalData->getPlayerData() as $pd) {
       foreach($personalDataForm->get("playerData") as $subForm) {
         $data = $this->getFormDataArray($subForm);
