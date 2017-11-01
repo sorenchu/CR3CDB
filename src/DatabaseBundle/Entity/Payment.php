@@ -15,12 +15,12 @@ class Payment
     /**
      * @var string
      */
-    private $wayOfPay;
+    private $status;
 
     /**
-     * @var float
+     * @var \DatabaseBundle\Entity\Pay
      */
-    private $amountOwned;
+    private $pay;
 
     /**
      * @var float
@@ -33,11 +33,6 @@ class Payment
     private $paymentDate;
 
     /**
-     * @var \DatabaseBundle\Entity\PlayerData
-     */
-    private $playerData;
-
-    /**
      * Get id
      *
      * @return integer
@@ -45,54 +40,6 @@ class Payment
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set wayOfPay
-     *
-     * @param string $wayOfPay
-     *
-     * @return Payment
-     */
-    public function setWayOfPay($wayOfPay)
-    {
-        $this->wayOfPay = $wayOfPay;
-
-        return $this;
-    }
-
-    /**
-     * Get wayOfPay
-     *
-     * @return string
-     */
-    public function getWayOfPay()
-    {
-        return $this->wayOfPay;
-    }
-
-    /**
-     * Set amountOwned
-     *
-     * @param float $amountOwned
-     *
-     * @return Payment
-     */
-    public function setAmountOwned($amountOwned)
-    {
-        $this->amountOwned = $amountOwned;
-
-        return $this;
-    }
-
-    /**
-     * Get amountOwned
-     *
-     * @return float
-     */
-    public function getAmountOwned()
-    {
-        return $this->amountOwned;
     }
 
     /**
@@ -142,40 +89,6 @@ class Payment
     {
         return $this->paymentDate;
     }
-
-    /**
-     * Set playerData
-     *
-     * @param \DatabaseBundle\Entity\PlayerData $playerData
-     *
-     * @return Payment
-     */
-    public function setPlayerData(\DatabaseBundle\Entity\PlayerData $playerData = null)
-    {
-        $this->playerData = $playerData;
-
-        return $this;
-    }
-
-    /**
-     * Get playerData
-     *
-     * @return \DatabaseBundle\Entity\PlayerData
-     */
-    public function getPlayerData()
-    {
-        return $this->playerData;
-    }
-
-    /**
-     * @var string
-     */
-    private $status;
-
-    /**
-     * @var \DatabaseBundle\Entity\Pay
-     */
-    private $pay;
 
     /**
      * Set status

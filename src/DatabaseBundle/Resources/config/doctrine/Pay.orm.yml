@@ -21,8 +21,9 @@ DatabaseBundle\Entity\Pay:
       nullable: true
     totalAmount:
       type: integer
-
+      nullable: true
       lenght: 150
+
   oneToOne:
     playerData:
       targetEntity: PlayerData
@@ -30,6 +31,7 @@ DatabaseBundle\Entity\Pay:
       joinColumn:
           name: playerData_id
           referencedColumnName: id
+      cascade: ["persist", "remove"]
 
   oneToMany:
      payment:

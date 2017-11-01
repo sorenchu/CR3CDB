@@ -23,11 +23,24 @@ class PlayerData
     private $category;
 
     /**
+     * @var integer
+     */
+    private $number;
+
+    /**
+     * @var \DatabaseBundle\Entity\PersonalData
+     */
+    private $personalData;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $parentData;
 
-    private $payment;
+    /**
+     * @var \DatabaseBundle\Entity\Pay
+     */
+    private $pay;
 
     /**
      * Constructor
@@ -35,7 +48,6 @@ class PlayerData
     public function __construct()
     {
         $this->parentData = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->payment = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -136,10 +148,6 @@ class PlayerData
         return $this->getPersonalData()->getName().' '
                   .$this->getPersonalData()->getSurname();
     }
-    /**
-     * @var \DatabaseBundle\Entity\PersonalData
-     */
-    private $personalData;
 
 
     /**
@@ -165,10 +173,6 @@ class PlayerData
     {
         return $this->personalData;
     }
-    /**
-     * @var integer
-     */
-    private $number;
 
 
     /**
@@ -194,67 +198,6 @@ class PlayerData
     {
         return $this->number;
     }
-
-    /**
-     * Add payment
-     *
-     * @param \DatabaseBundle\Entity\Payment $payment
-     *
-     * @return PlayerData
-     */
-    public function addPayment(\DatabaseBundle\Entity\Payment $payment)
-    {
-        $this->payment[] = $payment;
-
-        return $this;
-    }
-
-    /**
-     * Remove payment
-     *
-     * @param \DatabaseBundle\Entity\Payment $payment
-     */
-    public function removePayment(\DatabaseBundle\Entity\Payment $payment)
-    {
-        $this->payment->removeElement($payment);
-    }
-
-
-    /**
-     * Get payment
-     *
-     * @return Integer
-     */
-    public function getPayment() 
-    {
-        return $this->payment;
-    }
-
-    /**
-     * Set payment
-     *
-     * @param \DatabaseBundle\Entity\Payment $payment
-     */
-    public function setPayment(\DatabaseBundle\Entity\Payment $payment = null)
-    {
-      $this->payment = $payment;
-
-      return $this;
-    }
-
-    public function getAmountPayed()
-    {
-        $amountPayed = 0;
-        foreach($this->payment as $payment) {
-            $amountPayed += $payment->getAmountPayed();
-        }
-        return $amountPayed;
-    }
-    /**
-     * @var \DatabaseBundle\Entity\Pay
-     */
-    private $pay;
-
 
     /**
      * Set pay

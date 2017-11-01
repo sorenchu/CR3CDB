@@ -58,14 +58,24 @@
               {% if isBank %}
                 {{ form_row(formData.pay.person) }}
                 {{ form_row(formData.pay.accountNumber) }}
+              {% else %} 
+                {{ form_widget(formData, 
+                    { 'attr': {'style': 'display:none'} })
+                }}
               {% endif %}
             <ul class="payments" data-prototype="{{ form_widget(formData.pay.payment.vars.prototype)|e('html_attr') }}">
-            {% for payment in formData.pay.payment %}
-              <li>
-              {{ form_row(payment.amountPayed) }}
-              {{ form_row(payment.paymentDate) }}</li>
-              <br>
-            {% endfor %}
+            {% if formData.pay.payment %}
+              {% for payment in formData.pay.payment %}
+                <li>
+                {{ form_row(payment.amountPayed) }}
+                {{ form_row(payment.paymentDate) }}</li>
+                <br>
+              {% endfor %}
+            {% else %} 
+              {{ form_widget(formData, 
+                  { 'attr': {'style': 'display:none'} })
+              }}
+            {% endif %}
             </ul>
         {% else %} 
           {{ form_widget(formData, 

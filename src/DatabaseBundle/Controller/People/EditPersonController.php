@@ -5,7 +5,7 @@ namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Form\Person\PersonalDataType;
 use DatabaseBundle\Form\Season\SeasonType;
-use DatabaseBundle\Entity\Payment;
+use DatabaseBundle\Entity\Pay;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
@@ -20,6 +20,7 @@ class EditPersonController extends Controller
   {
     $peopleQueries = new GetEditionQueries($this);
     $seasonQueries = new SeasonQueries($this);
+    $playerData = NULL;
 
     $season = $seasonQueries->getSeason($seasonId);
     $seasonForm = $this->createForm(new SeasonType(), $season);
@@ -34,7 +35,6 @@ class EditPersonController extends Controller
     }
 
     $personalData = $peopleQueries->getPerson($id);
-    $log = $this->get('logger');
     if ($personalData->getIsPlayer())
     {
       $handlingData = new HandlingData($this, "player");
@@ -85,11 +85,13 @@ class EditPersonController extends Controller
 
     $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
     $personalDataForm->handleRequest($request);
-    $bank = $this->getWayOfPayment($personalData, $personalDataForm);
+    $bank = true;
     if ($personalDataForm->isSubmitted())
     {
       $seasonForm = $this->createForm(new SeasonType(), $season);
-      $bank = $this->checkPayment($personalData, $personalDataForm);
+      if ($playerData) {
+        $bank = $this->checkPayment($playerData, $personalDataForm);
+      }
       $peopleQueries->savePerson($personalData, true);
       $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
     }
@@ -102,51 +104,43 @@ class EditPersonController extends Controller
     ));
   }
 
-  private function checkPayment($personalData, $personalDataForm) 
+  private function checkPayment($playerData, $personalDataForm) 
   {
-    return $this->addPayment($personalData, $personalDataForm);
+    return $this->addPayment($playerData, $personalDataForm);
   }
 
-  private function getWayOfPayment($personalData, $personalDataForm)
+  private function getBank($playerData, $personalDataForm)
   {
     $bank = false;
-    foreach ($personalData->getPlayerData() as $pd) {
-      foreach($personalDataForm->get("playerData") as $subForm) {
-        $data = $this->getFormDataArray($subForm)["pay"];
-        if ($data && $data->getWayOfPayment() == 'bank') {
-          $bank = true;
-        }
+    foreach($personalDataForm->get("playerData") as $subForm) {
+      $data = $this->getFormDataArray($subForm)["pay"];
+      if ($data && $data->getWayOfPayment() == 'bank') {
+        $bank = 'bank';
       }
     }
     return $bank;
   }
 
-  private function addPayment($personalData, $personalDataForm) 
+  private function addPayment($playerData, $personalDataForm) 
   {
-    $bank = false;
-    foreach ($personalData->getPlayerData() as $pd) {
-      foreach($personalDataForm->get("playerData") as $subForm) {
-        $data = $this->getFormDataArray($subForm)["pay"];
-        if ($data->getPlayerData() == NULL) {
-          $data->setPlayerData($pd);
-        }
-        foreach($data->getPayment() as $pay) {
-          if ($pay->getPay() == NULL) {
-            $pay->setPay($data);
-          }
-        }
-        if ($data->getWayOfPayment() == 'bank') {
-          $bank = true;
-        }
+    $pay = new Pay();
+    foreach($personalDataForm->get("playerData") as $subForm) {
+      if($this->getFormDataArray($subForm)["season"] == $playerData->getSeason()) {
+      $pay = $this->getFormDataArray($subForm)["pay"];
+      $playerData->setCategory(
+        $playerData->getCategory()
+      );
+      
+      $pay->setPlayerData($playerData);
+      $playerData->setPay($pay);
+      return;
       }
     }
-    return $bank;
   }
 
   private function getFormDataArray($form)
   {
     $data = [];
-    $logger = $this->get('logger');
     foreach($form as $key => $value) {
         $data[$key] = $value->getData();
     }
