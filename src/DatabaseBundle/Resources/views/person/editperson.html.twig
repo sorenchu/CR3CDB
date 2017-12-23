@@ -53,7 +53,9 @@
             {{ form_row(formData.number) }}
             {{ form_row(formData.category) }} 
             {{ form_row(formData.season) }}
-            {{ form_row(formData.pay.wayOfPayment) }}
+            {{ form_row(formData.pay.wayOfPayment, 
+                  {'attr': {'onchange': 'return submit();' }})
+            }}
             {{ form_row(formData.pay.totalAmount) }}
               {% if isBank %}
                 {{ form_row(formData.pay.person) }}

@@ -26,7 +26,7 @@ class GetEditionQueries extends Controller
     return $em->getRepository('DatabaseBundle:PersonalData')->find($id);
   }
 
-  public function getPeopleByType($id, $table)
+  public function getPeopleByType($id, $table, $season)
   {
     if (0 == strcmp("playerdata", $table)) {
       $tableName = 'DatabaseBundle:Playerdata';
@@ -49,10 +49,14 @@ class GetEditionQueries extends Controller
     $query = $repository->createQueryBuilder($alias)
         ->from($tableName, 'data')
         ->join($alias.'.personalData', 'person')
+        ->join($alias.'.season', 'season')
         ->where('person.id = :id')
+        ->andWhere('season.id = :season')
         ->setParameter('id', $id)
+        ->setParameter('season', $season)
         ->getQuery();
-    return $query;
+
+    return $query->getResult();
   }
 
   public function savePerson($personalData, $edit)
@@ -135,7 +139,7 @@ class GetEditionQueries extends Controller
     $parent = $em->getRepository('DatabaseBundle:ParentData')
                   ->createQueryBuilder('parents')
                   ->join('parents.season', 'season')
-                  ->where('season.id = := seasonId')
+                  ->where('season.id = :seasonId')
                   ->andWhere('parents.id = :id')
                   ->setParameter('seasonId', $seasonId)
                   ->setParameter('id', $id)
@@ -143,6 +147,18 @@ class GetEditionQueries extends Controller
                   ->getResult()[0];
     $em->remove($parent);
     $em->flush();
+  }
+
+  public function getPay($id) {
+    $em = $this->personController->getDoctrine()->getManager();
+    $pay = $em->getRepository('DatabaseBundle:Pay')
+                ->createQueryBuilder('pay')
+                ->join('pay.playerData', 'playerData')
+                ->where('playerData.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getResult();
+    return $pay;    
   }
 }
 ?>

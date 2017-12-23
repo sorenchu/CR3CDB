@@ -16,11 +16,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class EditPersonController extends Controller
 {
+  private $peopleQueries;
+  private $id;
+
   public function editPersonAction($id, $seasonId=null, Request $request)
   {
     $peopleQueries = new GetEditionQueries($this);
     $seasonQueries = new SeasonQueries($this);
     $playerData = NULL;
+    #$bank = true;
 
     $season = $seasonQueries->getSeason($seasonId);
     $seasonForm = $this->createForm(new SeasonType(), $season);
@@ -41,10 +45,20 @@ class EditPersonController extends Controller
       $playerData = $handlingData->getChildData();
       $playerData->setPersonalData($personalData);
       $playerData->setSeason($season);
-      if (null == $personalData->playerIsInCurrentSeason($season))
-      {
+      $pay = $peopleQueries->getPay($personalData->getId()); 
+      if ($pay == NULL) {
+        $pay = new Pay();
+      }
+      $pay->setPlayerData($playerData);
+      if (null == $personalData->playerIsInCurrentSeason($season)) {
         $personalData->getPlayerData()->add($playerData);
       }
+      if ($pay->getPayment() == NULL) {
+        $payment = new Payment();
+        $payment->setPay($pay);
+        $pay->addPayment($payment);
+      }
+      $playerData->setPay($pay);
     }
 
     if ($personalData->getIsCoach())
@@ -85,13 +99,11 @@ class EditPersonController extends Controller
 
     $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
     $personalDataForm->handleRequest($request);
-    $bank = true;
+    $bank = $this->getBank($playerData, $personalDataForm);
     if ($personalDataForm->isSubmitted())
     {
+      $this->addPayment($personalData->getPlayerData(), $personalDataForm);
       $seasonForm = $this->createForm(new SeasonType(), $season);
-      if ($playerData) {
-        $bank = $this->checkPayment($playerData, $personalDataForm);
-      }
       $peopleQueries->savePerson($personalData, true);
       $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
     }
@@ -125,15 +137,17 @@ class EditPersonController extends Controller
   {
     $pay = new Pay();
     foreach($personalDataForm->get("playerData") as $subForm) {
-      if($this->getFormDataArray($subForm)["season"] == $playerData->getSeason()) {
-      $pay = $this->getFormDataArray($subForm)["pay"];
-      $playerData->setCategory(
-        $playerData->getCategory()
-      );
-      
-      $pay->setPlayerData($playerData);
-      $playerData->setPay($pay);
-      return;
+      foreach($playerData as $pd) {
+        if($this->getFormDataArray($subForm)["season"] == $pd->getSeason()) {
+          $pay = $this->getFormDataArray($subForm)["pay"];
+          $pd->setCategory(
+              $pd->getCategory()
+              );
+
+          $pay->setPlayerData($pd);
+          $pd->setPay($pay);
+          return;
+        }
       }
     }
   }
