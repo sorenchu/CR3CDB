@@ -24,13 +24,12 @@ class EditPersonController extends Controller
     $peopleQueries = new GetEditionQueries($this);
     $seasonQueries = new SeasonQueries($this);
     $playerData = NULL;
-    #$bank = true;
+    $bank = false;
 
     $season = $seasonQueries->getSeason($seasonId);
     $seasonForm = $this->createForm(new SeasonType(), $season);
     $seasonForm->handleRequest($request);
-    if ($seasonForm->isSubmitted())
-    {
+    if ($seasonForm->isSubmitted()) {
       return $this->redirectToRoute('edit_person',
                     array('id' => $id,
                           'seasonId' => $seasonForm->get('season')
@@ -39,8 +38,7 @@ class EditPersonController extends Controller
     }
 
     $personalData = $peopleQueries->getPerson($id);
-    if ($personalData->getIsPlayer())
-    {
+    if ($personalData->getIsPlayer()) {
       $handlingData = new HandlingData($this, "player");
       $playerData = $handlingData->getChildData();
       $playerData->setPersonalData($personalData);
@@ -61,48 +59,45 @@ class EditPersonController extends Controller
       $playerData->setPay($pay);
     }
 
-    if ($personalData->getIsCoach())
-    {
+    if ($personalData->getIsCoach()) {
       $handlingData = new HandlingData($this, "coach");
       $coachData = $handlingData->getChildData();
       $coachData->setPersonalData($personalData);
       $coachData->setSeason($season);
-      if (null == $personalData->coachIsInCurrentSeason($season))
-      {
+      if (null == $personalData->coachIsInCurrentSeason($season)) {
         $personalData->getCoachData()->add($coachData);
       }
     }
 
-    if ($personalData->getIsMember())
-    {
+    if ($personalData->getIsMember()) {
       $handlingData = new HandlingData($this, "member");
       $memberData = $handlingData->getChildData();
       $memberData->setPersonalData($personalData);
       $memberData->setSeason($season);
-      if (null == $personalData->memberIsInCurrentSeason($season))
-      {
+      if (null == $personalData->memberIsInCurrentSeason($season)) {
         $personalData->getMemberData()->add($memberData);
       }
     }
 
-    if ($personalData->getIsParent())
-    {
+    if ($personalData->getIsParent()) {
       $handlingData = new HandlingData($this, "parent");
       $parentData = $handlingData->getChildData();
       $parentData->setPersonalData($personalData);
       $parentData->setSeason($season);
-      if (null == $personalData->parentIsInCurrentSeason($season))
-      {
+      if (null == $personalData->parentIsInCurrentSeason($season)) {
         $personalData->getParentData()->add($parentData);
       }
     }
 
     $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
     $personalDataForm->handleRequest($request);
-    $bank = $this->getBank($playerData, $personalDataForm);
-    if ($personalDataForm->isSubmitted())
-    {
-      $this->addPayment($personalData->getPlayerData(), $personalDataForm);
+    if ($playerData) 
+      $bank = $this->getBank($playerData, $personalDataForm, $season);
+    if ($personalDataForm->isSubmitted()) {
+      if($playerData) {
+        $pay = $this->addPay($personalData->getPlayerDataBySeason($season), $personalDataForm);
+        $this->addPayment($pay, $personalDataForm);
+      }
       $seasonForm = $this->createForm(new SeasonType(), $season);
       $peopleQueries->savePerson($personalData, true);
       $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
@@ -116,37 +111,40 @@ class EditPersonController extends Controller
     ));
   }
 
-  private function checkPayment($playerData, $personalDataForm) 
-  {
-    return $this->addPayment($playerData, $personalDataForm);
-  }
-
-  private function getBank($playerData, $personalDataForm)
+  private function getBank($playerData, $personalDataForm, $season)
   {
     $bank = false;
     foreach($personalDataForm->get("playerData") as $subForm) {
-      $data = $this->getFormDataArray($subForm)["pay"];
-      if ($data && $data->getWayOfPayment() == 'bank') {
-        $bank = 'bank';
+      if ($this->getFormDataArray($subForm)["season"] == $season) {
+        $data = $this->getFormDataArray($subForm)["pay"];
+        if ($data && $data->getWayOfPayment() == 'bank') {
+          $bank = 'bank';
+        }
       }
     }
     return $bank;
   }
 
-  private function addPayment($playerData, $personalDataForm) 
+  private function addPay($playerData, $personalDataForm) 
   {
-    $pay = new Pay();
     foreach($personalDataForm->get("playerData") as $subForm) {
-      foreach($playerData as $pd) {
-        if($this->getFormDataArray($subForm)["season"] == $pd->getSeason()) {
-          $pay = $this->getFormDataArray($subForm)["pay"];
-          $pd->setCategory(
-              $pd->getCategory()
-              );
+      if($this->getFormDataArray($subForm)["season"] == $playerData->getSeason()) {
+        $pay = $this->getFormDataArray($subForm)["pay"];
+        $playerData->setCategory($playerData->getCategory());
+        $pay->setPlayerData($playerData);
+        $playerData->setPay($pay);
+        return $pay;
+      }
+    }
+  }
 
-          $pay->setPlayerData($pd);
-          $pd->setPay($pay);
-          return;
+  private function addPayment($pay, $personalDataForm)
+  {
+    foreach($personalDataForm->get("playerData") as $subForm) {
+      foreach($this->getFormDataArray($subForm["pay"]["payment"]) as $pm) {
+        if (!$pm->getPay()) {
+          $pm->setPay($pay);
+          $pay->addPayment($pm);
         }
       }
     }

@@ -70,7 +70,8 @@
               {% for payment in formData.pay.payment %}
                 <li>
                 {{ form_row(payment.amountPayed) }}
-                {{ form_row(payment.paymentDate) }}</li>
+                {{ form_row(payment.paymentDate) }}
+                {{ form_row(payment.status) }}</li>
                 <br>
               {% endfor %}
             {% else %} 

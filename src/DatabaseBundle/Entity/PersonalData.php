@@ -436,6 +436,21 @@ class PersonalData
     }
 
     /**
+     * Get playerData by season
+     * 
+     * @return PlayerData
+     */
+    public function getPlayerDataBySeason($season)
+    {
+        foreach($this->playerData as $pd) {
+          if ($pd->getSeason() == $season) {
+              return $pd;
+          } 
+        }
+        return NULL;
+    }
+
+    /**
      * Set playerData
      *
      * @param \DatabaseBundle\Entity\PlayerData $playerData

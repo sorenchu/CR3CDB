@@ -20,7 +20,7 @@ DatabaseBundle\Entity\Pay:
       type: bigint
       nullable: true
     totalAmount:
-      type: integer
+      type: float
       nullable: true
       lenght: 150
 
