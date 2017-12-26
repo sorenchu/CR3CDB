@@ -6,6 +6,7 @@ namespace DatabaseBundle\Controller\People;
 use DatabaseBundle\Form\Person\PersonalDataType;
 use DatabaseBundle\Form\Season\SeasonType;
 use DatabaseBundle\Entity\Pay;
+use DatabaseBundle\Entity\Payment;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
@@ -21,7 +22,7 @@ class EditPersonController extends Controller
 
   public function editPersonAction($id, $seasonId=null, Request $request)
   {
-    $peopleQueries = new GetEditionQueries($this);
+    $this->peopleQueries = new GetEditionQueries($this);
     $seasonQueries = new SeasonQueries($this);
     $playerData = NULL;
     $bank = false;
@@ -37,13 +38,13 @@ class EditPersonController extends Controller
       ));
     }
 
-    $personalData = $peopleQueries->getPerson($id);
+    $personalData = $this->peopleQueries->getPerson($id);
     if ($personalData->getIsPlayer()) {
       $handlingData = new HandlingData($this, "player");
       $playerData = $handlingData->getChildData();
       $playerData->setPersonalData($personalData);
       $playerData->setSeason($season);
-      $pay = $peopleQueries->getPay($personalData->getId()); 
+      $pay = $this->peopleQueries->getPay($personalData->getId()); 
       if ($pay == NULL) {
         $pay = new Pay();
       }
@@ -97,9 +98,10 @@ class EditPersonController extends Controller
       if($playerData) {
         $pay = $this->addPay($personalData->getPlayerDataBySeason($season), $personalDataForm);
         $this->addPayment($pay, $personalDataForm);
+        $this->removePayment($pay, $personalDataForm, $season);
       }
       $seasonForm = $this->createForm(new SeasonType(), $season);
-      $peopleQueries->savePerson($personalData, true);
+      $this->peopleQueries->savePerson($personalData, true);
       $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
     }
     return $this->render('DatabaseBundle:person:editperson.html.twig', array(
@@ -150,6 +152,23 @@ class EditPersonController extends Controller
     }
   }
 
+  private function removePayment($pay, $personalDataForm, $season)
+  {
+    $payments = $pay->getPayment();
+    $dbPayments = $this->peopleQueries->getPaymentsByPay($pay->getId());
+    if ($payments->count() == sizeof($dbPayments)) {
+      return;
+    }
+    foreach($payments as $payment) {
+      foreach($dbPayments as $dbP) {
+        if(!$payments->contains($dbP)) {
+          $pay->removePayment($dbP);
+          $this->peopleQueries->removePayment($dbP);
+        }
+      }
+    }
+  }
+
   private function getFormDataArray($form)
   {
     $data = [];
@@ -157,6 +176,15 @@ class EditPersonController extends Controller
         $data[$key] = $value->getData();
     }
     return $data;
+  }
+
+  private function getPlayerDataForm($personalDataForm, $season)
+  {
+    foreach($personalDataForm->get("playerData") as $subForm) {
+      if ($subForm->get("season")->getViewData() == $season->getId()) {
+        return $subForm;
+      }
+    }
   }
 }
 ?>

@@ -47,6 +47,7 @@ class PayType extends AbstractType
                       'entry_type' => PaymentType::class,
                       'allow_add' => true,
                       'by_reference' => false,
+                      'allow_delete' => true,
           ));
   }
 

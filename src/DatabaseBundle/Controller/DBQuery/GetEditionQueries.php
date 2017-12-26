@@ -8,6 +8,8 @@ use DatabaseBundle\Entity\PlayerData;
 use DatabaseBundle\Entity\CoachData;
 use DatabaseBundle\Entity\MemberData;
 use DatabaseBundle\Entity\ParentData;
+use DatabaseBundle\Entity\Pay;
+use DatabaseBundle\Entity\Payment;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -57,6 +59,36 @@ class GetEditionQueries extends Controller
         ->getQuery();
 
     return $query->getResult();
+  }
+
+  public function searchPayment($id, $payment)
+  {
+    $repository = $this->personController->getDoctrine()->getRepository('DatabaseBundle:Payment');
+    $query = $repository->createQueryBuilder('payment')
+          ->join('payment.pay', 'pay')
+          ->where('pay.id = :id')
+          ->andWhere('payment.amountPayed = :amount')
+          ->andWhere('payment.paymentDate LIKE :date')
+          ->andWhere('payment.status LIKE :status')
+          ->setParameter('id', $id)
+          ->setParameter('amount', $payment->getAmountPayed())
+          ->setParameter('date', $payment->getPaymentDate())
+          ->setParameter('status', $payment->getStatus())
+          ->getQuery();
+    return $query->getResult();
+  }
+
+  public function getPaymentsByPay($id)
+  {
+    return $this->personController
+              ->getDoctrine()
+                ->getRepository('DatabaseBundle:Payment')
+                ->createQueryBuilder('payment')
+                  ->join('payment.pay', 'pay')
+                  ->where('pay.id = :id')
+                  ->setParameter('id', $id)
+                  ->getQuery()
+                  ->getResult();  
   }
 
   public function savePerson($personalData, $edit)
@@ -149,7 +181,26 @@ class GetEditionQueries extends Controller
     $em->flush();
   }
 
-  public function getPay($id) {
+  public function removePayment($payment)
+  {
+    $em = $this->personController->getDoctrine()->getManager();
+    $paymentData = $em->getRepository('DatabaseBundle:Payment')
+                      ->createQueryBuilder('payment')
+                      ->join('payment.pay', 'pay')
+                      ->where('pay.id = :payId')
+                      ->andWhere('payment.id = :id')
+                      ->setParameter('payId', $payment->getPay())
+                      ->setParameter('id', $payment->getId())
+                      ->setMaxResults(1)
+                      ->getQuery()
+                      ->getOneOrNullResult();
+    if($paymentData != NULL) 
+      $em->remove($paymentData);
+    $em->flush();
+  }
+
+  public function getPay($id)
+  {
     $em = $this->personController->getDoctrine()->getManager();
     $pay = $em->getRepository('DatabaseBundle:Pay')
                 ->createQueryBuilder('pay')
