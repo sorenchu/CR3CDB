@@ -56,17 +56,22 @@
             {{ form_row(formData.pay.wayOfPayment, 
                   {'attr': {'onchange': 'return submit();' }})
             }}
-            {{ form_row(formData.pay.totalAmount) }}
-              {% if isBank %}
+            {{ form_row(formData.pay.totalAmount,
+                  {'attr': {'onchange': 'return submit();' }}) 
+            }}
+            {% if isBank == 'true' %}
                 {{ form_row(formData.pay.person) }}
                 {{ form_row(formData.pay.accountNumber) }}
-              {% else %} 
-                {{ form_widget(formData, 
+            {% else %} 
+                {{ form_widget(formData.pay.person, 
                     { 'attr': {'style': 'display:none'} })
                 }}
-              {% endif %}
+                {{ form_widget(formData.pay.accountNumber,
+                    { 'attr': {'style': 'display:none'} })
+                }}
+            {% endif %}
             <ul class="payments" data-prototype="{{ form_widget(formData.pay.payment.vars.prototype)|e('html_attr') }}">
-            {% if formData.pay.payment %}
+            {% if formData.pay.payment and formData.pay.payment|length > 0 %}
               {% for payment in formData.pay.payment %}
                 <li>
                 {{ form_row(payment.amountPayed) }}

@@ -25,7 +25,7 @@ class EditPersonController extends Controller
     $this->peopleQueries = new GetEditionQueries($this);
     $seasonQueries = new SeasonQueries($this);
     $playerData = NULL;
-    $bank = false;
+    $bank = 'false';
 
     $season = $seasonQueries->getSeason($seasonId);
     $seasonForm = $this->createForm(new SeasonType(), $season);
@@ -44,11 +44,12 @@ class EditPersonController extends Controller
       $playerData = $handlingData->getChildData();
       $playerData->setPersonalData($personalData);
       $playerData->setSeason($season);
-      $pay = $this->peopleQueries->getPay($personalData->getId()); 
+      $pay = $this->peopleQueries->getPay($playerData->getId()); 
       if ($pay == NULL) {
         $pay = new Pay();
       }
-      $pay->setPlayerData($playerData);
+      if ($playerData) 
+        $pay->setPlayerData($playerData);
       if (null == $personalData->playerIsInCurrentSeason($season)) {
         $personalData->getPlayerData()->add($playerData);
       }
@@ -115,12 +116,12 @@ class EditPersonController extends Controller
 
   private function getBank($playerData, $personalDataForm, $season)
   {
-    $bank = false;
+    $bank = 'false';
     foreach($personalDataForm->get("playerData") as $subForm) {
       if ($this->getFormDataArray($subForm)["season"] == $season) {
         $data = $this->getFormDataArray($subForm)["pay"];
         if ($data && $data->getWayOfPayment() == 'bank') {
-          $bank = 'bank';
+          $bank = 'true';
         }
       }
     }
