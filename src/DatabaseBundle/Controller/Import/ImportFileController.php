@@ -15,60 +15,60 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class ImportFileController extends Controller
 {
-  public function importAction(Request $request)
-  {
-    $success = null;
-
-    $fileImport = new FileImport();
-    $fileImportForm = $this->createForm(new FileImportType(), $fileImport);
-    $fileImportForm->handleRequest($request);
-
-    if($fileImportForm->isSubmitted())
+    public function importAction(Request $request)
     {
-      $success = $this->mapCsvToTables($fileImport);
+        $success = null;
+
+        $fileImport = new FileImport();
+        $fileImportForm = $this->createForm(new FileImportType(), $fileImport);
+        $fileImportForm->handleRequest($request);
+
+        if($fileImportForm->isSubmitted())
+        {
+            $success = $this->mapCsvToTables($fileImport);
+        }
+
+        return $this->render('DatabaseBundle:import:importing.html.twig', array(
+                    'fileImportForm' => $fileImportForm->createView(),
+                    'success' => $success,
+                    ));
     }
 
-    return $this->render('DatabaseBundle:import:importing.html.twig', array(
-                'fileImportForm' => $fileImportForm->createView(),
-                'success' => $success,
-    ));
-  }
-
-  private function uploadFile($fileImport)
-  {
-    $file = $fileImport->getPathToFile();
-    $fileName = md5(uniqid().'.'.$file->guessExtension());
-
-    $file->move($this->getParameter('imported_directory'),
-                  $fileName);
-    $fileImport->setPathToFile($this->getParameter('imported_directory').'/'.$fileName);
-  }
-
-  private function executeParser($fileImport)
-  {
-    // TODO: get relative path
-    if ('personalData' == $fileImport->getContent()) 
+    private function uploadFile($fileImport)
     {
-      $pathToScript = '/home/antonio/Projects/CR3CDB/src/DatabaseBundle/Controller/Import/personalData.py';
+        $file = $fileImport->getPathToFile();
+        $fileName = md5(uniqid().'.'.$file->guessExtension());
+
+        $file->move($this->getParameter('imported_directory'),
+                $fileName);
+        $fileImport->setPathToFile($this->getParameter('imported_directory').'/'.$fileName);
     }
-    else
+
+    private function executeParser($fileImport)
     {
-      $pathToScript = '/home/antonio/Projects/CR3CDB/src/DatabaseBundle/Controller/Import/playerData.py';
-    }
-    $script = 'python '.$pathToScript;
-    $process = new Process($script.' '.$fileImport->getPathToFile());
-    $process->run();
+        // TODO: get relative path
+        if ('personalData' == $fileImport->getContent()) 
+        {
+            $pathToScript = '/home/antonio/Projects/CR3CDB/src/DatabaseBundle/Controller/Import/personalData.py';
+        }
+        else
+        {
+            $pathToScript = '/home/antonio/Projects/CR3CDB/src/DatabaseBundle/Controller/Import/playerData.py';
+        }
+        $script = 'python '.$pathToScript;
+        $process = new Process($script.' '.$fileImport->getPathToFile());
+        $process->run();
 
-    if ($process->isSuccessful()) {
-        return true;
+        if ($process->isSuccessful()) {
+            return true;
+        }
+        return false;
     }
-    return false;
-  }
 
-  private function mapCsvToTables($fileImport)
-  {
-    $this->uploadFile($fileImport);
-    return $this->executeParser($fileImport); 
-  }
+    private function mapCsvToTables($fileImport)
+    {
+        $this->uploadFile($fileImport);
+        return $this->executeParser($fileImport); 
+    }
 }
 ?>
