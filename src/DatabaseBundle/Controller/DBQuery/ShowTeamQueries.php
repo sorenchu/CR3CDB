@@ -7,62 +7,62 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ShowTeamQueries extends Controller
 {
-  private $personController;
+    private $personController;
 
-  public function __construct($personController)
-  {
-    $this->personController = $personController;
-  }
+    public function __construct($personController)
+    {
+        $this->personController = $personController;
+    }
 
-  public function getAllMembers()
-  {
-    return ($this->personController
-       ->getDoctrine()
-         ->getRepository('DatabaseBundle:PersonalData')
-           ->findAll()); 
-  }
+    public function getAllMembers()
+    {
+        return ($this->personController
+                ->getDoctrine()
+                ->getRepository('DatabaseBundle:PersonalData')
+                ->findAll()); 
+    }
 
-  public function getParents($seasonId)
-  {
-    return $this->personController
-             ->getDoctrine()
-               ->getRepository('DatabaseBundle:ParentData')
-                ->createQueryBuilder('parents')
-                  ->join('parents.season', 'season')
-                  ->where('season.id = :seasonId')
-                  ->setParameter('seasonId', $seasonId)
-                  ->getQuery()
-                  ->getResult();
-  }
+    public function getParents($seasonId)
+    {
+        return $this->personController
+            ->getDoctrine()
+            ->getRepository('DatabaseBundle:ParentData')
+            ->createQueryBuilder('parents')
+            ->join('parents.season', 'season')
+            ->where('season.id = :seasonId')
+            ->setParameter('seasonId', $seasonId)
+            ->getQuery()
+            ->getResult();
+    }
 
-  public function getMembers($seasonId)
-  {
-    return $this->personController
-              ->getDoctrine()
-                ->getRepository('DatabaseBundle:MemberData')
-                  ->createQueryBuilder('members')
-                    ->join('members.season', 'season')
-                    ->where('season.id = :seasonId')
-                    ->setParameter('seasonId', $seasonId)
-                    ->getQuery()
-                    ->getResult();
-  }
+    public function getMembers($seasonId)
+    {
+        return $this->personController
+            ->getDoctrine()
+            ->getRepository('DatabaseBundle:MemberData')
+            ->createQueryBuilder('members')
+            ->join('members.season', 'season')
+            ->where('season.id = :seasonId')
+            ->setParameter('seasonId', $seasonId)
+            ->getQuery()
+            ->getResult();
+    }
 
-  public function getByCategory($name, $tableName, $seasonId)
-  {
-    $alias = 'aliastable';
-    $repository = $this->personController
-                    ->getDoctrine()
-                      ->getRepository($tableName);
-    $query = $repository->createQueryBuilder($alias)
-                  ->from($tableName, 'data')
-                  ->join($alias.'.season', 'season')
-                  ->where($alias.'.category LIKE :category')
-                  ->andWhere('season.id = :seasonId')
-                  ->setParameter('category', $name)
-                  ->setParameter('seasonId', $seasonId)
-                  ->getQuery();
-    return $query->getResult();
-  }
+    public function getByCategory($name, $tableName, $seasonId)
+    {
+        $alias = 'aliastable';
+        $repository = $this->personController
+            ->getDoctrine()
+            ->getRepository($tableName);
+        $query = $repository->createQueryBuilder($alias)
+            ->from($tableName, 'data')
+            ->join($alias.'.season', 'season')
+            ->where($alias.'.category LIKE :category')
+            ->andWhere('season.id = :seasonId')
+            ->setParameter('category', $name)
+            ->setParameter('seasonId', $seasonId)
+            ->getQuery();
+        return $query->getResult();
+    }
 }
 ?>

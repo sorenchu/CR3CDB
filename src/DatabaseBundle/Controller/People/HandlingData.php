@@ -21,18 +21,18 @@ class HandlingData extends Controller
     {
         $this->personController = $personController;
         switch($type) {
-          case "player":
-            $this->childData = new PlayerData();
-            break;
-          case "coach":
-            $this->childData = new CoachData();
-            break;
-          case "member":
-            $this->childData = new MemberData();
-            break;
-          case "parent":
-            $this->childData = new ParentData();
-            break;
+            case "player":
+                $this->childData = new PlayerData();
+                break;
+            case "coach":
+                $this->childData = new CoachData();
+                break;
+            case "member":
+                $this->childData = new MemberData();
+                break;
+            case "parent":
+                $this->childData = new ParentData();
+                break;
         }
     }
 

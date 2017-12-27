@@ -1,7 +1,5 @@
 <?php
-
 # src/DatabaseBundle/Controller/Admin/AdminController.php
-
 namespace DatabaseBundle\Controller\Admin;
 
 use DatabaseBundle\Entity\User;
@@ -15,61 +13,59 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends Controller
 {
-  private $userQueries;
+    private $userQueries;
 
-  public function __construct()
-  {
-    $this->userQueries = new UserQueries($this);
-  }
-
-  public function createUserAction(Request $request)
-  {
-    $user = new User();
-    $userData = $this->createForm(new UserDataType(), $user);
-    $userData->handleRequest($request);
-
-    if ($userData->isSubmitted())
+    public function __construct()
     {
-      $user = $this->userQueries->encodePassword($user, $user->getPassword());
-      $this->userQueries->saveUser($user);
+        $this->userQueries = new UserQueries($this);
     }
-    return $this->render('DatabaseBundle:admin:newuser.html.twig', array(
-                'userData' => $userData->createView(),
-                'edit' => false,
-    ));
-  }
 
-  public function showUsersAction()
-  {
-    $users = $this->userQueries->getUsers();
-    return $this->render('DatabaseBundle:admin:showusers.html.twig', array(
-                'userData' => $users));
-  }
-
-  public function deleteUserAction($id)
-  {
-    $deleted = $this->userQueries->deleteUser($id);
-    $users = $this->userQueries->getUsers();
-    return $this->render('DatabaseBundle:admin:showusers.html.twig', array(
-                'userData' => $users,
-                'deleted' => $deleted));
-  }
-
-  public function editUserAction($id, Request $request)
-  {
-    $user = $this->userQueries->getUserInfoById($id);
-    $userData = $this->createForm(new UserDataType(), $user);
-    $userData->handleRequest($request);
-
-    if ($userData->isSubmitted())
+    public function createUserAction(Request $request)
     {
-      $user = $this->userQueries->encodePassword($user, $user->getPassword());
-      $this->userQueries->saveUser($user);
+        $user = new User();
+        $userData = $this->createForm(new UserDataType(), $user);
+        $userData->handleRequest($request);
+
+        if ($userData->isSubmitted()) {
+            $user = $this->userQueries->encodePassword($user, $user->getPassword());
+            $this->userQueries->saveUser($user);
+        }
+        return $this->render('DatabaseBundle:admin:newuser.html.twig', array(
+                    'userData' => $userData->createView(),
+                    'edit' => false,
+                    ));
     }
-    return $this->render('DatabaseBundle:admin:newuser.html.twig', array(
-                'userData' => $userData->createView(),
-                'edit' => true,
-    ));
-  }
+
+    public function showUsersAction()
+    {
+        $users = $this->userQueries->getUsers();
+        return $this->render('DatabaseBundle:admin:showusers.html.twig', array(
+                    'userData' => $users));
+    }
+
+    public function deleteUserAction($id)
+    {
+        $deleted = $this->userQueries->deleteUser($id);
+        $users = $this->userQueries->getUsers();
+        return $this->render('DatabaseBundle:admin:showusers.html.twig', array(
+                    'userData' => $users,
+                    'deleted' => $deleted));
+    }
+
+    public function editUserAction($id, Request $request)
+    {
+        $user = $this->userQueries->getUserInfoById($id);
+        $userData = $this->createForm(new UserDataType(), $user);
+        $userData->handleRequest($request);
+
+        if ($userData->isSubmitted()) {
+            $user = $this->userQueries->encodePassword($user, $user->getPassword());
+            $this->userQueries->saveUser($user);
+        }
+        return $this->render('DatabaseBundle:admin:newuser.html.twig', array(
+                    'userData' => $userData->createView(),
+                    'edit' => true,
+                    ));
+    }
 }
 ?>
