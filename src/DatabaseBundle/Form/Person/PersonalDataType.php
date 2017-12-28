@@ -32,12 +32,13 @@ class PersonalDataType extends AbstractType
                                   'label' => 'Apodo',))
         ->add('dni', TextType::class, array('required' => false,))
         ->add('birthday', BirthdayType::class, array('label' => 'Fecha de Nacimiento'))
-        ->add('sex', 'choice', array(
+        ->add('sex', ChoiceType::class, array(
             'label' => 'Género',
             'choices' => array(
               'male' => 'Hombre',
               'female' => 'Mujer',
-            )
+            ),
+            'choices_as_values' => true,
           )
         )
         ->add('contactData', ContactDataType::class)

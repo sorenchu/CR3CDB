@@ -5,8 +5,6 @@ namespace DatabaseBundle\Form\Season;
 
 use DatabaseBundle\Entity\Season;
 
-use DatabaseBundle\Form\EventListener\SeasonChangeSubscriber;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,14 +24,15 @@ class SeasonType extends AbstractType
     $builder
         ->add('season', EntityType::class, array(
             'label' => 'Temporada',
-            'class' => 'DatabaseBundle:Season',
+            'class' => Season::class,
             'query_builder' => function (EntityRepository $er) {
-              return $er->createQueryBuilder('season');
+              return $er->createQueryBuilder(Season::class);
             },
             'choices' => $this->season,
             'required' => true,
             'multiple' => false,
             'expanded' => false,
+            'choices_as_values' => true,
             )
         );
   }

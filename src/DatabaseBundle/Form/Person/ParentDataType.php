@@ -4,6 +4,8 @@
 namespace DatabaseBundle\Form\Person;
 
 use DatabaseBundle\Entity\ParentData;
+use DatabaseBundle\Entity\PlayerData;
+use DatabaseBundle\Entity\Season;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,7 +25,7 @@ class ParentDataType extends AbstractType
     $builder
         ->add('season', EntityType::class, array(
             'label' => 'Temporada',
-            'class' => 'DatabaseBundle:Season',
+            'class' => Season::class,
             'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('season');
           },
@@ -32,11 +34,12 @@ class ParentDataType extends AbstractType
           'multiple' => false,
           'expanded' => false,
           'disabled' => true,
+          'choices_as_values' => true,
           )
         )
         ->add('playerdata', EntityType::class, array(
             'label' => 'Hijo',
-            'class' => 'DatabaseBundle:PlayerData',
+            'class' => PlayerData::class,
             'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('player')
                             ->where('player.category NOT LIKE :senior')

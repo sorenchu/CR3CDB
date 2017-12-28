@@ -25,9 +25,4 @@ DatabaseBundle\Entity\User:
             nullable: true 
 
     lifecycleCallbacks: {  }
-
-    oneToMany:
-      fileImport:
-        targetEntity: FileImport
-        mappedBy: fileImport
       

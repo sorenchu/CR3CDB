@@ -4,6 +4,7 @@
 namespace DatabaseBundle\Form\Person;
 
 use DatabaseBundle\Entity\MemberData;
+use DatabaseBundle\Entity\Season;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,7 +28,7 @@ class MemberDataType extends AbstractType
             'label' => 'Número de socio'))
         ->add('season', EntityType::class, array(
             'label' => 'Temporada',
-            'class' => 'DatabaseBundle:Season',
+            'class' => Season::class,
             'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('season');
             },
@@ -36,6 +37,7 @@ class MemberDataType extends AbstractType
             'multiple' => false,
             'expanded' => false,
             'disabled' => true,
+            'choices_as_values' => true,
           )
         )
         ->add('payment', MoneyType::class, array(

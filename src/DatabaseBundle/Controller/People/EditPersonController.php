@@ -28,7 +28,7 @@ class EditPersonController extends Controller
         $bank = 'false';
 
         $season = $seasonQueries->getSeason($seasonId);
-        $seasonForm = $this->createForm(new SeasonType(), $season);
+        $seasonForm = $this->createForm(SeasonType::class, $season);
         $seasonForm->handleRequest($request);
         if ($seasonForm->isSubmitted()) {
             return $this->redirectToRoute('edit_person',
@@ -95,7 +95,7 @@ class EditPersonController extends Controller
             }
         }
 
-        $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
+        $personalDataForm = $this->createForm(PersonalDataType::class, $personalData);
         $personalDataForm->handleRequest($request);
         if ($playerData) 
             $bank = $this->getBank($playerData, $personalDataForm, $season);

@@ -4,6 +4,7 @@
 namespace DatabaseBundle\Form\Person;
 
 use DatabaseBundle\Entity\CoachData;
+use DatabaseBundle\Entity\Season;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,7 +30,7 @@ class CoachDataType extends AbstractType
         )
         ->add('season', EntityType::class, array(
             'label' => 'Temporada',
-            'class' => 'DatabaseBundle:Season',
+            'class' => Season::class,
             'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('season');
             },
@@ -38,6 +39,7 @@ class CoachDataType extends AbstractType
             'multiple' => false,
             'expanded' => false,
             'disabled' => true,
+            'choices_as_values' => true,
           )
         )
         ->add('salary', MoneyType::class, array(
@@ -55,7 +57,8 @@ class CoachDataType extends AbstractType
               'sub10' => 'Sub-10',
               'sub8' => 'Sub-8',
               'sub6' => 'Sub-6',
-              )
+              ),
+            'choices_as_values' => true,
             )
           );
   }
