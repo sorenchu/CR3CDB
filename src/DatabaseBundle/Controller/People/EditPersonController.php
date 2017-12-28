@@ -39,18 +39,21 @@ class EditPersonController extends Controller
         }
 
         $personalData = $this->peopleQueries->getPerson($id);
+
         if ($personalData->getIsPlayer()) {
             $handlingData = new HandlingData($this, "player");
             $playerData = $handlingData->getChildData();
+
             $playerData->setPersonalData($personalData);
             $playerData->setSeason($season);
             $pay = $this->peopleQueries->getPay($playerData->getId()); 
             if ($pay == NULL) {
                 $pay = new Pay();
             }
-            if ($playerData)
+            if ($playerData) {
                 $pay->setPlayerData($playerData);
-            if (null == $personalData->playerIsInCurrentSeason($season)) {
+            }
+            if (NULL == $personalData->playerIsInCurrentSeason($season)) {
                 $personalData->getPlayerData()->add($playerData);
             }
             if ($pay->getPayment() == NULL) {
@@ -64,9 +67,10 @@ class EditPersonController extends Controller
         if ($personalData->getIsCoach()) {
             $handlingData = new HandlingData($this, "coach");
             $coachData = $handlingData->getChildData();
+
             $coachData->setPersonalData($personalData);
             $coachData->setSeason($season);
-            if (null == $personalData->coachIsInCurrentSeason($season)) {
+            if (NULL == $personalData->coachIsInCurrentSeason($season)) {
                 $personalData->getCoachData()->add($coachData);
             }
         }
@@ -76,7 +80,7 @@ class EditPersonController extends Controller
             $memberData = $handlingData->getChildData();
             $memberData->setPersonalData($personalData);
             $memberData->setSeason($season);
-            if (null == $personalData->memberIsInCurrentSeason($season)) {
+            if (NULL == $personalData->memberIsInCurrentSeason($season)) {
                 $personalData->getMemberData()->add($memberData);
             }
         }
@@ -86,7 +90,7 @@ class EditPersonController extends Controller
             $parentData = $handlingData->getChildData();
             $parentData->setPersonalData($personalData);
             $parentData->setSeason($season);
-            if (null == $personalData->parentIsInCurrentSeason($season)) {
+            if (NULL == $personalData->parentIsInCurrentSeason($season)) {
                 $personalData->getParentData()->add($parentData);
             }
         }

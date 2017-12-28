@@ -25,12 +25,14 @@ class PayType extends AbstractType
                         'bank' => 'Domiciliación bancaria',
                         'transfer' => 'Transferencia',
                         'deposit' => 'Ingreso',
-                        'cash' => 'Efectivo',
-          )))
+                        'cash' => 'Efectivo',),
+                    'empty_data' => 'bank',
+          ))
           ->add('totalAmount', MoneyType::class, 
                   array(
                     'required' => true,
-                    'label' => 'Coste'
+                    'label' => 'Coste',
+                    'empty_data' => 0,
           ))
           ->add('person', TextType::class,
                   array(

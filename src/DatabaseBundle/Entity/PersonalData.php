@@ -457,7 +457,7 @@ class PersonalData
      *
      * @return PersonalData
      */
-    public function setPlayerData(\DatabaseBundle\Entity\PlayerData $playerData = null)
+    public function setPlayerData(\DatabaseBundle\Entity\PlayerData $playerData = NULL)
     {
         $this->playerData = $playerData;
 
@@ -478,7 +478,7 @@ class PersonalData
         if ($pd->getSeason() == $season)
           return $pd;
       }
-      return null;
+      return NULL;
     }
 
     /**
@@ -522,7 +522,7 @@ class PersonalData
      *
      * @return WholePerson
      */
-    public function setCoachData(\DatabaseBundle\Entity\CoachData $coachData = null)
+    public function setCoachData(\DatabaseBundle\Entity\CoachData $coachData = NULL)
     {
         $this->coachData = $coachData;
 
@@ -543,7 +543,7 @@ class PersonalData
         if ($pd->getSeason() == $season)
           return $pd;
       }
-      return null;
+      return NULL;
     }
 
     /**
@@ -587,7 +587,7 @@ class PersonalData
      *
      * @return WholePerson
      */
-    public function setMemberData(\DatabaseBundle\Entity\MemberData $memberData = null)
+    public function setMemberData(\DatabaseBundle\Entity\MemberData $memberData = NULL)
     {
         $this->memberData = $memberData;
 
@@ -608,7 +608,7 @@ class PersonalData
         if ($pd->getSeason() == $season)
           return $pd;
       }
-      return null;
+      return NULL;
     }
 
     /**
@@ -652,7 +652,7 @@ class PersonalData
      *
      * @return WholePerson
      */
-    public function setParentData(\DatabaseBundle\Entity\ParentData $parentData = null)
+    public function setParentData(\DatabaseBundle\Entity\ParentData $parentData = NULL)
     {
         $this->parentData = $parentData;
 
@@ -673,7 +673,7 @@ class PersonalData
         if ($pd->getSeason() == $season)
           return $pd;
       }
-      return null;
+      return NULL;
     }
     /**
      * @var \DatabaseBundle\Entity\Authorization
@@ -693,7 +693,7 @@ class PersonalData
      *
      * @return PersonalData
      */
-    public function setAuthorization(\DatabaseBundle\Entity\Authorization $authorization = null)
+    public function setAuthorization(\DatabaseBundle\Entity\Authorization $authorization = NULL)
     {
         $this->authorization = $authorization;
 
@@ -717,7 +717,7 @@ class PersonalData
      *
      * @return PersonalData
      */
-    public function setContactData(\DatabaseBundle\Entity\ContactData $contactData = null)
+    public function setContactData(\DatabaseBundle\Entity\ContactData $contactData = NULL)
     {
         $this->contactData = $contactData;
 
