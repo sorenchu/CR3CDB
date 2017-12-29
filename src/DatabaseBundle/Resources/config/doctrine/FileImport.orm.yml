@@ -20,3 +20,12 @@ DatabaseBundle\Entity\FileImport:
     content:
       type: string
       nullable: false
+      
+  manyToOne:
+    user:
+      targetEntity: User
+      inversedBy: user
+      joinColumn:
+          name: user_id
+          referencedColumnName: id
+      cascade: ["persist"]
