@@ -37,8 +37,11 @@ DatabaseBundle\Entity\ContactData:
         lengtlh: 255
         nullable: true
 
-  oneToMany:
+  oneToOne:
     personalData:
       targetEntity: PersonalData
-      mappedBy: contactData
+      inversedBy: contactData
+      joinColumn:
+          name: personalData_id
+          referencedColumnName: id
       cascade: ["persist"]

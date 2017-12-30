@@ -80,11 +80,8 @@ DatabaseBundle\Entity\PersonalData:
       mappedBy: personalData
       cascade: ["persist", "remove"]
 
-  manyToOne:
+  oneToOne:
     contactData:
       targetEntity: ContactData
-      inversedBy: personalData
-      joinColumn:
-          name: contactData_id
-          referencedColumnName: id
+      mappedBy: personalData
       cascade: ["persist"]

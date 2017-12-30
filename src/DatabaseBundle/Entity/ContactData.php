@@ -242,4 +242,18 @@ class ContactData
     {
         return $this->personalData;
     }
+
+    /**
+     * Set personalData
+     *
+     * @param \DatabaseBundle\Entity\PersonalData $personalData
+     *
+     * @return ContactData
+     */
+    public function setPersonalData(\DatabaseBundle\Entity\PersonalData $personalData = null)
+    {
+        $this->personalData = $personalData;
+
+        return $this;
+    }
 }

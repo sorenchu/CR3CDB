@@ -24,9 +24,13 @@ class SqlHandling:
 
   def sendQuery(self, string):
     try:
+      print(string)
       self.cursor.execute(string)
     except self.cursor.IntegrityError as err:
       print 'Error: {}'.format(err)
+
+  def fetchOne(self):
+    return self.cursor.fetchone()
 
   def fetchOneData(self):
     return self.cursor.fetchone()[0]
