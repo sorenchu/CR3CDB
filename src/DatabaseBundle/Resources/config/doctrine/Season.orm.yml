@@ -29,13 +29,17 @@ DatabaseBundle\Entity\Season:
         playerData:
             targetEntity: PlayerData
             mappedBy: season
+            cascade: ["remove"]
         coachData:
             targetEntity: CoachData
             mappedBy: season
+            cascade: ["remove"]
         memberData:
             targetEntity: MemberData
             mappedBy: season
+            cascade: ["remove"]
         parentData:
             targetEntity: ParentData
             mappedBy: season
+            cascade: ["remove"]
 
