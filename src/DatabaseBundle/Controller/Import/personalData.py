@@ -39,8 +39,6 @@ def insertIntoContact(data):
     query = 'SELECT id FROM personalData WHERE dni = \"' + data['dni'] + '\";\n'
     sqlHandling.sendQuery(query)
     id = sqlHandling.fetchOne()
-    print("phone: %s" % (data['phone'] == ""))
-    print("id: %s" % id)
     if id != None:
         query = 'INSERT INTO contactData(address, city, zipcode, phone, email, personalData_id)'
         query += ' VALUES('
@@ -70,7 +68,6 @@ def insertIntoContact(data):
             query += '\"%s\", ' % (data['email'])
 
         query += '%d);\n' % (id[0])
-        #query += ' VALUES(\"%s\", \"%s\", %s, %s, %s, %d);\n' % (data['address'], data['city'], data['zipcode'], data['phone'], data['email'], id[0])
         return query
     return ""
 
@@ -90,7 +87,6 @@ def getPersonalData(string):
           'birthdate': arrayForQuery[12],
           'sex'      : arrayForQuery[13]
   }
-  print(data)
   # If there is no dni for a person, we check if he or she exists
   # with name and surname. If it does, we consider that already exists
   if '' == data['dni'] and 1 == existPersonInDatabase(data['name'], data['surname']):

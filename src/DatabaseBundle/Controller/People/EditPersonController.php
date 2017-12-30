@@ -7,6 +7,7 @@ use DatabaseBundle\Form\Person\PersonalDataType;
 use DatabaseBundle\Form\Season\SeasonType;
 use DatabaseBundle\Entity\Pay;
 use DatabaseBundle\Entity\Payment;
+use DatabaseBundle\Entity\ContactData;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
@@ -39,6 +40,10 @@ class EditPersonController extends Controller
         }
 
         $personalData = $this->peopleQueries->getPerson($id);
+        $contactData = $this->peopleQueries->getContactData($id);
+        if ($contactData) {
+            $contactData->setPersonalData($personalData);
+         }
 
         if ($personalData->getIsPlayer()) {
             $handlingData = new HandlingData($this, "player");

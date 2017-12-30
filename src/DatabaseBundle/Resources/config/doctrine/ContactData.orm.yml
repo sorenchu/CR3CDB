@@ -44,4 +44,4 @@ DatabaseBundle\Entity\ContactData:
       joinColumn:
           name: personalData_id
           referencedColumnName: id
-      cascade: ["persist"]
+      cascade: ["persist", "remove"]

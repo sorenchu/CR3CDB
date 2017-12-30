@@ -10,6 +10,7 @@ use DatabaseBundle\Entity\MemberData;
 use DatabaseBundle\Entity\ParentData;
 use DatabaseBundle\Entity\Pay;
 use DatabaseBundle\Entity\Payment;
+use DatabaseBundle\Entity\ContactData;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -26,6 +27,20 @@ class GetEditionQueries extends Controller
     {
         $em = $this->personController->getDoctrine()->getManager();
         return $em->getRepository('DatabaseBundle:PersonalData')->find($id);
+    }
+
+    public function getContactData($personId) 
+    {
+        $tableName = 'DatabaseBundle:ContactData';
+        $repository = $this->personController->
+            getDoctrine()->getRepository($tableName); 
+        $query = $repository->createQueryBuilder('contact')
+            ->from($tableName, 'data')
+            ->join('contact.personalData', 'person')
+            ->where('person.id = :id')
+            ->setParameter('id', $personId)
+            ->getQuery();
+        return $query->getOneOrNullResult();
     }
 
     public function getPeopleByType($id, $table, $season)

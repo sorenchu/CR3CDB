@@ -4,6 +4,7 @@
 namespace DatabaseBundle\Form\Person;
 
 use DatabaseBundle\Entity\PersonalData;
+use DatabaseBundle\Form\Person\ContactDataType;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

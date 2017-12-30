@@ -59,6 +59,11 @@ DatabaseBundle\Entity\PersonalData:
       mappedBy: personalData
       cascade: ["persist"]
 
+    contactData:
+      targetEntity: ContactData
+      mappedBy: personalData
+      cascade: ["persist", "remove"]
+
   oneToMany:
     playerData:
       targetEntity: PlayerData
@@ -79,9 +84,3 @@ DatabaseBundle\Entity\PersonalData:
       targetEntity: ParentData
       mappedBy: personalData
       cascade: ["persist", "remove"]
-
-  oneToOne:
-    contactData:
-      targetEntity: ContactData
-      mappedBy: personalData
-      cascade: ["persist"]
