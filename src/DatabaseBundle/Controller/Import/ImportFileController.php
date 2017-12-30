@@ -46,14 +46,12 @@ class ImportFileController extends Controller
 
     private function executeParser($fileImport)
     {
-        // TODO: get relative path
-        if ('personalData' == $fileImport->getContent()) 
-        {
-            $pathToScript = '/home/antonio/Projects/CR3CDB/src/DatabaseBundle/Controller/Import/personalData.py';
-        }
-        else
-        {
-            $pathToScript = '/home/antonio/Projects/CR3CDB/src/DatabaseBundle/Controller/Import/playerData.py';
+        $scriptPaths = '/../src/DatabaseBundle/Controller/Import/';
+        $pathToScript = $this->get('kernel')->getRootDir().$scriptPaths;
+        if ('personalData' == $fileImport->getContent()) {
+            $pathToScript = $pathToScript.'personalData.py';
+        } else {
+            $pathToScript = $pathToScript.'playerData.py';
         }
         $script = 'python '.$pathToScript;
         $process = new Process($script.' '.$fileImport->getPathToFile());

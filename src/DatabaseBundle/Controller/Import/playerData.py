@@ -137,7 +137,7 @@ def populateDB(fileGenerated):
 
 def main():
   if len(sys.argv) < 2:
-    print "error! Not enough arguments"
+    print "error! Not enough arguments\nUsage: python playerData.py file.csv"
     return -1
   pathOfFileToParse = sys.argv[1]
   fileToParse = FileTreatment(pathOfFileToParse)
