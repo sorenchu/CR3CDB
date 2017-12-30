@@ -66,7 +66,7 @@ def insertIntoContact(data):
             query += 'NULL, '
         else:
             query += '\"%s\", ' % (data['email'])
-
+    
         query += '%d);\n' % (id[0])
         return query
     return ""
@@ -94,12 +94,14 @@ def getPersonalData(string):
 
   query = ''
   if '' != data['dni']:
-    if data['birthdate'] == "":
-        data['birthdate'] = "NULL"
+    if data['birthdate'] == "" or data['birthdate'] == None:
+        data['birthdate'] = 'NULL'
     else:
         data['birthdate'] = str(datetime.strptime(data['birthdate'], '%d-%m-%Y'))
+        data['birthdate'] = '\"%s\"' % (data['birthdate'])
+
     query = 'INSERT INTO personalData(name, surname, sex, dni, birthday, is_player, is_coach, is_parent, is_member)'
-    query += ' VALUES(\"' + data['name'] + '\", \"' + data['surname'] + '\", \"' + getSex(data['sex']) + '\", \"' + data['dni'] + '\", "' + data['birthdate'] + '", 0, 0, 0, 0);\n'
+    query += ' VALUES(\"' + data['name'] + '\", \"' + data['surname'] + '\", \"' + getSex(data['sex']) + '\", \"' + data['dni'] + '\", ' + data['birthdate'] + ', 0, 0, 0, 0);\n'
   else:
     print 'Error! Duplicated person for ' + data['name'] + ' ' + data['surname']
   return query

@@ -56,22 +56,26 @@ def alterPersonalData(string):
   return ''
 
 def getCategory(string):
-  if 'Sub 21' == string:
+  if 'sub 21' == string:
     return 'senior'
-  elif 'Sub 18' == string:
+  elif 'sub 18' == string:
     return 'sub18'
-  elif 'Sub 16' == string:
+  elif 'sub 16' == string:
     return 'sub16'
-  elif 'Sub 14' == string:
+  elif 'sub 14' == string:
     return 'sub14'
-  elif 'Sub 12' == string:
+  elif 'sub 12' == string:
     return 'sub12'
-  elif 'Sub 10' == string:
+  elif 'sub 10' == string:
     return 'sub10'
-  elif 'Sub 8' == string:
+  elif 'sub 8' == string:
     return 'sub8'
-  elif 'Sub 6' == string:
+  elif 'sub 6' == string:
     return 'sub6'
+  elif string.find('femenina') != -1: 
+    return 'femenino'
+  elif 'junior' == string:
+    return 'senior'
   else: 
     return 'senior'
 
@@ -102,7 +106,7 @@ def insertIntoPlayerOrCoachData(string):
     if 'player' == getPlayerOrCoach(string):
       exists = existsAsPlayerOrCoachData(personalDataId, defaultSeason, 'playerData')
       if -1 != exists:
-        query = 'UPDATE playerData SET category = \"' + getCategory(arrayForQuery[6]) + '\", number = ' + arrayForQuery[0] + ', personalData_id= ' + str(personalDataId) + ', season_id = ' + str(defaultSeason) + ' WHERE id = ' + str(exists) + ';\n'
+        query = 'UPDATE playerData SET category = \"' + getCategory(arrayForQuery[6].lower()) + '\", number = ' + arrayForQuery[0] + ', personalData_id= ' + str(personalDataId) + ', season_id = ' + str(defaultSeason) + ' WHERE id = ' + str(exists) + ';\n'
       else:
         query = 'INSERT INTO playerData(category, number, personalData_id, season_id) '
         query += 'VALUES(\"' + getCategory(arrayForQuery[6]) + '\", ' + arrayForQuery[0] + ', ' + str(personalDataId) + ', ' + defaultSeason + ');\n'
