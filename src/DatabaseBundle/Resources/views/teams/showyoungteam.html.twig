@@ -25,7 +25,11 @@
           <td> {{ parent.getPersonalData().getName() }}
                {{ parent.getPersonalData().getSurname() }} </td>
           <td> {{ data.getPersonalData().getPhone() }} </td>
-          <td> {{ data.getAmountPayed() }} </td>
+          {% if data.getPay() != NULL %}
+            <td> {{ data.getPay().getTotalAmount() }} </td>
+          {% else %}
+            <td> 0 </td>
+          {% endif %}
           <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
           <td> <a href="/person/deletePerson/{{data.getPersonalData().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
         </tr>
@@ -38,7 +42,11 @@
         <td> {{ data.getNumber() }} </td>
         <td> </td>
         <td> {{ data.getPersonalData().getPhone() }} </td>
-        <td> {{ data.getAmountPayed() }} </td>
+        {% if data.getPay() != NULL %}
+            <td> {{ data.getPay().getTotalAmount() }} </td>
+        {% else %}
+            <td> 0 </td>
+        {% endif %}
         <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
         <td> <a href="/person/deletePerson/{{data.getPersonalData().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
     {% endif %}
