@@ -1,6 +1,7 @@
 /web/bundles/
 /web/imported/
 /web/*.sql
+/web/.*
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml

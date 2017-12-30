@@ -5,12 +5,12 @@ import sys
 import string
 import random
 import re
+import logging
 from datetime import datetime
 
 from SqlHandling import SqlHandling
 from FileTreatment import FileTreatment
-
-
+from Logging import Logging
 
 def generateName(extension):
   numOfChars = 10
@@ -66,7 +66,7 @@ def insertIntoContact(data):
             query += 'NULL, '
         else:
             query += '\"%s\", ' % (data['email'])
-
+    
         query += '%d);\n' % (id[0])
         return query
     return ""
@@ -94,12 +94,14 @@ def getPersonalData(string):
 
   query = ''
   if '' != data['dni']:
-    if data['birthdate'] == "":
-        data['birthdate'] = "NULL"
+    if data['birthdate'] == "" or data['birthdate'] == None:
+        data['birthdate'] = 'NULL'
     else:
         data['birthdate'] = str(datetime.strptime(data['birthdate'], '%d-%m-%Y'))
+        data['birthdate'] = '\"%s\"' % (data['birthdate'])
+
     query = 'INSERT INTO personalData(name, surname, sex, dni, birthday, is_player, is_coach, is_parent, is_member)'
-    query += ' VALUES(\"' + data['name'] + '\", \"' + data['surname'] + '\", \"' + getSex(data['sex']) + '\", \"' + data['dni'] + '\", "' + data['birthdate'] + '", 0, 0, 0, 0);\n'
+    query += ' VALUES(\"' + data['name'] + '\", \"' + data['surname'] + '\", \"' + getSex(data['sex']) + '\", \"' + data['dni'] + '\", ' + data['birthdate'] + ', 0, 0, 0, 0);\n'
   else:
     print 'Error! Duplicated person for ' + data['name'] + ' ' + data['surname']
   return query
@@ -150,19 +152,19 @@ def populateDB(fileGenerated):
 
 def main():
   if len(sys.argv) < 2:
-    print "error! Not enough arguments\nUsage: python personalData.py file.csv"
+    print "error! Not enough arguments\nUsage: python personalData.py file.csv [info|debug]"
     return -1
 
   pathOfFileToParse = sys.argv[1]
   fileToParse = FileTreatment(pathOfFileToParse)
-  pathOfFileGenerated = os.getcwd() + '/' + generateName('.sql')
+  pathOfFileGenerated = os.path.join(os.getcwd(), generateName('.sql'))
   personalDataGenerated = FileTreatment(pathOfFileGenerated)
   if 1 == parsingPersonalData(fileToParse, personalDataGenerated):
     personalDataGenerated.readFile()
     populateDB(personalDataGenerated.file)
     personalDataGenerated.deleteFile()
 
-    pathOfFileGenerated = os.getcwd() + '/' + generateName('.sql')
+    pathOfFileGenerated = os.path.join(os.getcwd(), generateName('.sql'))
     contactDataGenerated = FileTreatment(pathOfFileGenerated)
     parsingPersonalData(fileToParse, contactDataGenerated, True)
     contactDataGenerated.readFile()

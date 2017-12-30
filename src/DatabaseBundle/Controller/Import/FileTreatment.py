@@ -9,7 +9,10 @@ class FileTreatment:
     self.name = name
 
   def readFile(self):
-    self.file = open(self.name, 'r')
+    try:
+        self.file = open(self.name, 'r')
+    except IOError:
+        self.file = -1
 
   def editFile(self):
     self.file = open(self.name, 'a')
