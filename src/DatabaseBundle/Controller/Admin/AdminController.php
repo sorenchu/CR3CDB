@@ -55,9 +55,13 @@ class AdminController extends Controller
     public function editUserAction($id, Request $request)
     {
         $user = $this->userQueries->getUserInfoById($id);
-        $userData = $this->createForm(new UserDataType(), $user);
-        $userData->handleRequest($request);
+        $admin = false;
+        if (strcasecmp($user->getUsername(), 'Admin') == 0) {
+            $admin = true;
+        }
 
+        $userData = $this->createForm(new UserDataType($admin), $user);
+        $userData->handleRequest($request);
         if ($userData->isSubmitted()) {
             $user = $this->userQueries->encodePassword($user, $user->getPassword());
             $this->userQueries->saveUser($user);
@@ -65,6 +69,7 @@ class AdminController extends Controller
         return $this->render('DatabaseBundle:admin:newuser.html.twig', array(
                     'userData' => $userData->createView(),
                     'edit' => true,
+                    'admin' => $admin,
                     ));
     }
 }
