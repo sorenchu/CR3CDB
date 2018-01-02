@@ -4,6 +4,7 @@
 namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Entity\PersonalData;
+use DatabaseBundle\Entity\ContactData;
 use DatabaseBundle\Form\Person\PersonalDataType;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
@@ -30,8 +31,10 @@ class AddPersonController extends Controller
         $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
         $personalDataForm->handleRequest($request);
 
-        if($personalDataForm->isSubmitted()) 
-        {
+        if($personalDataForm->isSubmitted()) {
+            $contactData = $this->setContactData($personalDataForm->get("contactData"));
+            $contactData->setPersonalData($personalData);
+            $personalData->setContactData($contactData);
             $this->peopleQueries->savePerson($personalData, false);
             return $this->redirectToRoute('edit_person', 
                     array(
@@ -43,6 +46,27 @@ class AddPersonController extends Controller
         return $this->render('DatabaseBundle:person:new.html.twig', array(
                     'personalDataForm' => $personalDataForm->createView(),
                     ));
+    }
+
+    public function setContactData($contactDataForm)
+    {
+        $contactData = new ContactData();
+        $contactData->setAddress($this->viewData($contactDataForm["address"]));
+        $contactData->setCity($this->viewData($contactDataForm["city"]));
+        $contactData->setZipcode($this->viewData($contactDataForm["zipcode"]));
+        $contactData->setProvince($this->viewData($contactDataForm["province"]));
+        $contactData->setPhone($this->viewData($contactDataForm["phone"]));
+        $contactData->setEmail($this->viewData($contactDataForm["email"]));
+
+        return $contactData;
+    }
+
+    public function viewData($formSlot) 
+    {
+        if ($formSlot->getViewData() == "") {
+            return NULL;
+        }
+        return $formSlot->getViewData();
     }
 
     public function deletePersonAction($id)
