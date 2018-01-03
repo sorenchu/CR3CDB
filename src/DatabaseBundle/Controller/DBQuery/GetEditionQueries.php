@@ -73,7 +73,7 @@ class GetEditionQueries extends Controller
             ->setParameter('season', $season)
             ->getQuery();
 
-        return $query->getResult();
+        return $query->getOneOrNullResult();
     }
 
     public function searchPayment($id, $payment)

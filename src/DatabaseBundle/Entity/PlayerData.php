@@ -48,6 +48,7 @@ class PlayerData
     public function __construct()
     {
         $this->parentData = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->category = 'senior';
     }
 
     /**

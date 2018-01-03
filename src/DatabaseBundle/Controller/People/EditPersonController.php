@@ -5,6 +5,11 @@ namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Form\Person\PersonalDataType;
 use DatabaseBundle\Form\Season\SeasonType;
+
+use DatabaseBundle\Entity\PlayerData;
+use DatabaseBundle\Entity\CoachData;
+use DatabaseBundle\Entity\ParentData;
+use DatabaseBundle\Entity\MemberData;
 use DatabaseBundle\Entity\Pay;
 use DatabaseBundle\Entity\Payment;
 use DatabaseBundle\Entity\ContactData;
@@ -105,6 +110,7 @@ class EditPersonController extends Controller
         if ($playerData) 
             $bank = $this->getBank($playerData, $personalDataForm, $season);
         if ($personalDataForm->isSubmitted()) {
+            $personalData = $this->checkNewForms($personalDataForm, $personalData, $season);
             if($playerData) {
                 $pay = $this->addPay($personalData->getPlayerDataBySeason($season), $personalDataForm);
                 $this->addPayment($pay, $personalDataForm);
@@ -195,6 +201,35 @@ class EditPersonController extends Controller
                 return $subForm;
             }
         }
+    }
+
+    private function checkNewForms($personalDataForm, $personalData, $season)
+    {
+        if ($personalDataForm->get('isPlayer')->getViewData() and $this->peopleQueries->getPeopleByType($personalData->getId(), 'playerdata', $season) == null){
+            $playerData = new PlayerData();
+            $playerData->setPersonalData($personalData);
+            $playerData->setSeason($season);
+            $personalData->addPlayerDatum($playerData);
+        }
+        if ($personalDataForm->get('isCoach')->getViewData() and $this->peopleQueries->getPeopleByType($personalData->getId(), 'coachdata', $season) == null) {
+            $coachData = new CoachData();
+            $coachData->setPersonalData($personalData);
+            $coachData->setSeason($season);
+            $personalData->addCoachDatum($coachData);
+        }
+        if ($personalDataForm->get('isParent')->getViewData() and $this->peopleQueries->getPeopleByType($personalData->getId(), 'parentdata', $season) == null) {
+            $parentData = new ParentData();
+            $parentData->setPersonalData($personalData);
+            $parentData->setSeason($season);
+            $personalData->addParentDatum($parentData);
+        }
+        if ($personalDataForm->get('isMember')->getViewData() and $this->peopleQueries->getPeopleByType($personalData->getId(), 'memberdata', $season) == null) {
+            $memberData = new MemberData();
+            $memberData->setPersonalData($personalData);
+            $memberData->setSeason($season);
+            $personalData->addMemberDatum($memberData);
+        }
+        return $personalData;
     }
 }
 ?>
