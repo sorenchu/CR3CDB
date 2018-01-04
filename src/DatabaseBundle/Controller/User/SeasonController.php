@@ -43,9 +43,6 @@ class SeasonController extends Controller
             $seasonText = $this->getSeasonTextFormatted($season);
             $season->setSeasontext($seasonText);
             $this->seasonQueries->saveSeason($season);
-            return $this->redirectToRoute('edit_season',
-                    array('id' => $this->seasonQueries
-                        ->getSeasonByText($season)->getId()));
         }
         return $this->render('DatabaseBundle:season:new.html.twig', array(
                     'seasonForm' => $seasonForm->createView(),
