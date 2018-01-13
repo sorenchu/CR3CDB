@@ -162,7 +162,6 @@ class EditPersonController extends Controller
             foreach($this->getFormDataArray($subForm["pay"]["payment"]) as $pm) {
                 if (!$pm->getPay()) {
                     $pm->setPay($pay);
-                    $pay->addPayment($pm);
                 }
             }
         }
