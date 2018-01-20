@@ -46,7 +46,7 @@ class ParentDataType extends AbstractType
             },
             'required' => true,
             'multiple' => true,
-            'expanded' => true,
+            #'expanded' => true,
             'group_by' => 'category',
             )
         );

@@ -31,6 +31,7 @@ class SeasonController extends Controller
         $season = new Season();  
         $seasonForm = $this->createForm(new AddSeasonType(), $season);
         $seasonForm->handleRequest($request);
+        $error = false;
 
         if ($this->seasonQueries->countSeasons() == 0) {
             $season->setDefaultseason(true);
@@ -47,6 +48,7 @@ class SeasonController extends Controller
         return $this->render('DatabaseBundle:season:new.html.twig', array(
                     'seasonForm' => $seasonForm->createView(),
                     'edit' => false,
+                    'error' => false,
                     ));
     }
 
@@ -68,12 +70,17 @@ class SeasonController extends Controller
         $season = $this->seasonQueries->getSeason($id);
         $seasonForm = $this->createForm(new AddSeasonType(), $season);
         $seasonForm->handleRequest($request);
+        $error = false;
 
+        $currentDefaultSeason = $this->seasonQueries->getDefaultSeason();
         if ($this->seasonQueries->countSeasons() == 1) {
             $season->setDefaultseason(true);
-        } else if ($season->getDefaultseason()) {
-            $currentDefaultSeason = $this->seasonQueries->getDefaultSeason();
+        } else if ($season->getDefaultseason() and $season != $currentDefaultSeason) {
             $this->seasonQueries->setAsNotDefault($currentDefaultSeason);
+        } else if ($currentDefaultSeason->getSeasonText() === $season->getSeasonText()
+                    and !$season->getDefaultseason()) {
+                $error = true;
+                $season->setDefaultseason(true);
         }
 
         if ($seasonForm->isSubmitted()) {
@@ -84,6 +91,7 @@ class SeasonController extends Controller
         return $this->render('DatabaseBundle:season:new.html.twig', array(
                     'seasonForm' => $seasonForm->createView(),
                     'edit' => true,
+                    'error' => $error,
                     ));
     }
 

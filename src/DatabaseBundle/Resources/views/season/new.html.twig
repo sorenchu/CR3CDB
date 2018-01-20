@@ -18,15 +18,24 @@
 {# src/DatabaseBundle/Resources/views/season/new.html.twig #}
 {{ form_start(seasonForm) }}
 <table>
+    {% if error %}
+        <tr>No se puede desmarcar la temporada predeterminada.</tr>
+    {% endif %}
   <tr>
     <td>
       {{ form_row(seasonForm.startingyear) }}
     </td>
   </tr>
   <tr>
+    {% if error %}
+    <td>
+      {{ form_row(seasonForm.defaultseason, { 'attr': {'checked': 'checked'} }) }}
+    </td>
+    {% else %}
     <td>
       {{ form_row(seasonForm.defaultseason) }}
     </td>
+    {% endif %}
   </tr>
 </table>
 {{ form_end(seasonForm) }}
