@@ -5,85 +5,126 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>{% block title %}{% endblock %} - CR3C</title>
     <style type="text/css">
-      table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        <!-- width: 100%; -->
+      * {
+        margin: 0px;
+        padding: 0px;
+        font-family: "Sarala", sans-serif;
       }
 
-      td, th {
-        border: 1px solid #dddddd;
-        ext-align: left;
-        adding: 8px;
+      #header {
+        margin: auto;
+        width: 500px;
+      }
+
+      ul, ol {
+        list-style: none;
+      }
+
+      .nav > li {
+        float: left;
+      }
+
+      .nav li a {
+        background-color: #258228;
+        color:#fff;
+        text-decoration:none;
+        padding:10px 12px;
+        display:block;
+      }
+      
+      .nav li a:hover {
+        background-color:#434343;
+      }
+      
+      .nav li ul {
+        display:none;
+        position:absolute;
+        min-width:140px;
+      }
+      
+      .nav li:hover > ul {
+        display:block;
+      }
+      
+      .nav li ul li {
+        position:relative;
+      }
+      
+      .nav li ul li ul {
+          right:-140px;
+          top:0px;
+      }
+
+      table {
+        border-collapse: collapse;
+      }
+
+      th {
+        background-color:#0B610B;
+        border: 2px solid #000;
+        height: 20px;
+      }
+
+      td {
+        border: 1px solid #000;
+      }
+
+      tr:nth-child(odd) {
+        background-color: #258228;
+      }
+
+      tr:nth-child(even) {
+        background-color: #fff;
+      }
+
+      body {
+        background-color:#66bb6a;
       }
       </style>
     {% endblock %}
-    <table>
-      {% if is_granted("ROLE_ADMIN") %}
-        <td><a href="/admin/showUsers">Gestión de usuarios</a></td>
-      {% endif %}
-      <td><a href="/user/changePassword">Cambiar contraseña</a></td>
-      <td><a href="{{ path('logout') }}">Logout</a></td>
-    </table>
     </head>
-
     <body>
-    {{ include(
-        'DatabaseBundle:season:template.html.twig') }}
+      <img src="{{ asset('/images/Rugby-Tres-Cantos-Banner.jpg') }}" alt="banner" width="80%" />
+      <div id="menu-dropdown"> 
+        <ul class="nav">
+          <li><a href="/people/showAll">Gestión del equipo</a>
+            <ul>
+                <li><a href="/person/new">Añadir Miembro</a></li>
+                <li><a href="/people/new">Importar</a></li>
+                <li><a href="/people/showAll">Mostrar todo</a></li>
+                <li><a href="/team/showSenior">Equipo Senior</a></li>
+                <li><a href="/team/showFemale">Equipo Femenino</a></li>
+                <li><a href="/team/showSub18">Equipo Sub18</a></li>
+                <li><a href="/team/showSub16">Equipo Sub16</a></li>
+                <li><a href="/team/showSub14">Equipo Sub14</a></li>
+                <li><a href="/team/showSub12">Equipo Sub12</a></li>
+                <li><a href="/team/showSub10">Equipo Sub10</a></li>
+                <li><a href="/team/showSub8">Equipo Sub8</a></li>
+                <li><a href="/team/showSub6">Equipo Sub6</a></li>
+            </ul>
+          </li>
+          {% if is_granted("ROLE_ADMIN") %}
+          <li><a href="/admin/showUsers">Gestión de usuarios</a>
+            <ul>
+                <li><a href="/admin/newUser">Añadir usuario</a></li>
+                <li><a href="/admin/showUsers">Mostrar usuarios</a></li>
+            </ul>
+          </li>
+          {% endif %}
+          <li><a href="/season/showSeasons">Gestión de temporadas</a>
+            <ul>
+                <li><a href="/admin/newSeason">Añadir temporada</a></li>
+                <li><a href="/season/showSeasons">Mostrar temporadas</a></li>
+            </ul>
+          </li>
+          <li><a href="/user/changePassword">Cambiar contraseña</a></li>
+          <li align="right"><a href="{{ path('logout') }}">Logout</a></li>
+        </ul>
+      <br><br><br>
+      </div>
       <div id="content">
         {% block body %} 
         {% endblock %}
-      </div>
-      <div id="sidebar">
-          {% block sidebar %}
-          <br><br><br>
-          <table>
-            <tr>
-              <th>
-                <a href="/person/new">Añadir Miembro</a>
-              </th>
-              <th>
-                <a href="/people/new">Importar</a>
-              </th>
-              <th>
-                <a href="/people/showAll">Mostrar todo</a>
-              </th>
-              <th>
-                <a href="/team/showSenior">Equipo Senior</a>
-              </th>
-              <th>
-                <a href="/team/showFemale">Equipo Femenino</a>
-              </th>
-              <th>
-                <a href="/team/showSub18">Equipo Sub18</a>
-              </th>
-              <th>
-                <a href="/team/showSub16">Equipo Sub16</a>
-              </th>
-              <th>
-                <a href="/team/showSub14">Equipo Sub14</a>
-              </th>
-              <th>
-                <a href="/team/showSub12">Equipo Sub12</a>
-              </th>
-              <th>
-                <a href="/team/showSub10">Equipo Sub10</a>
-              </th>
-              <th>
-                <a href="/team/showSub8">Equipo Sub8</a>
-              </th>
-              <th>
-                <a href="/team/showSub6">Equipo Sub6</a>
-              </th>
-              <th>
-                <a href="/people/showParents">Padres de la escuela</a>
-              </th>
-              <th>
-                <a href="/people/showMembers">Socios del club</a>
-              </th>
-            </tr>
-          </table>
-          {% endblock %}
       </div>
       <div id="footer">
         {% block footer %}
