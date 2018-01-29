@@ -25,8 +25,14 @@
       <td> {{ data.getPersonalData().getName() }}
            {{ data.getPersonalData().getSurname() }} </td>
       <td> {{ data.getMemberId() }} </td>
-      <td> {{ data.getPersonalData().getPhone() }} </td>
-      <td> {{ data.getPersonalData().getEmail() }} </td>
+      <td> {% if data.getPersonalData().getContactData() %}
+                {{ data.getPersonalData().getContactData()getPhone() }}
+           {% endif %}
+      </td>
+      <td> {% if data.getPersonalData().getContactData() %}
+                {{ data.getPersonalData().getEmail() }}
+           {% endif %}
+      </td>
       <td> {{ data.getPayment() }} </td>
       <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
       <td> <a href="/person/deletePerson/{{data.getPersonalData().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>

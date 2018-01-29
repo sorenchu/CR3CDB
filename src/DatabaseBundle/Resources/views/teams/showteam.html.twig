@@ -20,8 +20,13 @@
          {{ data.getPersonalData().getSurname() }} </td>
       <td> {{ data.getPersonalData().getNickname() }} </td>
       <td> {{ data.getNumber() }} </td>
-      <td> {{ data.getPersonalData().getEmail() }} </td>
-      <td> {{ data.getPersonalData().getPhone() }} </td>
+      <td> {% if data.getPersonalData().getContactData() %}
+              {{ data.getPersonalData().getContactData().getEmail() }}
+           {% endif %}
+      </td>
+      <td> {% if data.getPersonalData().getContactData() %}
+              {{ data.getPersonalData().getContactData().getPhone() }}        {% endif %}
+      </td>
       {% if data.getPay() != NULL %}
         <td> {{ data.getPay().getTotalAmount() }} </td>
       {% else %}

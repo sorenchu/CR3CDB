@@ -24,7 +24,10 @@
           <td> {{ data.getNumber() }} </td>
           <td> {{ parent.getPersonalData().getName() }}
                {{ parent.getPersonalData().getSurname() }} </td>
-          <td> {{ data.getPersonalData().getPhone() }} </td>
+          <td> {% if data.getPersonalData().getContactData() %}
+                  {{ data.getPersonalData().getContactData().getPhone() }}
+               {% endif %}
+          </td>
           {% if data.getPay() != NULL %}
             <td> {{ data.getPay().getTotalAmount() }} </td>
           {% else %}
