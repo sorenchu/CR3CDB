@@ -24,8 +24,10 @@
   {% for season in seasons %}
     <tr>
       <td> {{ season.getSeasonText() }} </td>
-      <td> {% if season.getDefaultseason() == 1 %} X
-           {% else %} {% endif %}
+      <td align="center">
+           {% if season.getDefaultseason() == 1 %} 
+                X
+           {% endif %}
       </td>
       <td><a href="/season/editSeason/{{season.getId()}}">Editar</a></td>
       <td><a href="/season/deleteSeason/{{season.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar esta temporada? Eliminará todos los datos relacionados con ella')">Borrar</a></td>

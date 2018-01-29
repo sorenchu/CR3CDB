@@ -1,0 +1,96 @@
+<style type="text/css">
+    * {
+       font-family: "Sarala", sans-serif;
+    }
+    
+    #header {
+      margin: auto;
+    }
+
+    h1 {
+      margin: auto;
+      padding: 40px;
+      color: #434343;
+    }
+    
+    ul, ol {
+      list-style: none;
+      padding: 0px 0px;
+      margin: auto auto;
+    }
+    
+    .nav > li {
+      float: left;
+    }
+    
+    .nav li a {
+      background-color: #258228;
+      color:#fff;
+      text-decoration:none;
+      padding:10px 12px;
+      margin: auto;
+      display:block;
+    }
+    
+    .nav li a:hover {
+      background-color:#434343;
+    }
+    
+    .nav li ul {
+      display:none;
+      position:absolute;
+      min-width:140px;
+    }
+    
+    .nav li:hover > ul {
+      display:block;
+    }
+
+    .nav li ul li {                                              
+      position:relative;                                         
+    }                                                            
+                                                                 
+    .nav li ul li ul {                                           
+      right:-140px;                                            
+      top:0px;                                                 
+    }                                                            
+                                                                 
+    table {                                                      
+      border-collapse: collapse;                                 
+    }                                                            
+                                                                 
+    th {                                                         
+      background-color:#0B610B;                                  
+      border: 2px solid #000;                                    
+      height: 20px;                                              
+    }                                                            
+                                                                 
+    td {                                                         
+      border: 1px solid #000;                                    
+    }                                                            
+                                                                 
+    tr:nth-child(odd) {                                          
+      background-color: #258228;                                 
+    }                                                            
+                                                                 
+    tr:nth-child(even) {                                         
+      background-color: #fff;                                    
+    }                                                            
+                                                                 
+    body {                                                       
+      background-color:#66bb6a;                                  
+    } 
+
+    #menu-dropdown {
+      width: 100%;
+      margin: auto auto;
+      padding: -10px 0;
+    }
+
+    #container {
+      width: 80%;
+      margin: auto;
+      padding: 20px 0;
+      background-color: #fff;
+    }
+</style>  
