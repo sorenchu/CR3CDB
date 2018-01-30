@@ -93,4 +93,13 @@
       padding: 20px 0;
       background-color: #fff;
     }
+
+    a:link {
+      color: blue;
+      background-color: white;
+    }
+
+    a:visited {
+      color: blue;
+    }
 </style>  
