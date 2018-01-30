@@ -16,13 +16,19 @@
     <td>
       {{ form_row(userData.username) }}
     </td>
+  </tr>
   <tr>
+    <td>
+      {{ form_row(userData.oldpassword) }}
+    </td>
+  </tr>
   <tr>
     {#% if edit == false %#}
     <td>
       {{ form_row(userData.password) }}
     </td>
     {#% endif %#} 
+  </tr>
   <tr>
     <td>
       {{ form_row(userData.role) }}

@@ -16,7 +16,7 @@ DatabaseBundle\Entity\PersonalData:
       - Choice:
           choices: [male, female]
     birthday:
-      
+ 
 #DatabaseBundle\Entity\FileImport:
 #  properties:
 #    pathToFile:

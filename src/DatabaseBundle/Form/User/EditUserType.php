@@ -29,6 +29,9 @@ class EditUserType extends AbstractType
             ),
             'disabled' => 'true')
           )
+        ->add('oldpassword', PasswordType::class, array(
+                     'label' => 'Contraseña actual')
+          )
         ->add('password', RepeatedType::class, array(
                      'type' => PasswordType::class,
                      'invalid_message' => 'Las contraseñas deben coincidir',

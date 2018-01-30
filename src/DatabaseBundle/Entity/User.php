@@ -200,4 +200,33 @@ class User implements UserInterface
     {
         $this->fileImport->removeElement($fileImport);
     }
+    /**
+     * @var string
+     */
+    private $oldpassword;
+
+
+    /**
+     * Set oldpassword
+     *
+     * @param string $oldpassword
+     *
+     * @return User
+     */
+    public function setOldpassword($oldpassword)
+    {
+        $this->oldpassword = $oldpassword;
+
+        return $this;
+    }
+
+    /**
+     * Get oldpassword
+     *
+     * @return string
+     */
+    public function getOldpassword()
+    {
+        return $this->oldpassword;
+    }
 }

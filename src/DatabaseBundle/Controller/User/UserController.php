@@ -24,11 +24,15 @@ class UserController extends Controller
     {
         $changed = false;
         $username = $this->get('security.token_storage')->getToken()->getUser()->getUsername();
+        $curPassword = $this->get('security.token_storage')->getToken()->getUser()->getPassword();
+        $logger = $this->get('logger');
+        $logger->info("old pwd: ".$curPassword);
         $user = $this->userQueries->getUserInfoByUsername($username);
 
         $editUserForm = $this->createForm(new EditUserType(), $user);
         $editUserForm->handleRequest($request);
         if ($editUserForm->isSubmitted()) {
+            $logger->info("old pwd2 form: ".$editUserForm->get('oldpassword')->getViewData());
             $user = $this->userQueries->encodePassword($user, $user->getPassword());
             // TODO: verify if old password matches.
             $this->userQueries->saveUser($user);
