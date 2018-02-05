@@ -26,7 +26,7 @@
            {{ data.getPersonalData().getSurname() }} </td>
       <td> {{ data.getMemberId() }} </td>
       <td> {% if data.getPersonalData().getContactData() %}
-                {{ data.getPersonalData().getContactData()getPhone() }}
+                {{ data.getPersonalData().getContactData().getPhone() }}
            {% endif %}
       </td>
       <td> {% if data.getPersonalData().getContactData() %}

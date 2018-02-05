@@ -14,11 +14,17 @@
       <div id="container">
         <img src="{{ asset('/images/Rugby-Tres-Cantos-Banner.jpg') }}" alt="banner" width="100%" />
           <ul class="nav">
-            <li><a href="/people/showAll">Gestión del equipo</a>
+            <li><a href="/people/showAll">Gestión de los miembros</a>
+              <ul>
+                  <li><a href="/people/showAll">Todos</a></li>
+                  <li><a href="/people/showMembers">Socios</a></li>
+                  <li><a href="/people/showParents">Padres</a></li>
+              </ul>
+            </li>
+            <li><a href="/people/showSenior">Gestión del equipo</a>
               <ul>
                   <li><a href="/person/new">Añadir Miembro</a></li>
                   <li><a href="/people/new">Importar</a></li>
-                  <li><a href="/people/showAll">Mostrar todo</a></li>
                   <li><a href="/team/showSenior">Equipo Senior</a></li>
                   <li><a href="/team/showFemale">Equipo Femenino</a></li>
                   <li><a href="/team/showSub18">Equipo Sub18</a></li>
