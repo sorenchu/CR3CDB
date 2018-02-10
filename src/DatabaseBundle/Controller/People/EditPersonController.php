@@ -32,6 +32,7 @@ class EditPersonController extends Controller
         $seasonQueries = new SeasonQueries($this);
         $playerData = NULL;
         $bank = 'false';
+        $underage = 'false';
 
         $season = $seasonQueries->getSeason($seasonId);
         $seasonForm = $this->createForm(new SeasonType(), $season);
@@ -72,6 +73,7 @@ class EditPersonController extends Controller
                 $pay->addPayment($payment);
             }
             $playerData->setPay($pay);
+            $underage = $this->isUnderage($personalData->getPlayerDataBySeason($season));
         }
 
         if ($personalData->getIsCoach()) {
@@ -126,6 +128,7 @@ class EditPersonController extends Controller
                     'personalData' => $personalData,
                     'curSeason' => $season,
                     'isBank' => $bank,
+                    'underage' => $underage,
                     ));
     }
 
@@ -229,6 +232,13 @@ class EditPersonController extends Controller
             $personalData->addMemberDatum($memberData);
         }
         return $personalData;
+    }
+
+    private function isUnderage($playerData) {
+        if ($playerData->getCategory() == 'senior' or $playerData->getCategory() == 'female') {
+            return 'false';
+        }
+        return 'true';
     }
 }
 ?>

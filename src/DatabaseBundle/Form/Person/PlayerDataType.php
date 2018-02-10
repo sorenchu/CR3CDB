@@ -57,6 +57,16 @@ class PlayerDataType extends AbstractType
               'sub6' => 'Sub-6',
             )
           )
+        )
+        ->add('parentdata', EntityType::class, array(
+            'label' => 'Padres',
+            'class' => 'DatabaseBundle:ParentData',
+            'query_builder' => function (EntityRepository $er) {
+                  return $er->createQueryBuilder('parent');
+            },
+            'required' => true,
+            'multiple' => true,
+            )
         );
   }
   

@@ -53,6 +53,9 @@
             {{ form_row(formData.number) }}
             {{ form_row(formData.category) }} 
             {{ form_row(formData.season) }}
+            {% if underage == 'true' %}
+                {{ form_row(formData.parentdata) }}
+            {% endif %}
             {{ form_row(formData.pay.wayOfPayment, 
                   {'attr': {'onchange': 'return submit();' }})
             }}

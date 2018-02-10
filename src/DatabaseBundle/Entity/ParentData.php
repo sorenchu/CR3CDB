@@ -126,4 +126,10 @@ class ParentData
     {
         return $this->personalData;
     }
+
+    public function __toString()
+    {
+        return $this->getPersonalData()->getName().' '
+                .$this->getPersonalData()->getSurname();
+    }
 }
