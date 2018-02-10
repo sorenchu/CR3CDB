@@ -44,7 +44,7 @@ class ParentDataType extends AbstractType
                             ->setParameter('senior', 'Senior')
                             ->setParameter('femenino', 'Femenino');
             },
-            'required' => true,
+            'required' => false,
             'multiple' => true,
             #'expanded' => true,
             'group_by' => 'category',
