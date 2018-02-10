@@ -47,6 +47,10 @@ class ShowPeopleController extends Controller
         $seasonNumber = $this->seasonQueries->countSeasons();
         if (0 < $seasonNumber) {
             $parentData = $this->teamQueries->getParents($this->season->getId());
+            $logger = $this->get('logger');
+            foreach ($parentData as $pd) {
+                $logger->info($pd->getPersonalData()->getName());
+            }
             return $this->render('DatabaseBundle:people:showparents.html.twig', array(
                         'parentData' => $parentData,
                         'seasonForm' => $seasonForm->createView(),
