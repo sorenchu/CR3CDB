@@ -17,17 +17,22 @@
       {{ form_row(userData.username) }}
     </td>
   </tr>
+  {% if wrongPassword %}
+  <tr>
+    <td>
+        Error al introducir la contraseña actual 
+    </td>
+  </tr>
+  {% endif %}
   <tr>
     <td>
       {{ form_row(userData.oldpassword) }}
     </td>
   </tr>
   <tr>
-    {#% if edit == false %#}
     <td>
       {{ form_row(userData.password) }}
     </td>
-    {#% endif %#} 
   </tr>
   <tr>
     <td>

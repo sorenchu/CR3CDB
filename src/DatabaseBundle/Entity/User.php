@@ -36,6 +36,11 @@ class User implements UserInterface
     }
 
     /**
+     * @var string
+     */
+    private $oldpassword;
+
+    /**
      * Set username
      *
      * @param string $username
@@ -200,11 +205,6 @@ class User implements UserInterface
     {
         $this->fileImport->removeElement($fileImport);
     }
-    /**
-     * @var string
-     */
-    private $oldpassword;
-
 
     /**
      * Set oldpassword

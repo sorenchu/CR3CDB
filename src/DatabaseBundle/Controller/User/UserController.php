@@ -9,10 +9,10 @@ use DatabaseBundle\Controller\DBQuery\UserQueries;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPasswordValidator;
 
 class UserController extends Controller
 {
-    private $user;
     private $userQueries;
 
     public function __construct()
@@ -23,24 +23,29 @@ class UserController extends Controller
     public function changePasswordAction(Request $request)
     {
         $changed = false;
+        $wrongPassword = false;
+
         $username = $this->get('security.token_storage')->getToken()->getUser()->getUsername();
-        $curPassword = $this->get('security.token_storage')->getToken()->getUser()->getPassword();
-        $logger = $this->get('logger');
-        $logger->info("old pwd: ".$curPassword);
         $user = $this->userQueries->getUserInfoByUsername($username);
+        $factory = $this->container->get('security.encoder_factory');
+        $encoder = $factory->getEncoder($user);
+        $oldPwd = $this->get('security.token_storage')->getToken()->getUser()->getOldpassword();
 
         $editUserForm = $this->createForm(new EditUserType(), $user);
         $editUserForm->handleRequest($request);
         if ($editUserForm->isSubmitted()) {
-            $logger->info("old pwd2 form: ".$editUserForm->get('oldpassword')->getViewData());
-            $user = $this->userQueries->encodePassword($user, $user->getPassword());
-            // TODO: verify if old password matches.
-            $this->userQueries->saveUser($user);
-            $changed = true;
+            if ($encoder->isPasswordValid($oldPwd, $editUserForm->get('oldpassword')->getViewData(), $user->getSalt())) {
+                $newuser = $this->userQueries->encodePassword($user, $user->getPassword());
+                $this->userQueries->saveUser($newuser);
+                $changed = true;
+            } else {
+                $wrongPassword = true;
+            }
         }
         return $this->render('DatabaseBundle:user:edituser.html.twig',
                 array('userData' => $editUserForm->createView(),
-                    'changed' => $changed
+                    'changed' => $changed,
+                    'wrongPassword' => $wrongPassword,
                     ));
     }
 }

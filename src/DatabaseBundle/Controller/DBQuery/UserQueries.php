@@ -62,6 +62,7 @@ class UserQueries extends Controller
         $encoder = $this->adminController->container->get('security.password_encoder');
         $encoded = $encoder->encodePassword($user, $password);
         $user->setPassword($encoded);
+        $user->setOldpassword($encoded);
         return $user;
     }
 }
