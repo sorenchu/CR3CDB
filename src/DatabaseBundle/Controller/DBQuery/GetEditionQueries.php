@@ -124,16 +124,33 @@ class GetEditionQueries extends Controller
         $em->flush();
     }
 
-    public function getCategoryFromPerson($id, $table)
+    public function getCategoryFromPerson($id, $season, $table)
     {
         $em = $this->personController->getDoctrine()->getManager();
-        if (0 == $table)
-            return $em->getRepository('DatabaseBundle:PlayerData')
-                ->find($id)
-                ->getCategory();
-        return $em->getRepository('DatabaseBundle:CoachData')
-            ->find($id)
-            ->getCategory();
+        if (0 == $table) {
+            $member = $em->getRepository('DatabaseBundle:PlayerData')
+                ->createQueryBuilder('players')
+                ->join('players.personalData', 'person')
+                ->join('players.season', 'season')
+                ->where('person.id = :id')
+                ->andWhere('season.id = :seasonId')
+                ->setParameter('id', $id)
+                ->setParameter('seasonId', $season)
+                ->getQuery()
+                ->getResult()[0];
+        } else {
+            $member = $em->getRepository('DatabaseBundle:CoachData')
+                ->createQueryBuilder('coaches')
+                ->join('coaches.personalData', 'person')
+                ->join('coaches.season', 'season')
+                ->where('person.id = :id')
+                ->andWhere('season.id = :seasonId')
+                ->setParameter('id', $id)
+                ->setParameter('seasonId', $season)
+                ->getQuery()
+                ->getResult()[0];
+        }
+        return $member->getCategory();
     }
 
     public function deleteFromTeam($id, $seasonId, $table)
@@ -143,25 +160,60 @@ class GetEditionQueries extends Controller
             $teamMember = $em->getRepository('DatabaseBundle:PlayerData')
                 ->createQueryBuilder('players')
                 ->join('players.season', 'season')
+                ->join('players.personalData', 'person')
                 ->where('season.id = :seasonId')
-                ->andWhere('players.id = :id')
+                ->andWhere('person.id = :id')
                 ->setParameter('seasonId', $seasonId)
                 ->setParameter('id', $id)
                 ->getQuery()
                 ->getResult()[0];
+            $em->remove($teamMember);
+            $em->flush();
+
+            // Check if it is still player. Either way, set to non player
+            $teamMember = $em->getRepository('DatabaseBundle:PlayerData')
+                ->createQueryBuilder('players')
+                ->join('players.personalData', 'person')
+                ->where('person.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getOneOrNullResult();
+
+            if ($teamMember == NULL) {
+                $person = $em->getRepository('DatabaseBundle:PersonalData')
+                    ->find($id);
+                $person->setIsPlayer(0);
+                $this->savePerson($person, true);
+            }
         } else {
             $teamMember = $em->getRepository('DatabaseBundle:CoachData')
                 ->createQueryBuilder('coaches')
+                ->join('coaches.personalData', 'person')
                 ->join('coaches.season', 'season')
                 ->where('season.id = :seasonId')
-                ->andWhere('coaches.id = :id')
+                ->andWhere('person.id = :id')
                 ->setParameter('seasonId', $seasonId)
                 ->setParameter('id', $id)
                 ->getQuery()
                 ->getResult()[0];
+            $em->remove($teamMember);
+            $em->flush();
+
+            // Check if it is still player. Either way, set to non player
+            $teamMember = $em->getRepository('DatabaseBundle:CoachData')
+                ->createQueryBuilder('coaches')
+                ->join('coaches.personalData', 'person')
+                ->where('person.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getOneOrNullResult();
+            if ($teamMember == NULL) {
+                $person = $em->getRepository('DatabaseBundle:PersonalData')
+                    ->find($id);
+                $person->setIsCoach(0);
+                $this->savePerson($person, true);
+            }
         }
-        $em->remove($teamMember);
-        $em->flush();
     }
 
     public function deleteFromMember($id, $seasonId)
@@ -170,14 +222,32 @@ class GetEditionQueries extends Controller
         $member = $em->getRepository('DatabaseBundle:MemberData')
             ->createQueryBuilder('members')
             ->join('members.season', 'season')
+            ->join('members.personalData', 'person')
             ->where('season.id = :seasonId')
-            ->andWhere('members.id = :id')
+            ->andWhere('person.id = :id')
             ->setParameter('seasonId', $seasonId)
             ->setParameter('id', $id)
             ->getQuery()
             ->getResult()[0];
         $em->remove($member);
         $em->flush();
+
+        // Check if it is still member. Either way, set to non member 
+        $member = $em->getRepository('DatabaseBundle:MemberData')
+            ->createQueryBuilder('members')
+            ->join('members.personalData', 'person')
+            ->where('person.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if ($member == NULL) {
+            $person = $em->getRepository('DatabaseBundle:PersonalData')
+                ->find($id);
+            $person->setIsMember(0);
+            $this->savePerson($person, true);
+        }
+        
     }
 
     public function deleteFromParent($id, $seasonId)
@@ -194,6 +264,22 @@ class GetEditionQueries extends Controller
             ->getResult()[0];
         $em->remove($parent);
         $em->flush();
+
+        // Check if it is still parent. Either way, set to non parent
+        $parent = $em->getRepository('DatabaseBundle:ParentData')
+            ->createQueryBuilder('parents')
+            ->join('parents.personalData', 'person')
+            ->where('person.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if ($parent == NULL) {
+            $person = $em->getRepository('DatabaseBundle:PersonalData')
+                ->find($id);
+            $person->setIsParent(0);
+            $this->savePerson($person, true);
+        }
     }
 
     public function removePayment($payment)

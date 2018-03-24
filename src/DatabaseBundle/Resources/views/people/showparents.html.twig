@@ -37,7 +37,7 @@
                  {% endif %}
             </td>
             <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
-            <td> <a href="/person/deletePerson/{{data.getPersonalData().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+            <td> <a href="/person/deleteFromParent/{{data.getPersonalData().getId()}}/{{season.getId()}}" onclick="return confirm('¿Estás seguro de querer a este padre de la lista?')"> Eliminar </a> </td>
           </tr>
         {% endfor %}
     {% else %}
@@ -55,7 +55,7 @@
                {% endif %}
           </td>
           <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
-          <td> <a href="/person/deletePerson/{{data.getPersonalData().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+          <td> <a href="/person/deleteFromParent/{{data.getPersonalData().getId()}}/{{season.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar a este padre de la lista?')"> Eliminar </a> </td>
         </tr>
     {% endif %}
   {% endfor %}

@@ -35,7 +35,7 @@
       </td>
       <td> {{ data.getPayment() }} </td>
       <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
-      <td> <a href="/person/deletePerson/{{data.getPersonalData().getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+      <td> <a href="/person/deleteFromMember/{{data.getPersonalData().getId()}}/{{season.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar a este socio de la lista?')"> Eliminar </a> </td>
     </tr>
   {% endfor %}
   </table>

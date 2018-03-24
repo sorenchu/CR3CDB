@@ -85,7 +85,7 @@ class AddPersonController extends Controller
 
     public function deleteFromTeamAction($id, $season, $table)
     {
-        $category = $this->peopleQueries->getCategoryFromPerson($id, $table);
+        $category = $this->peopleQueries->getCategoryFromPerson($id, $season, $table);
         $this->peopleQueries->deleteFromTeam($id, $season, $table);
         return $this->redirectToTeam($category, $season);
     }
