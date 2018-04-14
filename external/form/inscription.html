@@ -1,0 +1,34 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+    <title>Formulario de inscripción - Temporada 2018/19</title>
+    <img src="./wp-content/uploads/Rugby-Tres-Cantos-Banner.jpg" alt="banner" width="70%" align="center" />
+</head>
+
+<body>
+    <div id="container">
+        <h1>Formulario de inscripción - Temporada 2018/19</h1>
+        <form action="/thanks.php" method="post">
+            Nombre <input type="text" name="name"><br>
+            Apellidos <input type="text" name="surname"><br>
+            Dni <input type="text" name="dni"><br>
+            Fecha de Nacimiento <input type="date" name="birthdate"><br>
+            Género <select name="sex">
+                        <option value="hombre">Hombre</option>
+                        <option value="female">Mujer</option>
+                   </select>
+            <hr>
+            Teléfono <input type="tel" name="phone"><br>
+            Correo Electrónico <input type="email" name="email"><br>
+            Dirección <input type="text" name="address"><br>
+            Ciudad <input type="text" name="city"><br>
+            Código postal <input type="text" name="zipcode"><br>
+            Provincia <input type="text" name="province"><br>
+            <hr>
+            Acepto que el Club de Rugby Tres Cantos trate los datos proporcionados con arreglo a la LOPD <input type="checkbox" name="lopd"><br>
+            <hr>
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
+</body>
+</html>
