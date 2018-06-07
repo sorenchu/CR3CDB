@@ -51,6 +51,8 @@ class EditPersonController extends Controller
             $contactData->setPersonalData($personalData);
          }
 
+        $logger = $this->get('logger');
+        $logger->info($personalData->getPlayerData()->count());
         if ($personalData->getIsPlayer()) {
             $handlingData = new HandlingData($this, "player");
             $playerData = $handlingData->getChildData();
@@ -64,7 +66,8 @@ class EditPersonController extends Controller
             if ($playerData) {
                 $pay->setPlayerData($playerData);
             }
-            if (NULL == $personalData->playerIsInCurrentSeason($season)) {
+            if (NULL == $personalData->playerIsInCurrentSeason($season) and
+                $personalData->getPlayerData()->count() < 1) {
                 $personalData->getPlayerData()->add($playerData);
             }
             if ($pay->getPayment() == NULL) {
@@ -82,7 +85,8 @@ class EditPersonController extends Controller
 
             $coachData->setPersonalData($personalData);
             $coachData->setSeason($season);
-            if (NULL == $personalData->coachIsInCurrentSeason($season)) {
+            if (NULL == $personalData->coachIsInCurrentSeason($season) and
+                $personalData->getCoachData()->count() < 1) {
                 $personalData->getCoachData()->add($coachData);
             }
         }
@@ -92,7 +96,8 @@ class EditPersonController extends Controller
             $memberData = $handlingData->getChildData();
             $memberData->setPersonalData($personalData);
             $memberData->setSeason($season);
-            if (NULL == $personalData->memberIsInCurrentSeason($season)) {
+            if (NULL == $personalData->memberIsInCurrentSeason($season) and
+                $personalData->getMemberData()->count() < 1) {
                 $personalData->getMemberData()->add($memberData);
             }
         }
@@ -102,7 +107,8 @@ class EditPersonController extends Controller
             $parentData = $handlingData->getChildData();
             $parentData->setPersonalData($personalData);
             $parentData->setSeason($season);
-            if (NULL == $personalData->parentIsInCurrentSeason($season)) {
+            if (NULL == $personalData->parentIsInCurrentSeason($season) and
+                $personalData->getParentData()->count() < 1) {
                 $personalData->getParentData()->add($parentData);
             }
         }
@@ -111,6 +117,7 @@ class EditPersonController extends Controller
         $personalDataForm->handleRequest($request);
         if ($playerData) 
             $bank = $this->getBank($playerData, $personalDataForm, $season);
+        $logger->info("clicked: ".$personalDataForm->get('save')->isClicked());
         if ($personalDataForm->isSubmitted()) {
             $personalData = $this->checkNewForms($personalDataForm, $personalData, $season);
             if($playerData) {
