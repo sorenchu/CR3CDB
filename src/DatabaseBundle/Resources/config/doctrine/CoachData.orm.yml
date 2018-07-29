@@ -37,3 +37,9 @@ DatabaseBundle\Entity\CoachData:
             joinColumn:
                 name: personalData_id
                 referencedColumnName: id
+
+    oneToOne:
+        coachPerson:
+            targetEntity: CoachPerson
+            mappedBy: coachData
+            cascade: ["persist", "remove"]

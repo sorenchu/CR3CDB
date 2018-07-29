@@ -11,6 +11,7 @@ use DatabaseBundle\Entity\ParentData;
 use DatabaseBundle\Entity\Pay;
 use DatabaseBundle\Entity\Payment;
 use DatabaseBundle\Entity\ContactData;
+use DatabaseBundle\Entity\CoachPerson;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -177,9 +178,9 @@ class GetEditionQueries extends Controller
                 ->where('person.id = :id')
                 ->setParameter('id', $id)
                 ->getQuery()
-                ->getOneOrNullResult();
+                ->getResult();
 
-            if ($teamMember == NULL) {
+            if (sizeof($teamMember) > 0) {
                 $person = $em->getRepository('DatabaseBundle:PersonalData')
                     ->find($id);
                 $person->setIsPlayer(0);
@@ -199,6 +200,17 @@ class GetEditionQueries extends Controller
             $em->remove($teamMember);
             $em->flush();
 
+            $coachPerson = $em->getRepository('DatabaseBundle:CoachPerson')
+                ->createQueryBuilder('coachPerson')
+                ->join('coachPerson.personalData', 'personalData')
+                ->join('coachPerson.coachData', 'coachData')
+                ->where('personalData.id = :id')
+                ->andWhere('coachData.id = :coachId')
+                ->setParameter('id', $id)
+                ->setParameter('coachId', $teamMember->getId())
+                ->getQuery()
+                ->getResult();
+
             // Check if it is still player. Either way, set to non player
             $teamMember = $em->getRepository('DatabaseBundle:CoachData')
                 ->createQueryBuilder('coaches')
@@ -206,13 +218,11 @@ class GetEditionQueries extends Controller
                 ->where('person.id = :id')
                 ->setParameter('id', $id)
                 ->getQuery()
-                ->getOneOrNullResult();
-            if ($teamMember == NULL) {
-                $person = $em->getRepository('DatabaseBundle:PersonalData')
-                    ->find($id);
-                $person->setIsCoach(0);
-                $this->savePerson($person, true);
-            }
+                ->getResult();
+
+            $person = $em->getRepository('DatabaseBundle:PersonalData')
+                ->find($id);
+            $this->savePerson($person, true);
         }
     }
 
@@ -311,6 +321,23 @@ class GetEditionQueries extends Controller
             ->getQuery()
             ->getResult();
         return $pay;    
+    }
+
+    public function getCoachPerson($id, $season) 
+    {
+        $em = $this->personController->getDoctrine()->getManager();
+        $coachPerson = $em->getRepository('DatabaseBundle:CoachPerson')
+            ->createQueryBuilder('coachPerson')
+            ->join('coachPerson.personalData', 'personalData')
+            ->join('coachPerson.coachData', 'coachData')
+            ->join('coachData.season', 'season')
+            ->where('personalData.id = :id')
+            ->andWhere('season.id = :season')
+            ->setParameter('id', $id)
+            ->setParameter('season', $season)
+            ->getQuery()
+            ->getResult();
+        return $coachPerson;
     }
 }
 ?>

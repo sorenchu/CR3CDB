@@ -733,4 +733,58 @@ class PersonalData
     {
         return $this->contactData;
     }
+
+    /**
+     * @var \DatabaseBundle\Entity\CoachPerson
+     */
+    private $coachPerson;
+
+
+    /**
+     * Set coachPerson
+     *
+     * @param \DatabaseBundle\Entity\CoachPerson $coachPerson
+     *
+     * @return PersonalData
+     */
+    public function setCoachPerson(\DatabaseBundle\Entity\CoachPerson $coachPerson = null)
+    {
+        $this->coachPerson = $coachPerson;
+
+        return $this;
+    }
+
+    /**
+     * Get coachPerson
+     *
+     * @return \DatabaseBundle\Entity\CoachPerson
+     */
+    public function getCoachPerson()
+    {
+        return $this->coachPerson;
+    }
+
+    /**
+     * Add coachPerson
+     *
+     * @param \DatabaseBundle\Entity\CoachPerson $coachPerson
+     *
+     * @return PersonalData
+     */
+    public function addCoachPerson(\DatabaseBundle\Entity\CoachPerson $coachPerson)
+    {
+        $this->coachPerson[] = $coachPerson;
+
+        return $this;
+    }
+
+    /**
+     * Remove coachPerson
+     *
+     * @param \DatabaseBundle\Entity\CoachPerson $coachPerson
+     */
+    public function removeCoachPerson(\DatabaseBundle\Entity\CoachPerson $coachPerson)
+    {
+        $this->coachPerson->removeElement($coachPerson);
+    }
 }

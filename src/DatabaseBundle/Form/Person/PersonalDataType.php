@@ -5,6 +5,7 @@ namespace DatabaseBundle\Form\Person;
 
 use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Form\Person\ContactDataType;
+use DatabaseBundle\Form\Person\CoachPersonType;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -46,10 +47,10 @@ class PersonalDataType extends AbstractType
             'label' => 'Jugador',
             'required' => false,)
         )
-        ->add('isCoach', CheckboxType::class, array(
-            'label' => 'Entrenador',
-            'required' => false,)
-        )
+        # ->add('isCoach', CheckboxType::class, array(
+        #     'label' => 'Entrenador',
+        #     'required' => false,)
+        # )
         ->add('isParent', CheckboxType::class, array(
             'label' => 'Padre',
             'required' => false,)
@@ -58,6 +59,11 @@ class PersonalDataType extends AbstractType
             'label' => 'Socio',
             'required' => false,)
         )
+        ->add('coachPerson', CollectionType::class,
+                array('entry_type' => CoachPersonType::class,
+                        'allow_add' => true,
+                        'by_reference' => true,)
+                )
         ->addEventListener(FormEvents::POST_SET_DATA,
                            function (FormEvent $event) {
             $personalData = $event->getData();
@@ -73,14 +79,14 @@ class PersonalDataType extends AbstractType
                                  'by_reference' => false,)
                           );
               }
-              if ($personalData->getIsCoach())
-              {
+              // if ($personalData->getCoachPerson() and $personalData->getCoachPerson()->getIsCoach())
+              // {
                 $form->add('coachData', CollectionType::class,
                            array('entry_type' => CoachDataType::class,
                                  'allow_add' => true,
                                  'by_reference' => false,)
                           );
-              }
+              // }
               if ($personalData->getIsMember())
               {
                 $form->add('memberData', CollectionType::class,

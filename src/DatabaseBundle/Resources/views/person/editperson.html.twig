@@ -15,9 +15,15 @@
   {% if personalData.getIsPlayer() %}
     <th>Jugador</th>
   {% endif %}
-  {% if personalData.getIsCoach() %}  
-    <th>Entrenador</th>
-  {% endif %}
+  {% for formData in personalDataForm.coachPerson %}
+      {% if formData.vars.value.coachData.season.seasontext == curSeason %}
+        <th>{{ form_row(formData.isCoach) }}</th>
+      {% else %} 
+        {{ form_widget(formData, 
+            { 'attr': {'style': 'display:none'} })
+        }}
+      {% endif %}
+  {% endfor %}
   {% if personalData.getIsMember() %}
     <th>Socio</th>
   {% endif %}
@@ -42,7 +48,7 @@
     {{ form_row(personalDataForm.contactData.province) }}
   <hr>
     {{ form_row(personalDataForm.isPlayer) }}
-    {{ form_row(personalDataForm.isCoach) }}
+    {# form_row(personalDataForm.isCoach) #}
     {{ form_row(personalDataForm.isParent) }}
     {{ form_row(personalDataForm.isMember) }}
   </td>
@@ -96,22 +102,20 @@
       {% endfor %}
     </td>
   {% endif %}
-  {% if personalData.getIsCoach() %}  
-    <td>
-      {% for formData in personalDataForm.coachData %}
-        {% if formData.vars.value.season.seasontext == curSeason %}
-            {{ form_row(formData.number) }}
-            {{ form_row(formData.salary) }}
-            {{ form_row(formData.category) }} 
-            {{ form_row(formData.season) }}
-        {% else %} 
-          {{ form_widget(formData, 
-              { 'attr': {'style': 'display:none'} })
-          }}
-        {% endif %}
-      {% endfor %}
-    </td>
-  {%endif %}
+  <td>
+  {% for formData in personalDataForm.coachData %}
+    {% if formData.vars.value.coachPerson.isCoach == true and formData.vars.value.season.seasontext == curSeason %}
+        {{ form_row(formData.number) }}
+        {{ form_row(formData.salary) }}
+        {{ form_row(formData.category) }} 
+        {{ form_row(formData.season) }}
+    {% else %} 
+      {{ form_widget(formData, 
+          { 'attr': {'style': 'display:none'} })
+      }}
+    {% endif %}
+  {% endfor %}
+  </td>
   {% if personalData.getIsMember() %}
     <td> 
       {% for formData in personalDataForm.memberData %}

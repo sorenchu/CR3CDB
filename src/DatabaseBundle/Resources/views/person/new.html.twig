@@ -8,7 +8,7 @@
 {# src/DatabaseBundle/Resources/views/person/new.html.twig #}
 
 {{ form_start(personalDataForm) }}
-<table style="width:100%">
+<table style="width:33%">
   <tr>
     <td>
       {{ form_row(personalDataForm.name) }}
@@ -26,7 +26,6 @@
       {{ form_row(personalDataForm.contactData.province) }}
     <hr>
       {{ form_row(personalDataForm.isPlayer) }}
-      {{ form_row(personalDataForm.isCoach) }}
       {{ form_row(personalDataForm.isParent) }}
       {{ form_row(personalDataForm.isMember) }}
       {{ form_row(personalDataForm.save) }}

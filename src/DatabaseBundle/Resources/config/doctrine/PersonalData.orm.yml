@@ -41,9 +41,9 @@ DatabaseBundle\Entity\PersonalData:
         type: boolean
         default: false
 
-    isCoach:
-        type: boolean
-        default: false
+    # isCoach:
+    #     type: boolean
+    #     default: false
 
     isMember:
         type: boolean
@@ -84,3 +84,8 @@ DatabaseBundle\Entity\PersonalData:
       targetEntity: ParentData
       mappedBy: personalData
       cascade: ["persist", "remove"]
+
+    coachPerson:
+        targetEntity: CoachPerson
+        mappedBy: personalData
+        cascade: ["persist", "remove"]

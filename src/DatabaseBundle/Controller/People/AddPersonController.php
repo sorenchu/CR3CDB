@@ -5,6 +5,7 @@ namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Entity\ContactData;
+use DatabaseBundle\Entity\CoachPerson;
 use DatabaseBundle\Form\Person\PersonalDataType;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
@@ -35,6 +36,11 @@ class AddPersonController extends Controller
             $contactData = $this->setContactData($personalDataForm->get("contactData"));
             $contactData->setPersonalData($personalData);
             $personalData->setContactData($contactData);
+        
+            // $coachPerson = $this->setCoachPerson($personalDataForm->get("coachPerson")[0]);
+            // $coachPerson->setPersonalData($personalData);
+            // $personalData->setCoachPerson($coachPerson);
+
             $this->peopleQueries->savePerson($personalData, false);
             return $this->redirectToRoute('edit_person', 
                     array(
@@ -59,6 +65,18 @@ class AddPersonController extends Controller
         $contactData->setEmail($this->viewData($contactDataForm["email"]));
 
         return $contactData;
+    }
+
+    public function setCoachPerson($coachPersonForm)
+    {
+        $coachPerson = new CoachPerson();
+        if ($this->viewData($coachPersonForm['isCoach']) == 1) {
+            $coachPerson->setIsCoach(true);
+        } else {
+            $coachPerson->setIsCoach(false);
+        }
+        
+        return $coachPerson;
     }
 
     public function viewData($formSlot) 

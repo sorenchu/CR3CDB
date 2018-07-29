@@ -13,6 +13,7 @@ use DatabaseBundle\Entity\MemberData;
 use DatabaseBundle\Entity\Pay;
 use DatabaseBundle\Entity\Payment;
 use DatabaseBundle\Entity\ContactData;
+use DatabaseBundle\Entity\CoachPerson;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
@@ -51,8 +52,6 @@ class EditPersonController extends Controller
             $contactData->setPersonalData($personalData);
          }
 
-        $logger = $this->get('logger');
-        $logger->info($personalData->getPlayerData()->count());
         if ($personalData->getIsPlayer()) {
             $handlingData = new HandlingData($this, "player");
             $playerData = $handlingData->getChildData();
@@ -79,16 +78,18 @@ class EditPersonController extends Controller
             $underage = $this->isUnderage($personalData->getPlayerDataBySeason($season));
         }
 
-        if ($personalData->getIsCoach()) {
+        if ($this->peopleQueries->getCoachPerson($id, $season) == NULL) {
+            $coachPerson = new CoachPerson();
+            $coachPerson->setIsCoach(false);
             $handlingData = new HandlingData($this, "coach");
             $coachData = $handlingData->getChildData();
-
             $coachData->setPersonalData($personalData);
             $coachData->setSeason($season);
-            if (NULL == $personalData->coachIsInCurrentSeason($season) and
-                $personalData->getCoachData()->count() < 1) {
-                $personalData->getCoachData()->add($coachData);
-            }
+            $coachData->setCoachPerson($coachPerson);
+            $coachPerson->setCoachData($coachData);
+            $coachPerson->setPersonalData($personalData);
+            $personalData->addCoachPerson($coachPerson);
+            $personalData->addCoachDatum($coachData);
         }
 
         if ($personalData->getIsMember()) {
@@ -117,7 +118,6 @@ class EditPersonController extends Controller
         $personalDataForm->handleRequest($request);
         if ($playerData) 
             $bank = $this->getBank($playerData, $personalDataForm, $season);
-        $logger->info("clicked: ".$personalDataForm->get('save')->isClicked());
         if ($personalDataForm->isSubmitted()) {
             $personalData = $this->checkNewForms($personalDataForm, $personalData, $season);
             if($playerData) {
@@ -220,12 +220,7 @@ class EditPersonController extends Controller
             $playerData->setSeason($season);
             $personalData->addPlayerDatum($playerData);
         }
-        if ($personalDataForm->get('isCoach')->getViewData() and $this->peopleQueries->getPeopleByType($personalData->getId(), 'coachdata', $season) == null) {
-            $coachData = new CoachData();
-            $coachData->setPersonalData($personalData);
-            $coachData->setSeason($season);
-            $personalData->addCoachDatum($coachData);
-        }
+
         if ($personalDataForm->get('isParent')->getViewData() and $this->peopleQueries->getPeopleByType($personalData->getId(), 'parentdata', $season) == null) {
             $parentData = new ParentData();
             $parentData->setPersonalData($personalData);

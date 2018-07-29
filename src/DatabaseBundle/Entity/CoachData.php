@@ -167,4 +167,34 @@ class CoachData
     {
         return $this->number;
     }
+
+    /**
+     * @var \DatabaseBundle\Entity\CoachPerson
+     */
+    private $coachPerson;
+
+
+    /**
+     * Set coachPerson
+     *
+     * @param \DatabaseBundle\Entity\CoachPerson $coachPerson
+     *
+     * @return CoachData
+     */
+    public function setCoachPerson(\DatabaseBundle\Entity\CoachPerson $coachPerson = null)
+    {
+        $this->coachPerson = $coachPerson;
+
+        return $this;
+    }
+
+    /**
+     * Get coachPerson
+     *
+     * @return \DatabaseBundle\Entity\CoachPerson
+     */
+    public function getCoachPerson()
+    {
+        return $this->coachPerson;
+    }
 }

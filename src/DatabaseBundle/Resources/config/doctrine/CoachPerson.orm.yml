@@ -1,0 +1,30 @@
+# src/DatabaseBundle/Resources/config/doctrine/CoachPerson.orm.yml
+DatabaseBundle\Entity\CoachPerson:
+    type: entity
+    table: coachPerson
+    repositoryClass: DatabaseBundle\Repository\CoachPersonRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+
+    fields:
+        isCoach:
+            type: boolean
+            default: false
+
+    manyToOne:
+        personalData:
+            targetEntity: PersonalData
+            inversedBy: coachPerson
+            joinColumn:
+                name: personalData_id
+                referenceColumnName: id
+
+    oneToOne:
+        coachData:
+            targetEntity: CoachData
+            inversedBy: coachPerson
+            joinColumn:
+                name: coachData_id
+                referenceColumnName: id
