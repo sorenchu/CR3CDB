@@ -19,7 +19,7 @@ class AddSeasonType extends AbstractType
   {
     $builder
         ->add('startingyear', NumberType::class, array(
-                                          'required' => true,
+                                          'required' => false,
                                           'label' => 'Año',))
         ->add('defaultseason', CheckboxType::class, array(
                                           'label' => 'Por defecto',

@@ -37,14 +37,6 @@ DatabaseBundle\Entity\PersonalData:
     sex:
         type: string
 
-    isPlayer:
-        type: boolean
-        default: false
-
-    # isCoach:
-    #     type: boolean
-    #     default: false
-
     isMember:
         type: boolean
         default: false
@@ -84,6 +76,11 @@ DatabaseBundle\Entity\PersonalData:
       targetEntity: ParentData
       mappedBy: personalData
       cascade: ["persist", "remove"]
+
+    playerPerson:
+        targetEntity: PlayerPerson
+        mappedBy: personalData
+        cascade: ["persist", "remove"]
 
     coachPerson:
         targetEntity: CoachPerson

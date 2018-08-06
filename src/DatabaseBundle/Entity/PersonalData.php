@@ -787,4 +787,43 @@ class PersonalData
     {
         $this->coachPerson->removeElement($coachPerson);
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $playerPerson;
+
+
+    /**
+     * Add playerPerson
+     *
+     * @param \DatabaseBundle\Entity\PlayerPerson $playerPerson
+     *
+     * @return PersonalData
+     */
+    public function addPlayerPerson(\DatabaseBundle\Entity\PlayerPerson $playerPerson)
+    {
+        $this->playerPerson[] = $playerPerson;
+
+        return $this;
+    }
+
+    /**
+     * Remove playerPerson
+     *
+     * @param \DatabaseBundle\Entity\PlayerPerson $playerPerson
+     */
+    public function removePlayerPerson(\DatabaseBundle\Entity\PlayerPerson $playerPerson)
+    {
+        $this->playerPerson->removeElement($playerPerson);
+    }
+
+    /**
+     * Get playerPerson
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlayerPerson()
+    {
+        return $this->playerPerson;
+    }
 }

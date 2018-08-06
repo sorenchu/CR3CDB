@@ -23,7 +23,7 @@ class MemberDataType extends AbstractType
     $this->season = $options['current_season'];
     $builder
         ->add('memberId', IntegerType::class, array(
-            'required' => true,
+            'required' => false,
             'label' => 'Número de socio'))
         ->add('season', EntityType::class, array(
             'label' => 'Temporada',
@@ -32,7 +32,7 @@ class MemberDataType extends AbstractType
                   return $er->createQueryBuilder('season');
             },
             'choices' => $this->season,
-            'required' => true,
+            'required' => false,
             'multiple' => false,
             'expanded' => false,
             'disabled' => true,

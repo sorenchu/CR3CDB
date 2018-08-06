@@ -37,7 +37,7 @@ class EditUserType extends AbstractType
                      'invalid_message' => 'Las contraseñas deben coincidir',
                      'options' => array(
                             'attr' => array('class' => 'password-field')),
-                     'required' => true,
+                     'required' => false,
                      'first_options'  => array('label' => 'Nueva contraseña'),
                      'second_options' => array('label' => 'Repita contraseña'),
           ))

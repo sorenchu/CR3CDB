@@ -47,3 +47,7 @@ DatabaseBundle\Entity\PlayerData:
             mappedBy: playerData
             cascade: ["persist", "remove"]
             
+        playerPerson:
+            targetEntity: PlayerPerson
+            mappedBy: playerData
+            cascade: ["persist", "remove"]

@@ -30,7 +30,7 @@ class PayType extends AbstractType
           ))
           ->add('totalAmount', MoneyType::class, 
                   array(
-                    'required' => true,
+                    'required' => false,
                     'label' => 'Coste',
                     'empty_data' => 0,
           ))

@@ -223,4 +223,33 @@ class PlayerData
     {
         return $this->pay;
     }
+    /**
+     * @var \DatabaseBundle\Entity\PlayerPerson
+     */
+    private $playerPerson;
+
+
+    /**
+     * Set playerPerson
+     *
+     * @param \DatabaseBundle\Entity\PlayerPerson $playerPerson
+     *
+     * @return PlayerData
+     */
+    public function setPlayerPerson(\DatabaseBundle\Entity\PlayerPerson $playerPerson = null)
+    {
+        $this->playerPerson = $playerPerson;
+
+        return $this;
+    }
+
+    /**
+     * Get playerPerson
+     *
+     * @return \DatabaseBundle\Entity\PlayerPerson
+     */
+    public function getPlayerPerson()
+    {
+        return $this->playerPerson;
+    }
 }

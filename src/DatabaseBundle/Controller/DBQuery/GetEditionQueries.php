@@ -170,22 +170,6 @@ class GetEditionQueries extends Controller
                 ->getResult()[0];
             $em->remove($teamMember);
             $em->flush();
-
-            // Check if it is still player. Either way, set to non player
-            $teamMember = $em->getRepository('DatabaseBundle:PlayerData')
-                ->createQueryBuilder('players')
-                ->join('players.personalData', 'person')
-                ->where('person.id = :id')
-                ->setParameter('id', $id)
-                ->getQuery()
-                ->getResult();
-
-            if (sizeof($teamMember) > 0) {
-                $person = $em->getRepository('DatabaseBundle:PersonalData')
-                    ->find($id);
-                $person->setIsPlayer(0);
-                $this->savePerson($person, true);
-            }
         } else {
             $teamMember = $em->getRepository('DatabaseBundle:CoachData')
                 ->createQueryBuilder('coaches')
@@ -199,31 +183,10 @@ class GetEditionQueries extends Controller
                 ->getResult()[0];
             $em->remove($teamMember);
             $em->flush();
-
-            $coachPerson = $em->getRepository('DatabaseBundle:CoachPerson')
-                ->createQueryBuilder('coachPerson')
-                ->join('coachPerson.personalData', 'personalData')
-                ->join('coachPerson.coachData', 'coachData')
-                ->where('personalData.id = :id')
-                ->andWhere('coachData.id = :coachId')
-                ->setParameter('id', $id)
-                ->setParameter('coachId', $teamMember->getId())
-                ->getQuery()
-                ->getResult();
-
-            // Check if it is still player. Either way, set to non player
-            $teamMember = $em->getRepository('DatabaseBundle:CoachData')
-                ->createQueryBuilder('coaches')
-                ->join('coaches.personalData', 'person')
-                ->where('person.id = :id')
-                ->setParameter('id', $id)
-                ->getQuery()
-                ->getResult();
-
-            $person = $em->getRepository('DatabaseBundle:PersonalData')
-                ->find($id);
-            $this->savePerson($person, true);
         }
+        $person = $em->getRepository('DatabaseBundle:PersonalData')
+            ->find($id);
+        $this->savePerson($person, true);
     }
 
     public function deleteFromMember($id, $seasonId)
@@ -321,6 +284,23 @@ class GetEditionQueries extends Controller
             ->getQuery()
             ->getResult();
         return $pay;    
+    }
+
+    public function getPlayerPerson($id, $season)
+    {
+        $em = $this->personController->getDoctrine()->getManager();
+        $playerPerson = $em->getRepository('DatabaseBundle:PlayerPerson')
+            ->createQueryBuilder('playerPerson')
+            ->join('playerPerson.personalData', 'personalData')
+            ->join('playerPerson.playerData', 'playerData')
+            ->join('playerData.season', 'season')
+            ->where('personalData.id = :id')
+            ->andWhere('season.id = :season')
+            ->setParameter('id', $id)
+            ->setParameter('season', $season)
+            ->getQuery()
+            ->getResult();
+        return $playerPerson;
     }
 
     public function getCoachPerson($id, $season) 

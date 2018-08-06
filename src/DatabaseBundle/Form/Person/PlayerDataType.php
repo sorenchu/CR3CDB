@@ -35,7 +35,7 @@ class PlayerDataType extends AbstractType
                   return $er->createQueryBuilder('season');
             },
             'choices' => $this->season,
-            'required' => true,
+            'required' => false,
             'multiple' => false,
             'expanded' => false,
             'disabled' => true,
@@ -64,7 +64,7 @@ class PlayerDataType extends AbstractType
             'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('parent');
             },
-            'required' => true,
+            'required' => false,
             'multiple' => true,
             )
         );

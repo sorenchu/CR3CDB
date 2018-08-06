@@ -7,13 +7,14 @@ use DatabaseBundle\Form\Person\PersonalDataType;
 use DatabaseBundle\Form\Season\SeasonType;
 
 use DatabaseBundle\Entity\PlayerData;
+use DatabaseBundle\Entity\PlayerPerson;
 use DatabaseBundle\Entity\CoachData;
+use DatabaseBundle\Entity\CoachPerson;
 use DatabaseBundle\Entity\ParentData;
 use DatabaseBundle\Entity\MemberData;
 use DatabaseBundle\Entity\Pay;
 use DatabaseBundle\Entity\Payment;
 use DatabaseBundle\Entity\ContactData;
-use DatabaseBundle\Entity\CoachPerson;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
@@ -52,22 +53,20 @@ class EditPersonController extends Controller
             $contactData->setPersonalData($personalData);
          }
 
-        if ($personalData->getIsPlayer()) {
+        if ($this->peopleQueries->getPlayerPerson($id, $season) == NULL) {
+            $playerPerson = new PlayerPerson();
+            $playerPerson->setIsPlayer(false);
             $handlingData = new HandlingData($this, "player");
             $playerData = $handlingData->getChildData();
-
             $playerData->setPersonalData($personalData);
             $playerData->setSeason($season);
+            $playerData->setPlayerPerson($playerPerson);
+            $playerPerson->setPersonalData($personalData);
+            $personalData->addPlayerPerson($playerPerson);
+    
             $pay = $this->peopleQueries->getPay($playerData->getId()); 
             if ($pay == NULL) {
                 $pay = new Pay();
-            }
-            if ($playerData) {
-                $pay->setPlayerData($playerData);
-            }
-            if (NULL == $personalData->playerIsInCurrentSeason($season) and
-                $personalData->getPlayerData()->count() < 1) {
-                $personalData->getPlayerData()->add($playerData);
             }
             if ($pay->getPayment() == NULL) {
                 $payment = new Payment();
@@ -75,7 +74,10 @@ class EditPersonController extends Controller
                 $pay->addPayment($payment);
             }
             $playerData->setPay($pay);
-            $underage = $this->isUnderage($personalData->getPlayerDataBySeason($season));
+            $pay->setPlayerData($playerData);
+
+            $playerPerson->setPlayerData($playerData);
+            $personalData->addPlayerDatum($playerData);
         }
 
         if ($this->peopleQueries->getCoachPerson($id, $season) == NULL) {
@@ -116,8 +118,8 @@ class EditPersonController extends Controller
 
         $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
         $personalDataForm->handleRequest($request);
-        if ($playerData) 
-            $bank = $this->getBank($playerData, $personalDataForm, $season);
+        $bank = $this->getBank($playerData, $personalDataForm, $season);
+        $underage = $this->isUnderage($personalData->getPlayerDataBySeason($season));
         if ($personalDataForm->isSubmitted()) {
             $personalData = $this->checkNewForms($personalDataForm, $personalData, $season);
             if($playerData) {
@@ -214,13 +216,6 @@ class EditPersonController extends Controller
 
     private function checkNewForms($personalDataForm, $personalData, $season)
     {
-        if ($personalDataForm->get('isPlayer')->getViewData() and $this->peopleQueries->getPeopleByType($personalData->getId(), 'playerdata', $season) == null){
-            $playerData = new PlayerData();
-            $playerData->setPersonalData($personalData);
-            $playerData->setSeason($season);
-            $personalData->addPlayerDatum($playerData);
-        }
-
         if ($personalDataForm->get('isParent')->getViewData() and $this->peopleQueries->getPeopleByType($personalData->getId(), 'parentdata', $season) == null) {
             $parentData = new ParentData();
             $parentData->setPersonalData($personalData);

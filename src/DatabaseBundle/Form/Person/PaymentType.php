@@ -27,7 +27,6 @@ class PaymentType extends AbstractType
                   array(
                     'required' => false,
                     'label' => 'Fecha de pago',
-                    'required' => true,
                     'widget' => 'single_text',
                     'format' => 'dd/MM/yyyy'
           ))

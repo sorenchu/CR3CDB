@@ -1,0 +1,30 @@
+# src/DatabaseBundle/Resources/config/doctrine/PlayerPerson.orm.yml
+DatabaseBundle\Entity\PlayerPerson:
+    type: entity
+    table: playerPerson
+    repositoryClass: DatabaseBundle\Repository\PlayerPersonRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+
+    fields:
+        isPlayer:
+            type: boolean
+            default: false
+
+    manyToOne:
+        personalData:
+            targetEntity: PersonalData
+            inversedBy: playerPerson
+            joinColumn:
+                name: personalData_id
+                referenceColumnName: id
+
+    oneToOne:
+        playerData:
+            targetEntity: PlayerData
+            inversedBy: playerPerson
+            joinColumn:
+                name: playerData_id
+                referenceColumnName: id

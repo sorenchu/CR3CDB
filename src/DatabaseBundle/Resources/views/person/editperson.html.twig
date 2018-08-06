@@ -12,9 +12,15 @@
 <table>
 <tr>
   <th>Datos personales</th>
-  {% if personalData.getIsPlayer() %}
-    <th>Jugador</th>
-  {% endif %}
+  {% for formData in personalDataForm.playerPerson %}
+      {% if formData.vars.value.playerData.season.seasontext == curSeason %}
+        <th>{{ form_row(formData.isPlayer) }}</th>
+      {% else %} 
+        {{ form_widget(formData, 
+            { 'attr': {'style': 'display:none'} })
+        }}
+      {% endif %}
+  {% endfor %}
   {% for formData in personalDataForm.coachPerson %}
       {% if formData.vars.value.coachData.season.seasontext == curSeason %}
         <th>{{ form_row(formData.isCoach) }}</th>
@@ -47,61 +53,57 @@
     {{ form_row(personalDataForm.contactData.zipcode) }}
     {{ form_row(personalDataForm.contactData.province) }}
   <hr>
-    {{ form_row(personalDataForm.isPlayer) }}
-    {# form_row(personalDataForm.isCoach) #}
     {{ form_row(personalDataForm.isParent) }}
     {{ form_row(personalDataForm.isMember) }}
   </td>
-  {% if personalData.getIsPlayer() %}
-    <td>
-      {% for formData in personalDataForm.playerData %}
-        {% if formData.vars.value.season.seasontext == curSeason %}
-            {{ form_row(formData.number) }}
-            {{ form_row(formData.category) }} 
-            {{ form_row(formData.season) }}
-            {% if underage == 'true' %}
-                {{ form_row(formData.parentdata) }}
-            {% endif %}
-            {{ form_row(formData.pay.wayOfPayment, 
-                  {'attr': {'onchange': 'return submit();' }})
-            }}
-            {{ form_row(formData.pay.totalAmount,
-                  {'attr': {'onchange': 'return submit();' }}) 
-            }}
-            {% if isBank == 'true' %}
-                {{ form_row(formData.pay.person) }}
-                {{ form_row(formData.pay.accountNumber) }}
-            {% else %} 
-                {{ form_widget(formData.pay.person, 
-                    { 'attr': {'style': 'display:none'} })
-                }}
-                {{ form_widget(formData.pay.accountNumber,
-                    { 'attr': {'style': 'display:none'} })
-                }}
-            {% endif %}
-            <ul class="payments" data-prototype="{{ form_widget(formData.pay.payment.vars.prototype)|e('html_attr') }}">
-            {% if formData.pay.payment and formData.pay.payment|length > 0 %}
-              {% for payment in formData.pay.payment %}
-                <li>
-                {{ form_row(payment.amountPayed) }}
-                {{ form_row(payment.paymentDate) }}
-                {{ form_row(payment.status) }}</li>
-                <br>
-              {% endfor %}
-            {% else %} 
-              {{ form_widget(formData, 
+  <td>
+  {% for formData in personalDataForm.playerData %}
+      {% if formData.vars.value.playerPerson.isPlayer == true and formData.vars.value.season.seasontext == curSeason %}
+          {{ form_row(formData.number) }}
+          {{ form_row(formData.category) }} 
+          {{ form_row(formData.season) }}
+          {% if underage == 'true' %}
+              {{ form_row(formData.parentdata) }}
+          {% endif %}
+          {{ form_row(formData.pay.wayOfPayment, 
+                {'attr': {'onchange': 'return submit();' }})
+          }}
+          {{ form_row(formData.pay.totalAmount,
+                {'attr': {'onchange': 'return submit();' }}) 
+          }}
+          {% if isBank == 'true' %}
+              {{ form_row(formData.pay.person) }}
+              {{ form_row(formData.pay.accountNumber) }}
+          {% else %} 
+              {{ form_widget(formData.pay.person, 
                   { 'attr': {'style': 'display:none'} })
               }}
-            {% endif %}
-            </ul>
-        {% else %} 
-          {{ form_widget(formData, 
-              { 'attr': {'style': 'display:none'} })
-          }}
-        {% endif %}
-      {% endfor %}
-    </td>
-  {% endif %}
+              {{ form_widget(formData.pay.accountNumber,
+                  { 'attr': {'style': 'display:none'} })
+              }}
+          {% endif %}
+          <ul class="payments" data-prototype="{{ form_widget(formData.pay.payment.vars.prototype)|e('html_attr') }}">
+          {% if formData.pay.payment and formData.pay.payment|length > 0 %}
+            {% for payment in formData.pay.payment %}
+              <li>
+              {{ form_row(payment.amountPayed) }}
+              {{ form_row(payment.paymentDate) }}
+              {{ form_row(payment.status) }}</li>
+              <br>
+            {% endfor %}
+          {% else %} 
+            {{ form_widget(formData, 
+                { 'attr': {'style': 'display:none'} })
+            }}
+          {% endif %}
+          </ul>
+      {% else %} 
+        {{ form_widget(formData, 
+            { 'attr': {'style': 'display:none'} })
+        }}
+      {% endif %}
+  {% endfor %}
+  </td>
   <td>
   {% for formData in personalDataForm.coachData %}
     {% if formData.vars.value.coachPerson.isCoach == true and formData.vars.value.season.seasontext == curSeason %}
@@ -148,7 +150,7 @@
 </tr>
 <tr>
   <td>
-      {{ form_row(personalDataForm.save) }}
+      {{ form_row(personalDataForm.save)}}
   </td>
 </tr>
 </table>

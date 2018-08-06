@@ -34,7 +34,7 @@ class CoachDataType extends AbstractType
                   return $er->createQueryBuilder('season');
             },
             'choices' => $this->season,
-            'required' => true,
+            'required' => false,
             'multiple' => false,
             'expanded' => false,
             'disabled' => true,
