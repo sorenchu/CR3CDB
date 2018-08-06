@@ -3,9 +3,9 @@
 namespace DatabaseBundle\Entity;
 
 /**
- * PlayerPerson
+ * MemberPerson
  */
-class PlayerPerson
+class MemberPerson
 {
     /**
      * @var integer
@@ -15,12 +15,12 @@ class PlayerPerson
     /**
      * @var boolean
      */
-    private $isPlayer;
+    private $isMember;
 
     /**
-     * @var \DatabaseBundle\Entity\PlayerData
+     * @var \DatabaseBundle\Entity\MemberData
      */
-    private $playerData;
+    private $memberData;
 
     /**
      * @var \DatabaseBundle\Entity\PersonalData
@@ -39,51 +39,51 @@ class PlayerPerson
     }
 
     /**
-     * Set isPlayer
+     * Set isMember
      *
-     * @param boolean $isPlayer
+     * @param boolean $isMember
      *
-     * @return PlayerPerson
+     * @return MemberPerson
      */
-    public function setIsPlayer($isPlayer)
+    public function setIsMember($isMember)
     {
-        $this->isPlayer = $isPlayer;
+        $this->isMember = $isMember;
 
         return $this;
     }
 
     /**
-     * Get isPlayer
+     * Get isMember
      *
      * @return boolean
      */
-    public function getIsPlayer()
+    public function getIsMember()
     {
-        return $this->isPlayer;
+        return $this->isMember;
     }
 
     /**
-     * Set playerData
+     * Set memberData
      *
-     * @param \DatabaseBundle\Entity\PlayerData $playerData
+     * @param \DatabaseBundle\Entity\MemberData $memberData
      *
-     * @return PlayerPerson
+     * @return MemberPerson
      */
-    public function setPlayerData(\DatabaseBundle\Entity\PlayerData $playerData = null)
+    public function setMemberData(\DatabaseBundle\Entity\MemberData $memberData = null)
     {
-        $this->playerData = $playerData;
+        $this->memberData = $memberData;
 
         return $this;
     }
 
     /**
-     * Get playerData
+     * Get memberData
      *
-     * @return \DatabaseBundle\Entity\PlayerData
+     * @return \DatabaseBundle\Entity\MemberData
      */
-    public function getPlayerData()
+    public function getMemberData()
     {
-        return $this->playerData;
+        return $this->memberData;
     }
 
     /**
@@ -91,7 +91,7 @@ class PlayerPerson
      *
      * @param \DatabaseBundle\Entity\PersonalData $personalData
      *
-     * @return PlayerPerson
+     * @return MemberPerson
      */
     public function setPersonalData(\DatabaseBundle\Entity\PersonalData $personalData = null)
     {

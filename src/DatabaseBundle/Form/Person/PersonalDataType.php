@@ -44,18 +44,14 @@ class PersonalDataType extends AbstractType
           )
         )
         ->add('contactData', ContactDataType::class)
-        // ->add('isPlayer', CheckboxType::class, array(
-        //     'label' => 'Jugador',
-        //     'required' => false,)
-        // )
         ->add('isParent', CheckboxType::class, array(
             'label' => 'Padre',
             'required' => false,)
         )
-        ->add('isMember', CheckboxType::class, array(
-            'label' => 'Socio',
-            'required' => false,)
-        )
+        //->add('isMember', CheckboxType::class, array(
+        //    'label' => 'Socio',
+        //    'required' => false,)
+        //)
         ->add('playerPerson', CollectionType::class,
                 array('entry_type' => PlayerPersonType::class,
                         'allow_add' => true,
@@ -63,6 +59,11 @@ class PersonalDataType extends AbstractType
                 )
         ->add('coachPerson', CollectionType::class,
                 array('entry_type' => CoachPersonType::class,
+                        'allow_add' => true,
+                        'by_reference' => true,)
+                )
+        ->add('memberPerson', CollectionType::class,
+                array('entry_type' => MemberPersonType::class,
                         'allow_add' => true,
                         'by_reference' => true,)
                 )
@@ -83,14 +84,11 @@ class PersonalDataType extends AbstractType
                                'allow_add' => true,
                                'by_reference' => false,)
                         );
-              if ($personalData->getIsMember())
-              {
-                $form->add('memberData', CollectionType::class,
-                           array('entry_type' => MemberDataType::class,
-                                 'allow_add' => true,
-                                 'by_reference' => false,)
-                          );
-              }
+              $form->add('memberData', CollectionType::class,
+                         array('entry_type' => MemberDataType::class,
+                               'allow_add' => true,
+                               'by_reference' => false,)
+                        );
               if ($personalData->getIsParent())
               {
                 $form->add('parentData', CollectionType::class,

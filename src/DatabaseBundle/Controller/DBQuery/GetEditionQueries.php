@@ -319,5 +319,22 @@ class GetEditionQueries extends Controller
             ->getResult();
         return $coachPerson;
     }
+
+    public function getMemberPerson($id, $season) 
+    {
+        $em = $this->personController->getDoctrine()->getManager();
+        $memberPerson = $em->getRepository('DatabaseBundle:MemberPerson')
+            ->createQueryBuilder('memberPerson')
+            ->join('memberPerson.personalData', 'personalData')
+            ->join('memberPerson.memberData', 'memberData')
+            ->join('memberData.season', 'season')
+            ->where('personalData.id = :id')
+            ->andWhere('season.id = :season')
+            ->setParameter('id', $id)
+            ->setParameter('season', $season)
+            ->getQuery()
+            ->getResult();
+        return $memberPerson;
+    }
 }
 ?>

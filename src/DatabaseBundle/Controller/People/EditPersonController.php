@@ -12,6 +12,7 @@ use DatabaseBundle\Entity\CoachData;
 use DatabaseBundle\Entity\CoachPerson;
 use DatabaseBundle\Entity\ParentData;
 use DatabaseBundle\Entity\MemberData;
+use DatabaseBundle\Entity\MemberPerson;
 use DatabaseBundle\Entity\Pay;
 use DatabaseBundle\Entity\Payment;
 use DatabaseBundle\Entity\ContactData;
@@ -94,15 +95,18 @@ class EditPersonController extends Controller
             $personalData->addCoachDatum($coachData);
         }
 
-        if ($personalData->getIsMember()) {
+        if ($this->peopleQueries->getMemberPerson($id, $season) == NULL) {
+            $memberPerson = new MemberPerson();
+            $memberPerson->setIsMember(false);
             $handlingData = new HandlingData($this, "member");
             $memberData = $handlingData->getChildData();
             $memberData->setPersonalData($personalData);
             $memberData->setSeason($season);
-            if (NULL == $personalData->memberIsInCurrentSeason($season) and
-                $personalData->getMemberData()->count() < 1) {
-                $personalData->getMemberData()->add($memberData);
-            }
+            $memberData->setMemberPerson($memberPerson);
+            $memberPerson->setMemberData($memberData);
+            $memberPerson->setPersonalData($personalData);
+            $personalData->addMemberPerson($memberPerson);
+            $personalData->addMemberDatum($memberData);
         }
 
         if ($personalData->getIsParent()) {
@@ -221,12 +225,6 @@ class EditPersonController extends Controller
             $parentData->setPersonalData($personalData);
             $parentData->setSeason($season);
             $personalData->addParentDatum($parentData);
-        }
-        if ($personalDataForm->get('isMember')->getViewData() and $this->peopleQueries->getPeopleByType($personalData->getId(), 'memberdata', $season) == null) {
-            $memberData = new MemberData();
-            $memberData->setPersonalData($personalData);
-            $memberData->setSeason($season);
-            $personalData->addMemberDatum($memberData);
         }
         return $personalData;
     }

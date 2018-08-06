@@ -826,4 +826,43 @@ class PersonalData
     {
         return $this->playerPerson;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $memberPerson;
+
+
+    /**
+     * Add memberPerson
+     *
+     * @param \DatabaseBundle\Entity\MemberPerson $memberPerson
+     *
+     * @return PersonalData
+     */
+    public function addMemberPerson(\DatabaseBundle\Entity\MemberPerson $memberPerson)
+    {
+        $this->memberPerson[] = $memberPerson;
+
+        return $this;
+    }
+
+    /**
+     * Remove memberPerson
+     *
+     * @param \DatabaseBundle\Entity\MemberPerson $memberPerson
+     */
+    public function removeMemberPerson(\DatabaseBundle\Entity\MemberPerson $memberPerson)
+    {
+        $this->memberPerson->removeElement($memberPerson);
+    }
+
+    /**
+     * Get memberPerson
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMemberPerson()
+    {
+        return $this->memberPerson;
+    }
 }

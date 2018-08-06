@@ -32,3 +32,9 @@ DatabaseBundle\Entity\MemberData:
             joinColumn:
                 name: personalData_id
                 referencedColumnName: id
+
+    oneToOne:
+        memberPerson:
+            targetEntity: MemberPerson
+            mappedBy: memberData
+            cascade: ["persist", "remove"]

@@ -138,4 +138,33 @@ class MemberData
     {
         return $this->personalData;
     }
+    /**
+     * @var \DatabaseBundle\Entity\MemberPerson
+     */
+    private $memberPerson;
+
+
+    /**
+     * Set memberPerson
+     *
+     * @param \DatabaseBundle\Entity\MemberPerson $memberPerson
+     *
+     * @return MemberData
+     */
+    public function setMemberPerson(\DatabaseBundle\Entity\MemberPerson $memberPerson = null)
+    {
+        $this->memberPerson = $memberPerson;
+
+        return $this;
+    }
+
+    /**
+     * Get memberPerson
+     *
+     * @return \DatabaseBundle\Entity\MemberPerson
+     */
+    public function getMemberPerson()
+    {
+        return $this->memberPerson;
+    }
 }

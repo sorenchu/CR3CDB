@@ -1,0 +1,30 @@
+# src/DatabaseBundle/Resources/config/doctrine/MemberPerson.orm.yml
+DatabaseBundle\Entity\MemberPerson:
+    type: entity
+    table: memberPerson
+    repositoryClass: DatabaseBundle\Repository\MemberPersonRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+
+    fields:
+        isMember:
+            type: boolean
+            default: false
+
+    manyToOne:
+        personalData:
+            targetEntity: PersonalData
+            inversedBy: memberPerson
+            joinColumn:
+                name: personalData_id
+                referenceColumnName: id
+
+    oneToOne:
+        memberData:
+            targetEntity: MemberData
+            inversedBy: memberPerson
+            joinColumn:
+                name: memberData_id
+                referenceColumnName: id
