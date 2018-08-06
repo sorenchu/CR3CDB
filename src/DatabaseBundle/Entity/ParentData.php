@@ -132,4 +132,33 @@ class ParentData
         return $this->getPersonalData()->getName().' '
                 .$this->getPersonalData()->getSurname();
     }
+    /**
+     * @var \DatabaseBundle\Entity\ParentPerson
+     */
+    private $parentPerson;
+
+
+    /**
+     * Set parentPerson
+     *
+     * @param \DatabaseBundle\Entity\ParentPerson $parentPerson
+     *
+     * @return ParentData
+     */
+    public function setParentPerson(\DatabaseBundle\Entity\ParentPerson $parentPerson = null)
+    {
+        $this->parentPerson = $parentPerson;
+
+        return $this;
+    }
+
+    /**
+     * Get parentPerson
+     *
+     * @return \DatabaseBundle\Entity\ParentPerson
+     */
+    public function getParentPerson()
+    {
+        return $this->parentPerson;
+    }
 }

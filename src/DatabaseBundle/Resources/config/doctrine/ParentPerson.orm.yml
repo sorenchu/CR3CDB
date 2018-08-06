@@ -1,0 +1,30 @@
+# src/DatabaseBundle/Resources/config/doctrine/ParentPerson.orm.yml
+DatabaseBundle\Entity\ParentPerson:
+    type: entity
+    table: parentPerson
+    repositoryClass: DatabaseBundle\Repository\ParentPersonRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+
+    fields:
+        isParent:
+            type: boolean
+            default: false
+
+    manyToOne:
+        personalData:
+            targetEntity: PersonalData
+            inversedBy: parentPerson
+            joinColumn:
+                name: personalData_id
+                referenceColumnName: id
+
+    oneToOne:
+        parentData:
+            targetEntity: ParentData
+            inversedBy: parentPerson
+            joinColumn:
+                name: parentData_id
+                referenceColumnName: id

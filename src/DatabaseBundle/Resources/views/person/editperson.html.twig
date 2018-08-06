@@ -39,9 +39,15 @@
         }}
       {% endif %}
   {% endfor %}
-  {% if personalData.getIsParent() %}
-    <th>Padre</th>
-  {%endif %}
+  {% for formData in personalDataForm.parentPerson %}
+      {% if formData.vars.value.parentData.season.seasontext == curSeason %}
+        <th>{{ form_row(formData.isParent) }}</th>
+      {% else %} 
+        {{ form_widget(formData, 
+            { 'attr': {'style': 'display:none'} })
+        }}
+      {% endif %}
+  {% endfor %}
 </tr>
 <tr>
   <td>
@@ -58,8 +64,6 @@
     {{ form_row(personalDataForm.contactData.city) }}
     {{ form_row(personalDataForm.contactData.zipcode) }}
     {{ form_row(personalDataForm.contactData.province) }}
-  <hr>
-    {{ form_row(personalDataForm.isParent) }}
   </td>
   <td>
   {% for formData in personalDataForm.playerData %}
@@ -136,20 +140,18 @@
     {% endif %}
   {% endfor %}
   </td>
-  {% if personalData.getIsParent() %}
-    <td> 
-      {% for formData in personalDataForm.parentData %}
-        {% if formData.vars.value.season.seasontext == curSeason %}
-            {{ form_row(formData.season) }}
-            {{ form_row(formData.playerdata) }}
-        {% else %} 
-          {{ form_widget(formData, 
-              { 'attr': {'style': 'display:none'} })
-          }}
-        {% endif %}
-      {% endfor %}
-    </td>
-  {% endif%}
+  <td> 
+  {% for formData in personalDataForm.parentData %}
+    {% if formData.vars.value.parentPerson.isParent == true and formData.vars.value.season.seasontext == curSeason %}
+        {{ form_row(formData.season) }}
+        {{ form_row(formData.playerdata) }}
+    {% else %} 
+      {{ form_widget(formData, 
+          { 'attr': {'style': 'display:none'} })
+      }}
+    {% endif %}
+  {% endfor %}
+  </td>
 </tr>
 <tr>
   <td>

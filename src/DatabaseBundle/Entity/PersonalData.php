@@ -865,4 +865,43 @@ class PersonalData
     {
         return $this->memberPerson;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $parentPerson;
+
+
+    /**
+     * Add parentPerson
+     *
+     * @param \DatabaseBundle\Entity\ParentPerson $parentPerson
+     *
+     * @return PersonalData
+     */
+    public function addParentPerson(\DatabaseBundle\Entity\ParentPerson $parentPerson)
+    {
+        $this->parentPerson[] = $parentPerson;
+
+        return $this;
+    }
+
+    /**
+     * Remove parentPerson
+     *
+     * @param \DatabaseBundle\Entity\ParentPerson $parentPerson
+     */
+    public function removeParentPerson(\DatabaseBundle\Entity\ParentPerson $parentPerson)
+    {
+        $this->parentPerson->removeElement($parentPerson);
+    }
+
+    /**
+     * Get parentPerson
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getParentPerson()
+    {
+        return $this->parentPerson;
+    }
 }

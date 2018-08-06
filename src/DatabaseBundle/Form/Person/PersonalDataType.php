@@ -44,14 +44,6 @@ class PersonalDataType extends AbstractType
           )
         )
         ->add('contactData', ContactDataType::class)
-        ->add('isParent', CheckboxType::class, array(
-            'label' => 'Padre',
-            'required' => false,)
-        )
-        //->add('isMember', CheckboxType::class, array(
-        //    'label' => 'Socio',
-        //    'required' => false,)
-        //)
         ->add('playerPerson', CollectionType::class,
                 array('entry_type' => PlayerPersonType::class,
                         'allow_add' => true,
@@ -64,6 +56,11 @@ class PersonalDataType extends AbstractType
                 )
         ->add('memberPerson', CollectionType::class,
                 array('entry_type' => MemberPersonType::class,
+                        'allow_add' => true,
+                        'by_reference' => true,)
+                )
+        ->add('parentPerson', CollectionType::class,
+                array('entry_type' => ParentPersonType::class,
                         'allow_add' => true,
                         'by_reference' => true,)
                 )
@@ -89,14 +86,11 @@ class PersonalDataType extends AbstractType
                                'allow_add' => true,
                                'by_reference' => false,)
                         );
-              if ($personalData->getIsParent())
-              {
-                $form->add('parentData', CollectionType::class,
-                           array('entry_type' => ParentDataType::class,
-                                 'allow_add' => true,
-                                 'by_reference' => false,)
-                          );
-              }
+              $form->add('parentData', CollectionType::class,
+                         array('entry_type' => ParentDataType::class,
+                               'allow_add' => true,
+                               'by_reference' => false,)
+                        );
             } 
         })
         ->add('save', SubmitType::class, array(

@@ -336,5 +336,22 @@ class GetEditionQueries extends Controller
             ->getResult();
         return $memberPerson;
     }
+
+    public function getParentPerson($id, $season) 
+    {
+        $em = $this->personController->getDoctrine()->getManager();
+        $parentPerson = $em->getRepository('DatabaseBundle:ParentPerson')
+            ->createQueryBuilder('parentPerson')
+            ->join('parentPerson.personalData', 'personalData')
+            ->join('parentPerson.parentData', 'parentData')
+            ->join('parentData.season', 'season')
+            ->where('personalData.id = :id')
+            ->andWhere('season.id = :season')
+            ->setParameter('id', $id)
+            ->setParameter('season', $season)
+            ->getQuery()
+            ->getResult();
+        return $parentPerson;
+    }
 }
 ?>

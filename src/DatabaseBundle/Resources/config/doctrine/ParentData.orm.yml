@@ -41,3 +41,9 @@ DatabaseBundle\Entity\ParentData:
             joinColumn:
                 name: personalData_id
                 referencedColumnName: id
+
+    oneToOne:
+        parentPerson:
+            targetEntity: ParentPerson
+            mappedBy: parentData
+            cascade: ["persist", "remove"]

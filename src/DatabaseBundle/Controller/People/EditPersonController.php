@@ -11,6 +11,7 @@ use DatabaseBundle\Entity\PlayerPerson;
 use DatabaseBundle\Entity\CoachData;
 use DatabaseBundle\Entity\CoachPerson;
 use DatabaseBundle\Entity\ParentData;
+use DatabaseBundle\Entity\ParentPerson;
 use DatabaseBundle\Entity\MemberData;
 use DatabaseBundle\Entity\MemberPerson;
 use DatabaseBundle\Entity\Pay;
@@ -109,15 +110,18 @@ class EditPersonController extends Controller
             $personalData->addMemberDatum($memberData);
         }
 
-        if ($personalData->getIsParent()) {
+        if ($this->peopleQueries->getParentPerson($id, $season) == NULL) {
+            $parentPerson = new ParentPerson();
+            $parentPerson->setIsParent(false);
             $handlingData = new HandlingData($this, "parent");
             $parentData = $handlingData->getChildData();
             $parentData->setPersonalData($personalData);
             $parentData->setSeason($season);
-            if (NULL == $personalData->parentIsInCurrentSeason($season) and
-                $personalData->getParentData()->count() < 1) {
-                $personalData->getParentData()->add($parentData);
-            }
+            $parentData->setParentPerson($parentPerson);
+            $parentPerson->setParentData($parentData);
+            $parentPerson->setPersonalData($personalData);
+            $personalData->addParentPerson($parentPerson);
+            $personalData->addParentDatum($parentData);
         }
 
         $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
@@ -125,7 +129,6 @@ class EditPersonController extends Controller
         $bank = $this->getBank($playerData, $personalDataForm, $season);
         $underage = $this->isUnderage($personalData->getPlayerDataBySeason($season));
         if ($personalDataForm->isSubmitted()) {
-            $personalData = $this->checkNewForms($personalDataForm, $personalData, $season);
             if($playerData) {
                 $pay = $this->addPay($personalData->getPlayerDataBySeason($season), $personalDataForm);
                 $this->addPayment($pay, $personalDataForm);
@@ -216,17 +219,6 @@ class EditPersonController extends Controller
                 return $subForm;
             }
         }
-    }
-
-    private function checkNewForms($personalDataForm, $personalData, $season)
-    {
-        if ($personalDataForm->get('isParent')->getViewData() and $this->peopleQueries->getPeopleByType($personalData->getId(), 'parentdata', $season) == null) {
-            $parentData = new ParentData();
-            $parentData->setPersonalData($personalData);
-            $parentData->setSeason($season);
-            $personalData->addParentDatum($parentData);
-        }
-        return $personalData;
     }
 
     private function isUnderage($playerData) {
