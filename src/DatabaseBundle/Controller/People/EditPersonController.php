@@ -39,7 +39,7 @@ class EditPersonController extends Controller
         $underage = 'false';
 
         $season = $seasonQueries->getSeason($seasonId);
-        $seasonForm = $this->createForm(new SeasonType(), $season);
+        $seasonForm = $this->createForm(\DatabaseBundle\Form\Season\SeasonType::class, $season);
         $seasonForm->handleRequest($request);
         if ($seasonForm->isSubmitted()) {
             return $this->redirectToRoute('edit_person',
@@ -124,7 +124,7 @@ class EditPersonController extends Controller
             $personalData->addParentDatum($parentData);
         }
 
-        $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
+        $personalDataForm = $this->createForm(\DatabaseBundle\Form\Person\PersonalDataType::class, $personalData);
         $personalDataForm->handleRequest($request);
         $bank = $this->getBank($playerData, $personalDataForm, $season);
         $underage = $this->isUnderage($personalData->getPlayerDataBySeason($season));
@@ -134,9 +134,9 @@ class EditPersonController extends Controller
                 $this->addPayment($pay, $personalDataForm);
                 $this->removePayment($pay, $personalDataForm, $season);
             }
-            $seasonForm = $this->createForm(new SeasonType(), $season);
+            $seasonForm = $this->createForm(\DatabaseBundle\Form\Season\SeasonType::class, $season);
             $this->peopleQueries->savePerson($personalData, true);
-            $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
+            $personalDataForm = $this->createForm(\DatabaseBundle\Form\Person\PersonalDataType::class, $personalData);
         }
         return $this->render('DatabaseBundle:person:editperson.html.twig', array(
                     'personalDataForm' => $personalDataForm->createView(),
