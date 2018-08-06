@@ -100,8 +100,8 @@ def getPersonalData(string):
         data['birthdate'] = str(datetime.strptime(data['birthdate'], '%d-%m-%Y'))
         data['birthdate'] = '\"%s\"' % (data['birthdate'])
 
-    query = 'INSERT INTO personalData(name, surname, sex, dni, birthday, is_player, is_coach, is_parent, is_member)'
-    query += ' VALUES(\"' + data['name'] + '\", \"' + data['surname'] + '\", \"' + getSex(data['sex']) + '\", \"' + data['dni'] + '\", ' + data['birthdate'] + ', 0, 0, 0, 0);\n'
+    query = 'INSERT INTO personalData(name, surname, sex, dni, birthday)'
+    query += ' VALUES(\"' + data['name'] + '\", \"' + data['surname'] + '\", \"' + getSex(data['sex']) + '\", \"' + data['dni'] + '\", ' + data['birthdate'] + ');\n'
   else:
     print 'Error! Duplicated person for ' + data['name'] + ' ' + data['surname']
   return query

@@ -59,10 +59,10 @@ def alterPersonalData(string):
   log.logDebug('Person %s %s has id %s' % (data['name'], data['surname'], data['id']))
   if -1 != data['id']:
     if 'player' == getPlayerOrCoach(string):
-      query = 'UPDATE personalData SET is_player'
+      query = 'INSERT INTO playerPerson(is_player, personalData_id, playerData_id) '
     else:
-      query = 'UPDATE personalData SET is_coach'
-    query += '=1 WHERE id = %s;\n' % (str(data['id']))
+      query = 'INSERT INTO coachPerson(is_coach, personalData_id, coachData_id) '
+    query += 'VALUES(1, %s, %s);\n' % (str(data['id']), 'NULL')
     return query
   return ''
 
