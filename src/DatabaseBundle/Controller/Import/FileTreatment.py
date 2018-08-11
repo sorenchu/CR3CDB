@@ -14,6 +14,10 @@ class FileTreatment:
     except IOError:
         self.file = -1
 
+  def cleanFile(self):
+    self.file = open(self.name, 'w')
+    self.file.close()
+
   def editFile(self):
     self.file = open(self.name, 'a')
 
