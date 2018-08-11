@@ -46,7 +46,6 @@ class SqlHandling:
     for line in fileGenerated:
       self.sendQuery(line)
     self.commit()
-    self.closeConnection()
 
   def closeConnection(self):
     self.cursor.close()

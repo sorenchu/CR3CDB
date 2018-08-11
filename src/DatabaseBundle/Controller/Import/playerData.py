@@ -5,8 +5,6 @@ import sys
 import string
 import random
 import re
-import logging
-import datetime
 
 from SqlHandling import SqlHandling
 from FileTreatment import FileTreatment
@@ -59,10 +57,13 @@ def alterPersonalData(string):
   log.logDebug('Person %s %s has id %s' % (data['name'], data['surname'], data['id']))
   if -1 != data['id']:
     if 'player' == getPlayerOrCoach(string):
+      data_id = existsAsPlayerOrCoachData(data['id'], getDefaultSeason(), 'playerData')
       query = 'INSERT INTO playerPerson(is_player, personalData_id, playerData_id) '
     else:
+      data_id = existsAsPlayerOrCoachData(data['id'], getDefaultSeason(), 'coachData')
       query = 'INSERT INTO coachPerson(is_coach, personalData_id, coachData_id) '
-    query += 'VALUES(1, %s, %s);\n' % (str(data['id']), 'NULL')
+    query += 'VALUES(1, %s, %s);\n' % (str(data['id']), str(data_id))
+    log.logDebug(query);
     return query
   return ''
 
@@ -107,6 +108,7 @@ def existsAsPlayerOrCoachData(id, season, table):
   sqlHandling.sendQuery(query)
   if 0 < sqlHandling.getRowCount():
     return sqlHandling.fetchOneData()
+  sqlHandling.closeConnection()
   return -1
 
 def insertIntoPlayerOrCoachData(string):
@@ -135,28 +137,32 @@ def insertIntoPlayerOrCoachData(string):
     return query
   return ''
 
-def parsingFile(source, destiny):
+def parsingFile(source, dataDestiny, dataOrPerson):
   log.logInfo('Parsing file...')
   frmIdNumber = '^\d{7},'
   pattern = re.compile(frmIdNumber)
   if source.readFile() == -1:
     log.logInfo('File %s does not exist' % (source.name))
     return -1
-  destiny.editFile()
+  dataDestiny.editFile()
+  dataQuery = ''
   for line in source.file:
     if pattern.search(line):
-      sqlQuery = alterPersonalData(line)
-      destiny.writeIntoFile(sqlQuery)
-      sqlQuery = insertIntoPlayerOrCoachData(line)
-      destiny.writeIntoFile(sqlQuery)
+      if dataOrPerson == 'data':
+        dataQuery += insertIntoPlayerOrCoachData(line)
+      else:
+        dataQuery += alterPersonalData(line)
   source.closeFile()
-  destiny.closeFile()
+  dataDestiny.writeIntoFile(dataQuery)
+  log.logDebug("Query: %s" % (dataQuery))
+  dataDestiny.closeFile()
   return 1 
 
 def populateDB(fileGenerated):
   log.logInfo("Populating database")
   sqlHandling = SqlHandling()
   sqlHandling.populateDB(fileGenerated)
+  sqlHandling.closeConnection()
 
 def main():
   if len(sys.argv) < 2:
@@ -173,15 +179,25 @@ def main():
   log.logInfo('Execution starts')
   fileToParse = FileTreatment(pathOfFileToParse)
   log.logInfo('File to be parsed: %s' % (pathOfFileToParse))
-  pathOfFileGenerated = os.path.join(os.getcwd(), generateName('.sql'))
-  log.logInfo('File generated: %s' % (pathOfFileGenerated))
-  fileGenerated = FileTreatment(pathOfFileGenerated)
-  if parsingFile(fileToParse, fileGenerated) != -1:
-    if fileGenerated.readFile() == -1:
-      log.logInfo('File %s wrongly generated' % (fileGenerated))
-    populateDB(fileGenerated.file)
-    fileToParse.deleteFile()
-    fileGenerated.deleteFile()
+  pathOfDataFileGenerated = os.path.join(os.getcwd(), generateName('.sql'))
+  pathOfPersonFileGenerated = os.path.join(os.getcwd(), generateName('.sql'))
+  log.logInfo('Data file generated: %s' % (pathOfDataFileGenerated))
+  log.logInfo('Person file generated: %s' % (pathOfPersonFileGenerated))
+  dataFileGenerated = FileTreatment(pathOfDataFileGenerated)
+  if parsingFile(fileToParse, dataFileGenerated, 'data') != -1:
+    if dataFileGenerated.readFile() == -1:
+      log.logInfo('File %s wrongly generated' % (dataFileGenerated))
+      return -1
+    populateDB(dataFileGenerated.file)
+    personFileGenerated = FileTreatment(pathOfPersonFileGenerated)
+    if parsingFile(fileToParse, personFileGenerated, 'person') != -1:
+        if personFileGenerated.readFile() == -1:
+          log.logInfo('File %s wrongly generated' % (personFileGenerated))
+          return -1
+        populateDB(personFileGenerated.file)
+        fileToParse.deleteFile()
+        dataFileGenerated.deleteFile()
+        personFileGenerated.deleteFile()
     log.logInfo('Execution ends\n\n')
     return 1
   else:
