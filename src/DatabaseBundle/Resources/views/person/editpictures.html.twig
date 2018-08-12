@@ -18,9 +18,11 @@
         <th>TARJETA SANITARIA</th>
     </tr>
     <tr>
-        <td><img src="{{ asset('pictures' ~ personalData.getPictures().getFrontDniName() )}}" style="width:380px;height:200px;" /></td>
-        <td><img src="{{ asset('pictures' ~ personalData.getPictures().getFamilyBookName() )}}" style="width:380px;height:200px;" /></td>
-        <td><img src="{{ asset('pictures' ~ personalData.getPictures().getHealthCareCardName() )}}" style="width:380px;height:200px;" /></td>
+        {% if personalData.getPictures() %}
+            <td><img src="{{ asset('pictures' ~ personalData.getPictures().getFrontDniName() )}}" style="width:380px;height:200px;" alt="Dni delantero" /></td>
+            <td><img src="{{ asset('pictures' ~ personalData.getPictures().getFamilyBookName() )}}" style="width:380px;height:200px;" alt="Libro de familia" /></td>
+            <td><img src="{{ asset('pictures' ~ personalData.getPictures().getHealthCareCardName() )}}" style="width:380px;height:200px;"alt="Tarjeta Sanitaria" /></td>
+        {% endif %}
     </tr>
     <tr>
         <td>{{ form_row(picturesForm.frontDni) }}</td>
@@ -28,7 +30,9 @@
         <td>{{ form_row(picturesForm.healthCareCard) }}</td>
     </tr>
     <tr>
-        <td><img src="{{ asset('pictures' ~ personalData.getPictures().getBackDniName() )}}" style="width:380px;height:200px;" /></td>
+        {% if personalData.getPictures() %}
+            <td><img src="{{ asset('pictures' ~ personalData.getPictures().getBackDniName() )}}" style="width:380px;height:200px;" alt="Dni trasero" /></td>
+        {% endif %}
     </tr>
     <tr>
         <td>{{ form_row(picturesForm.backDni) }}</td>
