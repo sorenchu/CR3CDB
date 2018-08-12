@@ -10,7 +10,8 @@
 {{ include('DatabaseBundle:season:seasonform.html.twig') }}
 <table>
 <td><a href="#">Principal</a></td>
-<td><a href="/pictures">Imágenes</a></td>
+<td><a href="/person/editPictures/{{personalData.id}}">Imágenes</a></td>
+</table>
 {{ form_start(personalDataForm) }}
 <table>
 <tr>

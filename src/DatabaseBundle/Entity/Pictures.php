@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\HttpFoundation\File\File;
+
 namespace DatabaseBundle\Entity;
 
 /**
@@ -12,45 +14,11 @@ class Pictures
      */
     private $id;
 
-
     /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
-     * @var file
+     * @var File
      */
     private $frontDni;
 
-
-    /**
-     * Set frontDni
-     *
-     * @param \file $frontDni
-     *
-     * @return Pictures
-     */
-    public function setFrontDni(\file $frontDni)
-    {
-        $this->frontDni = $frontDni;
-
-        return $this;
-    }
-
-    /**
-     * Get frontDni
-     *
-     * @return \file
-     */
-    public function getFrontDni()
-    {
-        return $this->frontDni;
-    }
     /**
      * @var string
      */
@@ -71,6 +39,66 @@ class Pictures
      */
     private $personalData;
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set frontDni
+     *
+     * @param \File $frontDni
+     *
+     * @return Pictures
+     */
+    public function setFrontDni(\Symfony\Component\HttpFoundation\File\UploadedFile $frontDni)
+    {
+        $this->frontDni = $frontDni;
+
+        return $this;
+    }
+
+    /**
+     * Get frontDni
+     *
+     * @return \File
+     */
+    public function getFrontDni()
+    {
+        return $this->frontDni;
+    }
+
+    public function getFrontDniName()
+    {
+        return '/'.$this->getName($this->frontDni);
+    }
+
+    public function getBackDniName()
+    {
+        return '/'.$this->getName($this->backDni);
+    }
+
+    public function getHealthCareCardName()
+    {
+        return '/'.$this->getName($this->healthCareCard);
+    }
+
+    public function getFamilyBookName()
+    {
+        return '/'.$this->getName($this->familyBook);
+    }
+
+    private function getName($name)
+    {
+        $split = explode('/', $name);
+        $lastElement = sizeof($split)-1;
+        return $split[$lastElement];
+    }
 
     /**
      * Set backDni
@@ -79,7 +107,7 @@ class Pictures
      *
      * @return Pictures
      */
-    public function setBackDni($backDni)
+    public function setBackDni(\Symfony\Component\HttpFoundation\File\UploadedFile $backDni)
     {
         $this->backDni = $backDni;
 
@@ -103,7 +131,7 @@ class Pictures
      *
      * @return Pictures
      */
-    public function setHealthCareCard($healthCareCard)
+    public function setHealthCareCard(\Symfony\Component\HttpFoundation\File\UploadedFile $healthCareCard)
     {
         $this->healthCareCard = $healthCareCard;
 
@@ -127,7 +155,7 @@ class Pictures
      *
      * @return Pictures
      */
-    public function setFamilyBook($familyBook)
+    public function setFamilyBook(\Symfony\Component\HttpFoundation\File\UploadedFile $familyBook)
     {
         $this->familyBook = $familyBook;
 

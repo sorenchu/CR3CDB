@@ -16,8 +16,21 @@ DatabaseBundle\Entity\PersonalData:
       - Choice:
           choices: [male, female]
     birthday:
+
+DatabaseBundle\Entity\Pictures:
+    properties:
+        frontDni:
+            - Image:
+                minWidth: 400
+                maxWidth: 1009
+                minHeight: 252
+                maxHeight: 638
+                mimeTypes: [images/*]
+                mimeTypesMessage: "Suba una imagen correcta"
  
-#DatabaseBundle\Entity\FileImport:
-#  properties:
-#    pathToFile:
-#      - File: "application/csv"
+        backDni:
+            - Image:
+                minWidth: 400
+                maxWidth: 1009
+                minHeight: 252
+                maxHeight: 638
