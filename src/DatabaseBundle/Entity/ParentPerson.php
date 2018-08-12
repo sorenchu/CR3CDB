@@ -110,4 +110,3 @@ class ParentPerson
         return $this->personalData;
     }
 }
-

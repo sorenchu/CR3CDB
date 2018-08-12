@@ -93,6 +93,11 @@ class PersonalData
     private $parentData;
 
     /**
+     * @var \DatabaseBundle\Entity\Pictures
+     */
+    private $pictures;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -903,5 +908,29 @@ class PersonalData
     public function getParentPerson()
     {
         return $this->parentPerson;
+    }
+
+    /**
+     * Set pictures
+     *
+     * @param \DatabaseBundle\Entity\Pictures $pictures
+     *
+     * @return PersonalData
+     */
+    public function setPictures(\DatabaseBundle\Entity\Pictures $pictures = null)
+    {
+        $this->pictures = $pictures;
+
+        return $this;
+    }
+
+    /**
+     * Get pictures
+     *
+     * @return \DatabaseBundle\Entity\Pictures
+     */
+    public function getPictures()
+    {
+        return $this->pictures;
     }
 }

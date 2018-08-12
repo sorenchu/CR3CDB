@@ -8,6 +8,9 @@
 
 {# src/DatabaseBundle/Resources/views/Default/editperson.html.twig #}
 {{ include('DatabaseBundle:season:seasonform.html.twig') }}
+<table>
+<td><a href="#">Principal</a></td>
+<td><a href="/pictures">Imágenes</a></td>
 {{ form_start(personalDataForm) }}
 <table>
 <tr>
@@ -158,6 +161,7 @@
       {{ form_row(personalDataForm.save)}}
   </td>
 </tr>
+</table>
 </table>
 {{ form_end(personalDataForm) }}
 {% endblock %}
