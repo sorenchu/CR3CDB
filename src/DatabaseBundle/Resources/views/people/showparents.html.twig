@@ -20,44 +20,46 @@
     <th>Email</th>
   </tr>
   {% for data in parentData %}
-    {% if data.getPlayerData()|length > 0 %}
-        {% for child in data.getPlayerData() %}
-          <tr>
-            <td> {{ data.getPersonalData().getName() }}
-                 {{ data.getPersonalData().getSurname() }} </td>
-            <td> {{ child.getPersonalData().getName() }}
-                 {{ child.getPersonalData().getSurname() }} </td>
-            <td> {{ child.getCategory()}} </td>
-            <td> {% if data.getPersonalData().getContactData() %}
-                    {{ data.getPersonalData().getContactData().getPhone() }} 
-                 {% endif %}
-            </td>
-            <td> {% if data.getPersonalData().getContactData() %}
-                    {{ data.getPersonalData().getContactData().getEmail() }}
-                 {% endif %}
-            </td>
-            <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
-            <td> <a href="/person/deleteFromParent/{{data.getPersonalData().getId()}}/{{season.getId()}}" onclick="return confirm('¿Estás seguro de querer a este padre de la lista?')"> Eliminar </a> </td>
-          </tr>
-        {% endfor %}
-    {% else %}
-        <tr>
-          <td> {{ data.getPersonalData().getName() }}
-               {{ data.getPersonalData().getSurname() }} </td>
-          <td> </td>
-          <td> </td>
-          <td> {% if data.getPersonalData().getContactData() %}
-                  {{ data.getPersonalData().getContactData().getPhone() }} 
-               {% endif %}
-          </td>
-          <td> {% if data.getPersonalData().getContactData() %}
-                  {{ data.getPersonalData().getContactData().getEmail() }}
-               {% endif %}
-          </td>
-          <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
-          <td> <a href="/person/deleteFromParent/{{data.getPersonalData().getId()}}/{{season.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar a este padre de la lista?')"> Eliminar </a> </td>
-        </tr>
-    {% endif %}
+    {% if data.getParentPerson().getIsParent() %}
+        {% if  data.getPlayerData()|length > 0 %}
+            {% for child in data.getPlayerData() %}
+              <tr>
+                <td> {{ data.getPersonalData().getName() }}
+                     {{ data.getPersonalData().getSurname() }} </td>
+                <td> {{ child.getPersonalData().getName() }}
+                     {{ child.getPersonalData().getSurname() }} </td>
+                <td> {{ child.getCategory()}} </td>
+                <td> {% if data.getPersonalData().getContactData() %}
+                        {{ data.getPersonalData().getContactData().getPhone() }} 
+                     {% endif %}
+                </td>
+                <td> {% if data.getPersonalData().getContactData() %}
+                        {{ data.getPersonalData().getContactData().getEmail() }}
+                     {% endif %}
+                </td>
+                <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
+                <td> <a href="/person/deleteFromParent/{{data.getPersonalData().getId()}}/{{season.getId()}}" onclick="return confirm('¿Estás seguro de querer a este padre de la lista?')"> Eliminar </a> </td>
+              </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+              <td> {{ data.getPersonalData().getName() }}
+                   {{ data.getPersonalData().getSurname() }} </td>
+              <td> </td>
+              <td> </td>
+              <td> {% if data.getPersonalData().getContactData() %}
+                      {{ data.getPersonalData().getContactData().getPhone() }} 
+                   {% endif %}
+              </td>
+              <td> {% if data.getPersonalData().getContactData() %}
+                      {{ data.getPersonalData().getContactData().getEmail() }}
+                   {% endif %}
+              </td>
+              <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
+              <td> <a href="/person/deleteFromParent/{{data.getPersonalData().getId()}}/{{season.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar a este padre de la lista?')"> Eliminar </a> </td>
+            </tr>
+        {% endif %}
+     {% endif %}
   {% endfor %}
   </table>
 {% endif %}

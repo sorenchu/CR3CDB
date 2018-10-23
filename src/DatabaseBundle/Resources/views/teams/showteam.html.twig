@@ -15,39 +15,43 @@
   {{ include(
       'DatabaseBundle:base:team_header.html.twig') }}
   {% for data in playerData %}
-    <tr>
-      <td> {{ data.getPersonalData().getName() }}
-         {{ data.getPersonalData().getSurname() }} </td>
-      <td> {{ data.getPersonalData().getNickname() }} </td>
-      <td> {{ data.getNumber() }} </td>
-      <td> {% if data.getPersonalData().getContactData() %}
-              {{ data.getPersonalData().getContactData().getEmail() }}
-           {% endif %}
-      </td>
-      <td> {% if data.getPersonalData().getContactData() %}
-              {{ data.getPersonalData().getContactData().getPhone() }}        {% endif %}
-      </td>
-      {% if data.getPay() != NULL %}
-        <td> {{ data.getPay().getTotalAmount() }} </td>
-      {% else %}
-        <td> 0 </td>
-      {% endif %}
-      <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
-      <td> <a href="/person/deleteFromTeam/{{data.getPersonalData().getId()}}/{{season.getId()}}/0" onclick="return confirm('¿Estás seguro de querer borrar a este jugador del equipo?')"> Eliminar </a> </td>
-    </tr>
+    {% if data.getPlayerPerson().getIsPlayer() %}
+        <tr>
+          <td> {{ data.getPersonalData().getName() }}
+             {{ data.getPersonalData().getSurname() }} </td>
+          <td> {{ data.getPersonalData().getNickname() }} </td>
+          <td> {{ data.getNumber() }} </td>
+          <td> {% if data.getPersonalData().getContactData() %}
+                  {{ data.getPersonalData().getContactData().getEmail() }}
+               {% endif %}
+          </td>
+          <td> {% if data.getPersonalData().getContactData() %}
+                  {{ data.getPersonalData().getContactData().getPhone() }}        {% endif %}
+          </td>
+          {% if data.getPay() != NULL %}
+            <td> {{ data.getPay().getTotalAmount() }} </td>
+          {% else %}
+            <td> 0 </td>
+          {% endif %}
+          <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
+          <td> <a href="/person/deleteFromTeam/{{data.getPersonalData().getId()}}/{{season.getId()}}/0" onclick="return confirm('¿Estás seguro de querer borrar a este jugador del equipo?')"> Eliminar </a> </td>
+        </tr>
+    {% endif %}
   {% endfor %}
   {% for data in coachData %}
-    <tr>
-      <td> {{ data.getPersonalData().getName() }}
-           {{ data.getPersonalData().getSurname() }} (Entrenador) </td>
-      <td> {{ data.getPersonalData().getNickname() }} </td>
-      <td> {{ data.getNumber() }} </td>
-      <td> {{ data.getPersonalData().getEmail() }} </td>
-      <td> {{ data.getPersonalData().getPhone() }} </td>
-      <td> {{ data.getSalary() }} </td>
-      <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
-      <td> <a href="/person/deleteFromTeam/{{data.getPersonalData().getId()}}/{{season.getId()}}/1" onclick="return confirm('¿Estás seguro de querer borrar a este entrenador del equipo?')"> Eliminar </a> </td>
-    </tr>
+    {% if data.getCoachPerson().getIsCoach() %}
+        <tr>
+          <td> {{ data.getPersonalData().getName() }}
+               {{ data.getPersonalData().getSurname() }} (Entrenador) </td>
+          <td> {{ data.getPersonalData().getNickname() }} </td>
+          <td> {{ data.getNumber() }} </td>
+          <td> {{ data.getPersonalData().getEmail() }} </td>
+          <td> {{ data.getPersonalData().getPhone() }} </td>
+          <td> {{ data.getSalary() }} </td>
+          <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
+          <td> <a href="/person/deleteFromTeam/{{data.getPersonalData().getId()}}/{{season.getId()}}/1" onclick="return confirm('¿Estás seguro de querer borrar a este entrenador del equipo?')"> Eliminar </a> </td>
+        </tr>
+    {% endif %}
   {% endfor %}
   </table>
 {% endif %}
