@@ -48,6 +48,11 @@ DatabaseBundle\Entity\PersonalData:
       mappedBy: personalData
       cascade: ["persist", "remove"]
 
+    pictures:
+      targetEntity: Pictures
+      mappedBy: personalData
+      cascade: ["persist", "remove"]
+
   oneToMany:
     playerData:
       targetEntity: PlayerData

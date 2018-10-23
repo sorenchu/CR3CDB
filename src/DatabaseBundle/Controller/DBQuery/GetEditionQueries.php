@@ -12,6 +12,7 @@ use DatabaseBundle\Entity\Pay;
 use DatabaseBundle\Entity\Payment;
 use DatabaseBundle\Entity\ContactData;
 use DatabaseBundle\Entity\CoachPerson;
+use DatabaseBundle\Entity\Pictures;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -352,6 +353,19 @@ class GetEditionQueries extends Controller
             ->getQuery()
             ->getResult();
         return $parentPerson;
+    }
+
+    public function getPictures($id)
+    {
+        $em = $this->personController->getDoctrine()->getManager();
+        $pictures = $em->getRepository('DatabaseBundle:Pictures')
+            ->createQueryBuilder('pictures')
+            ->join('pictures.personalData', 'personalData')
+            ->where('personalData.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+        return $pictures;
     }
 }
 ?>

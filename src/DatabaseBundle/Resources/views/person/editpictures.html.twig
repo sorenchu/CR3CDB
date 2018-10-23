@@ -1,0 +1,46 @@
+{% extends 'DatabaseBundle:base:base.html.twig' %}
+{% block title %}{{ personalData.name }} {{ personalData.surname }} {% endblock %}
+
+{% block body %}
+<h1>{{ personalData.name }} {{ personalData.surname }} </h1>
+
+{# src/DatabaseBundle/Resources/views/Default/editpictures.html.twig #}
+<table>
+<td><a href="/person/editPerson/{{personalData.id}}/{{season.id}}">Principal</a></td>
+<td><a href="#">Imágenes</a></td>
+</table>
+{{ form_start(picturesForm) }}
+<table>
+    <tr/>
+    <tr>
+        <th>DNI</th>
+        <th>LIBRO DE FAMILIA</th>
+        <th>TARJETA SANITARIA</th>
+    </tr>
+    <tr>
+        {% if personalData.getPictures() %}
+            <td><img src="{{ asset('pictures' ~ personalData.getPictures().getFrontDniName() )}}" style="width:380px;height:200px;" alt="Dni delantero" /></td>
+            <td><img src="{{ asset('pictures' ~ personalData.getPictures().getFamilyBookName() )}}" style="width:380px;height:200px;" alt="Libro de familia" /></td>
+            <td><img src="{{ asset('pictures' ~ personalData.getPictures().getHealthCareCardName() )}}" style="width:380px;height:200px;"alt="Tarjeta Sanitaria" /></td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>{{ form_row(picturesForm.frontDni) }}</td>
+        <td>{{ form_row(picturesForm.familyBook) }}</td>
+        <td>{{ form_row(picturesForm.healthCareCard) }}</td>
+    </tr>
+    <tr>
+        {% if personalData.getPictures() %}
+            <td><img src="{{ asset('pictures' ~ personalData.getPictures().getBackDniName() )}}" style="width:380px;height:200px;" alt="Dni trasero" /></td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>{{ form_row(picturesForm.backDni) }}</td>
+    </tr>
+    <tr>
+        <td>{{form_row(picturesForm.save) }} </td>    
+    </tr>
+</table>
+{{ form_end(picturesForm) }}
+
+{% endblock %}

@@ -70,6 +70,10 @@ edit_person:
     path:   /person/editPerson/{id}/{seasonId}
     defaults: { _controller: DatabaseBundle:People/EditPerson:editPerson }
 
+edit_pictures:
+    path:   /person/editPictures/{id}
+    defaults: { _controller: DatabaseBundle:People/PicturesPerson:editPictures }
+
 delete_person:
     path:   /person/deletePerson/{id}
     defaults: { _controller: DatabaseBundle:People/AddPerson:deletePerson }

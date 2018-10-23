@@ -53,7 +53,7 @@ class EditPersonController extends Controller
         $contactData = $this->peopleQueries->getContactData($id);
         if ($contactData) {
             $contactData->setPersonalData($personalData);
-         }
+        }
 
         if ($this->peopleQueries->getPlayerPerson($id, $season) == NULL) {
             $playerPerson = new PlayerPerson();
