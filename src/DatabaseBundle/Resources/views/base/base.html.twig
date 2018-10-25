@@ -44,6 +44,21 @@
               </ul>
             </li>
             {% endif %}
+            {% if is_granted("ROLE_COUNTER") %}
+            <li><a href="/counting/seniorPayments">Pagos</a>
+                <ul>
+                    <li><a href="/counting/seniorPayments">Pagos del equipo senior</a></li>
+                    <li><a href="/counting/femalePayments">Pagos del equipo femenino</a></li>
+                    <li><a href="/counting/sub18Payments">Pagos del equipo Sub18</a></li>
+                    <li><a href="/counting/sub16Payments">Pagos del equipo Sub16</a></li>
+                    <li><a href="/counting/sub14Payments">Pagos del equipo Sub14</a></li>
+                    <li><a href="/counting/Sub12Payments">Pagos del equipo Sub12</a></li>
+                    <li><a href="/counting/sub10Payments">Pagos del equipo Sub10</a></li>
+                    <li><a href="/counting/sub8Payments">Pagos del equipo Sub8</a></li>
+                    <li><a href="/counting/sub6Payments">Pagos del equipo Sub6</a></li>
+                </ul>
+            </li>
+            {% endif %}
             <li><a href="/season/showSeasons">Gestión de temporadas</a>
               <ul>
                   <li><a href="/season/newSeason">Añadir temporada</a></li>
