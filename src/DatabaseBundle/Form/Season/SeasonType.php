@@ -31,7 +31,7 @@ class SeasonType extends AbstractType
               return $er->createQueryBuilder('season');
             },
             'choices' => $this->season,
-            'required' => false,
+            'required' => true,
             'multiple' => false,
             'expanded' => false,
             )
