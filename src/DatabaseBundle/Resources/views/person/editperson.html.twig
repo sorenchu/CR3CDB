@@ -7,147 +7,147 @@
 <script src="{{ asset('js/newpayment.js') }}"></script>
 
 {# src/DatabaseBundle/Resources/views/Default/editperson.html.twig #}
-{{ include('DatabaseBundle:season:seasonform.html.twig') }}
-<table>
-<td><a href="#">Principal</a></td>
-<td><a href="/person/editPictures/{{personalData.id}}">Imágenes</a></td>
-</table>
+<hr>
+<div align="header">
+    <div class="col" align="left">
+        {{ include('DatabaseBundle:season:seasonform.html.twig') }}
+    </div>
+    <div class="col" align="right">
+        <a href="#">Principal</a>
+        <a href="/person/editPictures/{{personalData.id}}">Imágenes</a>
+    </div>
+</div>
+<hr>
 {{ form_start(personalDataForm) }}
-<table>
-<tr>
-  <th>Datos personales</th>
-  {% for formData in personalDataForm.playerPerson %}
-      {% if formData.vars.value.playerData.season.seasontext == curSeason %}
-        <th>{{ form_row(formData.isPlayer) }}</th>
-      {% else %} 
-        {{ form_widget(formData, 
-            { 'attr': {'style': 'display:none'} })
-        }}
-      {% endif %}
-  {% endfor %}
-  {% for formData in personalDataForm.coachPerson %}
-      {% if formData.vars.value.coachData.season.seasontext == curSeason %}
-        <th>{{ form_row(formData.isCoach) }}</th>
-      {% else %} 
-        {{ form_widget(formData, 
-            { 'attr': {'style': 'display:none'} })
-        }}
-      {% endif %}
-  {% endfor %}
-  {% for formData in personalDataForm.memberPerson %}
-      {% if formData.vars.value.memberData.season.seasontext == curSeason %}
-        <th>{{ form_row(formData.isMember) }}</th>
-      {% else %} 
-        {{ form_widget(formData, 
-            { 'attr': {'style': 'display:none'} })
-        }}
-      {% endif %}
-  {% endfor %}
-  {% for formData in personalDataForm.parentPerson %}
-      {% if formData.vars.value.parentData.season.seasontext == curSeason %}
-        <th>{{ form_row(formData.isParent) }}</th>
-      {% else %} 
-        {{ form_widget(formData, 
-            { 'attr': {'style': 'display:none'} })
-        }}
-      {% endif %}
-  {% endfor %}
-</tr>
-<tr>
-  <td>
+  <h2>Datos personales</h2>
+  <div class="col" align="left">
     {{ form_row(personalDataForm.name) }}
     {{ form_row(personalDataForm.surname) }}
     {{ form_row(personalDataForm.nickname) }}
     {{ form_row(personalDataForm.dni) }}
     {{ form_row(personalDataForm.birthday) }}
     {{ form_row(personalDataForm.sex) }}
-  <hr>
+  </div>
+  <div class="col" align="center">
     {{ form_row(personalDataForm.contactData.phone) }}
     {{ form_row(personalDataForm.contactData.email) }}
     {{ form_row(personalDataForm.contactData.address) }}
     {{ form_row(personalDataForm.contactData.city) }}
     {{ form_row(personalDataForm.contactData.zipcode) }}
     {{ form_row(personalDataForm.contactData.province) }}
-  </td>
-  <td>
-  {% for formData in personalDataForm.playerData %}
-      {% if formData.vars.value.playerPerson.isPlayer == true and formData.vars.value.season.seasontext == curSeason %}
-          {{ form_row(formData.number) }}
-          {{ form_row(formData.category) }} 
-          {{ form_row(formData.season) }}
-          {% if underage == 'true' %}
-              {{ form_row(formData.parentdata) }}
-          {% endif %}
-          {{ form_row(formData.pay.wayOfPayment, 
-                {'attr': {'onchange': 'return submit();' }})
-          }}
-          {{ form_row(formData.pay.totalAmount,
-                {'attr': {'onchange': 'return submit();' }}) 
-          }}
-          {% if isBank == 'true' %}
-              {{ form_row(formData.pay.person) }}
-              {{ form_row(formData.pay.accountNumber) }}
-          {% else %} 
-              {{ form_widget(formData.pay.person, 
-                  { 'attr': {'style': 'display:none'} })
-              }}
-              {{ form_widget(formData.pay.accountNumber,
-                  { 'attr': {'style': 'display:none'} })
-              }}
-          {% endif %}
-          <ul class="payments" data-prototype="{{ form_widget(formData.pay.payment.vars.prototype)|e('html_attr') }}">
-          {% if formData.pay.payment and formData.pay.payment|length > 0 %}
-            {% for payment in formData.pay.payment %}
-              <li>
-              {{ form_row(payment.amountPayed) }}
-              {{ form_row(payment.paymentDate) }}
-              {{ form_row(payment.status) }}</li>
-              <br>
-            {% endfor %}
-          {% else %} 
-            {{ form_widget(formData, 
-                { 'attr': {'style': 'display:none'} })
-            }}
-          {% endif %}
-          </ul>
+  </div>
+  <hr>
+  <h2>
+  {% for formData in personalDataForm.playerPerson %}
+      {% if formData.vars.value.playerData.season.seasontext == curSeason %}
+        {{ form_row(formData.isPlayer) }}
       {% else %} 
         {{ form_widget(formData, 
             { 'attr': {'style': 'display:none'} })
         }}
       {% endif %}
   {% endfor %}
-  </td>
-  <td>
+  </h2>
+  <div class="col" align="left">
+    {% for formData in personalDataForm.playerData %}
+        {% if formData.vars.value.playerPerson.isPlayer == true and formData.vars.value.season.seasontext == curSeason %}
+            {{ form_row(formData.number) }}
+            {{ form_row(formData.category) }} 
+            {% do formData.season.setRendered() %}
+  </div>
+  <div class="col" align="center">
+            {% if underage == 'true' %}
+                {{ form_row(formData.parentdata) }}
+            {% else %}
+                {% do formData.parentdata.setRendered() %}
+            {% endif %}
+  </div>
+  <div class="col" align="right">
+            {% do formData.pay.setRendered() %}
+            {% do formData.pay.payment.setRendered() %}
+            {{ form_row(formData.pay.wayOfPayment) }}
+            {{ form_row(formData.pay.totalAmount) }}
+            {% if isBank == 'true' %}
+                {{ form_row(formData.pay.person) }}
+                {{ form_row(formData.pay.accountNumber) }}
+            {% else %} 
+                {% do formData.pay.person.setRendered() %}
+                {% do formData.pay.accountNumber.setRendered() %}
+            {% endif %}
+  </div>
+        {% else %} 
+          {{ form_widget(formData, 
+              { 'attr': {'style': 'display:none'} })
+          }}
+        {% endif %}
+  {% endfor %}
+  <hr>
+  <h2>
+  {% for formData in personalDataForm.coachPerson %}
+      {% if formData.vars.value.coachData.season.seasontext == curSeason %}
+        {{ form_row(formData.isCoach) }}
+      {% else %} 
+        {{ form_widget(formData, 
+            { 'attr': {'style': 'display:none'} })
+        }}
+      {% endif %}
+  {% endfor %}
+  </h2>
+  <div class="col" align="left">
   {% for formData in personalDataForm.coachData %}
     {% if formData.vars.value.coachPerson.isCoach == true and formData.vars.value.season.seasontext == curSeason %}
         {{ form_row(formData.number) }}
         {{ form_row(formData.salary) }}
         {{ form_row(formData.category) }} 
-        {{ form_row(formData.season) }}
+        {% do formData.season.setRendered() %}
     {% else %} 
       {{ form_widget(formData, 
           { 'attr': {'style': 'display:none'} })
       }}
     {% endif %}
   {% endfor %}
-  </td>
-  <td> 
+  </div>
+  <hr>
+  <h2>
+  {% for formData in personalDataForm.memberPerson %}
+      {% if formData.vars.value.memberData.season.seasontext == curSeason %}
+        {{ form_row(formData.isMember) }}
+      {% else %} 
+        {{ form_widget(formData, 
+            { 'attr': {'style': 'display:none'} })
+        }}
+      {% endif %}
+  {% endfor %}
+  </h2>
+  <div class="col" align="left">
   {% for formData in personalDataForm.memberData %}
     {% if formData.vars.value.memberPerson.isMember == true and formData.vars.value.season.seasontext == curSeason %}
         {{ form_row(formData.memberId) }}
         {{ form_row(formData.payment) }} 
-        {{ form_row(formData.season) }}
+        {% do formData.season.setRendered() %}
     {% else %} 
       {{ form_widget(formData, 
           { 'attr': {'style': 'display:none'} })
       }}
     {% endif %}
   {% endfor %}
-  </td>
-  <td> 
+  </div>
+  <hr>
+  <h2>
+  {% for formData in personalDataForm.parentPerson %}
+      {% if formData.vars.value.parentData.season.seasontext == curSeason %}
+        {{ form_row(formData.isParent) }}
+      {% else %} 
+        {{ form_widget(formData, 
+            { 'attr': {'style': 'display:none'} })
+        }}
+      {% endif %}
+  {% endfor %}
+  </h2>
+  <div class="col" align="left">
   {% for formData in personalDataForm.parentData %}
     {% if formData.vars.value.parentPerson.isParent == true and formData.vars.value.season.seasontext == curSeason %}
-        {{ form_row(formData.season) }}
+        {% do formData.season.setRendered() %}
         {{ form_row(formData.playerdata) }}
     {% else %} 
       {{ form_widget(formData, 
@@ -155,14 +155,8 @@
       }}
     {% endif %}
   {% endfor %}
-  </td>
-</tr>
-<tr>
-  <td>
-      {{ form_row(personalDataForm.save)}}
-  </td>
-</tr>
-</table>
-</table>
+  </div>
+  <hr>
+  {{ form_row(personalDataForm.save)}}
 {{ form_end(personalDataForm) }}
 {% endblock %}

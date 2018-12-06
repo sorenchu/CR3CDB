@@ -1,6 +1,7 @@
 <style type="text/css">
     * {
        font-family: "Sarala", sans-serif;
+       box-sizing: border-box;
     }
     
     #header {
@@ -11,6 +12,11 @@
       margin: auto;
       padding: 40px;
       color: #434343;
+    }
+
+    h2 {
+      margin: auto 40px;
+      padding: 0px 0px;
     }
     
     ul, ol {
@@ -101,5 +107,21 @@
 
     a:visited {
       color: blue;
+    }
+
+    .col-container {
+        display: table;
+        width: 100%;
+    }
+    .col {
+        display: table-cell;
+        padding: 10px;
+        margin: auto;
+    }
+    @media only screen and (max-width: 600px) {
+        .col { 
+            display: block;
+            width: 100%;
+        }
     }
 </style>  

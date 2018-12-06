@@ -65,18 +65,6 @@ class EditPersonController extends Controller
             $playerData->setPlayerPerson($playerPerson);
             $playerPerson->setPersonalData($personalData);
             $personalData->addPlayerPerson($playerPerson);
-    
-            $pay = $this->peopleQueries->getPay($playerData->getId()); 
-            if ($pay == NULL) {
-                $pay = new Pay();
-            }
-            if ($pay->getPayment() == NULL) {
-                $payment = new Payment();
-                $payment->setPay($pay);
-                $pay->addPayment($payment);
-            }
-            $playerData->setPay($pay);
-            $pay->setPlayerData($playerData);
 
             $playerPerson->setPlayerData($playerData);
             $personalData->addPlayerDatum($playerData);
@@ -129,11 +117,6 @@ class EditPersonController extends Controller
         $bank = $this->getBank($playerData, $personalDataForm, $season);
         $underage = $this->isUnderage($personalData->getPlayerDataBySeason($season));
         if ($personalDataForm->isSubmitted()) {
-            if($playerData) {
-                $pay = $this->addPay($personalData->getPlayerDataBySeason($season), $personalDataForm);
-                $this->addPayment($pay, $personalDataForm);
-                $this->removePayment($pay, $personalDataForm, $season);
-            }
             $seasonForm = $this->createForm(\DatabaseBundle\Form\Season\SeasonType::class, $season);
             $this->peopleQueries->savePerson($personalData, true);
             $personalDataForm = $this->createForm(\DatabaseBundle\Form\Person\PersonalDataType::class, $personalData);
