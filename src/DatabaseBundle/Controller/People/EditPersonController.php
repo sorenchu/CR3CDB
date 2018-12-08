@@ -66,8 +66,23 @@ class EditPersonController extends Controller
             $playerPerson->setPersonalData($personalData);
             $personalData->addPlayerPerson($playerPerson);
 
+            $pay = $this->peopleQueries->getPay($playerData->getId()); 
+            if ($pay == NULL) {
+                $pay = new Pay();
+            }
+            if ($pay->getPayment() == NULL) {
+                $payment = new Payment();
+                $payment->setPay($pay);
+                $pay->addPayment($payment);
+            }
+            $playerData->setPay($pay);
+            $pay->setPlayerData($playerData);
+
             $playerPerson->setPlayerData($playerData);
             $personalData->addPlayerDatum($playerData);
+        } else {
+            $playerPerson = $this->peopleQueries->getPlayerPerson($id, $season);
+            $playerData = $playerPerson->getPlayerData();
         }
 
         if ($this->peopleQueries->getCoachPerson($id, $season) == NULL) {
@@ -117,6 +132,11 @@ class EditPersonController extends Controller
         $bank = $this->getBank($playerData, $personalDataForm, $season);
         $underage = $this->isUnderage($personalData->getPlayerDataBySeason($season));
         if ($personalDataForm->isSubmitted()) {
+            if($playerData) {
+                $pay = $playerData->getPay();
+                $this->addPayment($pay, $personalDataForm);
+                $this->removePayment($pay, $personalDataForm, $season);
+            }
             $seasonForm = $this->createForm(\DatabaseBundle\Form\Season\SeasonType::class, $season);
             $this->peopleQueries->savePerson($personalData, true);
             $personalDataForm = $this->createForm(\DatabaseBundle\Form\Person\PersonalDataType::class, $personalData);
@@ -164,6 +184,7 @@ class EditPersonController extends Controller
             foreach($this->getFormDataArray($subForm["pay"]["payment"]) as $pm) {
                 if (!$pm->getPay()) {
                     $pm->setPay($pay);
+                    $pay->addPayment($pm);
                 }
             }
         }
