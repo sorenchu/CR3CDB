@@ -213,4 +213,33 @@ class Pay
     {
         return $this->accountNumber;
     }
+    /**
+     * @var \DatabaseBundle\Entity\MemberData
+     */
+    private $memberData;
+
+
+    /**
+     * Set memberData
+     *
+     * @param \DatabaseBundle\Entity\MemberData $memberData
+     *
+     * @return Pay
+     */
+    public function setMemberData(\DatabaseBundle\Entity\MemberData $memberData = null)
+    {
+        $this->memberData = $memberData;
+
+        return $this;
+    }
+
+    /**
+     * Get memberData
+     *
+     * @return \DatabaseBundle\Entity\MemberData
+     */
+    public function getMemberData()
+    {
+        return $this->memberData;
+    }
 }

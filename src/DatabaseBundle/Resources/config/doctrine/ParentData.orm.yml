@@ -23,7 +23,7 @@ DatabaseBundle\Entity\ParentData:
                 inverseJoinColumns:
                   player_id:
                     referencedColumnName: id
-                onDelete: 'CASCADE'
+                onDelete: 'cascade'
             cascade: ["persist", "remove"]
                   
     manyToOne:

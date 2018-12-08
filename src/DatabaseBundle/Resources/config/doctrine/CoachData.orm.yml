@@ -43,3 +43,11 @@ DatabaseBundle\Entity\CoachData:
             targetEntity: CoachPerson
             mappedBy: coachData
             cascade: ["persist", "remove"]
+
+        dateData:
+            targetEntity: DateData
+            inversedBy: dateData
+            joinColumn:
+                name: date_id
+                referencedColumnName: id
+            cascade: ["persist", "remove"]

@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use DatabaseBundle\Form\Person\PayType;
+use DatabaseBundle\Form\Person\DateDataType;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -67,6 +68,9 @@ class PlayerDataType extends AbstractType
             'required' => false,
             'multiple' => true,
             )
+        )
+        ->add('datedata', DateDataType::class, array(
+                'label' => 'Período de actividad')
         );
   }
   

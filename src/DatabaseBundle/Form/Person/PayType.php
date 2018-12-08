@@ -11,7 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class PayType extends AbstractType
@@ -27,12 +26,6 @@ class PayType extends AbstractType
                         'deposit' => 'Ingreso',
                         'cash' => 'Efectivo',),
                     'empty_data' => 'bank',
-          ))
-          ->add('totalAmount', MoneyType::class, 
-                  array(
-                    'required' => false,
-                    'label' => 'Coste',
-                    'empty_data' => 0,
           ))
           ->add('person', TextType::class,
                   array(

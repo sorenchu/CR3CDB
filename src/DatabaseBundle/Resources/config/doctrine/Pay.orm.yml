@@ -19,19 +19,15 @@ DatabaseBundle\Entity\Pay:
     accountNumber:
       type: bigint
       nullable: true
-    totalAmount:
-      type: float
-      nullable: true
-      lenght: 150
 
   oneToOne:
     playerData:
       targetEntity: PlayerData
-      inversedBy: pay
-      joinColumn:
-          name: playerData_id
-          referencedColumnName: id
-      cascade: ["persist", "remove"]
+      mappedBy: pay
+
+    memberData:
+      targetEntity: MemberData
+      mappedBy: pay
 
   oneToMany:
      payment:

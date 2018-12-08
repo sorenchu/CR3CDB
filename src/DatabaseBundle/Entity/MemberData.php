@@ -167,4 +167,62 @@ class MemberData
     {
         return $this->memberPerson;
     }
+    /**
+     * @var \DatabaseBundle\Entity\Pay
+     */
+    private $pay;
+
+    /**
+     * @var \DatabaseBundle\Entity\Date
+     */
+    private $dateData;
+
+
+    /**
+     * Set pay
+     *
+     * @param \DatabaseBundle\Entity\Pay $pay
+     *
+     * @return MemberData
+     */
+    public function setPay(\DatabaseBundle\Entity\Pay $pay = null)
+    {
+        $this->pay = $pay;
+
+        return $this;
+    }
+
+    /**
+     * Get pay
+     *
+     * @return \DatabaseBundle\Entity\Pay
+     */
+    public function getPay()
+    {
+        return $this->pay;
+    }
+
+    /**
+     * Set dateData
+     *
+     * @param \DatabaseBundle\Entity\DateData $dateData
+     *
+     * @return MemberData
+     */
+    public function setDateData(\DatabaseBundle\Entity\DateData $dateData = null)
+    {
+        $this->dateData = $dateData;
+
+        return $this;
+    }
+
+    /**
+     * Get dateData
+     *
+     * @return \DatabaseBundle\Entity\Date
+     */
+    public function getDateData()
+    {
+        return $this->dateData;
+    }
 }

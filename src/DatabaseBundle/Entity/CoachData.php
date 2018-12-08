@@ -197,4 +197,33 @@ class CoachData
     {
         return $this->coachPerson;
     }
+    /**
+     * @var \DatabaseBundle\Entity\Date
+     */
+    private $dateData;
+
+
+    /**
+     * Set dateData
+     *
+     * @param \DatabaseBundle\Entity\DateData $dateData
+     *
+     * @return CoachData
+     */
+    public function setDateData(\DatabaseBundle\Entity\DateData $dateData = null)
+    {
+        $this->dateData = $dateData;
+
+        return $this;
+    }
+
+    /**
+     * Get dateData
+     *
+     * @return \DatabaseBundle\Entity\Date
+     */
+    public function getDateData()
+    {
+        return $this->dateData;
+    }
 }

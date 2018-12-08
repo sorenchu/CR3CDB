@@ -111,6 +111,9 @@ class EditPersonController extends Controller
             $memberPerson->setPersonalData($personalData);
             $personalData->addMemberPerson($memberPerson);
             $personalData->addMemberDatum($memberData);
+        } else {
+            $memberPerson = $this->peopleQueries->getMemberPerson($id, $season);
+            $memberData = $memberPerson->getMemberData();
         }
 
         if ($this->peopleQueries->getParentPerson($id, $season) == NULL) {
@@ -134,7 +137,12 @@ class EditPersonController extends Controller
         if ($personalDataForm->isSubmitted()) {
             if($playerData) {
                 $pay = $playerData->getPay();
-                $this->addPayment($pay, $personalDataForm);
+                $this->addPayment($pay, $personalDataForm, "playerData");
+                $this->removePayment($pay, $personalDataForm, $season);
+            }
+            if($memberData) {
+                $pay = $memberData->getPay();
+                $this->addPayment($pay, $personalDataForm, "memberData");
                 $this->removePayment($pay, $personalDataForm, $season);
             }
             $seasonForm = $this->createForm(\DatabaseBundle\Form\Season\SeasonType::class, $season);
@@ -178,9 +186,9 @@ class EditPersonController extends Controller
         }
     }
 
-    private function addPayment($pay, $personalDataForm)
+    private function addPayment($pay, $personalDataForm, $childEntity)
     {
-        foreach($personalDataForm->get("playerData") as $subForm) {
+        foreach($personalDataForm->get($childEntity) as $subForm) {
             foreach($this->getFormDataArray($subForm["pay"]["payment"]) as $pm) {
                 if (!$pm->getPay()) {
                     $pm->setPay($pay);

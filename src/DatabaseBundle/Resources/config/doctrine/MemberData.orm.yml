@@ -38,3 +38,19 @@ DatabaseBundle\Entity\MemberData:
             targetEntity: MemberPerson
             mappedBy: memberData
             cascade: ["persist", "remove"]
+
+        pay:
+            targetEntity: Pay
+            inversedBy: memberData
+            joinColumn:
+                name: pay_id
+                referencedColumnName: id
+            cascade: ["persist", "remove"]
+
+        dateData:
+            targetEntity: DateData
+            inversedBy: dateData
+            joinColumn:
+                name: date_id
+                referencedColumnName: id
+            cascade: ["persist", "remove"]

@@ -57,7 +57,10 @@ class CoachDataType extends AbstractType
               'sub6' => 'Sub-6',
               )
             )
-          );
+          )
+        ->add('datedata', DateDataType::class, array(
+                'label' => 'Período de actividad')
+        );
   }
 
   public function getBlockPrefix()

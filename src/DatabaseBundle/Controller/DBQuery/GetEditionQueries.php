@@ -334,7 +334,7 @@ class GetEditionQueries extends Controller
             ->setParameter('id', $id)
             ->setParameter('season', $season)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
         return $memberPerson;
     }
 

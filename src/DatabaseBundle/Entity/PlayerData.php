@@ -252,4 +252,33 @@ class PlayerData
     {
         return $this->playerPerson;
     }
+    /**
+     * @var \DatabaseBundle\Entity\Date
+     */
+    private $dateData;
+
+
+    /**
+     * Set dateData
+     *
+     * @param \DatabaseBundle\Entity\DateData $dateData
+     *
+     * @return PlayerData
+     */
+    public function setDateData(\DatabaseBundle\Entity\DateData $dateData = null)
+    {
+        $this->dateData = $dateData;
+
+        return $this;
+    }
+
+    /**
+     * Get dateData
+     *
+     * @return \DatabaseBundle\Entity\Date
+     */
+    public function getDateData()
+    {
+        return $this->dateData;
+    }
 }

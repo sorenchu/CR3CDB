@@ -1,0 +1,39 @@
+# src/DatabaseBundle/Resources/config/doctrine/DateData.orm.yml
+DatabaseBundle\Entity\DateData:
+    type: entity
+    table: dateData
+    repositoryClass: DatabaseBundle\Repository\DateDataRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator: 
+                strategy: AUTO
+
+    fields:
+        active:
+            type: boolean
+            default: true
+            nullable: false
+        joiningDate:
+            type: datetime
+            nullable: true
+        leavingDate:
+            type: datetime
+            nullable: true
+
+    oneToOne:
+        playerData:
+            targetEntity: PlayerData
+            mappedBy: dateData
+            cascade: ["persist", "remove"]
+
+        coachData:
+            targetEntity: CoachData
+            mappedBy: dateData
+            cascade: ["persist", "remove"]
+
+        memberData:
+            targetEntity: MemberData
+            mappedBy: dateData
+            cascade: ["persist", "remove"]

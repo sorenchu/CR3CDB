@@ -13,6 +13,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use DatabaseBundle\Form\Person\PayType;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -38,9 +39,11 @@ class MemberDataType extends AbstractType
             'disabled' => true,
           )
         )
-        ->add('payment', MoneyType::class, array(
-                                    'required' => false,
-                                    'label' => 'Pagos',));
+        ->add('pay', PayType::class, array(
+            'label' => 'Pagos',))
+        ->add('datedata', DateDataType::class, array(
+                'label' => 'Período de actividad')
+        );
   }
 
   public function getBlockPrefix()

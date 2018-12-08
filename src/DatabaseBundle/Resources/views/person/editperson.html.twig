@@ -54,6 +54,9 @@
             {{ form_row(formData.number) }}
             {{ form_row(formData.category) }} 
             {% do formData.season.setRendered() %}
+            {{ form_row(formData.datedata.active) }}
+            {{ form_row(formData.datedata.joiningDate) }}
+            {{ form_row(formData.datedata.leavingDate) }}
   </div>
   <div class="col" align="center">
             {% if underage == 'true' %}
@@ -66,7 +69,6 @@
             {% do formData.pay.setRendered() %}
             {% do formData.pay.payment.setRendered() %}
             {{ form_row(formData.pay.wayOfPayment) }}
-            {{ form_row(formData.pay.totalAmount) }}
             {% if isBank == 'true' %}
                 {{ form_row(formData.pay.person) }}
                 {{ form_row(formData.pay.accountNumber) }}
@@ -116,6 +118,9 @@
         {{ form_row(formData.salary) }}
         {{ form_row(formData.category) }} 
         {% do formData.season.setRendered() %}
+        {{ form_row(formData.datedata.active) }}
+        {{ form_row(formData.datedata.joiningDate) }}
+        {{ form_row(formData.datedata.leavingDate) }}
     {% else %} 
       {{ form_widget(formData, 
           { 'attr': {'style': 'display:none'} })
@@ -139,15 +144,44 @@
   {% for formData in personalDataForm.memberData %}
     {% if formData.vars.value.memberPerson.isMember == true and formData.vars.value.season.seasontext == curSeason %}
         {{ form_row(formData.memberId) }}
-        {{ form_row(formData.payment) }} 
         {% do formData.season.setRendered() %}
+        {{ form_row(formData.datedata.active) }}
+        {{ form_row(formData.datedata.joiningDate) }}
+        {{ form_row(formData.datedata.leavingDate) }}
+  </div>
+  <div class="col" align="right">
+            {% do formData.pay.setRendered() %}
+            {% do formData.pay.payment.setRendered() %}
+            {{ form_row(formData.pay.wayOfPayment) }}
+            {% if isBank == 'true' %}
+                {{ form_row(formData.pay.person) }}
+                {{ form_row(formData.pay.accountNumber) }}
+            {% else %} 
+                {% do formData.pay.person.setRendered() %}
+                {% do formData.pay.accountNumber.setRendered() %}
+            {% endif %}
+            <ul class="payments" data-prototype="{{ form_widget(formData.pay.payment.vars.prototype)|e('html_attr') }}">
+            {% if formData.pay.payment and formData.pay.payment|length > 0 %}
+              {% for payment in formData.pay.payment %}
+                <li>
+                {{ form_row(payment.amountPayed) }}
+                {{ form_row(payment.paymentDate) }}
+                {{ form_row(payment.status) }}</li>
+                <br>
+              {% endfor %}
+            {% else %} 
+              {{ form_widget(formData, 
+                  { 'attr': {'style': 'display:none'} })
+              }}
+            {% endif %}
+            </ul>
+  </div>
     {% else %} 
       {{ form_widget(formData, 
           { 'attr': {'style': 'display:none'} })
       }}
     {% endif %}
   {% endfor %}
-  </div>
   <hr>
   <h2>
   {% for formData in personalDataForm.parentPerson %}
