@@ -49,7 +49,7 @@ DatabaseBundle\Entity\MemberData:
 
         dateData:
             targetEntity: DateData
-            inversedBy: dateData
+            inversedBy: memberData
             joinColumn:
                 name: date_id
                 referencedColumnName: id

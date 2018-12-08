@@ -46,7 +46,7 @@ DatabaseBundle\Entity\CoachData:
 
         dateData:
             targetEntity: DateData
-            inversedBy: dateData
+            inversedBy: coachData
             joinColumn:
                 name: date_id
                 referencedColumnName: id

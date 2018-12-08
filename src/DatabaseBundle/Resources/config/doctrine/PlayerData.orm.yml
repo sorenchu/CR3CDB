@@ -57,7 +57,7 @@ DatabaseBundle\Entity\PlayerData:
 
         dateData:
             targetEntity: DateData
-            inversedBy: dateData
+            inversedBy: playerData
             joinColumn:
                 name: date_id
                 referencedColumnName: id

@@ -2,6 +2,6 @@
 ***      SEASONS         ***
 ***************************/
 INSERT INTO season(startingyear, seasontext, defaultseason)
-VALUES (2016, "2016/2017", 1);
+VALUES (2018, "2018/2019", 1);
 INSERT INTO season(startingyear, seasontext, defaultseason)
-VALUES (2017, "2017/2018", 0);
+VALUES (2019, "2019/2020", 0);
