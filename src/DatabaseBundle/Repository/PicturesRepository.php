@@ -10,4 +10,13 @@ namespace DatabaseBundle\Repository;
  */
 class PicturesRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getPictures($id)
+    {
+       $query = $this->createQueryBuilder('pictures')
+                ->join('pictures.personalData', 'personalData')
+                ->where('personalData.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery();
+        return $query->getOneOrNullResult(); 
+    }
 }

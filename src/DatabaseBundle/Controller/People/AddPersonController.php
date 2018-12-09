@@ -26,6 +26,7 @@ class AddPersonController extends Controller
 
     public function newAction(Request $request)
     {
+        $entityManager = $this->getDoctrine()->getManager();
         $personalData = new PersonalData();
         $seasonQueries = new SeasonQueries($this);
         $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
@@ -36,7 +37,7 @@ class AddPersonController extends Controller
             $contactData->setPersonalData($personalData);
             $personalData->setContactData($contactData);
         
-            $this->peopleQueries->savePerson($personalData, false);
+            $entityManager->getRepository(PersonalData::class)->savePerson($personalData, false);
             return $this->redirectToRoute('edit_person', 
                     array(
                         'id' => $personalData->getId(),
@@ -86,7 +87,7 @@ class AddPersonController extends Controller
 
     public function deleteFromTeamAction($id, $season, $table)
     {
-        $category = $this->peopleQueries->getCategoryFromPerson($id, $season, $table);
+        $category = $this->getCategoryFromPerson($id, $season, $table);
         $this->peopleQueries->deleteFromTeam($id, $season, $table);
         return $this->redirectToTeam($category, $season);
     }
@@ -153,6 +154,17 @@ class AddPersonController extends Controller
         return $this->redirectToRoute('show_parents',
                 array()
                 );
+    }
+
+    private function getCategoryFromPerson($id, $season, $table)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        if ('playerdata' == $table) {
+            $member = $entityManager->getRepository(PlayerData::class)->getCategory($id, $season);
+        } else {
+            $member = $entityManager->getRepository(CoachData::class)->getCategory($id, $season);
+        }
+        return $member->getCategory();
     }
 }
 ?>

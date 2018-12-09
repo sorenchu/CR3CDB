@@ -6,20 +6,13 @@ namespace DatabaseBundle\Controller\People;
 use DatabaseBundle\Form\Person\PersonalDataType;
 use DatabaseBundle\Form\Season\SeasonType;
 
-use DatabaseBundle\Entity\PlayerData;
 use DatabaseBundle\Entity\PlayerPerson;
-use DatabaseBundle\Entity\CoachData;
 use DatabaseBundle\Entity\CoachPerson;
 use DatabaseBundle\Entity\ParentData;
 use DatabaseBundle\Entity\ParentPerson;
-use DatabaseBundle\Entity\MemberData;
 use DatabaseBundle\Entity\MemberPerson;
-use DatabaseBundle\Entity\Pay;
-use DatabaseBundle\Entity\Payment;
 use DatabaseBundle\Entity\ContactData;
-
-use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
-use DatabaseBundle\Controller\DBQuery\SeasonQueries;
+use DatabaseBundle\Entity\PersonalData;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,18 +20,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class EditPersonController extends Controller
 {
-    private $peopleQueries;
     private $id;
+    private $entityManager;
 
     public function editPersonAction($id, $seasonId=null, Request $request)
     {
-        $this->peopleQueries = new GetEditionQueries($this);
-        $seasonQueries = new SeasonQueries($this);
         $playerData = NULL;
         $bank = 'false';
         $underage = 'false';
 
-        $season = $seasonQueries->getSeason($seasonId);
+        $this->entityManager = $this->getDoctrine()->getManager();
+        $season = $this->entityManager->getRepository(\DatabaseBundle\Entity\Season::class)->find($seasonId);
         $seasonForm = $this->createForm(\DatabaseBundle\Form\Season\SeasonType::class, $season);
         $seasonForm->handleRequest($request);
         if ($seasonForm->isSubmitted()) {
@@ -49,13 +41,14 @@ class EditPersonController extends Controller
                         ));
         }
 
-        $personalData = $this->peopleQueries->getPerson($id);
-        $contactData = $this->peopleQueries->getContactData($id);
+        $personalData = $this->entityManager->getRepository(PersonalData::class)->find($id);
+        $contactData = $this->entityManager->getRepository(ContactData::class)->getContactData($id);
         if ($contactData) {
             $contactData->setPersonalData($personalData);
         }
-
-        if ($this->peopleQueries->getPlayerPerson($id, $season) == NULL) {
+    
+        $playerPerson = $this->entityManager->getRepository(PlayerPerson::class)->getPlayerPerson($id, $season);
+        if ($playerPerson == NULL) {
             $playerPerson = new PlayerPerson();
             $playerPerson->setIsPlayer(false);
             $handlingData = new HandlingData($this, "player");
@@ -66,7 +59,7 @@ class EditPersonController extends Controller
             $playerPerson->setPersonalData($personalData);
             $personalData->addPlayerPerson($playerPerson);
 
-            $pay = $this->peopleQueries->getPay($playerData->getId()); 
+            $pay = $this->entityManager->getRepository(Pay::class)->getPay($playerData->getId());
             if ($pay == NULL) {
                 $pay = new Pay();
             }
@@ -81,11 +74,11 @@ class EditPersonController extends Controller
             $playerPerson->setPlayerData($playerData);
             $personalData->addPlayerDatum($playerData);
         } else {
-            $playerPerson = $this->peopleQueries->getPlayerPerson($id, $season);
             $playerData = $playerPerson->getPlayerData();
         }
 
-        if ($this->peopleQueries->getCoachPerson($id, $season) == NULL) {
+        $coachPerson = $this->entityManager->getRepository(CoachPerson::class)->getCoachPerson($id, $season);
+        if ($coachPerson == NULL) {
             $coachPerson = new CoachPerson();
             $coachPerson->setIsCoach(false);
             $handlingData = new HandlingData($this, "coach");
@@ -99,7 +92,8 @@ class EditPersonController extends Controller
             $personalData->addCoachDatum($coachData);
         }
 
-        if ($this->peopleQueries->getMemberPerson($id, $season) == NULL) {
+        $memberPerson = $this->entityManager->getRepository(MemberPerson::class)->getMemberPerson($id, $season);
+        if ($memberPerson == NULL) {
             $memberPerson = new MemberPerson();
             $memberPerson->setIsMember(false);
             $handlingData = new HandlingData($this, "member");
@@ -111,12 +105,27 @@ class EditPersonController extends Controller
             $memberPerson->setPersonalData($personalData);
             $personalData->addMemberPerson($memberPerson);
             $personalData->addMemberDatum($memberData);
+
+            $payMember = $this->entityManager->getRepository(Pay::class)->getPay($memberData->getId());
+            if ($payMember == NULL) {
+                $payMember = new Pay();
+            }
+            if ($payMember->getPayment() == NULL) {
+                $payment = new Payment();
+                $payment->setPay($payMember);
+                $payMember->addPayment($payment);
+            }
+            $memberData->setPay($payMember);
+            $pay->setMemberData($memberData);
+
+            $memberPerson->setMemberData($memberData);
+            $personalData->addMemberDatum($memberData);
         } else {
-            $memberPerson = $this->peopleQueries->getMemberPerson($id, $season);
             $memberData = $memberPerson->getMemberData();
         }
 
-        if ($this->peopleQueries->getParentPerson($id, $season) == NULL) {
+        $parentPerson = $this->entityManager->getRepository(ParentPerson::class)->getParentPerson($id, $season);
+        if ($parentPerson == NULL) {
             $parentPerson = new ParentPerson();
             $parentPerson->setIsParent(false);
             $handlingData = new HandlingData($this, "parent");
@@ -141,12 +150,12 @@ class EditPersonController extends Controller
                 $this->removePayment($pay, $personalDataForm, $season);
             }
             if($memberData) {
-                $pay = $memberData->getPay();
-                $this->addPayment($pay, $personalDataForm, "memberData");
-                $this->removePayment($pay, $personalDataForm, $season);
+                $payMember = $memberData->getPay();
+                $this->addPayment($payMember, $personalDataForm, "memberData");
+                $this->removePayment($payMember, $personalDataForm, $season);
             }
             $seasonForm = $this->createForm(\DatabaseBundle\Form\Season\SeasonType::class, $season);
-            $this->peopleQueries->savePerson($personalData, true);
+            $this->entityManager->getRepository(PersonalData::class)->savePerson($personalData, true);
             $personalDataForm = $this->createForm(\DatabaseBundle\Form\Person\PersonalDataType::class, $personalData);
         }
         return $this->render('DatabaseBundle:person:editperson.html.twig', array(
@@ -201,7 +210,8 @@ class EditPersonController extends Controller
     private function removePayment($pay, $personalDataForm, $season)
     {
         $payments = $pay->getPayment();
-        $dbPayments = $this->peopleQueries->getPaymentsByPay($pay->getId());
+        $repository = $this->entityManager->getRepository(\DatabaseBundle\Entity\Payment::class);
+        $dbPayments = $repository->getPaymentsByPay($pay->getId());
         if ($payments->count() == sizeof($dbPayments)) {
             return;
         }
@@ -209,7 +219,7 @@ class EditPersonController extends Controller
             foreach($dbPayments as $dbP) {
                 if(!$payments->contains($dbP)) {
                     $pay->removePayment($dbP);
-                    $this->peopleQueries->removePayment($dbP);
+                    $repository->removePayment($dbP);
                 }
             }
         }
@@ -233,7 +243,8 @@ class EditPersonController extends Controller
         }
     }
 
-    private function isUnderage($playerData) {
+    private function isUnderage($playerData)
+    {
         if ($playerData->getCategory() == 'senior' or $playerData->getCategory() == 'female') {
             return 'false';
         }

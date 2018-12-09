@@ -10,4 +10,31 @@ namespace DatabaseBundle\Repository;
  */
 class PaymentRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getPaymentsByPay($id)
+    {
+        $query = $this->createQueryBuilder('payment')
+            ->join('payment.pay', 'pay')
+            ->where('pay.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery();
+        return $query->getResult();
+    }
+
+    public function removePayment($payment)
+    {
+        $query = $this->createQueryBuilder('payment')
+            ->join('payment.pay', 'pay')
+            ->where('pay.id = :payId')
+            ->andWhere('payment.id = :id')
+            ->setParameter('payId', $payment->getPay())
+            ->setParameter('id', $payment->getId())
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+        $em = $this->getEntityManager();
+        if ($query != NULL) {
+            $em->remove($query);
+        }
+        $em->flush();
+    }
 }

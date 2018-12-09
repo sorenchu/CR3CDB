@@ -10,4 +10,17 @@ namespace DatabaseBundle\Repository;
  */
 class ParentPersonRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getParentPerson($id, $season)
+    {
+         $query = $this->createQueryBuilder('parentPerson')
+                ->join('parentPerson.personalData', 'personalData')
+                ->join('parentPerson.parentData', 'parentData')
+                ->join('parentData.season', 'season')
+                ->where('personalData.id = :id')
+                ->andWhere('season.id = :season')
+                ->setParameter('id', $id)
+                ->setParameter('season', $season)
+                ->getQuery();
+          return $query->getOneOrNullResult(); 
+    }
 }

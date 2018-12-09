@@ -12,4 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class PersonalDataRepository extends EntityRepository
 {
+    public function savePerson($personalData, $edit)
+    {
+        $em = $this->getEntityManager();
+        if ($edit)
+            $em->merge($personalData);
+        $em->persist($personalData);
+        $em->flush();
+    }
 }

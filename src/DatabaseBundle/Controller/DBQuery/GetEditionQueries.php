@@ -25,26 +25,6 @@ class GetEditionQueries extends Controller
         $this->personController = $personController;
     }
 
-    public function getPerson($id)
-    {
-        $em = $this->personController->getDoctrine()->getManager();
-        return $em->getRepository('DatabaseBundle:PersonalData')->find($id);
-    }
-
-    public function getContactData($personId) 
-    {
-        $tableName = 'DatabaseBundle:ContactData';
-        $repository = $this->personController->
-            getDoctrine()->getRepository($tableName); 
-        $query = $repository->createQueryBuilder('contact')
-            ->from($tableName, 'data')
-            ->join('contact.personalData', 'person')
-            ->where('person.id = :id')
-            ->setParameter('id', $personId)
-            ->getQuery();
-        return $query->getOneOrNullResult();
-    }
-
     public function getPeopleByType($id, $table, $season)
     {
         if (0 == strcmp("playerdata", $table)) {
@@ -95,19 +75,6 @@ class GetEditionQueries extends Controller
         return $query->getResult();
     }
 
-    public function getPaymentsByPay($id)
-    {
-        return $this->personController
-            ->getDoctrine()
-            ->getRepository('DatabaseBundle:Payment')
-            ->createQueryBuilder('payment')
-            ->join('payment.pay', 'pay')
-            ->where('pay.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getResult();  
-    }
-
     public function savePerson($personalData, $edit)
     {
         $em = $this->personController->getDoctrine()->getManager();
@@ -124,35 +91,6 @@ class GetEditionQueries extends Controller
             ->find($id);
         $em->remove($personalData);
         $em->flush();
-    }
-
-    public function getCategoryFromPerson($id, $season, $table)
-    {
-        $em = $this->personController->getDoctrine()->getManager();
-        if (0 == $table) {
-            $member = $em->getRepository('DatabaseBundle:PlayerData')
-                ->createQueryBuilder('players')
-                ->join('players.personalData', 'person')
-                ->join('players.season', 'season')
-                ->where('person.id = :id')
-                ->andWhere('season.id = :seasonId')
-                ->setParameter('id', $id)
-                ->setParameter('seasonId', $season)
-                ->getQuery()
-                ->getResult()[0];
-        } else {
-            $member = $em->getRepository('DatabaseBundle:CoachData')
-                ->createQueryBuilder('coaches')
-                ->join('coaches.personalData', 'person')
-                ->join('coaches.season', 'season')
-                ->where('person.id = :id')
-                ->andWhere('season.id = :seasonId')
-                ->setParameter('id', $id)
-                ->setParameter('seasonId', $season)
-                ->getQuery()
-                ->getResult()[0];
-        }
-        return $member->getCategory();
     }
 
     public function deleteFromTeam($id, $seasonId, $table)
@@ -256,24 +194,6 @@ class GetEditionQueries extends Controller
         }
     }
 
-    public function removePayment($payment)
-    {
-        $em = $this->personController->getDoctrine()->getManager();
-        $paymentData = $em->getRepository('DatabaseBundle:Payment')
-            ->createQueryBuilder('payment')
-            ->join('payment.pay', 'pay')
-            ->where('pay.id = :payId')
-            ->andWhere('payment.id = :id')
-            ->setParameter('payId', $payment->getPay())
-            ->setParameter('id', $payment->getId())
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
-        if($paymentData != NULL) 
-            $em->remove($paymentData);
-        $em->flush();
-    }
-
     public function getPay($id)
     {
         $em = $this->personController->getDoctrine()->getManager();
@@ -285,87 +205,6 @@ class GetEditionQueries extends Controller
             ->getQuery()
             ->getResult();
         return $pay;    
-    }
-
-    public function getPlayerPerson($id, $season)
-    {
-        $em = $this->personController->getDoctrine()->getManager();
-        $playerPerson = $em->getRepository('DatabaseBundle:PlayerPerson')
-            ->createQueryBuilder('playerPerson')
-            ->join('playerPerson.personalData', 'personalData')
-            ->join('playerPerson.playerData', 'playerData')
-            ->join('playerData.season', 'season')
-            ->where('personalData.id = :id')
-            ->andWhere('season.id = :season')
-            ->setParameter('id', $id)
-            ->setParameter('season', $season)
-            ->getQuery()
-            ->getOneOrNullResult();
-        return $playerPerson;
-    }
-
-    public function getCoachPerson($id, $season) 
-    {
-        $em = $this->personController->getDoctrine()->getManager();
-        $coachPerson = $em->getRepository('DatabaseBundle:CoachPerson')
-            ->createQueryBuilder('coachPerson')
-            ->join('coachPerson.personalData', 'personalData')
-            ->join('coachPerson.coachData', 'coachData')
-            ->join('coachData.season', 'season')
-            ->where('personalData.id = :id')
-            ->andWhere('season.id = :season')
-            ->setParameter('id', $id)
-            ->setParameter('season', $season)
-            ->getQuery()
-            ->getResult();
-        return $coachPerson;
-    }
-
-    public function getMemberPerson($id, $season) 
-    {
-        $em = $this->personController->getDoctrine()->getManager();
-        $memberPerson = $em->getRepository('DatabaseBundle:MemberPerson')
-            ->createQueryBuilder('memberPerson')
-            ->join('memberPerson.personalData', 'personalData')
-            ->join('memberPerson.memberData', 'memberData')
-            ->join('memberData.season', 'season')
-            ->where('personalData.id = :id')
-            ->andWhere('season.id = :season')
-            ->setParameter('id', $id)
-            ->setParameter('season', $season)
-            ->getQuery()
-            ->getOneOrNullResult();
-        return $memberPerson;
-    }
-
-    public function getParentPerson($id, $season) 
-    {
-        $em = $this->personController->getDoctrine()->getManager();
-        $parentPerson = $em->getRepository('DatabaseBundle:ParentPerson')
-            ->createQueryBuilder('parentPerson')
-            ->join('parentPerson.personalData', 'personalData')
-            ->join('parentPerson.parentData', 'parentData')
-            ->join('parentData.season', 'season')
-            ->where('personalData.id = :id')
-            ->andWhere('season.id = :season')
-            ->setParameter('id', $id)
-            ->setParameter('season', $season)
-            ->getQuery()
-            ->getResult();
-        return $parentPerson;
-    }
-
-    public function getPictures($id)
-    {
-        $em = $this->personController->getDoctrine()->getManager();
-        $pictures = $em->getRepository('DatabaseBundle:Pictures')
-            ->createQueryBuilder('pictures')
-            ->join('pictures.personalData', 'personalData')
-            ->where('personalData.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getOneOrNullResult();
-        return $pictures;
     }
 }
 ?>

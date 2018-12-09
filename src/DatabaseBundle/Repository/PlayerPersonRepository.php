@@ -10,4 +10,17 @@ namespace DatabaseBundle\Repository;
  */
 class PlayerPersonRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getPlayerPerson($id, $season)
+    {
+         $query = $this->createQueryBuilder('playerPerson')
+                ->join('playerPerson.personalData', 'personalData')
+                ->join('playerPerson.playerData', 'playerData')
+                ->join('playerData.season', 'season')
+                ->where('personalData.id = :id')
+                ->andWhere('season.id = :season')
+                ->setParameter('id', $id)
+                ->setParameter('season', $season)
+                ->getQuery();
+          return $query->getOneOrNullResult(); 
+    }
 }

@@ -10,4 +10,13 @@ namespace DatabaseBundle\Repository;
  */
 class PayRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getPay($id)
+    {
+        $query = $this->createQueryBuilder('pay')
+                ->join('pay.playerData', 'playerData')
+                ->where('playerData.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery();
+        return $query->getResult();
+    }
 }

@@ -6,7 +6,8 @@ namespace DatabaseBundle\Controller\People;
 use DatabaseBundle\Entity\Pictures;
 use DatabaseBundle\Form\Person\PicturesType;
 
-use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
+use DatabaseBundle\Entity\PersonalData;
+use DatabaseBundle\Repository\PersonalDataRepository;
 use DatabaseBundle\Controller\DBQuery\SeasonQueries;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -15,13 +16,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class PicturesPersonController extends Controller
 {
-    private $peopleQueries;
-
     public function editPicturesAction($id, Request $request)
     {
-        $this->peopleQueries = new GetEditionQueries($this);
-        $personalData = $this->peopleQueries->getPerson($id);
-        $pictures = $this->peopleQueries->getPictures($id);
+        $entityManager = $this->getDoctrine()->getManager();
+        $personalData = $entityManager->getRepository(PersonalData::class)->find($id);
+        $pictures = $entityManager->getRepository(Pictures::class)->getPictures($id);
         if ($pictures == NULL) {
             $pictures = new Pictures();
         }
@@ -33,7 +32,7 @@ class PicturesPersonController extends Controller
             $this->uploadPictures($pictures);
             $personalData->setPictures($pictures);
             $pictures->setPersonalData($personalData);
-            $this->peopleQueries->savePerson($personalData, true);
+            $entityManager->getRepository(PersonalData::class)->savePerson($personalData, true);
             $picturesForm = $this->createForm(\DatabaseBundle\Form\Person\PicturesType::class, $pictures);
         }
         $seasonQueries = new SeasonQueries($this);

@@ -10,4 +10,14 @@ namespace DatabaseBundle\Repository;
  */
 class ContactDataRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getContactData($personId)
+    {
+        $query = $this->createQueryBuilder('contact')
+            ->from('DatabaseBundle:ContactData', 'data')
+            ->join('contact.personalData', 'person')
+            ->where('person.id = :id')
+            ->setParameter('id', $personId)
+            ->getQuery();
+        return $query->getOneOrNullResult();
+    }
 }
