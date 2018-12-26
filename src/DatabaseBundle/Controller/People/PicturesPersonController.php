@@ -8,7 +8,6 @@ use DatabaseBundle\Form\Person\PicturesType;
 
 use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Repository\PersonalDataRepository;
-use DatabaseBundle\Controller\DBQuery\SeasonQueries;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,12 +34,11 @@ class PicturesPersonController extends Controller
             $entityManager->getRepository(PersonalData::class)->savePerson($personalData, true);
             $picturesForm = $this->createForm(\DatabaseBundle\Form\Person\PicturesType::class, $pictures);
         }
-        $seasonQueries = new SeasonQueries($this);
         return $this->render('DatabaseBundle:person:editpictures.html.twig', array(
             'picturesForm' => $picturesForm->createView(),
             'personalData' => $personalData,
             'pictures' => $pictures,
-            'season' => $seasonQueries->getDefaultSeason(),
+            'season' => $entityManager->getRepository(Season::class)->getDefaultSeason(),
             ));
     }
 

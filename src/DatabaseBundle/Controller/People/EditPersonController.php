@@ -13,6 +13,7 @@ use DatabaseBundle\Entity\ParentPerson;
 use DatabaseBundle\Entity\MemberPerson;
 use DatabaseBundle\Entity\ContactData;
 use DatabaseBundle\Entity\PersonalData;
+use DatabaseBundle\Entity\Pay;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class EditPersonController extends Controller
 {
-    private $id;
     private $entityManager;
 
     public function editPersonAction($id, $seasonId=null, Request $request)

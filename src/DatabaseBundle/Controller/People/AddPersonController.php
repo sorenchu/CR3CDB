@@ -9,7 +9,6 @@ use DatabaseBundle\Form\Person\PersonalDataType;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
-use DatabaseBundle\Controller\DBQuery\SeasonQueries;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +27,6 @@ class AddPersonController extends Controller
     {
         $entityManager = $this->getDoctrine()->getManager();
         $personalData = new PersonalData();
-        $seasonQueries = new SeasonQueries($this);
         $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
         $personalDataForm->handleRequest($request);
 
@@ -41,7 +39,7 @@ class AddPersonController extends Controller
             return $this->redirectToRoute('edit_person', 
                     array(
                         'id' => $personalData->getId(),
-                        'seasonId' => $seasonQueries->getDefaultSeason()->getId(),
+                        'seasonId' => $entityManager->getRepository(Season::class)->getDefaultSeason(),
                         ));
         }
 
@@ -74,13 +72,10 @@ class AddPersonController extends Controller
     public function deletePersonAction($id)
     {
         $this->peopleQueries->deletePerson($id);
-        $showAllQuery = new ShowTeamQueries($this);
-        $personalData = $showAllQuery->getAllMembers();
-        $seasonQueries = new SeasonQueries($this);
-
+        $entityManager = $this->getDoctrine()->getManager();
         return $this->render('DatabaseBundle:people:showall.html.twig', array(
-                    'personalData' => $personalData,
-                    'season' => $seasonQueries->getDefaultSeason(),
+                    'personalData' => $entityManager->getRepository(PersonalData::class)->findAll(),
+                    'season' => $entityManager->getRepository(Season::class)->getDefaultSeason(),
                     )
                 );
     }

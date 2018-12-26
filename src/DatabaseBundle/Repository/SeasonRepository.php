@@ -42,4 +42,9 @@ class SeasonRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function setAsNotDefault($season)
+    {
+        $season->setDefaultseason(false);  
+    }
 }

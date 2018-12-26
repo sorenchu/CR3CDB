@@ -4,8 +4,8 @@
 namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
-use DatabaseBundle\Controller\DBQuery\SeasonQueries;
 use DatabaseBundle\Form\Season\SeasonType;
+use DatabaseBundle\Entity\Season;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,13 +14,11 @@ use Symfony\Component\HttpFoundation\Response;
 class ShowTeamsController extends Controller
 {
     private $teamQueries;
-    private $seasonQueries;
     private $season;
 
     public function __construct()
     {
         $this->teamQueries = new ShowTeamQueries($this);
-        $this->seasonQueries = new SeasonQueries($this);
     }
 
     public function showSeniorAction(Request $request)
@@ -70,19 +68,20 @@ class ShowTeamsController extends Controller
 
     private function showSeniorTeam($specificTeam, $request)
     {
+        $entityManager = $this->getDoctrine()->getManager();
         $seasonForm = $this->createForm(new SeasonType());
         $seasonForm->handleRequest($request);
         $season = $seasonForm->get('season')->getData();
         if ($season != null) {
             $this->season = $season;
         } else {
-            $this->season = $this->seasonQueries->getDefaultSeason();
+            $this->season = $entityManager->getRepository(Season::class)->getDefaultSeason();
         }
 
         if (!$seasonForm->isSubmitted())
             $seasonForm->get('season')->setData($this->season);
 
-        $seasonNumber = $this->seasonQueries->countSeasons();
+        $seasonNumber = $entityManager->getRepository(Season::class)->countSeasons();
         if (0 < $seasonNumber) {
             $playerData = $this->teamQueries
                 ->getByCategory($specificTeam, 'DatabaseBundle:PlayerData', $this->season->getId());
@@ -104,18 +103,19 @@ class ShowTeamsController extends Controller
 
     private function showJuniorTeam($specificTeam, $request)
     {
+        $entityManager = $this->getDoctrine()->getManager();
         $seasonForm = $this->createForm(new SeasonType);
         $seasonForm->handleRequest($request);
         $season = $seasonForm->get('season')->getData();
         if ($season != null) {
             $this->season = $season;
         } else {
-            $this->season = $this->seasonQueries->getDefaultSeason();
+            $this->season = $entityManager->getRepository(Season::class)->getDefaultSeason();
         }
         if (!$seasonForm->isSubmitted())
             $seasonForm->get('season')->setData($this->season);
 
-        $seasonNumber = $this->seasonQueries->countSeasons();
+        $seasonNumber = $entityManager->getRepository(Season::class)->countSeasons();
         if (0 < $seasonNumber) {
             $playerData = $this->teamQueries
                 ->getByCategory($specificTeam, 'DatabaseBundle:PlayerData', $this->season->getId());

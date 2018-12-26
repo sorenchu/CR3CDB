@@ -4,8 +4,9 @@
 namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
-use DatabaseBundle\Controller\DBQuery\SeasonQueries;
 use DatabaseBundle\Form\Season\SeasonType;
+use DatabaseBundle\Entity\PersonalData;
+use DatabaseBundle\Entity\Season;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,37 +15,37 @@ use Symfony\Component\HttpFoundation\Response;
 class ShowPeopleController extends Controller
 {
     private $teamQueries;
-    private $seasonQueries;
     private $season;
 
     public function __construct()
     {
         $this->teamQueries = new ShowTeamQueries($this);
-        $this->seasonQueries = new SeasonQueries($this);
     }
 
     public function showAllAction()
     {
-        $personalData = $this->teamQueries->getAllMembers();
+        $entityManager = $this->getDoctrine()->getManager();
+        $personalData = $entityManager->getRepository(PersonalData::class)->findAll();
         return $this->render('DatabaseBundle:people:showall.html.twig', array(
                     'personalData' => $personalData,
-                    'season' => $this->seasonQueries->getDefaultSeason()));
+                    'season' => $entityManager->getRepository(Season::class)->getDefaultSeason()));
     }
 
     public function showParentsAction(Request $request)
     {
+        $entityManager = $this->getDoctrine()->getManager();
         $seasonForm = $this->createForm(new SeasonType);
         $seasonForm->handleRequest($request);
         $season = $seasonForm->get('season')->getData();
         if ($season != null) {
             $this->season = $season;
         } else {
-            $this->season = $this->seasonQueries->getDefaultSeason();
+            $this->season = $entityManager->getRepository(Season::class)->getDefaultSeason();
         }
         if (!$seasonForm->isSubmitted())
             $seasonForm->get('season')->setData($this->season);
 
-        $seasonNumber = $this->seasonQueries->countSeasons();
+        $seasonNumber = $entityManager->getRepository(Season::class)->countSeasons();
         if (0 < $seasonNumber) {
             $parentData = $this->teamQueries->getParents($this->season->getId());
             $logger = $this->get('logger');
@@ -66,18 +67,19 @@ class ShowPeopleController extends Controller
 
     public function showMembersAction(Request $request)
     {
+        $entityManager = $this->getDoctrine()->getManager();
         $seasonForm = $this->createForm(new SeasonType);
         $seasonForm->handleRequest($request);
         $season = $seasonForm->get('season')->getData();
         if ($season != null) {
             $this->season = $season;
         } else {
-            $this->season = $this->seasonQueries->getDefaultSeason();
+            $this->season = $entityManager->getRepository(Season::class)->getDefaultSeason();
         } 
         if (!$seasonForm->isSubmitted())
             $seasonForm->get('season')->setData($this->season);
 
-        $seasonNumber = $this->seasonQueries->countSeasons();
+        $seasonNumber = $entityManager->getRepository(Season::class)->countSeasons();
         if (0 < $seasonNumber) {
             $memberData = $this->teamQueries->getMembers($this->season->getId());
             return $this->render('DatabaseBundle:people:showmembers.html.twig', array(

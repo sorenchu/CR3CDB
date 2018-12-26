@@ -58,23 +58,6 @@ class GetEditionQueries extends Controller
         return $query->getOneOrNullResult();
     }
 
-    public function searchPayment($id, $payment)
-    {
-        $repository = $this->personController->getDoctrine()->getRepository('DatabaseBundle:Payment');
-        $query = $repository->createQueryBuilder('payment')
-            ->join('payment.pay', 'pay')
-            ->where('pay.id = :id')
-            ->andWhere('payment.amountPayed = :amount')
-            ->andWhere('payment.paymentDate LIKE :date')
-            ->andWhere('payment.status LIKE :status')
-            ->setParameter('id', $id)
-            ->setParameter('amount', $payment->getAmountPayed())
-            ->setParameter('date', $payment->getPaymentDate())
-            ->setParameter('status', $payment->getStatus())
-            ->getQuery();
-        return $query->getResult();
-    }
-
     public function savePerson($personalData, $edit)
     {
         $em = $this->personController->getDoctrine()->getManager();
