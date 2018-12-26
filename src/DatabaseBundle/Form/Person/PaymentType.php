@@ -36,7 +36,8 @@ class PaymentType extends AbstractType
                     'choices' => array(
                         'pending' => 'Pendiente de cobro',
                         'charged' => 'Cobrado',
-                        'returned' => 'Devuelto')
+                        'returned' => 'Devuelto'),
+                    'choices_as_values' => true,
           ));
   }
 

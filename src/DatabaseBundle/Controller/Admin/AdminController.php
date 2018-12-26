@@ -23,7 +23,7 @@ class AdminController extends Controller
     public function createUserAction(Request $request)
     {
         $user = new User();
-        $userData = $this->createForm(new UserDataType(), $user);
+        $userData = $this->createForm(UserDataType::class, $user);
         $userData->handleRequest($request);
 
         if ($userData->isSubmitted()) {

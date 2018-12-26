@@ -27,8 +27,9 @@ class EditUserType extends AbstractType
               'ROLE_ADMIN' => 'Administrador',
               'ROLE_USER' => 'Usuario',
             ),
-            'disabled' => 'true')
-          )
+            'disabled' => 'true',
+            'choices_as_values' => true,
+        ))
         ->add('oldpassword', PasswordType::class, array(
                      'label' => 'Contraseña actual')
           )

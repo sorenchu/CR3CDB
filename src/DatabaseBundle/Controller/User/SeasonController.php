@@ -22,7 +22,7 @@ class SeasonController extends Controller
     public function addSeasonAction(Request $request) 
     {
         $season = new Season();  
-        $seasonForm = $this->createForm(new AddSeasonType(), $season);
+        $seasonForm = $this->createForm(AddSeasonType::class, $season);
         $seasonForm->handleRequest($request);
         $error = false;
 

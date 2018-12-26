@@ -20,7 +20,7 @@ class ImportFileController extends Controller
         $success = null;
 
         $fileImport = new FileImport();
-        $fileImportForm = $this->createForm(new FileImportType(), $fileImport);
+        $fileImportForm = $this->createForm(FileImportType::class, $fileImport);
         $fileImportForm->handleRequest($request);
 
         if($fileImportForm->isSubmitted())

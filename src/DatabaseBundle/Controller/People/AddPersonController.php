@@ -27,7 +27,7 @@ class AddPersonController extends Controller
     {
         $entityManager = $this->getDoctrine()->getManager();
         $personalData = new PersonalData();
-        $personalDataForm = $this->createForm(new PersonalDataType(), $personalData);
+        $personalDataForm = $this->createForm(PersonalDataType::class, $personalData);
         $personalDataForm->handleRequest($request);
 
         if($personalDataForm->isSubmitted()) {

@@ -14,6 +14,7 @@ use DatabaseBundle\Entity\MemberPerson;
 use DatabaseBundle\Entity\ContactData;
 use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Entity\Pay;
+use DatabaseBundle\Entity\Season;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,8 +31,8 @@ class EditPersonController extends Controller
         $underage = 'false';
 
         $this->entityManager = $this->getDoctrine()->getManager();
-        $season = $this->entityManager->getRepository(\DatabaseBundle\Entity\Season::class)->find($seasonId);
-        $seasonForm = $this->createForm(\DatabaseBundle\Form\Season\SeasonType::class, $season);
+        $season = $this->entityManager->getRepository(Season::class)->find($seasonId);
+        $seasonForm = $this->createForm(SeasonType::class, $season);
         $seasonForm->handleRequest($request);
         if ($seasonForm->isSubmitted()) {
             return $this->redirectToRoute('edit_person',
@@ -141,7 +142,7 @@ class EditPersonController extends Controller
             $personalData->addParentDatum($parentData);
         }
 
-        $personalDataForm = $this->createForm(\DatabaseBundle\Form\Person\PersonalDataType::class, $personalData);
+        $personalDataForm = $this->createForm(PersonalDataType::class, $personalData);
         $personalDataForm->handleRequest($request);
         $bank = $this->getBank($playerData, $personalDataForm, $season);
         $underage = $this->isUnderage($personalData->getPlayerDataBySeason($season));
@@ -156,9 +157,9 @@ class EditPersonController extends Controller
                 $this->addPayment($payMember, $personalDataForm, "memberData");
                 $this->removePayment($payMember, $personalDataForm, $season);
             }
-            $seasonForm = $this->createForm(\DatabaseBundle\Form\Season\SeasonType::class, $season);
+            $seasonForm = $this->createForm(SeasonType::class, $season);
             $this->entityManager->getRepository(PersonalData::class)->savePerson($personalData, true);
-            $personalDataForm = $this->createForm(\DatabaseBundle\Form\Person\PersonalDataType::class, $personalData);
+            $personalDataForm = $this->createForm(PersonalDataType::class, $personalData);
         }
         return $this->render('DatabaseBundle:person:editperson.html.twig', array(
                     'personalDataForm' => $personalDataForm->createView(),

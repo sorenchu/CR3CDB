@@ -34,7 +34,7 @@ class ShowPeopleController extends Controller
     public function showParentsAction(Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $seasonForm = $this->createForm(new SeasonType);
+        $seasonForm = $this->createForm(SeasonType::class);
         $seasonForm->handleRequest($request);
         $season = $seasonForm->get('season')->getData();
         if ($season != null) {
@@ -68,7 +68,7 @@ class ShowPeopleController extends Controller
     public function showMembersAction(Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $seasonForm = $this->createForm(new SeasonType);
+        $seasonForm = $this->createForm(SeasonType::class);
         $seasonForm->handleRequest($request);
         $season = $seasonForm->get('season')->getData();
         if ($season != null) {

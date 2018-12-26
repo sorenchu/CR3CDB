@@ -31,7 +31,7 @@ class UserController extends Controller
         $encoder = $factory->getEncoder($user);
         $oldPwd = $this->get('security.token_storage')->getToken()->getUser()->getOldpassword();
 
-        $editUserForm = $this->createForm(new EditUserType(), $user);
+        $editUserForm = $this->createForm(EditUserType::class, $user);
         $editUserForm->handleRequest($request);
         if ($editUserForm->isSubmitted()) {
             if ($encoder->isPasswordValid($oldPwd, $editUserForm->get('oldpassword')->getViewData(), $user->getSalt())) {

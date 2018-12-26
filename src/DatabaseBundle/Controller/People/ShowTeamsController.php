@@ -69,7 +69,7 @@ class ShowTeamsController extends Controller
     private function showSeniorTeam($specificTeam, $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $seasonForm = $this->createForm(new SeasonType());
+        $seasonForm = $this->createForm(SeasonType::class);
         $seasonForm->handleRequest($request);
         $season = $seasonForm->get('season')->getData();
         if ($season != null) {
@@ -104,7 +104,7 @@ class ShowTeamsController extends Controller
     private function showJuniorTeam($specificTeam, $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $seasonForm = $this->createForm(new SeasonType);
+        $seasonForm = $this->createForm(SeasonType::class);
         $seasonForm->handleRequest($request);
         $season = $seasonForm->get('season')->getData();
         if ($season != null) {

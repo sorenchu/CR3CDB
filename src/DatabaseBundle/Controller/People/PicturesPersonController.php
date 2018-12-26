@@ -3,11 +3,12 @@
 
 namespace DatabaseBundle\Controller\People;
 
-use DatabaseBundle\Entity\Pictures;
 use DatabaseBundle\Form\Person\PicturesType;
-
-use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Repository\PersonalDataRepository;
+
+use DatabaseBundle\Entity\Pictures;
+use DatabaseBundle\Entity\PersonalData;
+use DatabaseBundle\Entity\Season;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,14 +26,14 @@ class PicturesPersonController extends Controller
         }
         $personalData->setPictures($pictures);
         $pictures->setPersonalData($personalData);
-        $picturesForm = $this->createForm(\DatabaseBundle\Form\Person\PicturesType::class, $pictures);
+        $picturesForm = $this->createForm(PicturesType::class, $pictures);
         $picturesForm->handleRequest($request);
         if ($picturesForm->isSubmitted()) {
             $this->uploadPictures($pictures);
             $personalData->setPictures($pictures);
             $pictures->setPersonalData($personalData);
             $entityManager->getRepository(PersonalData::class)->savePerson($personalData, true);
-            $picturesForm = $this->createForm(\DatabaseBundle\Form\Person\PicturesType::class, $pictures);
+            $picturesForm = $this->createForm(PicturesType::class, $pictures);
         }
         return $this->render('DatabaseBundle:person:editpictures.html.twig', array(
             'picturesForm' => $picturesForm->createView(),

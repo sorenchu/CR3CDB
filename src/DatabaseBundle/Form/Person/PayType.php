@@ -26,6 +26,7 @@ class PayType extends AbstractType
                         'deposit' => 'Ingreso',
                         'cash' => 'Efectivo',),
                     'empty_data' => 'bank',
+                    'choices_as_values' => true,
           ))
           ->add('person', TextType::class,
                   array(

@@ -55,7 +55,8 @@ class CoachDataType extends AbstractType
               'sub10' => 'Sub-10',
               'sub8' => 'Sub-8',
               'sub6' => 'Sub-6',
-              )
+              ),
+            'choices_as_values' => true
             )
           )
         ->add('datedata', DateDataType::class, array(
