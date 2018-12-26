@@ -281,4 +281,36 @@ class PlayerData
     {
         return $this->dateData;
     }
+
+    /**
+     * Set category by season
+     *
+     * @return PlayerData
+     */
+    public function setCategoryBySeason($season)
+    {
+        $birthDate = $this->getPersonalData()->getBirthday();
+        $seasonDate = new \DateTime($season->getStartingyear()."-12-31");
+        $diff = abs(strtotime($seasonDate->format('Y-m-d')) -
+                    strtotime($birthDate->format('Y-m-d')));
+        $years = floor($diff / (365*24*60*60));
+        if ($years >= 18)
+            $this->setCategory('senior');
+        elseif ($years >= 16)
+            $this->setCategory('sub18');
+        elseif ($years >= 14)
+            $this->setCategory('sub16');
+        elseif ($years >= 12)
+            $this->setCategory('sub14');
+        elseif ($years >= 10)
+            $this->setCategory('sub12');
+        elseif ($years >= 8)
+            $this->setCategory('sub10');
+        elseif ($years >= 6)
+            $this->setCategory('sub8');
+        else 
+            $this->setCategory('sub6');
+
+        return $this;
+    }
 }

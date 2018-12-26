@@ -46,7 +46,7 @@ class EditPersonController extends Controller
         if ($contactData) {
             $contactData->setPersonalData($personalData);
         }
-    
+
         $playerPerson = $this->entityManager->getRepository(PlayerPerson::class)->getPlayerPerson($id, $season);
         if ($playerPerson == NULL) {
             $playerPerson = new PlayerPerson();
@@ -58,6 +58,7 @@ class EditPersonController extends Controller
             $playerData->setPlayerPerson($playerPerson);
             $playerPerson->setPersonalData($personalData);
             $personalData->addPlayerPerson($playerPerson);
+            $playerData->setCategoryBySeason($season);
 
             $pay = $this->entityManager->getRepository(Pay::class)->getPay($playerData->getId());
             if ($pay == NULL) {
@@ -75,6 +76,7 @@ class EditPersonController extends Controller
             $personalData->addPlayerDatum($playerData);
         } else {
             $playerData = $playerPerson->getPlayerData();
+            $playerData->setCategoryBySeason($season);
         }
 
         $coachPerson = $this->entityManager->getRepository(CoachPerson::class)->getCoachPerson($id, $season);
@@ -116,7 +118,7 @@ class EditPersonController extends Controller
                 $payMember->addPayment($payment);
             }
             $memberData->setPay($payMember);
-            $pay->setMemberData($memberData);
+            $payMember->setMemberData($memberData);
 
             $memberPerson->setMemberData($memberData);
             $personalData->addMemberDatum($memberData);
