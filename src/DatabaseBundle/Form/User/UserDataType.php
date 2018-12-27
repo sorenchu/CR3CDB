@@ -32,8 +32,8 @@ class UserDataType extends AbstractType
                     ->add('role', ChoiceType::class, array(
                         'label' => 'Rol',
                         'choices' => array(
-                            'ROLE_ADMIN' => 'Administrador',
-                            'ROLE_USER' => 'Usuario',
+                            'Administrador' => 'ROLE_ADMIN',
+                            'Usuario' => 'ROLE_USER',
                             ),
                         'disabled' => true,
                 ));
@@ -43,8 +43,8 @@ class UserDataType extends AbstractType
                     ->add('role', ChoiceType::class, array(
                         'label' => 'Rol',
                         'choices' => array(
-                            'ROLE_ADMIN' => 'Administrador',
-                            'ROLE_USER' => 'Usuario',
+                            'Administrador' => 'ROLE_ADMIN',
+                            'Usuario' => 'ROLE_USER',
                             ),
                 ));
         }

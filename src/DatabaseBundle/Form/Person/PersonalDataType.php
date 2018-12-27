@@ -37,10 +37,9 @@ class PersonalDataType extends AbstractType
         ->add('sex', ChoiceType::class, array(
             'label' => 'Género',
             'choices' => array(
-              'male' => 'Hombre',
-              'female' => 'Mujer',
+              'Hombre' => 'male',
+              'Mujer'  => 'female',
             ),
-            'choices_as_values' => true
           )
         )
         ->add('contactData', ContactDataType::class)

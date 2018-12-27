@@ -21,6 +21,13 @@ security:
             pattern:   ^/
             provider: our_db_provider
             logout_on_user_change: true
+            logout:
+                path: /logout
+                target: /
+                invalidate_session: true
+                delete_cookies:
+                    a: { path: null, domain: null }
+                    b: { path: null, domain: null }
 
         secured_area:
             anonymous: ~

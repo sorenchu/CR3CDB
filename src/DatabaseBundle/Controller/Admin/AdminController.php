@@ -60,7 +60,7 @@ class AdminController extends Controller
             $admin = true;
         }
 
-        $userData = $this->createForm(new UserDataType($admin), $user);
+        $userData = $this->createForm(UserDataType::class, $user);
         $userData->handleRequest($request);
         if ($userData->isSubmitted()) {
             $user = $this->userQueries->encodePassword($user, $user->getPassword());

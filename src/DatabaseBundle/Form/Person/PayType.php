@@ -21,12 +21,12 @@ class PayType extends AbstractType
                   array(
                     'label' => 'Modo de pago',
                     'choices' => array(
-                        'bank' => 'Domiciliación bancaria',
-                        'transfer' => 'Transferencia',
-                        'deposit' => 'Ingreso',
-                        'cash' => 'Efectivo',),
+                         'Domiciliación bancaria' => 'bank',
+                         'Transferencia'          => 'transfer',
+                         'Ingreso'                => 'deposit',
+                         'Efectivo'               => 'cash',
+                    ),
                     'empty_data' => 'bank',
-                    'choices_as_values' => true,
           ))
           ->add('person', TextType::class,
                   array(

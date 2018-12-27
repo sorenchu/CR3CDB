@@ -24,10 +24,9 @@ class FileImportType extends AbstractType
         ->add('content', ChoiceType::class, array(
                         'label' => 'Contenido',
                         'choices' => array(
-                            'personalData' => 'Datos personales',
-                            'playerData' => 'Fichas federativas',
+                            'Datos personales' => 'personalData',
+                            'Fichas federativas' => 'playerData',
                         ),
-                        'choices_as_values' => true,
                       )
         )
         ->add('upload', SubmitType::class, array('label' => 'Subir'))

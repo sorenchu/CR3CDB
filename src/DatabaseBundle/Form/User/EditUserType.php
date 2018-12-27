@@ -24,11 +24,10 @@ class EditUserType extends AbstractType
         ->add('role', ChoiceType::class, array(
             'label' => 'Rol',
             'choices' => array(
-              'ROLE_ADMIN' => 'Administrador',
-              'ROLE_USER' => 'Usuario',
+              'Administrador' => 'ROLE_ADMIN', 
+              'Usuario'       => 'ROLE_USER',
             ),
             'disabled' => 'true',
-            'choices_as_values' => true,
         ))
         ->add('oldpassword', PasswordType::class, array(
                      'label' => 'Contraseña actual')

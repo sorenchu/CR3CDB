@@ -34,10 +34,10 @@ class PaymentType extends AbstractType
                   array(
                     'label' => 'Estado',
                     'choices' => array(
-                        'pending' => 'Pendiente de cobro',
-                        'charged' => 'Cobrado',
-                        'returned' => 'Devuelto'),
-                    'choices_as_values' => true,
+                        'Pendiente de cobro' => 'pending',
+                        'Cobrado'            => 'charged',
+                        'Devuelto'           => 'returned',
+                    ),
           ));
   }
 

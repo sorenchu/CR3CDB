@@ -46,17 +46,16 @@ class CoachDataType extends AbstractType
         ->add('category', ChoiceType::class, array(
             'label' => 'Categoría',
             'choices' => array(
-              'senior' => 'Senior',
-              'femenino' => 'Femenino',
-              'sub18' => 'Sub-18',
-              'sub16' => 'Sub-16',
-              'sub14' => 'Sub-14',
-              'sub12' => 'Sub-12',
-              'sub10' => 'Sub-10',
-              'sub8' => 'Sub-8',
-              'sub6' => 'Sub-6',
+              'Senior'  => 'senior',
+              'Femenino'=> 'femenino',
+              'Sub-18'  => 'sub18',
+              'Sub-16'  => 'sub16',
+              'Sub-14'  => 'sub14',
+              'Sub-12'  => 'sub12',
+              'Sub-10'  => 'sub10',
+              'Sub-8'   => 'sub8',
+              'Sub-6'   => 'sub6',
               ),
-            'choices_as_values' => true
             )
           )
         ->add('datedata', DateDataType::class, array(
