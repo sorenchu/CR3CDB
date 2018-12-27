@@ -20,6 +20,7 @@ security:
             http_basic: ~
             pattern:   ^/
             provider: our_db_provider
+            logout_on_user_change: true
 
         secured_area:
             anonymous: ~
@@ -30,6 +31,7 @@ security:
                 delete_cookies:
                     a: { path: null, domain: null }
                     b: { path: null, domain: null }
+            logout_on_user_change: true
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
