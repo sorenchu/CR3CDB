@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class CoachDataRepository extends EntityRepository
 {
-    private function getCategory($id, $season)
+    public function getCategory($id, $season)
     {
        $query = $this->createQueryBuilder('coaches')
                 ->join('coaches.personalData', 'person')

@@ -5,6 +5,8 @@ namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Entity\ContactData;
+use DatabaseBundle\Entity\PlayerData;
+use DatabaseBundle\Entity\CoachData;
 use DatabaseBundle\Form\Person\PersonalDataType;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
@@ -154,7 +156,7 @@ class AddPersonController extends Controller
     private function getCategoryFromPerson($id, $season, $table)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        if ('playerdata' == $table) {
+        if (0 == $table) {
             $member = $entityManager->getRepository(PlayerData::class)->getCategory($id, $season);
         } else {
             $member = $entityManager->getRepository(CoachData::class)->getCategory($id, $season);
