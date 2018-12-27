@@ -65,7 +65,7 @@ class SeasonController extends Controller
     {
         $entityManager = $this->getDoctrine()->getManager();
         $season = $entityManager->getRepository(Season::class)->find($id);
-        $seasonForm = $this->createForm(new AddSeasonType(), $season);
+        $seasonForm = $this->createForm(AddSeasonType::class, $season);
         $seasonForm->handleRequest($request);
         $error = false;
 
