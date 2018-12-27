@@ -21,9 +21,11 @@ class DateDataType extends AbstractType
                                 'label' => 'Activo',
                                 'required' => false,))
             ->add('joiningDate', DateType::class, array(
-                                'label' => 'Fecha de alta',))
+                                'label' => 'Fecha de alta',
+                                'widget' => 'single_text',))
             ->add('leavingDate', DateType::class, array(
-                                'label' => 'Fecha de baja',));
+                                'label' => 'Fecha de baja',
+                                'widget' => 'single_text',));
     }
 
     public function getBlockPrefix()

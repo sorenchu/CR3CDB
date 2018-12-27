@@ -26,9 +26,8 @@ class PaymentType extends AbstractType
           ->add('paymentDate', DateType::class,
                   array(
                     'required' => false,
-                    'label' => 'Fecha de pago',
-                    'widget' => 'single_text',
-                    'format' => 'dd/MM/yyyy'
+                    'label' => 'Fecha de recibo',
+                    'widget' => 'single_text'
           ))
           ->add('status', ChoiceType::class,
                   array(
