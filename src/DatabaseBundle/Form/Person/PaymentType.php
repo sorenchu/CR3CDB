@@ -37,6 +37,15 @@ class PaymentType extends AbstractType
                         'Cobrado'            => 'charged',
                         'Devuelto'           => 'returned',
                     ),
+          ))
+          ->add('active', ChoiceType::class,
+                  array(
+                    'label' => 'Activo',
+                    'choices' => array(
+                        'Activo' => true,
+                        'Inactivo' => false,
+                    ),
+                    'data' => true,
           ));
   }
 

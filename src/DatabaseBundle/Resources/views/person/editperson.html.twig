@@ -79,10 +79,13 @@
             <ul class="payments" data-prototype="{{ form_widget(formData.pay.payment.vars.prototype)|e('html_attr') }}">
             {% if formData.pay.payment and formData.pay.payment|length > 0 %}
               {% for payment in formData.pay.payment %}
-                <li>
-                {{ form_row(payment.amountPayed) }}
-                {{ form_row(payment.paymentDate) }}
-                {{ form_row(payment.status) }}</li>
+                {% if payment.active %}
+                    <li>
+                    {{ form_row(payment.amountPayed) }}
+                    {{ form_row(payment.paymentDate) }}
+                    {{ form_row(payment.status) }}
+                    </li>
+                {% endif %}
                 <br>
               {% endfor %}
             {% else %} 

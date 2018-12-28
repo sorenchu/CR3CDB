@@ -37,4 +37,43 @@ class PaymentRepository extends \Doctrine\ORM\EntityRepository
         }
         $em->flush();
     }
+
+    public function getByPayment($payment)
+    {
+        $query = $this->createQueryBuilder('payment')
+            ->join('payment.pay', 'pay')
+            ->where('pay.id = :payId')
+            ->andWhere('payment.amountPayed = :amount')
+            ->andWhere('payment.paymentDate = :date')
+            ->andWhere('payment.status = :status')
+            ->andWhere('payment.active = :active')
+            ->setParameter('payId', $payment->getPay())
+            ->setParameter('amount', $payment->getAmountPayed())
+            ->setParameter('date', $payment->getPaymentdate())
+            ->setParameter('status', $payment->getStatus())
+            ->setParameter('active', $payment->getActive())
+            ->getQuery();
+        return $query->getOneOrNullResult();
+    }
+
+    public function getPaymentsByHistory($phId)
+    {
+        $query = $this->createQueryBuilder('payment')
+            ->join('payment.paymentHistory', 'history')
+            ->where('history.id = :id')
+            ->setParameter('id', $phId)
+            ->getQuery();
+        return $query->getResult();
+    }
+
+    public function getActivePayment($phId)
+    {
+        $query = $this->createQueryBuilder('payment')
+            ->join('payment.paymentHistory', 'history')
+            ->where('history.id = :id')
+            ->andWhere('payment.active = 1')
+            ->setParameter('id', $phId)
+            ->getQuery();
+        return $query->getOneOrNullResult();
+    }
 }

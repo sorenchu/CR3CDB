@@ -33,6 +33,23 @@ class Payment
     private $paymentDate;
 
     /**
+     * @var string
+     */
+    private $active;
+
+    public function __construct($payment=NULL)
+    {
+        if ($payment != NULL)
+        {
+            $this->status = $payment->getStatus();
+            $this->pay = $payment->getPay();
+            $this->amountPayed = $payment->getAmountPayed();
+            $this->paymentDate = $payment->getPaymentDate();
+            $this->active = true;
+        }
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -136,5 +153,58 @@ class Payment
     public function getPay()
     {
         return $this->pay;
+    }
+    /**
+     * @var \DatabaseBundle\Entity\PaymentHistory
+     */
+    private $paymentHistory;
+
+
+    /**
+     * Set paymentHistory.
+     *
+     * @param \DatabaseBundle\Entity\PaymentHistory|null $paymentHistory
+     *
+     * @return Payment
+     */
+    public function setPaymentHistory(\DatabaseBundle\Entity\PaymentHistory $paymentHistory = null)
+    {
+        $this->paymentHistory = $paymentHistory;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentHistory.
+     *
+     * @return \DatabaseBundle\Entity\PaymentHistory|null
+     */
+    public function getPaymentHistory()
+    {
+        return $this->paymentHistory;
+    }
+
+    /**
+     * Set active.
+     *
+     * @param string $active
+     *
+     * @return Payment
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active.
+     *
+     * @return string
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 }

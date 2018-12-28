@@ -1,0 +1,18 @@
+# src/DatabaseBundle/Resources/config/doctrine/PaymentHistory.orm.yml
+DatabaseBundle\Entity\PaymentHistory:
+    type: entity
+    table: paymentHistory
+    repositoryClass: DatabaseBundle\Repository\PaymentHistoryRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    oneToMany:
+        payment:
+            targetEntity: Payment
+            mappedBy: paymentHistory
+            cascade: ["persist", "remove"]
+
