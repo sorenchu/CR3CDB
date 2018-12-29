@@ -37,18 +37,6 @@ class Payment
      */
     private $active;
 
-    public function __construct($payment=NULL)
-    {
-        if ($payment != NULL)
-        {
-            $this->status = $payment->getStatus();
-            $this->pay = $payment->getPay();
-            $this->amountPayed = $payment->getAmountPayed();
-            $this->paymentDate = $payment->getPaymentDate();
-            $this->active = true;
-        }
-    }
-
     /**
      * Get id
      *
@@ -206,5 +194,18 @@ class Payment
     public function getActive()
     {
         return $this->active;
+    }
+
+    public function compareWithArray($compared)
+    {
+        if ($compared['id'] != $this->id 
+            or $compared['pay_id'] != $this->pay->getId()
+            or $compared['paymentHistory_id'] != $this->paymentHistory->getId()
+            or $compared['paymentDate'] != $this->paymentDate
+            or $compared['amountPayed'] != $this->amountPayed
+            or $compared['status'] != $this->status
+            or $compared['active'] != $this->active)
+            return false;
+        return true;
     }
 }

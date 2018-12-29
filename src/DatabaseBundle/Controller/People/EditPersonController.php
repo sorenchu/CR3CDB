@@ -15,6 +15,8 @@ use DatabaseBundle\Entity\ContactData;
 use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Entity\Pay;
 use DatabaseBundle\Entity\Season;
+use DatabaseBundle\Entity\Payment;
+use DatabaseBundle\Entity\PaymentHistory;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,11 +67,6 @@ class EditPersonController extends Controller
             if ($pay == NULL) {
                 $pay = new Pay();
             }
-            if ($pay->getPayment() == NULL) {
-                $payment = new Payment();
-                $payment->setPay($pay);
-                $pay->addPayment($payment);
-            }
             $playerData->setPay($pay);
             $pay->setPlayerData($playerData);
 
@@ -112,11 +109,6 @@ class EditPersonController extends Controller
             $payMember = $this->entityManager->getRepository(Pay::class)->getPay($memberData->getId());
             if ($payMember == NULL) {
                 $payMember = new Pay();
-            }
-            if ($payMember->getPayment() == NULL) {
-                $payment = new Payment();
-                $payment->setPay($payMember);
-                $payMember->addPayment($payment);
             }
             $memberData->setPay($payMember);
             $payMember->setMemberData($memberData);
@@ -203,8 +195,32 @@ class EditPersonController extends Controller
         foreach($personalDataForm->get($childEntity) as $subForm) {
             foreach($this->getFormDataArray($subForm["pay"]["payment"]) as $pm) {
                 if (!$pm->getPay()) {
+                    $history = new PaymentHistory();
+                    $history->addPayment($pm);
+                    $pm->setPaymentHistory($history);
+                    $pm->setActive(true);
                     $pm->setPay($pay);
                     $pay->addPayment($pm);
+                } else {
+                    $originalData = $this->entityManager->getUnitOfWork()->getOriginalEntityData($pm);
+                    if (!$pm->compareWithArray($originalData)) {
+                        $originalPayment = new Payment();
+                        $originalPayment->setPay(
+                            $pm->getPay());
+                        $originalPayment->setPaymentHistory(
+                            $pm->getPaymentHistory());
+                        $originalPayment->setPaymentDate(
+                            $originalData['paymentDate']);
+                        $originalPayment->setAmountPayed(
+                            $originalData['amountPayed']);
+                        $originalPayment->setStatus(
+                            $originalData['status']);
+                        $originalPayment->setActive(false);
+                        $originalPayment->setPay($pay);
+                        $pay->addPayment($originalPayment);
+                        $pm->setActive(true);
+                        $pm->setPay($pay);
+                    }
                 }
             }
         }
