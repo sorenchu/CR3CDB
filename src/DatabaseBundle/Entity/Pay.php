@@ -242,4 +242,45 @@ class Pay
     {
         return $this->memberData;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $activePayment;
+
+
+    /**
+     * Add activePayment.
+     *
+     * @param \DatabaseBundle\Entity\ActivePayment $activePayment
+     *
+     * @return Pay
+     */
+    public function addActivePayment(\DatabaseBundle\Entity\ActivePayment $activePayment)
+    {
+        $this->activePayment[] = $activePayment;
+
+        return $this;
+    }
+
+    /**
+     * Remove activePayment.
+     *
+     * @param \DatabaseBundle\Entity\ActivePayment $activePayment
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeActivePayment(\DatabaseBundle\Entity\ActivePayment $activePayment)
+    {
+        return $this->activePayment->removeElement($activePayment);
+    }
+
+    /**
+     * Get activePayment.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getActivePayment()
+    {
+        return $this->activePayment;
+    }
 }

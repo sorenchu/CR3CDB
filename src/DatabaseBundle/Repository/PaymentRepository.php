@@ -66,7 +66,7 @@ class PaymentRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
-    public function getActivePayment($phId)
+    public function getActivePaymentByHistory($phId)
     {
         $query = $this->createQueryBuilder('payment')
             ->join('payment.paymentHistory', 'history')
@@ -75,5 +75,16 @@ class PaymentRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('id', $phId)
             ->getQuery();
         return $query->getOneOrNullResult();
+    }
+
+    public function getActivePaymentsByPay($payId)
+    {
+        $query = $this->createQueryBuilder('payment')
+            ->join('payment.pay', 'pay')
+            ->where('pay.id = :id')
+            ->andWhere('payment.active = 1')
+            ->setParameter('id', $payId)
+            ->getQuery();
+        return $query->getResult();
     }
 }

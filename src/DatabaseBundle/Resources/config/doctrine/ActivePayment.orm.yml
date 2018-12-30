@@ -1,0 +1,28 @@
+# src/DatabaseBundle/Resources/config/doctrine/ActivePayment.orm.yml
+DatabaseBundle\Entity\ActivePayment:
+    type: entity
+    table: activePayment
+    repositoryClass: DatabaseBundle\Repository\ActivePaymentRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    oneToOne:
+        payment:
+            targetEntity: Payment
+            inversedBy: activePayment
+            joinColumn:
+                name: payment_id
+                referencedColumnName: id
+            cascade: ["persist", "remove"]
+
+    manyToOne:
+        pay:
+            targetEntity: Pay
+            inversedBy: activePayment
+            joinColumn:
+                name: pay_id
+                referencedColumnName: id

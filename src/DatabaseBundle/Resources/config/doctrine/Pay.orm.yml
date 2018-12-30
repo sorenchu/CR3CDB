@@ -34,3 +34,8 @@ DatabaseBundle\Entity\Pay:
         targetEntity: Payment 
         mappedBy: pay
         cascade: ["persist", "remove"]
+
+     activePayment:
+        targetEntity: ActivePayment
+        mappedBy: pay
+        cascade: ["persist", "remove"]

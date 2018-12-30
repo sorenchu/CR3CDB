@@ -20,9 +20,6 @@ DatabaseBundle\Entity\Payment:
       status:
           type: string
           nullable: true
-      active:
-          type: boolean
-          nullable: true
 
   manyToOne:
       pay:
@@ -39,6 +36,8 @@ DatabaseBundle\Entity\Payment:
               name: paymentHistory_id
               referencedColumnName: id
           cascade: ["persist", "remove"]
-          
 
-
+  oneToOne:
+       activePayment:
+          targetEntity: ActivePayment
+          mappedBy: payment

@@ -67,7 +67,7 @@
   </div>
   <div class="col" align="right">
             {% do formData.pay.setRendered() %}
-            {% do formData.pay.payment.setRendered() %}
+            {% do formData.pay.activepayment.setRendered() %}
             {{ form_row(formData.pay.wayOfPayment) }}
             {% if isBank == 'true' %}
                 {{ form_row(formData.pay.person) }}
@@ -76,13 +76,13 @@
                 {% do formData.pay.person.setRendered() %}
                 {% do formData.pay.accountNumber.setRendered() %}
             {% endif %}
-            <ul class="payments" data-prototype="{{ form_widget(formData.pay.payment.vars.prototype)|e('html_attr') }}">
-            {% if formData.pay.payment and formData.pay.payment|length > 0 %}
-              {% for payment in formData.pay.payment %}
+            <ul class="payments" data-prototype="{{ form_widget(formData.pay.activepayment.vars.prototype)|e('html_attr') }}">
+            {% if formData.pay.activepayment and formData.pay.activepayment|length > 0 %}
+              {% for p in formData.pay.activepayment %}
                     <li>
-                    {{ form_row(payment.amountPayed) }}
-                    {{ form_row(payment.paymentDate) }}
-                    {{ form_row(payment.status) }}
+                    {{ form_row(p.payment.amountPayed) }}
+                    {{ form_row(p.payment.paymentDate) }}
+                    {{ form_row(p.payment.status) }}
                     </li>
                 <br>
               {% endfor %}
@@ -92,7 +92,6 @@
               }}
             {% endif %}
             </ul>
-
   </div>
         {% else %} 
           {{ form_widget(formData, 

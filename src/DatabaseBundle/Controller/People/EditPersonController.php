@@ -17,6 +17,7 @@ use DatabaseBundle\Entity\Pay;
 use DatabaseBundle\Entity\Season;
 use DatabaseBundle\Entity\Payment;
 use DatabaseBundle\Entity\PaymentHistory;
+use DatabaseBundle\Entity\ActivePayment;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -193,15 +194,21 @@ class EditPersonController extends Controller
     private function addPayment($pay, $personalDataForm, $childEntity)
     {
         foreach($personalDataForm->get($childEntity) as $subForm) {
-            foreach($this->getFormDataArray($subForm["pay"]["payment"]) as $pm) {
-                if (!$pm->getPay()) {
+            foreach($this->getFormDataArray($subForm["pay"]["activepayment"]) as $activePayment) {
+                if (!$activePayment->getPay()) {
                     $history = new PaymentHistory();
-                    $history->addPayment($pm);
-                    $pm->setPaymentHistory($history);
-                    $pm->setActive(true);
+                    $activePayment->setPay($pay);
+                    $pay->addActivePayment($activePayment);
+
+                    $pm = $activePayment->getPayment();
+                    $activePayment->setPayment($pm);
                     $pm->setPay($pay);
+                    $history->addPayment($pm);
                     $pay->addPayment($pm);
+                    $pm->setPaymentHistory($history);
+                    $pm->setActivePayment($activePayment);
                 } else {
+                    $pm = $activePayment->getPayment();
                     $originalData = $this->entityManager->getUnitOfWork()->getOriginalEntityData($pm);
                     if (!$pm->compareWithArray($originalData)) {
                         $originalPayment = new Payment();
@@ -215,10 +222,8 @@ class EditPersonController extends Controller
                             $originalData['amountPayed']);
                         $originalPayment->setStatus(
                             $originalData['status']);
-                        $originalPayment->setActive(false);
                         $originalPayment->setPay($pay);
                         $pay->addPayment($originalPayment);
-                        $pm->setActive(true);
                         $pm->setPay($pay);
                     }
                 }

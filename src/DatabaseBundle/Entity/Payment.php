@@ -33,11 +33,6 @@ class Payment
     private $paymentDate;
 
     /**
-     * @var string
-     */
-    private $active;
-
-    /**
      * Get id
      *
      * @return integer
@@ -172,30 +167,6 @@ class Payment
         return $this->paymentHistory;
     }
 
-    /**
-     * Set active.
-     *
-     * @param string $active
-     *
-     * @return Payment
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
-    /**
-     * Get active.
-     *
-     * @return string
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
     public function compareWithArray($compared)
     {
         if ($compared['id'] != $this->id 
@@ -203,9 +174,37 @@ class Payment
             or $compared['paymentHistory_id'] != $this->paymentHistory->getId()
             or $compared['paymentDate'] != $this->paymentDate
             or $compared['amountPayed'] != $this->amountPayed
-            or $compared['status'] != $this->status
-            or $compared['active'] != $this->active)
+            or $compared['status'] != $this->status)
             return false;
         return true;
+    }
+    /**
+     * @var \DatabaseBundle\Entity\ActivePayment
+     */
+    private $activePayment;
+
+
+    /**
+     * Set activePayment.
+     *
+     * @param \DatabaseBundle\Entity\ActivePayment|null $activePayment
+     *
+     * @return Payment
+     */
+    public function setActivePayment(\DatabaseBundle\Entity\ActivePayment $activePayment = null)
+    {
+        $this->activePayment = $activePayment;
+
+        return $this;
+    }
+
+    /**
+     * Get activePayment.
+     *
+     * @return \DatabaseBundle\Entity\ActivePayment|null
+     */
+    public function getActivePayment()
+    {
+        return $this->activePayment;
     }
 }

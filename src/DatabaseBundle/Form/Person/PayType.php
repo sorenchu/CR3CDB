@@ -38,9 +38,9 @@ class PayType extends AbstractType
                     'required' => false,
                     'label' => 'Número de cuenta'
           ))
-          ->add('payment', CollectionType::class, 
+          ->add('activepayment', CollectionType::class, 
                     array(
-                      'entry_type' => PaymentType::class,
+                      'entry_type' => ActivePaymentType::class,
                       'entry_options' => array('label' => false),
                       'allow_add' => true,
                       'by_reference' => false,
