@@ -24,7 +24,6 @@
   </tr>
   {% set formNumber = formNumber +1 %}
   {% endfor %}
-
   </table>
 
 {% set formNumber = 0 %}
@@ -33,7 +32,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Historia del recibo</h5>
+        <h4 class="modal-title" id="editModalLabel">Editar recibo</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -49,9 +48,31 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="showPaymentHistory-{{formNumber}}" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="historyModalLabel">Historial del recibo</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	{% for payment in historyPayments[formNumber] %}
+	     <strong>{{ payment.getPaymentdate().format('d-m-Y') }}</strong>
+             {{ payment.getAmountPayed() }}
+	     {{ payment.getStatus() }}
+	     <br>
+	{% endfor %}
+	</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% set formNumber = formNumber +1 %}
 {% endfor %}
-
-
-
 {% endblock %}

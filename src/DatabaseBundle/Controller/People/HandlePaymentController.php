@@ -41,6 +41,22 @@ class HandlePaymentController extends Controller
             $paymentForm = $this->createForm(ActivePaymentType::class, $activePayment);
             array_push($paymentForms, $paymentForm);
         }
+        $history = $this->em->getRepository(Payment::class)
+                          ->getPaymentsGroupedByHistory();
+        $hId = NULL;
+        $pushing = NULL;
+        $historyPayments = array();
+        foreach ($history as $h) {
+            if ($hId != $h->getPaymentHistory()->getId()) {
+                if ($pushing != NULL) {
+                    array_push($historyPayments, $pushing);
+                }
+                $hId = $h->getPaymentHistory()->getId();
+                $pushing = array();
+            }
+            array_push($pushing, $h);
+        }
+        array_push($historyPayments, $pushing);
 
         return $this->render('DatabaseBundle:person:showpayments.html.twig', array(
                     'seasonForm' => $seasonForm->createView(),
@@ -49,6 +65,7 @@ class HandlePaymentController extends Controller
                     'playerData' => $playerData,
                     'activePayments' => $activePayments,
                     'paymentForms' => $paymentForms,
+                    'historyPayments' => $historyPayments,
         ));
     }
 }

@@ -87,4 +87,13 @@ class PaymentRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery();
         return $query->getResult();
     }
+
+    public function getPaymentsGroupedByHistory()
+    {
+	$query = $this->createQueryBuilder('payment')
+	    ->join('payment.paymentHistory', 'history')
+	    ->orderBy('history.id')
+	    ->getQuery();
+	return $query->getResult();
+    }
 }
