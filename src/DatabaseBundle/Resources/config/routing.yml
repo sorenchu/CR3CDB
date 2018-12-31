@@ -137,3 +137,7 @@ view_seasons:
 delete_season:
     path:  /season/deleteSeason/{id}
     defaults: { _controller: DatabaseBundle:User/Season:deleteSeason }
+
+show_payments:
+    path: /person/showPayments/{id}/{seasonId}
+    defaults: { _controller: DatabaseBundle:People/HandlePayment:showPayments }

@@ -76,6 +76,8 @@ class EditPersonController extends Controller
         } else {
             $playerData = $playerPerson->getPlayerData();
             $playerData->setCategoryBySeason($season);
+            $playerPayments = $this->entityManager->getRepository(Payment::class)
+                                ->getPaymentsByPay($playerData->getPay()->getId());
         }
 
         $coachPerson = $this->entityManager->getRepository(CoachPerson::class)->getCoachPerson($id, $season);
@@ -161,6 +163,7 @@ class EditPersonController extends Controller
                     'curSeason' => $season,
                     'isBank' => $bank,
                     'underage' => $underage,
+                    'playerPayments' => $playerPayments,
                     ));
     }
 

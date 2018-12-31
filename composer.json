@@ -34,7 +34,9 @@
         "symfony/assetic-bundle": "^2.8",
         "sensio/framework-extra-bundle": "^5.2",
         "sensio/distribution-bundle": "^5.0",
-        "sensio/generator-bundle": "^3.1"
+        "sensio/generator-bundle": "^3.1",
+        "twbs/bootstrap": "^4.2",
+        "symfony/webpack-encore-pack": "^1.0"
     },
     "replace": {
         "symfony/asset": "self.version",

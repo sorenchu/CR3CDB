@@ -3,7 +3,7 @@ var $addPaymentLink = $('<a href="#" class="add_payment_link">Añade un pago</a>
 var $newLinkLi = $('<li></li>').append($addPaymentLink);
 
 jQuery(document).ready(function() {
-    $collectionHolder = $('ul.payments');
+    $collectionHolder = $('ul.playerpayments');
     $collectionHolder.append($addPaymentLink);
 
     $collectionHolder.data('index', $collectionHolder.find(':input').length);

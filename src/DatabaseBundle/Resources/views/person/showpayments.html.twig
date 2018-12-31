@@ -1,0 +1,57 @@
+{% extends 'DatabaseBundle:base:base.html.twig' %}
+
+{% block title %}
+  {{ personalData.name }} {{ personalData.surname }}
+{% endblock %}
+
+{% block body %}
+  <h1><a href="/person/editPerson/{{playerData.getPersonalData().getId()}}/{{curSeason.getId()}}"> {{ personalData.name }} {{ personalData.surname }}</a></h1> 
+  {{ include ('DatabaseBundle:season:seasonform.html.twig') }}
+  <table style="width: 66%">
+  <tr>
+     <th><strong>Cantidad</strong></th>
+     <th><strong>Fecha</strong></th>
+     <th><strong>Estado</strong></th>
+  {% set formNumber = 0 %}
+  {% for data in activePayments %}
+  <tr>
+     <td> <a href="#" data-toggle="modal" data-target="#editPayment-{{formNumber}}"> {{ data.getPayment().getAmountPayed() }} </a></td>
+     <td> {{ data.getPayment().getPaymentDate().format('d-m-Y') }} </td>
+     <td> {{ data.getPayment().getStatus() }} </td>
+     <td> <a href="#" data-toggle="modal" data-target="#showPaymentHistory-{{formNumber}}"> Ver historial </a>
+     </td>
+     <td> <a href="#"> Eliminar pago </a></td>
+  </tr>
+  {% set formNumber = formNumber +1 %}
+  {% endfor %}
+
+  </table>
+
+{% set formNumber = 0 %}
+{% for data in activePayments %}
+<div class="modal fade" id="editPayment-{{formNumber}}" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Historia del recibo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{ form_start(paymentForms[formNumber].createView()) }}
+	{{ form_end(paymentForms[formNumber].createView()) }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% set formNumber = formNumber +1 %}
+{% endfor %}
+
+
+
+{% endblock %}
