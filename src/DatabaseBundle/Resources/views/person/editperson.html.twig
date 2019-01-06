@@ -67,10 +67,11 @@
             {% endif %}
   </div>
   <div class="col" align="right">
+            <a href="/person/showPayments/{{personalData.id}}/{{curSeason.id}}">Ver pagos</a>
             {% do formData.pay.setRendered() %}
             {% do formData.pay.activepayment.setRendered() %}
             {{ form_row(formData.pay.wayOfPayment) }}
-            {% if isBank == 'true' %}
+            {% if isPlayerBank == 'true' %}
                 {{ form_row(formData.pay.person) }}
                 {{ form_row(formData.pay.accountNumber) }}
             {% else %} 
@@ -151,10 +152,11 @@
         {{ form_row(formData.datedata.leavingDate) }}
   </div>
   <div class="col" align="right">
+            <a href="/person/showPayments/{{personalData.id}}/{{curSeason.id}}">Ver pagos</a>
             {% do formData.pay.setRendered() %}
             {% do formData.pay.activepayment.setRendered() %}
             {{ form_row(formData.pay.wayOfPayment) }}
-            {% if isBank == 'true' %}
+            {% if isMemberBank == 'true' %}
                 {{ form_row(formData.pay.person) }}
                 {{ form_row(formData.pay.accountNumber) }}
             {% else %} 

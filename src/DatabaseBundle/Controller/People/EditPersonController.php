@@ -139,7 +139,8 @@ class EditPersonController extends Controller
 
         $personalDataForm = $this->createForm(PersonalDataType::class, $personalData);
         $personalDataForm->handleRequest($request);
-        $bank = $this->getBank($playerData, $personalDataForm, $season);
+        $playerBank = $this->getBank("playerData", $personalDataForm, $season);
+        $memberBank = $this->getBank("memberData", $personalDataForm, $season);
         $underage = $this->isUnderage($personalData->getPlayerDataBySeason($season));
         if ($personalDataForm->isSubmitted()) {
             if($playerData) {
@@ -161,16 +162,17 @@ class EditPersonController extends Controller
                     'seasonForm' => $seasonForm->createView(),
                     'personalData' => $personalData,
                     'curSeason' => $season,
-                    'isBank' => $bank,
+                    'isPlayerBank' => $playerBank,
+                    'isMemberBank' => $memberBank,
                     'underage' => $underage,
                     'playerPayments' => $playerPayments,
                     ));
     }
 
-    private function getBank($playerData, $personalDataForm, $season)
+    private function getBank($data, $personalDataForm, $season)
     {
         $bank = 'false';
-        foreach($personalDataForm->get("playerData") as $subForm) {
+        foreach($personalDataForm->get($data) as $subForm) {
             if ($this->getFormDataArray($subForm)["season"] == $season) {
                 $data = $this->getFormDataArray($subForm)["pay"];
                 if ($data && $data->getWayOfPayment() == 'bank') {
