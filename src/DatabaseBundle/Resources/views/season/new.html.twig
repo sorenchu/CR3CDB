@@ -2,24 +2,28 @@
 
 {% block title %}
 {% if edit %}
-  Editar temporada
+  {% trans %} editseason {% endtrans %}
 {% else %}
-  Nueva temporada
+  {% trans %} newseason {% endtrans %}
 {% endif %}
 {% endblock %}
 
 {% block body %}
+<h1>
 {% if edit %}
-    <h1>Editar temporada</h1>
+  {% trans %} editseason {% endtrans %}
 {% else %}
-    <h1>Nueva temporada</h1>
+  {% trans %} newseason {% endtrans %}
 {% endif %}
+</h1>
 
 {# src/DatabaseBundle/Resources/views/season/new.html.twig #}
 {{ form_start(seasonForm) }}
 <table>
     {% if error %}
-        <tr>No se puede desmarcar la temporada predeterminada.</tr>
+        <tr>
+        {% trans %} defaultseasonerror {% endtrans %}
+        </tr>
     {% endif %}
   <tr>
     <td>

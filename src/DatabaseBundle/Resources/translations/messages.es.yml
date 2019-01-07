@@ -57,6 +57,13 @@ addseason: Añadir temporada
 showseasons: Mostrar temporadas
 noseason: No se han añadido temporadas todavía.
 addoneseason: Añade una
+editseason: Editar temporada
+newseason: Nueva temporada
+defaultseasonerror: No se puede desmarcar la temporada predeterminada.
+deleteddefaultseasonerror: No se puede desmarcar la temporada predeterminada.
+deletedseasonsuccess: La temporada se ha borrado correctamente
+season: Temporada
+default: Predeterminada
 
 main: Principal
 pictures: Imágenes
