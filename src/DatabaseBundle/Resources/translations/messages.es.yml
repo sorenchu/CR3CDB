@@ -50,6 +50,8 @@ deleteuserconfirm: ¿Estás seguro de querer borrar este usuario?
 admin: Administrador
 accounting: Contable
 passwordchange: Cambiar contraseña
+changesuccess: La constraseña se ha cambiado correctamente
+wrongpassword: Error al introducir la contraseña actual
 
 importfile: Importar archivo
 importsuccess: Archivo importado con éxito

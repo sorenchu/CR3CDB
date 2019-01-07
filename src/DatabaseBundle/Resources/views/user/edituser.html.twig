@@ -1,13 +1,13 @@
 {% extends 'DatabaseBundle:base:base.html.twig' %}
 
-{% block title %}Cambiar contraseña{% endblock %}
+{% block title %}{% trans %} passwordchange {% endtrans %}{% endblock %}
 
 {% block body %}
-<h1>Cambiar contraseña</h1>
+<h1>{% trans %} passwordchange {% endtrans %}</h1>
 
 {# src/DatabaseBundle/Resources/view/user/edituser.html.twig #}
 {% if changed %}
-  La contraseña se ha cambiado correctamente
+  {% trans %} changesuccess {% endtrans %}
 {% endif %}
 
 {{ form_start(userData) }}
@@ -20,7 +20,7 @@
   {% if wrongPassword %}
   <tr>
     <td>
-        Error al introducir la contraseña actual 
+        {% trans %} wrongpassword {% endtrans %}
     </td>
   </tr>
   {% endif %}
