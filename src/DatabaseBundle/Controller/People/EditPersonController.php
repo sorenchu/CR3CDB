@@ -75,6 +75,12 @@ class EditPersonController extends Controller
             $personalData->addPlayerDatum($playerData);
         } else {
             $playerData = $playerPerson->getPlayerData();
+            $pay = $this->entityManager->getRepository(Pay::class)->getPay($playerData->getId());
+            if ($pay == NULL) {
+                $pay = new Pay();
+            }
+            $playerData->setPay($pay);
+            $pay->setPlayerData($playerData);
             $playerData->setCategoryBySeason($season);
             $playerPayments = $this->entityManager->getRepository(Payment::class)
                                 ->getPaymentsByPay($playerData->getPay()->getId());
