@@ -1,9 +1,9 @@
 {% extends 'DatabaseBundle:base:base.html.twig' %}
 
-{% block title %} Importar archivo {% endblock %}
+{% block title %} {% trans %} importfile {% endtrans %} {% endblock %}
 
 {% block body %}
-<h1>Importar archivo</h1>
+<h1>{% trans %} importfile {% endtrans %}</h1>
 
 <table>
   {{ form_start(fileImportForm) }}
@@ -25,9 +25,9 @@
   <tr>
     <td>
     {% if success %}
-        Archivo importado con éxito
+        {% trans %} importsuccess {% endtrans %}
     {% else %}
-        Ha habido algún problema importando el archivo
+        {% trans %} importunsuccess {% endtrans %}
     {% endif %}
     </td>
   </tr>

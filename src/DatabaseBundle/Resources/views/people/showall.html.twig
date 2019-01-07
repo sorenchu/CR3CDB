@@ -1,18 +1,20 @@
 {% extends 'DatabaseBundle:base:base.html.twig' %}
 
 {% block title %}
-  Mostrando todos los miembros
+  {% trans %} showall {% endtrans %}
 {% endblock %}
 
 {% block body %}
-<h1>Miembros del club</h1>
+<h1>
+  {% trans %} showall {% endtrans %}
+</h1>
 <table style="width: 100%">
 <tr>
-  <th><strong>Nombre</strong></th>
-  <th><strong>Apellidos</strong></th>
-  <th><strong>Apodo</strong></th>
-  <th><strong>Email</strong></th>
-  <th>Número de teléfono</th>
+  <th><strong>{% trans %} name {% endtrans %}</strong></th>
+  <th><strong>{% trans %} surname {% endtrans %}</strong></th>
+  <th><strong>{% trans %} nickname {% endtrans %}</strong></th>
+  <th><strong>{% trans %} email {% endtrans %}</strong></th>
+  <th><strong>{% trans %} phonenumber {% endtrans %}</strong></th>
 </tr>
 {% for data in personalData %}
   <tr>
@@ -27,8 +29,8 @@
             {{ data.getContactData().getPhone() }}
          {% endif %}
     </td>
-    <td> <a href="/person/editPerson/{{data.getId()}}/{{season.getId()}}"> Editar </a> </td>
-    <td> <a href="/person/deletePerson/{{data.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> Eliminar </a> </td>
+    <td> <a href="/person/editPerson/{{data.getId()}}/{{season.getId()}}"> {% trans %} edit {% endtrans %} </a> </td>
+    <td> <a href="/person/deletePerson/{{data.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este miembro?')"> {% trans %} delete {% endtrans %} </a> </td>
   </tr>
 {% endfor %}
 </table>

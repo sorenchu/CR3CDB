@@ -1,25 +1,27 @@
 {% extends 'DatabaseBundle:base:base.html.twig' %}
 
 {% block title %}
-  Mostrando a todos los socios
+    {% trans %} showmembers {% endtrans %}
 {% endblock %}
 
 {% block body %}
-<h1>Socios del Club</h1>
+<h1>
+    {% trans %} showmembers {% endtrans %}
+</h1>
 {% if seasonNumber == 0%}
-    <span> No se han añadido temporadas todavía. <a href="/season/newSeason">Añade una</a></span>
+    <span> {% trans %} noseason {% endtrans %} <a href="/season/newSeason">{% trans %} addoneseason {% endtrans %}</a></span>
 {% else %}
   {{ include ('DatabaseBundle:season:seasonform.html.twig') }}
 
   <table style="width: 100%">
   <tr>
-    <th>Nombre y apellidos </th>
-    <th>Número de socio</th>
-    <th>Número de teléfono</th>
-    <th>Email</th>
-    {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %} 
-        <th>Pagos</th>
-    {% endif %}
+  <th><strong>{% trans %} namesurname {% endtrans %}</strong></th>
+  <th><strong>{% trans %} membernumber {% endtrans %}</strong></th>
+  <th><strong>{% trans %} email {% endtrans %}</strong></th>
+  <th><strong>{% trans %} phonenumber {% endtrans %}</strong></th>
+  {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %} 
+      <th><strong>{% trans %} payments {% endtrans %}</strong></th>
+  {% endif %}
   </tr>
 
   {% for data in memberData %}

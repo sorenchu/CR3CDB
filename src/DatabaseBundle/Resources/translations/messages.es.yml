@@ -1,4 +1,5 @@
 membermanagement: Gestión de los miembros
+showall: Miembros del club
 all: Todos
 members: Socios
 parents: Padres
@@ -18,11 +19,16 @@ u8team: Equipo sub8
 u6team: Equipo sub6
 
 namesurname: Nombre y apellidos
+name: Nombre
+surname: Apellidos
 nickname: Apodo
 rugbynumber: Ficha
 email: Email
 phonenumber: Número de teléfono
 payments: Pagos
+
+showmembers: Socios del club
+membernumber: Número de socio
 
 usermanagement: Gestión de usuarios
 adduser: Añadir usuario
@@ -39,9 +45,15 @@ admin: Administrador
 accounting: Contable
 passwordchange: Cambiar contraseña
 
+importfile: Importar archivo
+importsuccess: Archivo importado con éxito
+importunsuccess: Ha habido algún problema importando el archivo
+
 seasonmanagement: Gestión de temporadas
 addseason: Añadir temporada
 showseasons: Mostrar temporadas
+noseason: No se han añadido temporadas todavía.
+addoneseason: Añade una
 
 edit: Editar
 delete: Eliminar
