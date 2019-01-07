@@ -1,10 +1,10 @@
 <tr>
-  <th><strong>Nombre y apellidos</strong></th>
-  <th><strong>Apodo</strong></th>
-  <th><strong>Número de ficha</strong></th>
-  <th><strong>Padre</strong></th>
-  <th>Número de teléfono</th>
+  <th><strong>{% trans %}namesurname{% endtrans %}</strong></th>
+  <th><strong>{% trans %}nickname{% endtrans %}</strong></th>
+  <th><strong>{% trans %}rugbynumber{% endtrans %}</strong></th>
+  <th><strong>{% trans %}father {% endtrans %}</strong></th>
+  <th><strong>{% trans %}phonenumber{% endtrans %}</strong></th>
   {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %}
-    <th>Pagos</th>
+    <th><strong>{% trans %}payments{% endtrans %}</strong></th>
   {% endif %}
 </tr>

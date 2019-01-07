@@ -2,6 +2,7 @@ membermanagement: Gestión de los miembros
 all: Todos
 members: Socios
 parents: Padres
+father: Padre
 
 playermanagement: Gestión del equipo
 addmember: Añadir miembro
@@ -15,6 +16,13 @@ u12team: Equipo sub12
 u10team: Equipo sub10
 u8team: Equipo sub8
 u6team: Equipo sub6
+
+namesurname: Nombre y apellidos
+nickname: Apodo
+rugbynumber: Ficha
+email: Email
+phonenumber: Número de teléfono
+payments: Pagos
 
 usermanagement: Gestión de usuarios
 adduser: Añadir usuario
