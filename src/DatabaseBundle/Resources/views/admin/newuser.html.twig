@@ -1,19 +1,21 @@
-{% extends 'DatabaseBundle:base:admin_base.html.twig' %}
+{% extends 'DatabaseBundle:base:base.html.twig' %}
 
 {% block title %}
 {% if edit %}
-  Editar usuario
+  {% trans %} edituser {% endtrans %}
 {% else %}
-  Añadir usuario
+  {% trans %} adduser {% endtrans %}
 {% endif %}
 {% endblock %}
 
 {% block body %}
+<h1>
 {% if edit %}
-  <h1>Editar usuario</h1>
+  {% trans %} edituser {% endtrans %}
 {% else %}
-  <h1>Añadir usuario</h1>
+  {% trans %} adduser {% endtrans %}
 {% endif %}
+</h1>
 
 {# src/DatabaseBundle/Resources/view/admin/newuser.html.twig #}
 

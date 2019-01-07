@@ -1,9 +1,54 @@
+membermanagement: Gestión de los miembros
+all: Todos
+members: Socios
+parents: Padres
+
+playermanagement: Gestión del equipo
+addmember: Añadir miembro
+import: Importar
+seniorteam: Equipo senior
+femaleteam: Equipo femenino
+u18team: Equipo sub18
+u16team: Equipo sub16
+u14team: Equipo sub14
+u12team: Equipo sub12
+u10team: Equipo sub10
+u8team: Equipo sub8
+u6team: Equipo sub6
+
+usermanagement: Gestión de usuarios
+adduser: Añadir usuario
+edituser: Editar usuario
+showusers: Mostrar usuarios
+deleteduser: El usuario de ha borrado correctamente
+cannotdeleteadmin: No se puede borrar el usuario <strong>admin</strong>
+users: Usuarios
+user: Usuario
+password: Password
+role: Rol
+deleteuserconfirm: ¿Estás seguro de querer borrar este usuario?
+admin: Administrador
+accounting: Contable
+passwordchange: Cambiar contraseña
+
+seasonmanagement: Gestión de temporadas
+addseason: Añadir temporada
+showseasons: Mostrar temporadas
+
+edit: Editar
+delete: Eliminar
+
 quantity: Cantidad
 date: Fecha
 status: Estado
 pending: Pendiente de cobro
 charged: Pagado
 returned: Devuelto
+
+nopermission: No tienes permisos para acceder a esta página
+
 save: Guardar
 close: Cerrar
-nopermission: No tienes permisos para acceder a esta página
+
+logout: Salir
+copyright: Copyright 2016 by Balmaservices

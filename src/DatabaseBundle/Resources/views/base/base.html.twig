@@ -17,52 +17,52 @@
       <div id="container">
         <img src="{{ asset('/images/Rugby-Tres-Cantos-Banner.jpg') }}" alt="banner" width="100%" />
           <ul class="nav">
-            <li><a href="/people/showAll">Gestión de los miembros</a>
+            <li><a href="/people/showAll">{% trans %} membermanagement {% endtrans %}</a>
               <ul>
-                  <li><a href="/people/showAll">Todos</a></li>
-                  <li><a href="/people/showMembers">Socios</a></li>
-                  <li><a href="/people/showParents">Padres</a></li>
+                  <li><a href="/people/showAll">{% trans %} all {% endtrans %}</a></li>
+                  <li><a href="/people/showMembers">{% trans %}members{% endtrans %}</a></li>
+                  <li><a href="/people/showParents">{% trans %}parents{% endtrans %}</a></li>
               </ul>
             </li>
-            <li><a href="/team/showSenior">Gestión del equipo</a>
+            <li><a href="/team/showSenior">{% trans %} playermanagement {% endtrans %}</a>
               <ul>
-                  <li><a href="/person/new">Añadir Miembro</a></li>
-                  <li><a href="/people/new">Importar</a></li>
-                  <li><a href="/team/showSenior">Equipo Senior</a></li>
-                  <li><a href="/team/showFemale">Equipo Femenino</a></li>
-                  <li><a href="/team/showSub18">Equipo Sub18</a></li>
-                  <li><a href="/team/showSub16">Equipo Sub16</a></li>
-                  <li><a href="/team/showSub14">Equipo Sub14</a></li>
-                  <li><a href="/team/showSub12">Equipo Sub12</a></li>
-                  <li><a href="/team/showSub10">Equipo Sub10</a></li>
-                  <li><a href="/team/showSub8">Equipo Sub8</a></li>
-                  <li><a href="/team/showSub6">Equipo Sub6</a></li>
+                  <li><a href="/person/new">{% trans %} addmember {%endtrans %}</a></li>
+                  <li><a href="/people/new">{% trans %} import{% endtrans %}</a></li>
+                  <li><a href="/team/showSenior">{% trans %}seniorteam{% endtrans %}</a></li>
+                  <li><a href="/team/showFemale">{% trans %}femaleteam{% endtrans %}</a></li>
+                  <li><a href="/team/showSub18">{% trans %}u18team{% endtrans %}</a></li>
+                  <li><a href="/team/showSub16">{% trans %}u16team{% endtrans %}</a></li>
+                  <li><a href="/team/showSub14">{% trans %}u14team{% endtrans %}</a></li>
+                  <li><a href="/team/showSub12">{% trans %}u12team{% endtrans %}</a></li>
+                  <li><a href="/team/showSub10">{% trans %}u10team{% endtrans %}</a></li>
+                  <li><a href="/team/showSub8"> {% trans %}u8team{% endtrans %}</a></li>
+                  <li><a href="/team/showSub6"> {% trans %}u6team{% endtrans %}</a></li>
               </ul>
             </li>
-            {% if is_granted("ROLE_ADMIN") %}
-            <li><a href="/admin/showUsers">Gestión de usuarios</a>
+            {% if is_granted("ROLE_ADMIN") %} 
+            <li><a href="/admin/showUsers">{% trans %} usermanagement {% endtrans %}</a>
               <ul>
-                  <li><a href="/admin/newUser">Añadir usuario</a></li>
-                  <li><a href="/admin/showUsers">Mostrar usuarios</a></li>
+                  <li><a href="/admin/newUser">{% trans %} adduser {% endtrans %}</a></li>
+                  <li><a href="/admin/showUsers">{% trans %} showusers {% endtrans %}</a></li>
               </ul>
             </li>
             {% endif %}
-            <li><a href="/season/showSeasons">Gestión de temporadas</a>
+            <li><a href="/season/showSeasons">{% trans %} seasonmanagement {% endtrans %}</a>
               <ul>
-                  <li><a href="/season/newSeason">Añadir temporada</a></li>
-                  <li><a href="/season/showSeasons">Mostrar temporadas</a></li>
+                  <li><a href="/season/newSeason">{% trans %} addseason {% endtrans %}</a></li>
+                  <li><a href="/season/showSeasons">{% trans %} showseasons {% endtrans %}</a></li>
               </ul>
             </li>
-            <li><a href="/user/changePassword">Cambiar contraseña</a></li>
-            <li align="right"><a href="{{ path('logout') }}">Logout</a></li>
+            <li><a href="/user/changePassword">{% trans %} passwordchange {% endtrans %}</a></li>
+            <li align="right"><a href="{{ path('logout') }}">{% trans %} logout {% endtrans %}</a></li>
           </ul>
           {% block body %} 
           {% endblock %}
         <div id="footer">
           {% block footer %}
-            &copy; Copyright 2016 by Balmaservices
+            &copy; {% trans %} copyright {% endtrans %}
           {% endblock %}
         </div>
       </div>
     </body>
-  </html>
+</html>

@@ -1,33 +1,40 @@
-{% extends 'DatabaseBundle:base:admin_base.html.twig' %}
+{% extends 'DatabaseBundle:base:base.html.twig' %}
 
-{% block title %} Mostrando usuarios {% endblock %}
+{% block title %} {% trans %} showusers {% endtrans %} {% endblock %}
 
 {%block body %}
-<h1>Usuarios</h1>
+<h1>{% trans %} users {% endtrans %}</h1>
 
 {# src/DatabaseBundle/Resources/view/admin/showusers.html.twig #}
 {% if deleted is defined %}
   {% if deleted == true %}
-    <span>El usuario se ha borrado correctamente</span>
+    <span>{% trans %} deleteduser {% endtrans %}</span>
   {% else %}
-    <span>No se puede borrar el usuario <strong>admin</strong></span>
+    <span>{% trans %} cannotdeleteadmin {% endtrans %}</span>
   {% endif %}
 {% endif %}
 
 <table style="width: 100%">
 <tr>
-  <th><strong>Usuario</strong></th>
+  <th><strong>{% trans %} user {% endtrans %}</strong></th>
   {# TODO: password needs to be skipped #}
-  <th><strong>Password</strong></th>
-  <th><strong>Rol</strong></th>
+  <th><strong>{% trans %} password {% endtrans %}</strong></th>
+  <th><strong>{% trans %} role     {% endtrans %}</strong></th>
 </tr>
 {% for user in userData %}
   <tr>
     <td> {{ user.getUsername() }} </td>
     <td> ***************** </td>
-    <td> {{ user.getRole() }} </td>
-    <td> <a href="/admin/editUser/{{user.getId()}}">Editar</a></td>
-    <td> <a href="/admin/deleteUser/{{user.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este usuario?')"> Eliminar </a> </td>
+    <td> {% if user.getRole() == "ROLE_ADMIN" %}
+            {% trans %} admin {% endtrans %}
+         {% elseif user.getRole() == "ROLE_USER" %}
+            {% trans %} user {% endtrans %}
+         {% elseif user.getRole() == "ROLE_ACCOUNTING" %}
+            {% trans %} accouting {% endtrans %}
+         {% endif %}
+    </td>
+    <td> <a href="/admin/editUser/{{user.getId()}}">{% trans %} edit {% endtrans %} </a></td>
+    <td> <a href="/admin/deleteUser/{{user.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar este usuario?')">{% trans %} delete {% endtrans %}</a> </td>
   </tr>
 {% endfor %}
 </table>
