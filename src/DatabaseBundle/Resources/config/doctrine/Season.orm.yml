@@ -42,4 +42,8 @@ DatabaseBundle\Entity\Season:
             targetEntity: ParentData
             mappedBy: season
             cascade: ["remove"]
+        journal:
+            targetEntity: Journal
+            mappedBy: season
+            cascade: ["remove"]
 

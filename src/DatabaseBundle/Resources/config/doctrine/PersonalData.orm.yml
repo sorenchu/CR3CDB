@@ -93,3 +93,8 @@ DatabaseBundle\Entity\PersonalData:
         targetEntity: ParentPerson
         mappedBy: personalData
         cascade: ["persist", "remove"]
+
+    journal:
+        targetEntity: Journal
+        mappedBy: personalData
+        cascade: ["persist", "remove"]

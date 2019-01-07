@@ -331,4 +331,45 @@ class Season
     {
         $this->id = $season->getId();
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $journal;
+
+
+    /**
+     * Add journal.
+     *
+     * @param \DatabaseBundle\Entity\Journal $journal
+     *
+     * @return Season
+     */
+    public function addJournal(\DatabaseBundle\Entity\Journal $journal)
+    {
+        $this->journal[] = $journal;
+
+        return $this;
+    }
+
+    /**
+     * Remove journal.
+     *
+     * @param \DatabaseBundle\Entity\Journal $journal
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeJournal(\DatabaseBundle\Entity\Journal $journal)
+    {
+        return $this->journal->removeElement($journal);
+    }
+
+    /**
+     * Get journal.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getJournal()
+    {
+        return $this->journal;
+    }
 }

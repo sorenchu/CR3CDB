@@ -1,0 +1,35 @@
+# src/DatabaseBundle/Resources/config/doctrine/Journal.orm.yml
+DatabaseBundle\Entity\Journal:
+    type: entity
+    table: journal
+    repositoryClass: DatabaseBundle\Repository\JournalRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+
+    fields:
+        title:
+            type: string
+            length: 40
+            nullable: true
+
+        text:
+            type: string
+            length: 2048
+            nullable: true
+
+    manyToOne:
+       personalData:
+            targetEntity: PersonalData
+            inversedBy: journal
+            joinColumn:
+                name: personalData_id
+                referencedColumnName: id
+
+       season:
+            targetEntity: Season
+            inversedBy: journal
+            joinColumn:
+                name: season_id
+                referencedColumnName: id
