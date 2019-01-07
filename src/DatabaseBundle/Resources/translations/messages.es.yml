@@ -18,6 +18,9 @@ u12team: Equipo sub12
 u10team: Equipo sub10
 u8team: Equipo sub8
 u6team: Equipo sub6
+showteam: Mostrando equipo
+membersof: Miembros del
+coach: Entrenador
 
 personaldata: Datos personales
 namesurname: Nombre y apellidos

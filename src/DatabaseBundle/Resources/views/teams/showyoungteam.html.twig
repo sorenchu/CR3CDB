@@ -1,13 +1,13 @@
 {% extends 'DatabaseBundle:base:base.html.twig' %}
 
 {% block title %}
-  Mostrando equipo {{teamName}}
+  {% trans %} showteam {% endtrans %} {{teamName}}
 {% endblock %}
 
 {% block body %}
 <h1>Miembros del {{teamName}}</h1>
 {% if seasonNumber == 0 %}
-    <span> No se han añadido temporadas todavía. <a href="/season/newSeason">Añade una</a></span>
+    <span> {% trans %} noseason {% endtrans %} <a href="/season/newSeason">{% trans %} addoneseason {% endtrans %}</a></span>
 {% else %}
   {{ include ('DatabaseBundle:season:seasonform.html.twig') }}
 
@@ -61,7 +61,7 @@
   {% for data in coachData %}
     <tr>
       <td> {{ data.getPersonalData().getName() }}
-           {{ data.getPersonalData().getSurname() }} (Entrenador) </td>
+           {{ data.getPersonalData().getSurname() }} ({% trans %} coach {% endtrans %}) </td>
       <td> {{ data.getPersonalData().getNickname() }} </td>
       <td> {{ data.getNumber() }} </td>
       <td> {{ data.getPersonalData().getEmail() }} </td>
