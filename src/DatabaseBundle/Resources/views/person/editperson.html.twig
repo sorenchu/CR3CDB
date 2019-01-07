@@ -67,7 +67,9 @@
             {% endif %}
   </div>
   <div class="col" align="right">
-            <a href="/person/showPayments/{{personalData.id}}/{{curSeason.id}}">Ver pagos</a>
+            {% if formData.pay.activepayment|length > 0 %}
+                <a href="/person/showPayments/{{personalData.id}}/{{curSeason.id}}">Ver pagos</a>
+            {% endif %}
             {% do formData.pay.setRendered() %}
             {% do formData.pay.activepayment.setRendered() %}
             {{ form_row(formData.pay.wayOfPayment) }}
@@ -152,7 +154,9 @@
         {{ form_row(formData.datedata.leavingDate) }}
   </div>
   <div class="col" align="right">
-            <a href="/person/showPayments/{{personalData.id}}/{{curSeason.id}}">Ver pagos</a>
+            {% if formData.pay.activepayment|length > 0 %}
+                <a href="/person/showPayments/{{personalData.id}}/{{curSeason.id}}">Ver pagos</a>
+            {% endif %}
             {% do formData.pay.setRendered() %}
             {% do formData.pay.activepayment.setRendered() %}
             {{ form_row(formData.pay.wayOfPayment) }}

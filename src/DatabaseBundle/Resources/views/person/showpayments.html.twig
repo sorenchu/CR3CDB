@@ -9,15 +9,22 @@
   {{ include ('DatabaseBundle:season:seasonform.html.twig') }}
   <table style="width: 66%">
   <tr>
-     <th><strong>Cantidad</strong></th>
-     <th><strong>Fecha</strong></th>
-     <th><strong>Estado</strong></th>
+     <th><strong>{% trans %}quantity{% endtrans %}</strong></th>
+     <th><strong>{% trans %}date{% endtrans %}</strong></th>
+     <th><strong>{% trans %}status{% endtrans %}</strong></th>
   {% set formNumber = 0 %}
   {% for data in activePayments %}
   <tr>
      <td> <a href="#" data-toggle="modal" data-target="#editPayment-{{formNumber}}"> {{ data.getPayment().getAmountPayed() }} </a></td>
      <td> {{ data.getPayment().getPaymentDate().format('d-m-Y') }} </td>
-     <td> {{ data.getPayment().getStatus() }} </td>
+     <td> {% if data.getPayment().getStatus() == "pending" %} 
+            {% trans %} pending {% endtrans %} 
+          {% elseif data.getPayment().getStatus() == "charged" %}
+            {% trans %} charged {% endtrans %}
+          {% elseif data.getPayment().getStatus() == "returned" %}
+            {% trans %} returned {% endtrans %}
+          {% endif %}
+     </td>
      <td> <a href="#" data-toggle="modal" data-target="#showPaymentHistory-{{formNumber}}"> Ver historial </a>
      </td>
      <td> <a href="#"> Eliminar pago </a></td>
@@ -42,8 +49,8 @@
 	{{ form_end(paymentForms[formNumber].createView()) }}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans %} close {% endtrans %}</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">{% trans %} save {% endtrans %}</button>
       </div>
     </div>
   </div>
@@ -62,13 +69,19 @@
 	{% for payment in historyPayments[formNumber] %}
 	     <strong>{{ payment.getPaymentdate().format('d-m-Y') }}</strong>
              {{ payment.getAmountPayed() }}
-	     {{ payment.getStatus() }}
+             {% if payment.getStatus() == "pending" %} 
+               {% trans %} pending {% endtrans %} 
+             {% elseif payment.getStatus() == "charged" %}
+               {% trans %} charged {% endtrans %}
+             {% elseif payment.getStatus() == "returned" %}
+               {% trans %} returned {% endtrans %}
+             {% endif %}
 	     <br>
 	{% endfor %}
 	</table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans %} close {% endtrans %}</button>
       </div>
     </div>
   </div>

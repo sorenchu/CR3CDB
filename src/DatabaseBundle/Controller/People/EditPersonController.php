@@ -32,6 +32,7 @@ class EditPersonController extends Controller
         $playerData = NULL;
         $bank = 'false';
         $underage = 'false';
+        $playerPayments = NULL;
 
         $this->entityManager = $this->getDoctrine()->getManager();
         $season = $this->entityManager->getRepository(Season::class)->find($seasonId);
@@ -78,9 +79,9 @@ class EditPersonController extends Controller
             $pay = $this->entityManager->getRepository(Pay::class)->getPay($playerData->getId());
             if ($pay == NULL) {
                 $pay = new Pay();
+                $playerData->setPay($pay);
+                $pay->setPlayerData($playerData);
             }
-            $playerData->setPay($pay);
-            $pay->setPlayerData($playerData);
             $playerData->setCategoryBySeason($season);
             $playerPayments = $this->entityManager->getRepository(Payment::class)
                                 ->getPaymentsByPay($playerData->getPay()->getId());
