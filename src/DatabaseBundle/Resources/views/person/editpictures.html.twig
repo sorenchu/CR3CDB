@@ -6,16 +6,16 @@
 
 {# src/DatabaseBundle/Resources/views/Default/editpictures.html.twig #}
 <table>
-<td><a href="/person/editPerson/{{personalData.id}}/{{season.id}}">Principal</a></td>
-<td><a href="#">Imágenes</a></td>
+<td><a href="/person/editPerson/{{personalData.id}}/{{season.id}}">{% trans %} main {% endtrans %}</a></td>
+<td><a href="#">{% trans %} pictures {% endtrans %}</a></td>
 </table>
 {{ form_start(picturesForm) }}
 <table>
     <tr/>
     <tr>
-        <th>DNI</th>
-        <th>LIBRO DE FAMILIA</th>
-        <th>TARJETA SANITARIA</th>
+        <th>{% trans %} idnumber {% endtrans %}</th>
+        <th>{% trans %} familybook {% endtrans %}</th>
+        <th>{% trans %} healthcarecard {% endtrans %}</th>
     </tr>
     <tr>
         {% if personalData.getPictures() %}

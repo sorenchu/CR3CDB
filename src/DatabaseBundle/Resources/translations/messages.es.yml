@@ -7,6 +7,7 @@ father: Padre
 
 playermanagement: Gestión del equipo
 addmember: Añadir miembro
+newmember: Nuevo miembro
 import: Importar
 seniorteam: Equipo senior
 femaleteam: Equipo femenino
@@ -18,6 +19,7 @@ u10team: Equipo sub10
 u8team: Equipo sub8
 u6team: Equipo sub6
 
+personaldata: Datos personales
 namesurname: Nombre y apellidos
 name: Nombre
 surname: Apellidos
@@ -26,6 +28,7 @@ rugbynumber: Ficha
 email: Email
 phonenumber: Número de teléfono
 payments: Pagos
+showpayments: Ver pagos
 
 showmembers: Socios del club
 membernumber: Número de socio
@@ -55,6 +58,11 @@ showseasons: Mostrar temporadas
 noseason: No se han añadido temporadas todavía.
 addoneseason: Añade una
 
+main: Principal
+pictures: Imágenes
+idcard: DNI
+familybook: Libro de familia
+healthcarecard: Tarjeta sanitaria
 edit: Editar
 delete: Eliminar
 

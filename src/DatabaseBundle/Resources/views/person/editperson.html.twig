@@ -14,13 +14,13 @@
         {{ include('DatabaseBundle:season:seasonform.html.twig') }}
     </div>
     <div class="col" align="right">
-        <a href="#">Principal</a>
-        <a href="/person/editPictures/{{personalData.id}}">Imágenes</a>
+        <a href="#">{% trans %} main {% endtrans %}</a>
+        <a href="/person/editPictures/{{personalData.id}}">{% trans %} pictures {% endtrans %}</a>
     </div>
 </div>
 <hr>
 {{ form_start(personalDataForm) }}
-  <h2>Datos personales</h2>
+  <h2>{% trans %} personaldata {% endtrans %}</h2>
   <div class="col" align="left">
     {{ form_row(personalDataForm.name) }}
     {{ form_row(personalDataForm.surname) }}
@@ -69,7 +69,7 @@
   {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %}
   <div class="col" align="right">
             {% if formData.pay.activepayment|length > 0 %}
-                <a href="/person/showPayments/{{personalData.id}}/{{curSeason.id}}">Ver pagos</a>
+                <a href="/person/showPayments/{{personalData.id}}/{{curSeason.id}}">{% trans %} showpayments {% endtrans %}</a>
             {% endif %}
             {% do formData.pay.setRendered() %}
             {% do formData.pay.activepayment.setRendered() %}
@@ -160,7 +160,7 @@
   {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %}
   <div class="col" align="right">
             {% if formData.pay.activepayment|length > 0 %}
-                <a href="/person/showPayments/{{personalData.id}}/{{curSeason.id}}">Ver pagos</a>
+                <a href="/person/showPayments/{{personalData.id}}/{{curSeason.id}}">{% trans %} showpayments {% endtrans %}</a>
             {% endif %}
             {% do formData.pay.setRendered() %}
             {% do formData.pay.activepayment.setRendered() %}
