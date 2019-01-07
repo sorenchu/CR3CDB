@@ -66,6 +66,7 @@
                 {% do formData.parentdata.setRendered() %}
             {% endif %}
   </div>
+  {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %}
   <div class="col" align="right">
             {% if formData.pay.activepayment|length > 0 %}
                 <a href="/person/showPayments/{{personalData.id}}/{{curSeason.id}}">Ver pagos</a>
@@ -97,6 +98,9 @@
             {% endif %}
             </ul>
   </div>
+  {% else %}
+    {% do formData.pay.setRendered() %}
+  {% endif %}
         {% else %} 
           {{ form_widget(formData, 
               { 'attr': {'style': 'display:none'} })
@@ -153,6 +157,7 @@
         {{ form_row(formData.datedata.joiningDate) }}
         {{ form_row(formData.datedata.leavingDate) }}
   </div>
+  {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %}
   <div class="col" align="right">
             {% if formData.pay.activepayment|length > 0 %}
                 <a href="/person/showPayments/{{personalData.id}}/{{curSeason.id}}">Ver pagos</a>
@@ -183,6 +188,9 @@
             {% endif %}
             </ul>
   </div>
+  {% else %}
+    {% do formData.pay.setRendered() %}
+  {% endif %}
     {% else %} 
       {{ form_widget(formData, 
           { 'attr': {'style': 'display:none'} })

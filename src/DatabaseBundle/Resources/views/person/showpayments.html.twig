@@ -7,85 +7,89 @@
 {% block body %}
   <h1><a href="/person/editPerson/{{playerData.getPersonalData().getId()}}/{{curSeason.getId()}}"> {{ personalData.name }} {{ personalData.surname }}</a></h1> 
   {{ include ('DatabaseBundle:season:seasonform.html.twig') }}
-  <table style="width: 66%">
-  <tr>
-     <th><strong>{% trans %}quantity{% endtrans %}</strong></th>
-     <th><strong>{% trans %}date{% endtrans %}</strong></th>
-     <th><strong>{% trans %}status{% endtrans %}</strong></th>
-  {% set formNumber = 0 %}
-  {% for data in activePayments %}
-  <tr>
-     <td> <a href="#" data-toggle="modal" data-target="#editPayment-{{formNumber}}"> {{ data.getPayment().getAmountPayed() }} </a></td>
-     <td> {{ data.getPayment().getPaymentDate().format('d-m-Y') }} </td>
-     <td> {% if data.getPayment().getStatus() == "pending" %} 
-            {% trans %} pending {% endtrans %} 
-          {% elseif data.getPayment().getStatus() == "charged" %}
-            {% trans %} charged {% endtrans %}
-          {% elseif data.getPayment().getStatus() == "returned" %}
-            {% trans %} returned {% endtrans %}
-          {% endif %}
-     </td>
-     <td> <a href="#" data-toggle="modal" data-target="#showPaymentHistory-{{formNumber}}"> Ver historial </a>
-     </td>
-     <td> <a href="#"> Eliminar pago </a></td>
-  </tr>
-  {% set formNumber = formNumber +1 %}
-  {% endfor %}
-  </table>
 
-{% set formNumber = 0 %}
-{% for data in activePayments %}
-<div class="modal fade" id="editPayment-{{formNumber}}" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="editModalLabel">Editar recibo</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        {{ form_start(paymentForms[formNumber].createView()) }}
-	{{ form_end(paymentForms[formNumber].createView()) }}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans %} close {% endtrans %}</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">{% trans %} save {% endtrans %}</button>
+{% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %}
+      <table style="width: 66%">
+      <tr>
+         <th><strong>{% trans %}quantity{% endtrans %}</strong></th>
+         <th><strong>{% trans %}date{% endtrans %}</strong></th>
+         <th><strong>{% trans %}status{% endtrans %}</strong></th>
+      {% set formNumber = 0 %}
+      {% for data in activePayments %}
+      <tr>
+         <td> <a href="#" data-toggle="modal" data-target="#editPayment-{{formNumber}}"> {{ data.getPayment().getAmountPayed() }} </a></td>
+         <td> {{ data.getPayment().getPaymentDate().format('d-m-Y') }} </td>
+         <td> {% if data.getPayment().getStatus() == "pending" %} 
+                {% trans %} pending {% endtrans %} 
+              {% elseif data.getPayment().getStatus() == "charged" %}
+                {% trans %} charged {% endtrans %}
+              {% elseif data.getPayment().getStatus() == "returned" %}
+                {% trans %} returned {% endtrans %}
+              {% endif %}
+         </td>
+         <td> <a href="#" data-toggle="modal" data-target="#showPaymentHistory-{{formNumber}}"> Ver historial </a>
+         </td>
+         <td> <a href="#"> Eliminar pago </a></td>
+      </tr>
+      {% set formNumber = formNumber +1 %}
+      {% endfor %}
+      </table>
+
+    {% set formNumber = 0 %}
+    {% for data in activePayments %}
+    <div class="modal fade" id="editPayment-{{formNumber}}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="editModalLabel">Editar recibo</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{ form_start(paymentForms[formNumber].createView()) }}
+            {{ form_end(paymentForms[formNumber].createView()) }}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans %} close {% endtrans %}</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">{% trans %} save {% endtrans %}</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-<div class="modal fade" id="showPaymentHistory-{{formNumber}}" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="historyModalLabel">Historial del recibo</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-	{% for payment in historyPayments[formNumber] %}
-	     <strong>{{ payment.getPaymentdate().format('d-m-Y') }}</strong>
-             {{ payment.getAmountPayed() }}
-             {% if payment.getStatus() == "pending" %} 
-               {% trans %} pending {% endtrans %} 
-             {% elseif payment.getStatus() == "charged" %}
-               {% trans %} charged {% endtrans %}
-             {% elseif payment.getStatus() == "returned" %}
-               {% trans %} returned {% endtrans %}
-             {% endif %}
-	     <br>
-	{% endfor %}
-	</table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans %} close {% endtrans %}</button>
+    <div class="modal fade" id="showPaymentHistory-{{formNumber}}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="historyModalLabel">Historial del recibo</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+        {% for payment in historyPayments[formNumber] %}
+            <strong>{{ payment.getPaymentdate().format('d-m-Y') }}</strong>
+                 {{ payment.getAmountPayed() }}
+                 {% if payment.getStatus() == "pending" %}
+                   {% trans %} pending {% endtrans %}
+                 {% elseif payment.getStatus() == "charged" %}
+                   {% trans %} charged {% endtrans %}
+                 {% elseif payment.getStatus() == "returned" %}
+                   {% trans %} returned {% endtrans %}
+                 {% endif %}
+            <br>
+        {% endfor %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans %} close {% endtrans %}</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-{% set formNumber = formNumber +1 %}
-{% endfor %}
+    {% set formNumber = formNumber +1 %}
+    {% endfor %}
+{% else %}
+    <h3> {% trans %} nopermission {% endtrans %} </h3>
+{% endif %}
 {% endblock %}

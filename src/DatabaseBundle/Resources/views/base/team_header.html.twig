@@ -4,5 +4,7 @@
   <th><strong>Número de ficha</strong></th>
   <th><strong>Email</strong></th>
   <th>Número de teléfono</th>
-  <th>Pagos</th>
+  {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %}
+    <th>Pagos</th>
+  {% endif %}
 </tr>

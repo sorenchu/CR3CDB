@@ -34,6 +34,7 @@ class UserDataType extends AbstractType
                         'choices' => array(
                             'Administrador' => 'ROLE_ADMIN',
                             'Usuario' => 'ROLE_USER',
+                            'Contable' => 'ROLE_ACCOUNTING',
                             ),
                         'disabled' => true,
                 ));
@@ -45,6 +46,7 @@ class UserDataType extends AbstractType
                         'choices' => array(
                             'Administrador' => 'ROLE_ADMIN',
                             'Usuario' => 'ROLE_USER',
+                            'Contable' => 'ROLE_ACCOUNTING',
                             ),
                 ));
         }

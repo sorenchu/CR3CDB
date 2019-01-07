@@ -17,7 +17,9 @@
     <th>Número de socio</th>
     <th>Número de teléfono</th>
     <th>Email</th>
-    <th>Pagos</th>
+    {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %} 
+        <th>Pagos</th>
+    {% endif %}
   </tr>
 
   {% for data in memberData %}
@@ -34,7 +36,9 @@
                 {{ data.getPersonalData().getEmail() }}
            {% endif %}
       </td>
-      <td> {{ data.getPayment() }} </td>
+      {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %} 
+        <td> {{ data.getPayment() }} </td>
+      {% endif %}
       <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
       <td> <a href="/person/deleteFromMember/{{data.getPersonalData().getId()}}/{{season.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar a este socio de la lista?')"> Eliminar </a> </td>
     </tr>
