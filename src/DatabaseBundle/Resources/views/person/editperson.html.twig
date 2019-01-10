@@ -224,4 +224,6 @@
   <hr>
   {{ form_row(personalDataForm.save)}}
 {{ form_end(personalDataForm) }}
+{{ include('DatabaseBundle:journal:showentries.html.twig') }}
+<a href="#" data-toggle="modal" data-target="#showEntries">Mostrar bitácora</a>
 {% endblock %}

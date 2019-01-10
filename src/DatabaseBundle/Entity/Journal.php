@@ -138,4 +138,33 @@ class Journal
     {
         return $this->season;
     }
+    /**
+     * @var dateTime
+     */
+    private $date;
+
+
+    /**
+     * Set date.
+     *
+     * @param \dateTime $date
+     *
+     * @return Journal
+     */
+    public function setDate(\dateTime $date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date.
+     *
+     * @return \dateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
 }

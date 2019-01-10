@@ -1,0 +1,18 @@
+<div class="modal fade" id="showEntries" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="showEntriesModalLabel">
+            Mostrar bitácora
+        </h4>
+        {% for entry in personalData.getJournal() %}
+        {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong>
+        <br>
+        {{ entry.getText() }}
+        <br>
+        <hr>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>

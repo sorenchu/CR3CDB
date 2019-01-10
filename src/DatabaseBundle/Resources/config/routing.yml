@@ -141,3 +141,8 @@ delete_season:
 show_payments:
     path: /person/showPayments/{id}/{seasonId}
     defaults: { _controller: DatabaseBundle:People/HandlePayment:showPayments }
+
+add_entry:
+    path: /journal/addEntry/{id}/{seasonId}
+    defaults: { _controller: DatabaseBundle:Journal/Journal:addEntry }
+
