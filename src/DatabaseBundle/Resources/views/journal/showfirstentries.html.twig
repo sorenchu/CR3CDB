@@ -1,0 +1,7 @@
+{% for entry in personalData.getInitialJournal() %}
+    {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong>
+    <br>
+    {{ entry.getText() }}
+    <br>
+    <hr>
+{% endfor %}

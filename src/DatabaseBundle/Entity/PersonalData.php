@@ -974,4 +974,18 @@ class PersonalData
     {
         return $this->journal;
     }
+
+    public function getInitialJournal()
+    {
+	$entries = array();
+        $init = sizeof($this->journal) > 0 ?
+                    sizeof($this->journal)-4
+                    : 0;
+        $end = sizeof($this->journal);
+        while ($end > $init) {
+            $end--;
+            $entries[] = $this->journal[$end];
+        }
+        return $entries;
+    }
 }

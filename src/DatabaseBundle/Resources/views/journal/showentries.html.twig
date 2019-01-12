@@ -6,12 +6,13 @@
             Mostrar bitácora
         </h4>
         {% for entry in personalData.getJournal() %}
-        {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong>
-        <br>
-        {{ entry.getText() }}
-        <br>
-        <hr>
+            {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong>
+            <br>
+            {{ entry.getText() }}
+            <br>
+            <hr>
         {% endfor %}
+        <button type="button" class="btn btn-default" data-dismiss="modal">{% trans %} close {% endtrans %}</button>
       </div>
     </div>
   </div>

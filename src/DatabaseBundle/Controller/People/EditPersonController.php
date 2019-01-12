@@ -5,6 +5,7 @@ namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Form\Person\PersonalDataType;
 use DatabaseBundle\Form\Season\SeasonType;
+use DatabaseBundle\Form\Journal\JournalType;
 
 use DatabaseBundle\Entity\PlayerPerson;
 use DatabaseBundle\Entity\CoachPerson;
@@ -18,6 +19,7 @@ use DatabaseBundle\Entity\Season;
 use DatabaseBundle\Entity\Payment;
 use DatabaseBundle\Entity\PaymentHistory;
 use DatabaseBundle\Entity\ActivePayment;
+use DatabaseBundle\Entity\Journal;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -164,6 +166,18 @@ class EditPersonController extends Controller
             $this->entityManager->getRepository(PersonalData::class)->savePerson($personalData, true);
             $personalDataForm = $this->createForm(PersonalDataType::class, $personalData);
         }
+        $journal = new Journal();
+        $journalForm = $this->createForm(JournalType::class, $journal);
+        $logger = $this->get('logger');
+        $logger->info("patappappa");
+        if ($journalForm->isSubmitted()) {
+            return $this->redirectToRoute('add_entry',
+                    array('id' => $id,
+                        'seasonId' => $seasonForm->get('season')
+                        ->getData()->getId()
+                        ));
+        }
+
         return $this->render('DatabaseBundle:person:editperson.html.twig', array(
                     'personalDataForm' => $personalDataForm->createView(),
                     'seasonForm' => $seasonForm->createView(),
@@ -173,6 +187,7 @@ class EditPersonController extends Controller
                     'isMemberBank' => $memberBank,
                     'underage' => $underage,
                     'playerPayments' => $playerPayments,
+                    'journalForm' => $journalForm->createView(),
                     ));
     }
 

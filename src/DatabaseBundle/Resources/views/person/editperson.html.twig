@@ -37,6 +37,11 @@
     {{ form_row(personalDataForm.contactData.zipcode) }}
     {{ form_row(personalDataForm.contactData.province) }}
   </div>
+  <div class="col" align="right">
+      {{ include('DatabaseBundle:journal:showfirstentries.html.twig') }}
+      <a href="#" data-toggle="modal" data-target="#addEntry">Añadir nota</a>
+      <a href="#" data-toggle="modal" data-target="#showEntries">Ver más...</a>
+  </div>
   <hr>
   <h2>
   {% for formData in personalDataForm.playerPerson %}
@@ -225,5 +230,5 @@
   {{ form_row(personalDataForm.save)}}
 {{ form_end(personalDataForm) }}
 {{ include('DatabaseBundle:journal:showentries.html.twig') }}
-<a href="#" data-toggle="modal" data-target="#showEntries">Mostrar bitácora</a>
+{{ include('DatabaseBundle:journal:addentry.html.twig') }}
 {% endblock %}

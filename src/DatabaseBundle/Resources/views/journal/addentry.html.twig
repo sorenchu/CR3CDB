@@ -1,4 +1,16 @@
-<div id=addJournal>
-{{ form_start(journalForm) }}
-{{ form_end(journalForm) }}
+<div class="modal fade" id="addEntry" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="addEntryModalLabel">
+            Añadir bitácora
+        </h4>
+        {{ form_start(journalForm) }}
+            {{ form_row(journalForm.title) }}
+            {{ form_row(journalForm.text) }}
+            {{ form_row(journalForm.save) }}
+        {{ form_end(journalForm) }}
+      </div>
+    </div>
+  </div>
 </div>
