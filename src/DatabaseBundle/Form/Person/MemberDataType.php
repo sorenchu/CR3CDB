@@ -24,9 +24,9 @@ class MemberDataType extends AbstractType
     $builder
         ->add('memberId', IntegerType::class, array(
             'required' => false,
-            'label' => 'Número de socio'))
+            'label' => 'membernumber'))
         ->add('season', EntityType::class, array(
-            'label' => 'Temporada',
+            'label' => 'season',
             'class' => 'DatabaseBundle:Season',
             'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('season');
@@ -39,9 +39,9 @@ class MemberDataType extends AbstractType
           )
         )
         ->add('pay', PayType::class, array(
-            'label' => 'Pagos',))
+            'label' => 'payments',))
         ->add('datedata', DateDataType::class, array(
-                'label' => 'Período de actividad')
+                'label' => 'activitytime')
         );
   }
 

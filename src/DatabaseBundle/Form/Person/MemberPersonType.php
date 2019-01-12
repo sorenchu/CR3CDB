@@ -17,7 +17,7 @@ class MemberPersonType extends AbstractType
     {
         $builder
             ->add('isMember', CheckboxType::class, array(
-                                'label' => 'Socio',
+                                'label' => 'member',
                                 'required' => false,));
     }
 

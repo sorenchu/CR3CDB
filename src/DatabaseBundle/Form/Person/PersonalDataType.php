@@ -27,20 +27,22 @@ class PersonalDataType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-        ->add('name', TextType::class, array('label' => 'Nombre'))
-        ->add('surname', TextType::class, array('label' => 'Apellidos'))
+        ->add('name', TextType::class, array('label' => 'name'))
+        ->add('surname', TextType::class, array('label' => 'surname'))
         ->add('nickname', TextType::class, array(
                                   'required' => false,
-                                  'label' => 'Apodo',))
-        ->add('dni', TextType::class, array('required' => false,))
+                                  'label' => 'nickname',))
+        ->add('dni', TextType::class, array(
+                                  'required' => false,
+                                  'label' => 'idcard',))
         ->add('birthday', BirthdayType::class, array(
-                                  'label' => 'Fecha de Nacimiento',
+                                  'label' => 'birthday',
                                   'widget' => 'single_text',))
         ->add('sex', ChoiceType::class, array(
-            'label' => 'Género',
+            'label' => 'sex',
             'choices' => array(
-              'Hombre' => 'male',
-              'Mujer'  => 'female',
+              'male' => 'male',
+              'female' => 'female',
             ),
           )
         )
@@ -95,7 +97,7 @@ class PersonalDataType extends AbstractType
             } 
         })
         ->add('save', SubmitType::class, array(
-            'label' => 'Guardar'));
+            'label' => 'save'));
   }
 
   public function getBlockPrefix()

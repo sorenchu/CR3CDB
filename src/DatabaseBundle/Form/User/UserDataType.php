@@ -27,14 +27,14 @@ class UserDataType extends AbstractType
   {
         if ($this->admin == true) {
             $builder->add('username', TextType::class,
-                 array('label' => 'Usuario',
+                 array('label' => 'user',
                         'disabled' => true,))
                     ->add('role', ChoiceType::class, array(
-                        'label' => 'Rol',
+                        'label' => 'role',
                         'choices' => array(
-                            'Administrador' => 'ROLE_ADMIN',
-                            'Usuario' => 'ROLE_USER',
-                            'Contable' => 'ROLE_ACCOUNTING',
+                            'admin' => 'ROLE_ADMIN',
+                            'user' => 'ROLE_USER',
+                            'accounting' => 'ROLE_ACCOUNTING',
                             ),
                         'disabled' => true,
                 ));
@@ -42,16 +42,16 @@ class UserDataType extends AbstractType
             $builder->add('username', TextType::class,
                  array('label' => 'Usuario',))
                     ->add('role', ChoiceType::class, array(
-                        'label' => 'Rol',
+                        'label' => 'role',
                         'choices' => array(
-                            'Administrador' => 'ROLE_ADMIN',
-                            'Usuario' => 'ROLE_USER',
-                            'Contable' => 'ROLE_ACCOUNTING',
+                            'admin' => 'ROLE_ADMIN',
+                            'user' => 'ROLE_USER',
+                            'accounting' => 'ROLE_ACCOUNTING',
                             ),
                 ));
         }
-        $builder->add('password', PasswordType::class, array('label' => 'Contraseña'))
-            ->add('save', SubmitType::class, array('label' => 'Guardar'));
+        $builder->add('password', PasswordType::class, array('label' => 'password'))
+            ->add('save', SubmitType::class, array('label' => 'save'));
   }
 
   public function getBlockPrefix()

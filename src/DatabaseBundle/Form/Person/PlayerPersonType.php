@@ -17,7 +17,7 @@ class PlayerPersonType extends AbstractType
     {
         $builder
             ->add('isPlayer', CheckboxType::class, array(
-                                'label' => 'Jugador',
+                                'label' => 'player',
                                 'required' => false,));
     }
 

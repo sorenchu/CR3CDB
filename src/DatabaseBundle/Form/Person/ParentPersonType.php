@@ -17,7 +17,7 @@ class ParentPersonType extends AbstractType
     {
         $builder
             ->add('isParent', CheckboxType::class, array(
-                                'label' => 'Padre',
+                                'label' => 'father',
                                 'required' => false,));
     }
 

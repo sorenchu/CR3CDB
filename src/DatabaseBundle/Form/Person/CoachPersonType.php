@@ -17,7 +17,7 @@ class CoachPersonType extends AbstractType
     {
         $builder
             ->add('isCoach', CheckboxType::class, array(
-                                'label' => 'Entrenador',
+                                'label' => 'coach',
                                 'required' => false,));
     }
 

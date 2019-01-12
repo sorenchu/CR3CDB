@@ -20,22 +20,22 @@ class ContactDataType extends AbstractType
     $builder
         ->add('address', TextType::class, array(
                           'required' => false,
-                          'label' => 'Dirección'))
+                          'label' => 'address'))
         ->add('city', TextType::class, array(
                           'required' => false,
-                          'label' => 'Ciudad'))
+                          'label' => 'city'))
         ->add('zipcode', NumberType::class, array(
                           'required' => false,
-                          'label' => 'Código postal'))
+                          'label' => 'zipcode'))
         ->add('province', TextType::class, array(
                           'required' => false,
-                          'label' => 'Provincia'))
+                          'label' => 'province'))
         ->add('phone', NumberType::class, array(
                           'required' => false,
-                          'label' => 'Teléfono'))
+                          'label' => 'phonenumber'))
         ->add('email', EmailType::class, array(
                                   'required' => false,
-                                  'label' => 'Correo Electrónico',));
+                                  'label' => 'email',));
   }
 
   public function getBlockPrefix()

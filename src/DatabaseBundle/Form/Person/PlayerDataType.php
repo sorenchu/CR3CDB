@@ -25,12 +25,12 @@ class PlayerDataType extends AbstractType
     $this->season = $options['current_season'];
     $builder
         ->add('number', TextType::class, array(
-            'label' => 'Número de ficha',
+            'label' => 'rugbynumber',
             'required' => false,
           )
         )
         ->add('season', EntityType::class, array(
-            'label' => 'Temporada',
+            'label' => 'season',
             'class' => 'DatabaseBundle:Season',
             'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('season');
@@ -43,24 +43,24 @@ class PlayerDataType extends AbstractType
           )
         )
         ->add('pay', PayType::class, array(
-            'label' => 'Pagos',))
+            'label' => 'payments',))
         ->add('category', ChoiceType::class, array(
-            'label' => 'Categoría',
+            'label' => 'category',
             'choices' => array(
-              'Senior'  => 'senior',
-              'Femenino'=> 'femenino',
-              'Sub-18'  => 'sub18',
-              'Sub-16'  => 'sub16',
-              'Sub-14'  => 'sub14',
-              'Sub-12'  => 'sub12',
-              'Sub-10'  => 'sub10',
-              'Sub-8'   => 'sub8',
-              'Sub-6'   => 'sub6',
+              'senior'  => 'senior',
+              'female'=> 'female',
+              'u18'  => 'sub18',
+              'u16'  => 'sub16',
+              'u14'  => 'sub14',
+              'u12'  => 'sub12',
+              'u10'  => 'sub10',
+              'u8'   => 'sub8',
+              'u6'   => 'sub6',
               ),
           )
         )
         ->add('parentdata', EntityType::class, array(
-            'label' => 'Padres',
+            'label' => 'parents',
             'class' => 'DatabaseBundle:ParentData',
             'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('parent');
@@ -70,7 +70,7 @@ class PlayerDataType extends AbstractType
             )
         )
         ->add('datedata', DateDataType::class, array(
-                'label' => 'Período de actividad')
+                'label' => 'activitytime')
         );
   }
   

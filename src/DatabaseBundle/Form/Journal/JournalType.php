@@ -19,13 +19,13 @@ class JournalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', TextType::class, array(
-                        'label' => 'Título',
+                        'label' => 'title',
                     ))
                 ->add('text', TextareaType::class, array(
-                        'label' => 'Contenido',
+                        'label' => 'content',
                     ))
                 ->add('save', SubmitType::class, array(
-                        'label' => 'Guardar'));
+                        'label' => 'save'));
     }
 
     public function getBlockPrefix()

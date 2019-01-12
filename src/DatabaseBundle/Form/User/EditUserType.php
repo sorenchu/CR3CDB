@@ -19,19 +19,19 @@ class EditUserType extends AbstractType
   {
     $builder
         ->add('username', TextType::class,
-              array('label' => 'Usuario',
+              array('label' => 'user',
                     'disabled' => 'true'))
         ->add('role', ChoiceType::class, array(
             'label' => 'Rol',
             'choices' => array(
-              'Administrador' => 'ROLE_ADMIN', 
-              'Usuario'       => 'ROLE_USER',
-              'Contable'      => 'ROLE_ACCOUNTING',
+              'admin' => 'ROLE_ADMIN', 
+              'user'       => 'ROLE_USER',
+              'accounting'      => 'ROLE_ACCOUNTING',
             ),
             'disabled' => 'true',
         ))
         ->add('oldpassword', PasswordType::class, array(
-                     'label' => 'Contraseña actual')
+                     'label' => 'currentpassword')
           )
         ->add('password', RepeatedType::class, array(
                      'type' => PasswordType::class,
@@ -42,7 +42,7 @@ class EditUserType extends AbstractType
                      'first_options'  => array('label' => 'Nueva contraseña'),
                      'second_options' => array('label' => 'Repita contraseña'),
           ))
-        ->add('save', SubmitType::class, array('label' => 'Guardar'));
+        ->add('save', SubmitType::class, array('label' => 'save'));
   }
 
   public function getBlockPrefix()

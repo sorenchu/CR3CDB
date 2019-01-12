@@ -1,3 +1,4 @@
+<h4>{% trans %} journal {% endtrans %}</h4>
 {% for entry in personalData.getInitialJournal() %}
     {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong>
     <br>

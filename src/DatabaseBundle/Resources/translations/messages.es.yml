@@ -4,23 +4,31 @@ all: Todos
 members: Socios
 parents: Padres
 father: Padre
+child: Hijo
 
+player: Jugador
 playermanagement: Gestión del equipo
+salary: Sueldo
 addmember: Añadir miembro
 newmember: Nuevo miembro
 import: Importar
-seniorteam: Equipo senior
-femaleteam: Equipo femenino
-u18team: Equipo sub18
-u16team: Equipo sub16
-u14team: Equipo sub14
-u12team: Equipo sub12
-u10team: Equipo sub10
-u8team: Equipo sub8
-u6team: Equipo sub6
+team: Equipo
+senior: senior
+female: femenino
+u18: sub18
+u16: sub16
+u14: sub14
+u12: sub12
+u10: sub10
+u8: sub8
+u6: sub6
 showteam: Mostrando equipo
 membersof: Miembros del
 coach: Entrenador
+category: Categoría
+activitytime: Período de actividad
+signupdate: Fecha de alta
+signdowndate: Fecha de baja
 
 personaldata: Datos personales
 namesurname: Nombre y apellidos
@@ -31,10 +39,31 @@ rugbynumber: Ficha
 email: Email
 phonenumber: Número de teléfono
 payments: Pagos
+Payment: Pago
 showpayments: Ver pagos
+birthday: Fecha de nacimiento
+sex: Género
+male: Hombre
+female: Mujer
+wayofpayment: Modo de pago
+bank: Domiciliación bancaria
+transfer: Transferencia
+deposit: Ingreso
+cash: Efectivo
+accountowner: Titular de la cuenta
+accountnumber: Número de cuenta
+payed: Pagado
+receiptdate: Fecha de recibo
+active: Activo
+
+address: Dirección
+city: Ciudad
+zipcode: Código postal
+province: Provincia
 
 showmembers: Socios del club
 membernumber: Número de socio
+member: Socio
 
 usermanagement: Gestión de usuarios
 adduser: Añadir usuario
@@ -50,6 +79,7 @@ deleteuserconfirm: ¿Estás seguro de querer borrar este usuario?
 admin: Administrador
 accounting: Contable
 passwordchange: Cambiar contraseña
+currentpassword: Contraseña actual
 changesuccess: La constraseña se ha cambiado correctamente
 wrongpassword: Error al introducir la contraseña actual
 
@@ -69,6 +99,10 @@ deleteddefaultseasonerror: No se puede desmarcar la temporada predeterminada.
 deletedseasonsuccess: La temporada se ha borrado correctamente
 season: Temporada
 default: Predeterminada
+year: Año
+bydefault: Por defecto
+
+journal: Bitácora
 
 main: Principal
 pictures: Imágenes
@@ -86,6 +120,9 @@ charged: Pagado
 returned: Devuelto
 
 nopermission: No tienes permisos para acceder a esta página
+title: Título
+content: Contenido
+Activepayment: Pago activo
 
 save: Guardar
 close: Cerrar

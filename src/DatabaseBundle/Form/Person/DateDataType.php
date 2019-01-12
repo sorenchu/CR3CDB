@@ -18,14 +18,14 @@ class DateDataType extends AbstractType
     {
         $builder
             ->add('active', CheckboxType::class, array(
-                                'label' => 'Activo',
+                                'label' => 'active',
                                 'required' => false,))
             ->add('joiningDate', DateType::class, array(
-                                'label' => 'Fecha de alta',
+                                'label' => 'signupdate',
                                 'widget' => 'single_text',
                                 'required' => false,))
             ->add('leavingDate', DateType::class, array(
-                                'label' => 'Fecha de baja',
+                                'label' => 'signdowndate',
                                 'widget' => 'single_text',
                                 'required' => false,));
     }

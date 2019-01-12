@@ -21,21 +21,21 @@ class PaymentType extends AbstractType
           ->add('amountPayed', MoneyType::class,
                   array(
                     'required' => false,
-                    'label' => 'Pagado',
+                    'label' => 'payed',
           ))
           ->add('paymentDate', DateType::class,
                   array(
                     'required' => false,
-                    'label' => 'Fecha de recibo',
+                    'label' => 'receiptdate',
                     'widget' => 'single_text'
           ))
           ->add('status', ChoiceType::class,
                   array(
-                    'label' => 'Estado',
+                    'label' => 'status',
                     'choices' => array(
-                        'Pendiente de cobro' => 'pending',
-                        'Cobrado'            => 'charged',
-                        'Devuelto'           => 'returned',
+                        'pending'  => 'pending',
+                        'charged'  => 'charged',
+                        'returned' => 'returned',
                     ),
           ));
   }

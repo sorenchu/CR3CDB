@@ -25,7 +25,7 @@ class SeasonType extends AbstractType
     $this->season = $options['current_season'];
     $builder
         ->add('season', EntityType::class, array(
-            'label' => 'Temporada',
+            'label' => 'season',
             'class' => 'DatabaseBundle:Season',
             'query_builder' => function (EntityRepository $er) {
               return $er->createQueryBuilder('season');

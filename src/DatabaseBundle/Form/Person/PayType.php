@@ -19,24 +19,24 @@ class PayType extends AbstractType
       $builder
           ->add('wayOfPayment', ChoiceType::class, 
                   array(
-                    'label' => 'Modo de pago',
+                    'label' => 'wayofpayment',
                     'choices' => array(
-                         'Domiciliación bancaria' => 'bank',
-                         'Transferencia'          => 'transfer',
-                         'Ingreso'                => 'deposit',
-                         'Efectivo'               => 'cash',
+                         'bank'     => 'bank',
+                         'transfer' => 'transfer',
+                         'deposit'  => 'deposit',
+                         'cash'     => 'cash',
                     ),
                     'empty_data' => 'bank',
           ))
           ->add('person', TextType::class,
                   array(
                     'required' => false,  
-                    'label' => 'Titular de la cuenta'
+                    'label' => 'accountowner',
           ))
           ->add('accountNumber', TextType::class,
                   array(
                     'required' => false,
-                    'label' => 'Número de cuenta'
+                    'label' => 'accountnumber',
           ))
           ->add('activepayment', CollectionType::class, 
                     array(

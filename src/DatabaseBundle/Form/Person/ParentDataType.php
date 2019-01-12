@@ -21,7 +21,7 @@ class ParentDataType extends AbstractType
     $this->season = $options['current_season'];
     $builder
         ->add('season', EntityType::class, array(
-            'label' => 'Temporada',
+            'label' => 'season',
             'class' => 'DatabaseBundle:Season',
             'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('season');
@@ -34,14 +34,14 @@ class ParentDataType extends AbstractType
           )
         )
         ->add('playerdata', EntityType::class, array(
-            'label' => 'Hijo',
+            'label' => 'child',
             'class' => 'DatabaseBundle:PlayerData',
             'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('player')
                             ->where('player.category NOT LIKE :senior')
                             ->andWhere('player.category NOT LIKE :femenino')
-                            ->setParameter('senior', 'Senior')
-                            ->setParameter('femenino', 'Femenino');
+                            ->setParameter('senior', 'senior')
+                            ->setParameter('femenino', 'female');
             },
             'required' => false,
             'multiple' => true,
