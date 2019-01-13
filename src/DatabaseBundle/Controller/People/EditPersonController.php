@@ -171,14 +171,15 @@ class EditPersonController extends Controller
         }
         $journal = new Journal();
         $journalForm = $this->createForm(JournalType::class, $journal);
-        $logger = $this->get('logger');
-        $logger->info("patappappa");
+        $journalForm->handleRequest($request);
         if ($journalForm->isSubmitted()) {
-            return $this->redirectToRoute('add_entry',
-                    array('id' => $id,
-                        'seasonId' => $seasonForm->get('season')
-                        ->getData()->getId()
-                        ));
+            $journal->setDate(new \DateTime());
+            $personalData->addJournal($journal);
+            $journal->setPersonalData($personalData);
+            $season->addJournal($journal);
+            $journal->setSeason($season);
+            $this->entityManager->persist($journal);
+            $this->entityManager->flush();
         }
 
         return $this->render('DatabaseBundle:person:editperson.html.twig', array(
