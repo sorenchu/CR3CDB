@@ -169,17 +169,26 @@ class EditPersonController extends Controller
             $this->entityManager->getRepository(PersonalData::class)->savePerson($personalData, true);
             $personalDataForm = $this->createForm(PersonalDataType::class, $personalData);
         }
+
         $journal = new Journal();
         $journalForm = $this->createForm(JournalType::class, $journal);
         $journalForm->handleRequest($request);
         if ($journalForm->isSubmitted()) {
-            $journal->setDate(new \DateTime());
-            $personalData->addJournal($journal);
-            $journal->setPersonalData($personalData);
-            $season->addJournal($journal);
-            $journal->setSeason($season);
+            // TODO: repository method to check if entry exists
+            // if (!$this->entityManager->getRepository(Journal::class)->exists($journal, $personalData->getId())) {
+                $personalData->addJournal($journal);
+                $journal->setPersonalData($personalData);
+                $season->addJournal($journal);
+                $journal->setSeason($season);
+                $journal->setDate(new \DateTime());
+            // }
             $this->entityManager->persist($journal);
             $this->entityManager->flush();
+        }
+
+        $journalForms = array();
+        foreach ($personalData->getJournal() as $j) {
+            $journalForms[] = $this->createForm(JournalType::class, $j);
         }
 
         return $this->render('DatabaseBundle:person:editperson.html.twig', array(
@@ -192,6 +201,8 @@ class EditPersonController extends Controller
                     'underage' => $underage,
                     'playerPayments' => $playerPayments,
                     'journalForm' => $journalForm->createView(),
+                    'journalForms' => $journalForms,
+                    'journalLength' => sizeof($journalForms),
                     ));
     }
 

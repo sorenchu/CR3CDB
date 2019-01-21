@@ -10,4 +10,18 @@ namespace DatabaseBundle\Repository;
  */
 class JournalRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function exists($journal, $id)
+    {
+        $query = $this->createQueryBuilder('journal')
+            ->from('DatabaseBundle:Journal', 'data')
+            ->join('journal.personalData', 'person')
+            ->where('person.id = :id')
+            ->andWhere('journal.title = :title')
+            ->andWhere('journal.text = :text')
+            ->setParameter('id', $id)
+            ->setParameter('title', $journal->getTitle())
+            ->setParameter('text', $journal->getText())
+            ->getQuery();
+        return $query->getOneOrNullResult();   
+    }
 }

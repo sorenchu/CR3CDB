@@ -1,8 +1,29 @@
-<h4>{% trans %} journal {% endtrans %}</h4>
+{# src/DatabaseBundle/Resources/views/journal/showfirstentries.html.twig #}
+<div id="showFirstEntries">
+{% set row = journalLength -1 %}
 {% for entry in personalData.getInitialJournal() %}
-    {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong>
+    {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong> <a href="#" data-toggle="modal" data-target="#editEntry-{{row}}">{% trans %} editjournal {% endtrans %} </a>
     <br>
     {{ entry.getText() }}
+    {{ row }}
     <br>
     <hr>
+    {% set row = row -1 %}
+{% endfor %}
+</div>
+
+{% for i in 0..journalLength -1 %}
+<div class="modal fade" id="editEntry-{{i}}" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="editEntryModalLabel">
+            {% trans %} editjournal {% endtrans %}
+        </h4>
+      </div>
+        {{ form_start(journalForms[i].createView()) }}
+        {{ form_end(journalForms[i].createView()) }}
+    </div>
+  </div>
+</div>
 {% endfor %}

@@ -1,15 +1,25 @@
+{# src/DatabaseBundle/Resources/views/journal/showfirstentries.html.twig #}
 <div class="modal fade" id="showEntries" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="showEntriesModalLabel">
-            Mostrar bitácora
+            {% trans %} showjournal {% endtrans %}
         </h4>
-        {% for entry in personalData.getJournal() %}
-            {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong>
+        {% set size = (personalData.getJournal()|length)-1 %}
+        {% for i in size..0 %}
+            {% set entry = personalData.getJournal()[i] %}
+            <div class="col" align="left">
+                {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong>
+            </div>
+            <div class="col" align="right">
+                <a href="#" data-toggle="modal" data-target="#addEntry-{{i}}">{% trans %} edit {% endtrans %}</a>
+            </div>
             <br>
-            {{ entry.getText() }}
+            <div class="col" align="left">
+                {{ entry.getText() }}
             <br>
+            </div>
             <hr>
         {% endfor %}
         <button type="button" class="btn btn-default" data-dismiss="modal">{% trans %} close {% endtrans %}</button>

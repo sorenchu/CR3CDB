@@ -988,4 +988,13 @@ class PersonalData
         }
         return $entries;
     }
+
+    public function hasJournal($journal)
+    {
+        foreach ($this->journal as $j) {
+            if ($journal == $j)
+                return true;
+        }
+        return false;
+    }
 }

@@ -38,8 +38,7 @@ class HandlePaymentController extends Controller
         $activePayments = $playerData->getPay()->getActivePayment();
         $paymentForms = array();
         foreach ($activePayments as $activePayment) {
-            $paymentForm = $this->createForm(ActivePaymentType::class, $activePayment);
-            array_push($paymentForms, $paymentForm);
+            $paymentForms[] = $this->createForm(ActivePaymentType::class, $activePayment);
         }
         $history = $this->em->getRepository(Payment::class)
                           ->getPaymentsGroupedByHistory();
