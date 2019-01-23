@@ -12,18 +12,20 @@
 {% endfor %}
 </div>
 
-{% for i in 0..journalLength -1 %}
-<div class="modal fade" id="editEntry-{{i}}" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="editEntryModalLabel">
-            {% trans %} editjournal {% endtrans %}
-        </h4>
+{% if journalLength > 0 %}
+    {% for i in 0..journalLength -1 %}
+    <div class="modal fade" id="editEntry-{{i}}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="editEntryModalLabel">
+                {% trans %} editjournal {% endtrans %}
+            </h4>
+          </div>
+            {{ form_start(journalForms[i].createView()) }}
+            {{ form_end(journalForms[i].createView()) }}
+        </div>
       </div>
-        {{ form_start(journalForms[i].createView()) }}
-        {{ form_end(journalForms[i].createView()) }}
     </div>
-  </div>
-</div>
-{% endfor %}
+    {% endfor %}
+{% endif %}

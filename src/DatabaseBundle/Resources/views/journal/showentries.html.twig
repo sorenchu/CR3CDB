@@ -7,21 +7,23 @@
             {% trans %} showjournal {% endtrans %}
         </h4>
         {% set size = (personalData.getJournal()|length)-1 %}
-        {% for i in size..0 %}
-            {% set entry = personalData.getJournal()[i] %}
-            <div class="col" align="left">
-                {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong>
-            </div>
-            <div class="col" align="right">
-                <a href="#" data-toggle="modal" data-target="#addEntry-{{i}}">{% trans %} edit {% endtrans %}</a>
-            </div>
-            <br>
-            <div class="col" align="left">
-                {{ entry.getText() }}
-            <br>
-            </div>
-            <hr>
-        {% endfor %}
+        {% if size > 0 %}
+            {% for i in size..0 %}
+                {% set entry = personalData.getJournal()[i] %}
+                <div class="col" align="left">
+                    {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong>
+                </div>
+                <div class="col" align="right">
+                    <a href="#" data-toggle="modal" data-target="#addEntry-{{i}}">{% trans %} edit {% endtrans %}</a>
+                </div>
+                <br>
+                <div class="col" align="left">
+                    {{ entry.getText() }}
+                <br>
+                </div>
+                <hr>
+            {% endfor %}
+        {% endif %}
         <button type="button" class="btn btn-default" data-dismiss="modal">{% trans %} close {% endtrans %}</button>
       </div>
     </div>

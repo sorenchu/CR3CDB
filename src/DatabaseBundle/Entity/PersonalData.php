@@ -978,7 +978,7 @@ class PersonalData
     public function getInitialJournal()
     {
 	$entries = array();
-        $init = sizeof($this->journal) > 0 ?
+        $init = sizeof($this->journal) > 4 ?
                     sizeof($this->journal)-4
                     : 0;
         $end = sizeof($this->journal);
