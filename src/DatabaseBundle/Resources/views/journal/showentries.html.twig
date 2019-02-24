@@ -6,10 +6,10 @@
         <h4 class="modal-title" id="showEntriesModalLabel">
             {% trans %} showjournal {% endtrans %}
         </h4>
-        {% set size = (personalData.getJournal()|length)-1 %}
+        {% set size = (personalData.getJournalEntriesBySeason(curSeason)|length) %}
         {% if size > 0 %}
-            {% for i in size..0 %}
-                {% set entry = personalData.getJournal()[i] %}
+            {% for i in size-1..0 %}
+                {% set entry = personalData.getJournalEntriesBySeason(curSeason)[i] %}
                 <div class="col" align="left">
                     {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong>
                 </div>

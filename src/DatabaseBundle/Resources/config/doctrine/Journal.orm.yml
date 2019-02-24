@@ -23,6 +23,10 @@ DatabaseBundle\Entity\Journal:
             type: datetime
             nullable: false
 
+        position:
+            type: integer
+            nullable: false
+
     manyToOne:
        personalData:
             targetEntity: PersonalData

@@ -975,18 +975,20 @@ class PersonalData
         return $this->journal;
     }
 
-    public function getInitialJournal()
+    public function getInitialJournal($season)
     {
-	$entries = array();
-        $init = sizeof($this->journal) > 4 ?
-                    sizeof($this->journal)-4
+	$entries = $this->getJournalEntriesBySeason($season);
+        $initialEntries = array();
+        
+        $init = sizeof($entries) > 4 ?
+                    sizeof($entries)-4
                     : 0;
-        $end = sizeof($this->journal);
+        $end = sizeof($entries);
         while ($end > $init) {
             $end--;
-            $entries[] = $this->journal[$end];
+            $initialEntries[] = $entries[$end];
         }
-        return $entries;
+        return $initialEntries;
     }
 
     public function hasJournal($journal)
@@ -996,5 +998,16 @@ class PersonalData
                 return true;
         }
         return false;
+    }
+
+    public function getJournalEntriesBySeason($season)
+    {
+        $entries = array();
+        foreach ($this->journal as $j) {
+            if ($j->getSeason() == $season) {
+                $entries[] = $j;
+            }
+        }
+        return $entries;
     }
 }

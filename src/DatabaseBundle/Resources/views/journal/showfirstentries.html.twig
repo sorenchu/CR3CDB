@@ -1,7 +1,7 @@
 {# src/DatabaseBundle/Resources/views/journal/showfirstentries.html.twig #}
 <div id="showFirstEntries">
 {% set row = journalLength -1 %}
-{% for entry in personalData.getInitialJournal() %}
+{% for entry in personalData.getInitialJournal(curSeason) %}
     {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong> <a href="#" data-toggle="modal" data-target="#editEntry-{{row}}">{% trans %} editjournal {% endtrans %} </a>
     <br>
     {{ entry.getText() }}

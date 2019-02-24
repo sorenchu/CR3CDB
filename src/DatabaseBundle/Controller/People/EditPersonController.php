@@ -181,13 +181,14 @@ class EditPersonController extends Controller
                 $season->addJournal($journal);
                 $journal->setSeason($season);
                 $journal->setDate(new \DateTime());
+                $journal->setPosition(sizeof($personalData->getJournalEntriesBySeason($season)));
             // }
             $this->entityManager->persist($journal);
             $this->entityManager->flush();
         }
 
         $journalForms = array();
-        foreach ($personalData->getJournal() as $j) {
+        foreach ($personalData->getJournalEntriesBySeason($season) as $j) {
             $journalForms[] = $this->createForm(JournalType::class, $j);
         }
 
