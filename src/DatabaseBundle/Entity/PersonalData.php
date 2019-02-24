@@ -1010,4 +1010,14 @@ class PersonalData
         }
         return $entries;
     }
+
+    public function getJournalEntryByPosition($position, $season) {
+        $entries = $this->getJournalEntriesBySeason($season);
+        foreach ($entries as $entry) {
+            if ($entry->getPosition() == $position) {
+                return $entry;
+            }
+        }
+        return null;
+    }
 }

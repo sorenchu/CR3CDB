@@ -170,28 +170,33 @@ class EditPersonController extends Controller
             $personalDataForm = $this->createForm(PersonalDataType::class, $personalData);
         }
 
+        $journalForms = array();
+        foreach ($personalData->getJournalEntriesBySeason($season) as $j) {
+            $journalForms[] = $this->createForm(JournalType::class, $j);
+        }
+
         $journal = new Journal();
         $journalForm = $this->createForm(JournalType::class, $journal);
         $journalForm->handleRequest($request);
         if ($journalForm->isSubmitted()) {
-            // TODO: repository method to check if entry exists
-            // if (!$this->entityManager->getRepository(Journal::class)->exists($journal, $personalData->getId())) {
-                $personalData->addJournal($journal);
-                $journal->setPersonalData($personalData);
-                $season->addJournal($journal);
-                $journal->setSeason($season);
-                $journal->setDate(new \DateTime());
-                $journal->setPosition(sizeof($personalData->getJournalEntriesBySeason($season)));
-            // }
-            $this->entityManager->persist($journal);
+            $position = $journalForm->get('position')->getData();
+            if (is_null($position)) {
+                $editingJournal = $journal;
+                $personalData->addJournal($editingJournal);
+                $season->addJournal($editingJournal);
+            } else {
+                $editingJournal = $personalData->getJournalEntryByPosition($position, $season);
+                $editingJournal->setTitle($journal->getTitle());
+                $editingJournal->setText($journal->getText());
+            }
+            $editingJournal->setPersonalData($personalData);
+            $editingJournal->setSeason($season);
+            $editingJournal->setDate(new \DateTime());
+            $editingJournal->setPosition(sizeof($personalData->getJournalEntriesBySeason($season)));
+            $this->entityManager->persist($editingJournal);
             $this->entityManager->flush();
             $journal = new Journal();
             $journalForm = $this->createForm(JournalType::class, $journal);
-        }
-
-        $journalForms = array();
-        foreach ($personalData->getJournalEntriesBySeason($season) as $j) {
-            $journalForms[] = $this->createForm(JournalType::class, $j);
         }
 
         return $this->render('DatabaseBundle:person:editperson.html.twig', array(

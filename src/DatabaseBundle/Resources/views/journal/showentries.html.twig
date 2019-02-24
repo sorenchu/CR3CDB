@@ -14,7 +14,7 @@
                     {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong>
                 </div>
                 <div class="col" align="right">
-                    <a href="#" data-toggle="modal" data-target="#addEntry-{{i}}">{% trans %} edit {% endtrans %}</a>
+                    <a href="#" data-toggle="modal" data-target="#editEntry-{{i}}" data-dismiss="modal">{% trans %} edit {% endtrans %}</a>
                 </div>
                 <br>
                 <div class="col" align="left">

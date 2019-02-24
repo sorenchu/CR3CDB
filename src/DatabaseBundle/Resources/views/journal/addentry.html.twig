@@ -9,6 +9,7 @@
             {{ form_row(journalForm.title) }}
             {{ form_row(journalForm.text) }}
             {{ form_row(journalForm.save) }}
+            {% do journalForm.position.setRendered() %}
         {{ form_end(journalForm) }}
       </div>
     </div>
