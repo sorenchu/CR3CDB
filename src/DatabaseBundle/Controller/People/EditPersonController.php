@@ -185,6 +185,8 @@ class EditPersonController extends Controller
             // }
             $this->entityManager->persist($journal);
             $this->entityManager->flush();
+            $journal = new Journal();
+            $journalForm = $this->createForm(JournalType::class, $journal);
         }
 
         $journalForms = array();
