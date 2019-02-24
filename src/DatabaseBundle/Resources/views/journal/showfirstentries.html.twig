@@ -5,7 +5,6 @@
     {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong> <a href="#" data-toggle="modal" data-target="#editEntry-{{row}}">{% trans %} editjournal {% endtrans %} </a>
     <br>
     {{ entry.getText() }}
-    {{ entry.getPosition() }}
     <br>
     <hr>
     {% set row = row -1 %}
@@ -26,8 +25,9 @@
             {{ form_start(form) }}
                 {{ form_row(form.title) }}
                 {{ form_row(form.text) }}  
-                {{ form_row(form.position)
-                }}
+                <span style="display:none">
+                {{ form_row(form.position) }}
+                </span>
             {{ form_end(form) }}
         </div>
       </div>
