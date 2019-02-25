@@ -329,7 +329,11 @@ class EditPersonController extends Controller
         $editingJournal->setPersonalData($this->personalData);
         $editingJournal->setSeason($this->season);
         $editingJournal->setDate(new \DateTime());
-        $editingJournal->setPosition($currentEntries[$lastEntry]->getPosition()+1);
+        if ($lastEntry < 1) {
+            $editingJournal->setPosition(1);
+        } else {
+            $editingJournal->setPosition($currentEntries[$lastEntry]->getPosition()+1);
+        }
         $this->entityManager->persist($editingJournal);
         $this->entityManager->flush();
     }
