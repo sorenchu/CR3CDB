@@ -60,4 +60,17 @@ class JournalController extends Controller
             'personalData' => $personalData,
         ));
     }
+
+    public function deleteEntryAction($id)
+    {
+        $this->entityManager = $this->getDoctrine()->getManager();
+        $entryData = $this->entityManager->getRepository('DatabaseBundle:Journal')
+            ->find($id);
+        $this->entityManager->remove($entryData);
+        $this->entityManager->flush();
+        return $this->redirectToRoute('edit_person',
+                array('id' => $entryData->getPersonalData()->getId(),
+                    'seasonId' => $entryData->getSeason()->getId()
+            ));
+    }
 }

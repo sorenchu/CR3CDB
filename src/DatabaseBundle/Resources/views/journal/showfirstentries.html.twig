@@ -2,7 +2,7 @@
 <div id="showFirstEntries">
 {% set row = journalLength -1 %}
 {% for entry in personalData.getInitialJournal(curSeason) %}
-    {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong> <a href="#" data-toggle="modal" data-target="#editEntry-{{row}}">{% trans %} editjournal {% endtrans %} </a> <a href="#" data-target="#deleteEntry-{{row}}">{% trans %} delete {% endtrans %}</a>
+    {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong> <a href="#" data-toggle="modal" data-target="#editEntry-{{row}}">{% trans %} editjournal {% endtrans %} </a> <a href="/journal/deleteEntry/{{entry.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar esta entrada?')" >{% trans %} delete {% endtrans %}</a>
     <br>
     {{ entry.getText() }}
     <br>

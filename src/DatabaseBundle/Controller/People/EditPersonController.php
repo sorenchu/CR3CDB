@@ -313,6 +313,9 @@ class EditPersonController extends Controller
 
     private function addJournal($position, $journal)
     {
+        $currentEntries = $this->personalData->getJournalEntriesBySeason($this->season);
+        $lastEntry = sizeof($currentEntries)-1;
+
         if (is_null($position)) {
             $editingJournal = $journal;
             $this->personalData->addJournal($editingJournal);
@@ -322,12 +325,14 @@ class EditPersonController extends Controller
             $editingJournal->setTitle($journal->getTitle());
             $editingJournal->setText($journal->getText());
         }
+
         $editingJournal->setPersonalData($this->personalData);
         $editingJournal->setSeason($this->season);
         $editingJournal->setDate(new \DateTime());
-        $editingJournal->setPosition(sizeof($this->personalData->getJournalEntriesBySeason($this->season)));
+        $editingJournal->setPosition($currentEntries[$lastEntry]->getPosition()+1);
         $this->entityManager->persist($editingJournal);
         $this->entityManager->flush();
     }
+
 }
 ?>

@@ -146,3 +146,6 @@ add_entry:
     path: /journal/addEntry/{id}/{seasonId}
     defaults: { _controller: DatabaseBundle:Journal/Journal:addEntry }
 
+delete_entry:
+    path: /journal/deleteEntry/{id}
+    defaults: { _controller: DatabaseBundle:Journal/Journal:deleteEntry }

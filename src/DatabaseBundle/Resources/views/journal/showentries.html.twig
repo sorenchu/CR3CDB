@@ -15,7 +15,7 @@
                 </div>
                 <div class="col" align="right">
                     <a href="#" data-toggle="modal" data-target="#editEntry-{{i}}" data-dismiss="modal">{% trans %} edit {% endtrans %}</a>
-                    <a href="#" data-toggle="modal" data-target="#deleteEntry-{{i}}">{% trans %} delete {% endtrans %}</a>
+                    <a href="/journal/deleteEntry/{{entry.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar esta entrada?')">{% trans %} delete {% endtrans %}</a>
                 </div>
                 <br>
                 <div class="col" align="left">
