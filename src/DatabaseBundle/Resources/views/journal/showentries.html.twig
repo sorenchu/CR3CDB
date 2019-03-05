@@ -11,7 +11,9 @@
             {% for i in size-1..0 %}
                 {% set entry = personalData.getJournalEntriesBySeason(curSeason)[i] %}
                 <div class="col" align="left">
+                <h4>
                     {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong>
+                </h4>
                 </div>
                 <div class="col" align="right">
                     <a href="#" data-toggle="modal" data-target="#editEntry-{{i}}" data-dismiss="modal">{% trans %} edit {% endtrans %}</a>
@@ -19,7 +21,9 @@
                 </div>
                 <br>
                 <div class="col" align="left">
+                  <p><font size="4">
                     {{ entry.getText() }}
+                  </font></p>
                 <br>
                 </div>
                 <hr>

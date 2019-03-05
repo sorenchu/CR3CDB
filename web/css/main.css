@@ -3,7 +3,7 @@
        font-family: "Sarala", sans-serif;
        box-sizing: border-box;
     }
-    
+
     #header {
       margin: auto;
     }
@@ -18,17 +18,17 @@
       margin: auto 40px;
       padding: 0px 0px;
     }
-    
+
     ul, ol {
       list-style: none;
       padding: 0px 0px;
       margin: auto auto;
     }
-    
+
     .nav > li {
       float: left;
     }
-    
+
     .nav li a {
       background-color: #258228;
       color:#fff;
@@ -37,55 +37,73 @@
       margin: auto;
       display:block;
     }
-    
+
     .nav li a:hover {
       background-color:#434343;
     }
-    
+
     .nav li ul {
       display:none;
       position:absolute;
       min-width:140px;
     }
-    
+
     .nav li:hover > ul {
       display:block;
     }
 
-    .nav li ul li {                                              
-      position:relative;                                         
-    }                                                            
-                                                                 
-    .nav li ul li ul {                                           
-      right:-140px;                                            
-      top:0px;                                                 
-    }                                                            
-                                                                 
-    table {                                                      
-      border-collapse: collapse;                                 
-    }                                                            
-                                                                 
-    th {                                                         
-      background-color:#0B610B;                                  
-      border: 2px solid #000;                                    
-      height: 20px;                                              
-    }                                                            
-                                                                 
-    td {                                                         
-      border: 1px solid #000;                                    
-    }                                                            
-                                                                 
-    tr:nth-child(odd) {                                          
+    .nav li ul li {
+      position:relative;
+    }
+
+    .nav li ul li ul {
+      right:-140px;
+      top:0px;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    th {
+      background-color:#0B610B;
+      border: 2px solid #000;
+      height: 20px;
+    }
+
+    td {
+      border: 1px solid #000;
+    }
+
+    tr:nth-child(odd) {
       background-color: #BDBDBD;
-    }                                                            
-                                                                 
-    tr:nth-child(even) {                                         
-      background-color: #fff;                                    
-    }                                                            
-                                                                 
-    body {                                                       
-      background-color:#66bb6a;                                  
-    } 
+    }
+
+    tr:nth-child(even) {
+      background-color: #fff;
+    }
+
+    table.journal {
+      width: 100%;
+    }
+
+    tr.journal {
+      background-color: #fff;
+    }
+
+    td.journaltext {
+      width: 60%;
+      border: 0px;
+    }
+
+    td.journal {
+      border: 0px;
+      width: 20%;
+    }
+
+    body {
+      background-color:#66bb6a;
+    }
 
     #menu-dropdown {
       width: 100%;
@@ -123,4 +141,4 @@
             width: 100%;
         }
     }
-</style>  
+</style>

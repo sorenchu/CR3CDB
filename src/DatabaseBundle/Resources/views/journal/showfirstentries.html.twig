@@ -1,14 +1,25 @@
 {# src/DatabaseBundle/Resources/views/journal/showfirstentries.html.twig #}
 <div id="showFirstEntries">
+<table class="journal">
 {% set row = journalLength -1 %}
 {% for entry in personalData.getInitialJournal(curSeason) %}
-    {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong> <a href="#" data-toggle="modal" data-target="#editEntry-{{row}}">{% trans %} editjournal {% endtrans %} </a> <a href="/journal/deleteEntry/{{entry.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar esta entrada?')" >{% trans %} delete {% endtrans %}</a>
-    <br>
-    {{ entry.getText() }}
-    <br>
-    <hr>
+    <tr class="journal">
+        <td class="journaltext">
+    {{ entry.getDate().format('d-m-Y') }} - <strong>{{ entry.getTitle }}</strong>
+        </td>
+        <td class="journal">
+    <a href="#" data-toggle="modal" data-target="#editEntry-{{row}}">{% trans %} editjournal {% endtrans %} </a>
+        </td>
+        <td class="journal">
+    <a href="/journal/deleteEntry/{{entry.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar esta entrada?')" >{% trans %} delete {% endtrans %}</a>
+        </td>
+    </tr>
+    <tr class="journal">
+        <td class="journal">{{ entry.getText() }}</td>
+    </tr>
     {% set row = row -1 %}
 {% endfor %}
+</table>
 </div>
 
 {% if journalLength > 0 %}

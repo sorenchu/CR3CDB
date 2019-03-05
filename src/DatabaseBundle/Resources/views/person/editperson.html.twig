@@ -39,8 +39,17 @@
   </div>
   <div class="col" align="right">
       {{ include('DatabaseBundle:journal:showfirstentries.html.twig') }}
+      <br>
+      <table align="left">
+        <tr class="journal">
+            <td class="journaltext">
       <a href="#" data-toggle="modal" data-target="#addEntry">{% trans %} addjournal {% endtrans %}</a>
+            </td>
+            <td class="journaltext">
       <a href="#" data-toggle="modal" data-target="#showEntries">{% trans %} showmore {% endtrans %}</a>
+            </td>
+        </tr>
+      </table>
   </div>
   <hr>
   <h2>
