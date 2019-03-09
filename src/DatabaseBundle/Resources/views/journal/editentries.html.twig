@@ -1,0 +1,24 @@
+{# src/DatabaseBundle/Resources/views/journal/editentries.html.twig #}
+{% if journalLength > 0 %}
+    {% for i in 0..journalLength -1 %}
+    <div class="modal fade" id="editEntry-{{i}}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="editEntryModalLabel">
+                {% trans %} editjournal {% endtrans %}
+            </h4>
+            {% set form = journalForms[i].createView() %}
+            {{ form_start(form) }}
+                {{ form_row(form.title) }}
+                {{ form_row(form.text) }}  
+                <span style="display:none">
+                {{ form_row(form.position) }}
+                </span>
+            {{ form_end(form) }}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+{% endif %}

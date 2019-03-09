@@ -1,6 +1,7 @@
 {# src/DatabaseBundle/Resources/views/journal/showfirstentries.html.twig #}
 <div id="showFirstEntries">
 <table class="journal">
+    <col width="400">
 {% set row = journalLength -1 %}
 {% for entry in personalData.getInitialJournal(curSeason) %}
     <tr class="journal">
@@ -21,27 +22,3 @@
 {% endfor %}
 </table>
 </div>
-
-{% if journalLength > 0 %}
-    {% for i in 0..journalLength -1 %}
-    <div class="modal fade" id="editEntry-{{i}}" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="editEntryModalLabel">
-                {% trans %} editjournal {% endtrans %}
-            </h4>
-          </div>
-            {% set form = journalForms[i].createView() %}
-            {{ form_start(form) }}
-                {{ form_row(form.title) }}
-                {{ form_row(form.text) }}  
-                <span style="display:none">
-                {{ form_row(form.position) }}
-                </span>
-            {{ form_end(form) }}
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-{% endif %}
