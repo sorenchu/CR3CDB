@@ -25,7 +25,8 @@ class ShowPeopleController extends Controller
     public function showAllAction()
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $personalData = $entityManager->getRepository(PersonalData::class)->findAll();
+        $personalData = $entityManager->getRepository(PersonalData::class)->findBy(
+                                array(), array('surname' => 'ASC'));
         return $this->render('DatabaseBundle:people:showall.html.twig', array(
                     'personalData' => $personalData,
                     'season' => $entityManager->getRepository(Season::class)->getDefaultSeason()));
