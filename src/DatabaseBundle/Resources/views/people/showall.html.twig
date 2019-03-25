@@ -34,4 +34,7 @@
   </tr>
 {% endfor %}
 </table>
+{% for i in range(1, counting) %}
+    <a href="/people/showAll/{{i}}"> {{ i }} </a>
+{% endfor %}
 {% endblock %}

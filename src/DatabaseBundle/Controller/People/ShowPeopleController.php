@@ -28,9 +28,12 @@ class ShowPeopleController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $personalData = $entityManager->getRepository(PersonalData::class)
                 ->getAll($page);
+        $counting = count($personalData['paginator'])/20;
+        $counting = round($counting);
         return $this->render('DatabaseBundle:people:showall.html.twig', array(
                     'personalData' => $personalData['paginator'],
-                    'season' => $entityManager->getRepository(Season::class)->getDefaultSeason()));
+                    'season' => $entityManager->getRepository(Season::class)->getDefaultSeason(),
+                    'counting' => $counting));
     }
 
     public function showParentsAction(Request $request)
