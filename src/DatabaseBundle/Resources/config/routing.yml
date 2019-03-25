@@ -15,7 +15,7 @@ import:
     defaults: { _controller: DatabaseBundle:Import/ImportFile:import }
 
 show_all:
-    path:   /people/showAll
+    path:   /people/showAll/{page}
     defaults: { _controller: DatabaseBundle:People/ShowPeople:showAll }
 
 show_players:
