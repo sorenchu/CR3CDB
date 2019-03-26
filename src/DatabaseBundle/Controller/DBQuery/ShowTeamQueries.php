@@ -43,24 +43,5 @@ class ShowTeamQueries extends Controller
             ->getQuery()
             ->getResult();
     }
-
-    public function getByCategory($name, $tableName, $seasonId)
-    {
-        $alias = 'aliastable';
-        $repository = $this->personController
-            ->getDoctrine()
-            ->getRepository($tableName);
-        $query = $repository->createQueryBuilder($alias)
-            ->from($tableName, 'data')
-            ->join($alias.'.personalData', 'personaldata')
-            ->join($alias.'.season', 'season')
-            ->where($alias.'.category LIKE :category')
-            ->andWhere('season.id = :seasonId')
-            ->setParameter('category', $name)
-            ->setParameter('seasonId', $seasonId)
-            ->orderBy('personaldata.surname')
-            ->getQuery();
-        return $query->getResult();
-    }
 }
 ?>

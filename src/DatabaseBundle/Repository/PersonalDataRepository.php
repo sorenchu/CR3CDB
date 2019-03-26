@@ -3,7 +3,6 @@
 namespace DatabaseBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * PersonalDataRepository
@@ -22,22 +21,11 @@ class PersonalDataRepository extends EntityRepository
         $em->flush();
     }
 
-    public function paginate($dql, $page = 1, $limit = 20)
-    {
-        $paginator = new Paginator($dql);
-        $paginator->getQuery()
-            ->setFirstResult($limit * ($page - 1)) // Offset
-            ->setMaxResults($limit); // Limit
-    
-        return $paginator;
-    }
-
     public function getAll($currentPage = 1, $limit = 20)
     {
-        $em = $this->getEntityManager();
         $personalData = $this->createQueryBuilder('c')
                 ->orderBy('c.surname', 'ASC');
-        $paginator = $this->paginate($personalData, $currentPage, $limit);
+        $paginator = \DatabaseBundle\Repository\PaginatorRepository::paginate($personalData, $currentPage, $limit);
         return array('paginator' => $paginator, 
                     'personalData' => $personalData);
     }
