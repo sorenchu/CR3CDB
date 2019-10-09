@@ -7,6 +7,7 @@ use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Entity\ContactData;
 use DatabaseBundle\Entity\PlayerData;
 use DatabaseBundle\Entity\CoachData;
+use DatabaseBundle\Entity\Season;
 use DatabaseBundle\Form\Person\PersonalDataType;
 
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
@@ -41,7 +42,7 @@ class AddPersonController extends Controller
             return $this->redirectToRoute('edit_person', 
                     array(
                         'id' => $personalData->getId(),
-                        'seasonId' => $entityManager->getRepository(Season::class)->getDefaultSeason(),
+                        'seasonId' => $entityManager->getRepository(Season::class)->getDefaultSeason()->getId(),
                         ));
         }
 
