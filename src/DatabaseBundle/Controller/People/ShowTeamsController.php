@@ -30,7 +30,7 @@ class ShowTeamsController extends Controller
 
     public function showFemaleAction($page=1, Request $request)
     {
-        return $this->showSeniorTeam('Femenino', $page, $request);
+        return $this->showSeniorTeam('Female', $page, $request);
     }
 
     public function showSub18Action($page=1, Request $request)
@@ -90,11 +90,12 @@ class ShowTeamsController extends Controller
             $coachData = $entityManager->getRepository(CoachData::class)
                 ->getByCategory($specificTeam, $this->season->getId(), 1);
             $counting = (count($playerData['paginator'])+count($coachData['paginator']))/20;
-            $counting = round($counting);
+            $counting = round($counting)+1;
             $showCoaches = false;
             if ($counting == $page) {
                 $showCoaches = true;
             }
+
             return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
                         'playerData' => $playerData['paginator'],
                         'coachData' => $coachData['paginator'],
@@ -131,6 +132,7 @@ class ShowTeamsController extends Controller
                 ->getByCategory($specificTeam, $this->season->getId(), $page);
             $coachData = $entityManager->getRepository(CoachData::class)
                 ->getByCategory($specificTeam, $this->season->getId(), 1);
+            // FIXME: this has to be refactorized to a single call
             $counting = (count($playerData['paginator'])+count($coachData['paginator']))/20;
             $counting = round($counting)+1;
             $showCoaches = false;
