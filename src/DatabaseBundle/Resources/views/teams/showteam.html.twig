@@ -40,23 +40,28 @@
         </tr>
     {% endif %}
   {% endfor %}
-  {% for data in coachData %}
-    {% if data.getCoachPerson().getIsCoach() %}
-        <tr>
-          <td> {{ data.getPersonalData().getName() }}
-               {{ data.getPersonalData().getSurname() }} ({% trans %} coach {% endtrans %}) </td>
-          <td> {{ data.getPersonalData().getNickname() }} </td>
-          <td> {{ data.getNumber() }} </td>
-          <td> {{ data.getPersonalData().getEmail() }} </td>
-          <td> {{ data.getPersonalData().getPhone() }} </td>
-          {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %}
-            <td> {{ data.getSalary() }} </td>
-          {% endif %}
-          <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> {% trans %} edit {% endtrans %} </a> </td>
-          <td> <a href="/person/deleteFromTeam/{{data.getPersonalData().getId()}}/{{season.getId()}}/1" onclick="return confirm('¿Estás seguro de querer borrar a este entrenador del equipo?')"> {% trans %} delete {% endtrans %} </a> </td>
-        </tr>
-    {% endif %}
-  {% endfor %}
+  {% if showCoaches %}
+    {% for data in coachData %}
+      {% if data.getCoachPerson().getIsCoach() %}
+          <tr>
+            <td> {{ data.getPersonalData().getName() }}
+                 {{ data.getPersonalData().getSurname() }} ({% trans %} coach {% endtrans %}) </td>
+            <td> {{ data.getPersonalData().getNickname() }} </td>
+            <td> {{ data.getNumber() }} </td>
+            <td> {{ data.getPersonalData().getEmail() }} </td>
+            <td> {{ data.getPersonalData().getPhone() }} </td>
+            {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %}
+              <td> {{ data.getSalary() }} </td>
+            {% endif %}
+            <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> {% trans %} edit {% endtrans %} </a> </td>
+            <td> <a href="/person/deleteFromTeam/{{data.getPersonalData().getId()}}/{{season.getId()}}/1" onclick="return confirm('¿Estás seguro de querer borrar a este entrenador del equipo?')"> {% trans %} delete {% endtrans %} </a> </td>
+          </tr>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
   </table>
+  {% for i in range(1, counting) %}
+      <a href="/team/show{{teamName}}/{{i}}"> {{ i }} </a>
+  {% endfor %}
 {% endif %}
 {% endblock %}

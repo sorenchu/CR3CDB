@@ -4,6 +4,7 @@
 namespace DatabaseBundle\Controller\People;
 
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
+use DatabaseBundle\Controller\Paginator\Paginator;
 use DatabaseBundle\Form\Season\SeasonType;
 use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Entity\Season;
@@ -22,13 +23,17 @@ class ShowPeopleController extends Controller
         $this->teamQueries = new ShowTeamQueries($this);
     }
 
-    public function showAllAction()
+    public function showAllAction($page=1)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $personalData = $entityManager->getRepository(PersonalData::class)->findAll();
+        $personalData = $entityManager->getRepository(PersonalData::class)
+                ->getAll($page);
+        $counting = count($personalData['paginator'])/20;
+        $counting = round($counting)+1;
         return $this->render('DatabaseBundle:people:showall.html.twig', array(
-                    'personalData' => $personalData,
-                    'season' => $entityManager->getRepository(Season::class)->getDefaultSeason()));
+                    'personalData' => $personalData['paginator'],
+                    'season' => $entityManager->getRepository(Season::class)->getDefaultSeason(),
+                    'counting' => $counting));
     }
 
     public function showParentsAction(Request $request)

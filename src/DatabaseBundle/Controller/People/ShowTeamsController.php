@@ -6,6 +6,8 @@ namespace DatabaseBundle\Controller\People;
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
 use DatabaseBundle\Form\Season\SeasonType;
 use DatabaseBundle\Entity\Season;
+use DatabaseBundle\Entity\PlayerData;
+use DatabaseBundle\Entity\CoachData;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,52 +23,52 @@ class ShowTeamsController extends Controller
         $this->teamQueries = new ShowTeamQueries($this);
     }
 
-    public function showSeniorAction(Request $request)
+    public function showSeniorAction($page=1, Request $request)
     {
-        return $this->showSeniorTeam('senior', $request);
+        return $this->showSeniorTeam('Senior', $page, $request);
     }
 
-    public function showFemaleAction(Request $request)
+    public function showFemaleAction($page=1, Request $request)
     {
-        return $this->showSeniorTeam('femenino', $request);
+        return $this->showSeniorTeam('Female', $page, $request);
     }
 
-    public function showSub18Action(Request $request)
+    public function showSub18Action($page=1, Request $request)
     {
-        return $this->showJuniorTeam('sub18', $request);
+        return $this->showJuniorTeam('Sub18', $page, $request);
     }
 
-    public function showSub16Action(Request $request)
+    public function showSub16Action($page=1, Request $request)
     {
-        return $this->showJuniorTeam('sub16', $request);
+        return $this->showJuniorTeam('Sub16', $page,  $request);
     }
 
-    public function showSub14Action(Request $request)
+    public function showSub14Action($page=1, Request $request)
     {
-        return $this->showJuniorTeam('sub14', $request);
+        return $this->showJuniorTeam('Sub14', $page, $request);
     }
 
-    public function showSub12Action(Request $request)
+    public function showSub12Action($page=1, Request $request)
     {
-        return $this->showJuniorTeam('sub12', $request);
+        return $this->showJuniorTeam('Sub12', $page, $request);
     }
 
-    public function showSub10Action(Request $request)
+    public function showSub10Action($page=1, Request $request)
     {
-        return $this->showJuniorTeam('sub10', $request);
+        return $this->showJuniorTeam('Sub10', $page, $request);
     }
 
-    public function showSub8Action(Request $request)
+    public function showSub8Action($page=1, Request $request)
     {
-        return $this->showJuniorTeam('sub8', $request);
+        return $this->showJuniorTeam('Sub8', $page, $request);
     }
 
-    public function showSub6Action(Request $request)
+    public function showSub6Action($page=1, Request $request)
     {
-        return $this->showJuniorTeam('sub6', $request);
+        return $this->showJuniorTeam('Sub6', $page, $request);
     }
 
-    private function showSeniorTeam($specificTeam, $request)
+    private function showSeniorTeam($specificTeam, $page, $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $seasonForm = $this->createForm(SeasonType::class);
@@ -83,17 +85,26 @@ class ShowTeamsController extends Controller
 
         $seasonNumber = $entityManager->getRepository(Season::class)->countSeasons();
         if (0 < $seasonNumber) {
-            $playerData = $this->teamQueries
-                ->getByCategory($specificTeam, 'DatabaseBundle:PlayerData', $this->season->getId());
-            $coachData = $this->teamQueries
-                ->getByCategory($specificTeam, 'DatabaseBundle:CoachData', $this->season->getId());
+            $playerData = $entityManager->getRepository(PlayerData::class)
+                ->getByCategory($specificTeam, $this->season->getId(), $page);
+            $coachData = $entityManager->getRepository(CoachData::class)
+                ->getByCategory($specificTeam, $this->season->getId(), 1);
+            $counting = (count($playerData['paginator'])+count($coachData['paginator']))/20;
+            $counting = round($counting)+1;
+            $showCoaches = false;
+            if ($counting == $page) {
+                $showCoaches = true;
+            }
+
             return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
-                        'playerData' => $playerData,
-                        'coachData' => $coachData,
+                        'playerData' => $playerData['paginator'],
+                        'coachData' => $coachData['paginator'],
                         'seasonForm' => $seasonForm->createView(),
                         'teamName' => $specificTeam,
                         'seasonNumber' => $seasonNumber,
                         'season' => $this->season,
+                        'counting' => $counting,
+                        'showCoaches' => $showCoaches,
                         ));
         }
         return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
@@ -101,7 +112,7 @@ class ShowTeamsController extends Controller
                     'seasonNumber' => $seasonNumber));
     }
 
-    private function showJuniorTeam($specificTeam, $request)
+    private function showJuniorTeam($specificTeam, $page, $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $seasonForm = $this->createForm(SeasonType::class);
@@ -117,17 +128,26 @@ class ShowTeamsController extends Controller
 
         $seasonNumber = $entityManager->getRepository(Season::class)->countSeasons();
         if (0 < $seasonNumber) {
-            $playerData = $this->teamQueries
-                ->getByCategory($specificTeam, 'DatabaseBundle:PlayerData', $this->season->getId());
-            $coachData = $this->teamQueries
-                ->getByCategory($specificTeam, 'DatabaseBundle:CoachData', $this->season->getId());
+            $playerData = $entityManager->getRepository(PlayerData::class)
+                ->getByCategory($specificTeam, $this->season->getId(), $page);
+            $coachData = $entityManager->getRepository(CoachData::class)
+                ->getByCategory($specificTeam, $this->season->getId(), 1);
+            // FIXME: this has to be refactorized to a single call
+            $counting = (count($playerData['paginator'])+count($coachData['paginator']))/20;
+            $counting = round($counting)+1;
+            $showCoaches = false;
+            if ($counting == $page) {
+                $showCoaches = true;
+            }
             return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
-                        'playerData' => $playerData,
-                        'coachData' => $coachData,
+                        'playerData' => $playerData['paginator'],
+                        'coachData' => $coachData['paginator'],
                         'seasonForm' => $seasonForm->createView(),
                         'teamName' => $specificTeam,
                         'seasonNumber' => $seasonNumber,
                         'season' => $this->season,
+                        'counting' => $counting,
+                        'showCoaches' => $showCoaches,
                         ));
         } else {
             return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(

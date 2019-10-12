@@ -24,4 +24,22 @@ class PlayerDataRepository extends EntityRepository
                 ->getQuery();
         return $query->getOneOrNullResult();
     }
+
+
+    public function getByCategory($name, $seasonId, $page)
+    {
+        $query = $this->createQueryBuilder('players')
+            ->join('players.personalData', 'personaldata')
+            ->join('players.season', 'season')
+            ->where('players.category LIKE :category')
+            ->andWhere('season.id = :seasonId')
+            ->setParameter('category', $name)
+            ->setParameter('seasonId', $seasonId)
+            ->orderBy('personaldata.surname')
+            ->getQuery();
+        $paginator = \DatabaseBundle\Repository\PaginatorRepository::paginate($query, $page);
+        return array('paginator' => $paginator,
+                    'query' => $query);
+    }
 }
+?>

@@ -15,7 +15,7 @@ import:
     defaults: { _controller: DatabaseBundle:Import/ImportFile:import }
 
 show_all:
-    path:   /people/showAll
+    path:   /people/showAll/{page}
     defaults: { _controller: DatabaseBundle:People/ShowPeople:showAll }
 
 show_players:
@@ -23,39 +23,39 @@ show_players:
     defaults: { _controller: DatabaseBundle:People/ShowPeople:showPlayers }
 
 show_senior:
-    path:   /team/showSenior
+    path:   /team/showSenior/{page}
     defaults: { _controller: DatabaseBundle:People/ShowTeams:showSenior }
 
 show_female:
-    path:   /team/showFemale
+    path:   /team/showFemale/{page}
     defaults: { _controller: DatabaseBundle:People/ShowTeams:showFemale }
 
 show_sub18:
-    path:   /team/showSub18
+    path:   /team/showSub18/{page}
     defaults: { _controller: DatabaseBundle:People/ShowTeams:showSub18 }
 
 show_sub16:
-    path:   /team/showSub16
+    path:   /team/showSub16/{page}
     defaults: { _controller: DatabaseBundle:People/ShowTeams:showSub16 }
 
 show_sub14:
-    path:   /team/showSub14
+    path:   /team/showSub14/{page}
     defaults: { _controller: DatabaseBundle:People/ShowTeams:showSub14 }
 
 show_sub12:
-    path:   /team/showSub12
+    path:   /team/showSub12/{page}
     defaults: { _controller: DatabaseBundle:People/ShowTeams:showSub12 }
 
 show_sub10:
-    path:   /team/showSub10
+    path:   /team/showSub10/{page}
     defaults: { _controller: DatabaseBundle:People/ShowTeams:showSub10 }
 
 show_sub8:
-    path:   /team/showSub8
+    path:   /team/showSub8/{page}
     defaults: { _controller: DatabaseBundle:People/ShowTeams:showSub8 }
 
 show_sub6:
-    path:   /team/showSub6
+    path:   /team/showSub6/{page}
     defaults: { _controller: DatabaseBundle:People/ShowTeams:showSub6 }
 
 show_parents:

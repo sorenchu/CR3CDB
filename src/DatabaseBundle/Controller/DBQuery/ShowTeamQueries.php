@@ -14,23 +14,17 @@ class ShowTeamQueries extends Controller
         $this->personController = $personController;
     }
 
-    public function getAllMembers()
-    {
-        return ($this->personController
-                ->getDoctrine()
-                ->getRepository('DatabaseBundle:PersonalData')
-                ->findAll()); 
-    }
-
     public function getParents($seasonId)
     {
         return $this->personController
             ->getDoctrine()
             ->getRepository('DatabaseBundle:ParentData')
             ->createQueryBuilder('parents')
+            ->join('parents.personalData', 'personaldata')
             ->join('parents.season', 'season')
             ->where('season.id = :seasonId')
             ->setParameter('seasonId', $seasonId)
+            ->orderBy('personaldata.surname')
             ->getQuery()
             ->getResult();
     }
@@ -41,28 +35,13 @@ class ShowTeamQueries extends Controller
             ->getDoctrine()
             ->getRepository('DatabaseBundle:MemberData')
             ->createQueryBuilder('members')
+            ->join('members.personalData', 'personaldata')
             ->join('members.season', 'season')
             ->where('season.id = :seasonId')
             ->setParameter('seasonId', $seasonId)
+            ->orderBy('personaldata.surname')
             ->getQuery()
             ->getResult();
-    }
-
-    public function getByCategory($name, $tableName, $seasonId)
-    {
-        $alias = 'aliastable';
-        $repository = $this->personController
-            ->getDoctrine()
-            ->getRepository($tableName);
-        $query = $repository->createQueryBuilder($alias)
-            ->from($tableName, 'data')
-            ->join($alias.'.season', 'season')
-            ->where($alias.'.category LIKE :category')
-            ->andWhere('season.id = :seasonId')
-            ->setParameter('category', $name)
-            ->setParameter('seasonId', $seasonId)
-            ->getQuery();
-        return $query->getResult();
     }
 }
 ?>

@@ -20,4 +20,13 @@ class PersonalDataRepository extends EntityRepository
         $em->persist($personalData);
         $em->flush();
     }
+
+    public function getAll($currentPage = 1, $limit = 20)
+    {
+        $personalData = $this->createQueryBuilder('c')
+                ->orderBy('c.surname', 'ASC');
+        $paginator = \DatabaseBundle\Repository\PaginatorRepository::paginate($personalData, $currentPage, $limit);
+        return array('paginator' => $paginator, 
+                    'personalData' => $personalData);
+    }
 }
