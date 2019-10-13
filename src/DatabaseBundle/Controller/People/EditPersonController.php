@@ -59,28 +59,14 @@ class EditPersonController extends Controller
             $contactData->setPersonalData($this->personalData);
         }
 
+        $personalDataForm = $this->createForm(PersonalDataType::class, $this->personalData);
         $playerPerson = $this->entityManager->getRepository(PlayerPerson::class)->getPlayerPerson($id, $this->season);
         if ($playerPerson == NULL) {
             $playerPerson = new PlayerPerson();
             $playerPerson->setIsPlayer(false);
-            $handlingData = new HandlingData($this, "player");
-            $playerData = $handlingData->getChildData();
-            $playerData->setPersonalData($this->personalData);
-            $playerData->setSeason($this->season);
-            $playerData->setPlayerPerson($playerPerson);
             $playerPerson->setPersonalData($this->personalData);
             $this->personalData->addPlayerPerson($playerPerson);
-            $playerData->setCategoryBySeason($this->season);
-
-            $pay = $this->entityManager->getRepository(Pay::class)->getPay($playerData->getId());
-            if ($pay == NULL) {
-                $pay = new Pay();
-            }
-            $playerData->setPay($pay);
-            $pay->setPlayerData($playerData);
-
-            $playerPerson->setPlayerData($playerData);
-            $this->personalData->addPlayerDatum($playerData);
+            $playerData = $this->creatingPlayerData($playerPerson);
         } else {
             $playerData = $playerPerson->getPlayerData();
             $pay = $this->entityManager->getRepository(Pay::class)->getPay($playerData->getId());
@@ -305,7 +291,7 @@ class EditPersonController extends Controller
 
     private function isUnderage($playerData)
     {
-        if ($playerData->getCategory() == 'senior' or $playerData->getCategory() == 'female') {
+        if (!$playerData or $playerData->getCategory() == 'senior' or $playerData->getCategory() == 'female') {
             return 'false';
         }
         return 'true';
@@ -336,6 +322,25 @@ class EditPersonController extends Controller
         }
         $this->entityManager->persist($editingJournal);
         $this->entityManager->flush();
+    }
+
+    private function creatingPlayerData($playerPerson) {
+        $handlingData = new HandlingData($this, "player");
+        $playerData = $handlingData->getChildData();
+        $playerData->setPersonalData($this->personalData);
+        $playerData->setSeason($this->season);
+        $playerData->setPlayerPerson($playerPerson);
+        $playerData->setCategoryBySeason($this->season);
+        $pay = $this->entityManager->getRepository(Pay::class)->getPay($playerData->getId());
+        if ($pay == NULL) {
+            $pay = new Pay();
+        }
+        $playerData->setPay($pay);
+        $pay->setPlayerData($playerData);
+
+        $playerPerson->setPlayerData($playerData);
+        $this->personalData->addPlayerDatum($playerData);
+        return $playerData;
     }
 
 }

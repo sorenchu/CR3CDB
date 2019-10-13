@@ -54,9 +54,11 @@
   {{ include('DatabaseBundle:journal:editentries.html.twig') }}
   <hr>
   <h2>
+  {% set playerData = "" %}
   {% for formData in personalDataForm.playerPerson %}
       {% if formData.vars.value.playerData.season.seasontext == curSeason %}
         {{ form_row(formData.isPlayer) }}
+        {% set playerData = formData.playerData %}
       {% else %} 
         {{ form_widget(formData, 
             { 'attr': {'style': 'display:none'} })
@@ -65,40 +67,38 @@
   {% endfor %}
   </h2>
   <div class="col" align="left">
-    {% for formData in personalDataForm.playerData %}
-        {% if formData.vars.value.playerPerson.isPlayer == true and formData.vars.value.season.seasontext == curSeason %}
-            {{ form_row(formData.number) }}
-            {{ form_row(formData.category) }} 
-            {% do formData.season.setRendered() %}
-            {{ form_row(formData.datedata.active) }}
-            {{ form_row(formData.datedata.joiningDate) }}
-            {{ form_row(formData.datedata.leavingDate) }}
+    {{ form_row(playerData.number) }}
+    {{ form_row(playerData.category) }} 
+    {% do playerData.season.setRendered() %}
+    {{ form_row(playerData.datedata.active) }}
+    {{ form_row(playerData.datedata.joiningDate) }}
+    {{ form_row(playerData.datedata.leavingDate) }}
   </div>
   <div class="col" align="center">
             {% if underage == 'true' %}
-                {{ form_row(formData.parentdata) }}
+                {{ form_row(playerData.parentdata) }}
             {% else %}
-                {% do formData.parentdata.setRendered() %}
+                {% do playerData.parentdata.setRendered() %}
             {% endif %}
   </div>
   {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %}
   <div class="col" align="right">
-            {% if formData.pay.activepayment|length > 0 %}
+            {% if playerData.pay.activepayment|length > 0 %}
                 <a href="/person/showPayments/{{personalData.id}}/{{curSeason.id}}">{% trans %} showpayments {% endtrans %}</a>
             {% endif %}
-            {% do formData.pay.setRendered() %}
-            {% do formData.pay.activepayment.setRendered() %}
-            {{ form_row(formData.pay.wayOfPayment) }}
+            {% do playerData.pay.setRendered() %}
+            {% do playerData.pay.activepayment.setRendered() %}
+            {{ form_row(playerData.pay.wayOfPayment) }}
             {% if isPlayerBank == 'true' %}
-                {{ form_row(formData.pay.person) }}
-                {{ form_row(formData.pay.accountNumber) }}
+                {{ form_row(playerData.pay.person) }}
+                {{ form_row(playerData.pay.accountNumber) }}
             {% else %} 
-                {% do formData.pay.person.setRendered() %}
-                {% do formData.pay.accountNumber.setRendered() %}
+                {% do playerData.pay.person.setRendered() %}
+                {% do playerData.pay.accountNumber.setRendered() %}
             {% endif %}
-            <ul class="playerpayments" data-prototype="{{ form_widget(formData.pay.activepayment.vars.prototype)|e('html_attr') }}">
-            {% if formData.pay.activepayment and formData.pay.activepayment|length > 0 %}
-              {% for p in formData.pay.activepayment %}
+            <ul class="playerpayments" data-prototype="{{ form_widget(playerData.pay.activepayment.vars.prototype)|e('html_attr') }}">
+            {% if playerData.pay.activepayment and playerData.pay.activepayment|length > 0 %}
+              {% for p in playerData.pay.activepayment %}
                     <li>
                     {{ form_row(p.payment.amountPayed) }}
                     {{ form_row(p.payment.paymentDate) }}
@@ -107,21 +107,13 @@
                 <br>
               {% endfor %}
             {% else %} 
-              {{ form_widget(formData, 
+              {{ form_widget(playerData, 
                   { 'attr': {'style': 'display:none'} })
               }}
             {% endif %}
             </ul>
   </div>
-  {% else %}
-    {% do formData.pay.setRendered() %}
   {% endif %}
-        {% else %} 
-          {{ form_widget(formData, 
-              { 'attr': {'style': 'display:none'} })
-          }}
-        {% endif %}
-  {% endfor %}
   <hr>
   <h2>
   {% for formData in personalDataForm.coachPerson %}
