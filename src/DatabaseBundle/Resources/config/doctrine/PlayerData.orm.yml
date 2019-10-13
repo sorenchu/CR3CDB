@@ -34,13 +34,6 @@ DatabaseBundle\Entity\PlayerData:
                 referencedColumnName: id
             cascade: ["persist"]
 
-        personalData:
-            targetEntity: PersonalData
-            inversedBy: playerData
-            joinColumn:
-                name: personalData_id
-                referencedColumnName: id
-
     oneToOne:
         pay:
             targetEntity: Pay

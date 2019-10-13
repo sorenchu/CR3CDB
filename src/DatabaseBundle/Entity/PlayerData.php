@@ -146,8 +146,8 @@ class PlayerData
 
     public function __toString()
     {
-        return $this->getPersonalData()->getName().' '
-                  .$this->getPersonalData()->getSurname();
+        return $this->getPlayerPerson()->getPersonalData()->getName().' '
+                  .$this->getPlayerPerson()->getPersonalData()->getSurname();
     }
 
 
@@ -289,7 +289,7 @@ class PlayerData
      */
     public function setCategoryBySeason($season)
     {
-        $birthDate = $this->getPersonalData()->getBirthday();
+        $birthDate = $this->getPlayerPerson()->getPersonalData()->getBirthday();
         $seasonDate = new \DateTime($season->getStartingyear()."-12-31");
         $diff = abs(strtotime($seasonDate->format('Y-m-d')) -
                     strtotime($birthDate->format('Y-m-d')));

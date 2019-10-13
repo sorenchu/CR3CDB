@@ -54,11 +54,6 @@ DatabaseBundle\Entity\PersonalData:
       cascade: ["persist", "remove"]
 
   oneToMany:
-    playerData:
-      targetEntity: PlayerData
-      mappedBy: personalData
-      cascade: ["persist", "remove"]
-
     coachData:
       targetEntity: CoachData
       mappedBy: personalData

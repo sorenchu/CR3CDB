@@ -102,7 +102,6 @@ class PersonalData
      */
     public function __construct()
     {
-        $this->playerData = new \Doctrine\Common\Collections\ArrayCollection();
         $this->coachData = new \Doctrine\Common\Collections\ArrayCollection();
         $this->memberData = new \Doctrine\Common\Collections\ArrayCollection();
         $this->parentData = new \Doctrine\Common\Collections\ArrayCollection();
@@ -407,66 +406,18 @@ class PersonalData
     }
 
     /**
-     * Add playerDatum
-     *
-     * @param \DatabaseBundle\Entity\PlayerData $playerDatum
-     *
-     * @return PersonalData
-     */
-    public function addPlayerDatum(\DatabaseBundle\Entity\PlayerData $playerDatum)
-    {
-        $this->playerData[] = $playerDatum;
-
-        return $this;
-    }
-
-    /**
-     * Remove playerDatum
-     *
-     * @param \DatabaseBundle\Entity\PlayerData $playerDatum
-     */
-    public function removePlayerDatum(\DatabaseBundle\Entity\PlayerData $playerDatum)
-    {
-        $this->playerData->removeElement($playerDatum);
-    }
-
-    /**
-     * Get playerData
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPlayerData()
-    {
-        return $this->playerData;
-    }
-
-    /**
      * Get playerData by season
      * 
      * @return PlayerData
      */
     public function getPlayerDataBySeason($season)
     {
-        foreach($this->playerData as $pd) {
-          if ($pd->getSeason() == $season) {
-              return $pd;
+        foreach($this->getPlayerPerson() as $pd) {
+          if ($pd->getPlayerData()->getSeason() == $season) {
+              return $pd->getPlayerData();
           } 
         }
         return NULL;
-    }
-
-    /**
-     * Set playerData
-     *
-     * @param \DatabaseBundle\Entity\PlayerData $playerData
-     *
-     * @return PersonalData
-     */
-    public function setPlayerData(\DatabaseBundle\Entity\PlayerData $playerData = NULL)
-    {
-        $this->playerData = $playerData;
-
-        return $this;
     }
 
     /**
@@ -478,10 +429,10 @@ class PersonalData
      */
     public function playerIsInCurrentSeason($season) 
     {
-      foreach ($this->playerData as $pd)
+      foreach ($this->getPlayerPerson() as $pd)
       {
-        if ($pd->getSeason() == $season)
-          return $pd;
+        if ($pd->getPlayerData()->getSeason() == $season)
+          return $pd->getPlayerData();
       }
       return NULL;
     }

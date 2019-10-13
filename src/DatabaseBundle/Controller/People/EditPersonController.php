@@ -319,7 +319,6 @@ class EditPersonController extends Controller
     private function creatingPlayerData($playerPerson) {
         $handlingData = new HandlingData($this, "player");
         $playerData = $handlingData->getChildData();
-        $playerData->setPersonalData($this->personalData);
         $playerData->setSeason($this->season);
         $playerData->setPlayerPerson($playerPerson);
         $playerData->setCategoryBySeason($this->season);
@@ -331,7 +330,6 @@ class EditPersonController extends Controller
         $pay->setPlayerData($playerData);
 
         $playerPerson->setPlayerData($playerData);
-        $this->personalData->addPlayerDatum($playerData);
         return $playerData;
     }
 

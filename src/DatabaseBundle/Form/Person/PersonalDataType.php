@@ -74,11 +74,6 @@ class PersonalDataType extends AbstractType
 
             if ($personalData)
             {
-              $form->add('playerData', CollectionType::class,
-                         array('entry_type' => PlayerDataType::class,
-                               'allow_add' => true,
-                               'by_reference' => false,)
-                        );
               $form->add('coachData', CollectionType::class,
                          array('entry_type' => CoachDataType::class,
                                'allow_add' => true,
