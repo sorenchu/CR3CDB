@@ -340,7 +340,6 @@ class EditPersonController extends Controller
                 if (!$activePayment->getPay()) {
                     $history = new PaymentHistory();
                     $activePayment->setPay($pay);
-
                     $pm = $activePayment->getPayment();
                     $activePayment->setPayment($pm);
                     $pm->setPay($pay);

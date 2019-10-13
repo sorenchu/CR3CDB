@@ -28,3 +28,4 @@ DatabaseBundle\Entity\PlayerPerson:
             joinColumn:
                 name: playerData_id
                 referenceColumnName: id
+            cascade: ["persist", "remove"]
