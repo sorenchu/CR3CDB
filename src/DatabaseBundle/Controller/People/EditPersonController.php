@@ -139,13 +139,14 @@ class EditPersonController extends Controller
 
         $personalDataForm = $this->createForm(PersonalDataType::class, $this->personalData);
         $personalDataForm->handleRequest($request);
-        $playerBank = $this->getBank("playerData", $personalDataForm);
+        $playerBank = $this->getBank2("playerPerson", $personalDataForm);
         $memberBank = $this->getBank("memberData", $personalDataForm);
         $underage = $this->isUnderage($this->personalData->getPlayerDataBySeason($this->season));
         if ($personalDataForm->isSubmitted()) {
             if($playerData) {
                 $pay = $playerData->getPay();
-                $this->addPayment($pay, $personalDataForm, "playerData");
+                $this->addPayment2($pay, $personalDataForm, "playerPerson");
+                // $this->addPayment($pay, $personalDataForm, "playerData");
                 $this->removePayment($pay, $personalDataForm, $this->season);
             }
             if($memberData) {
@@ -202,21 +203,21 @@ class EditPersonController extends Controller
         return $bank;
     }
 
-    private function addPay($playerData, $personalDataForm) 
-    {
-        foreach($personalDataForm->get("playerData") as $subForm) {
-            if($this->getFormDataArray($subForm)["season"] == $playerData->getSeason()) {
-                $pay = $this->getFormDataArray($subForm)["pay"];
-                $playerData->setCategory($playerData->getCategory());
-                $pay->setPlayerData($playerData);
-                $playerData->setPay($pay);
-                return $pay;
+    private function getBank2($data, $personalDataForm) {
+        $bank = 'false';
+        foreach($personalDataForm->get($data) as $subForm) {
+            $playerData = $this->getFormDataArray($subForm)['playerData'];
+            if ($playerData->getSeason() == $this->season) {
+                $data = $playerData->getPay();
+                if ($data && $data->getWayOfPayment() == 'bank') {
+                    $bank = 'true';
+                }
             }
         }
+        return $bank;
     }
 
-    private function addPayment($pay, $personalDataForm, $childEntity)
-    {
+    private function addPayment($pay, $personalDataForm, $childEntity) {
         foreach($personalDataForm->get($childEntity) as $subForm) {
             foreach($this->getFormDataArray($subForm["pay"]["activepayment"]) as $activePayment) {
                 if (!$activePayment->getPay()) {
@@ -254,7 +255,7 @@ class EditPersonController extends Controller
     }
 
     private function removePayment($pay, $personalDataForm)
-    {
+    { 
         $payments = $pay->getPayment();
         $repository = $this->entityManager->getRepository(\DatabaseBundle\Entity\Payment::class);
         $dbPayments = $repository->getPaymentsByPay($pay->getId());
@@ -278,15 +279,6 @@ class EditPersonController extends Controller
             $data[$key] = $value->getData();
         }
         return $data;
-    }
-
-    private function getPlayerDataForm($personalDataForm)
-    {
-        foreach($personalDataForm->get("playerData") as $subForm) {
-            if ($subForm->get("season")->getViewData() == $this->season->getId()) {
-                return $subForm;
-            }
-        }
     }
 
     private function isUnderage($playerData)
@@ -343,5 +335,42 @@ class EditPersonController extends Controller
         return $playerData;
     }
 
+    private function addPayment2($pay, $personalDataForm, $childEntity) {
+        foreach($personalDataForm->get($childEntity) as $subForm) {
+            $playerData = $this->getFormDataArray($subForm)['playerData'];
+            foreach ($playerData->getPay()->getActivePayment() as $activePayment) {
+                if (!$activePayment->getPay()) {
+                    $history = new PaymentHistory();
+                    $activePayment->setPay($pay);
+
+                    $pm = $activePayment->getPayment();
+                    $activePayment->setPayment($pm);
+                    $pm->setPay($pay);
+                    $history->addPayment($pm);
+                    $pm->setPaymentHistory($history);
+                    $pm->setActivePayment($activePayment);
+                } else {
+                    $pm = $activePayment->getPayment();
+                    $originalData = $this->entityManager->getUnitOfWork()->getOriginalEntityData($pm);
+                    if (!$pm->compareWithArray($originalData)) {
+                        $originalPayment = new Payment();
+                        $originalPayment->setPay(
+                            $pm->getPay());
+                        $originalPayment->setPaymentHistory(
+                            $pm->getPaymentHistory());
+                        $originalPayment->setPaymentDate(
+                            $originalData['paymentDate']);
+                        $originalPayment->setAmountPayed(
+                            $originalData['amountPayed']);
+                        $originalPayment->setStatus(
+                            $originalData['status']);
+                        $originalPayment->setPay($pay);
+                        $pay->addPayment($originalPayment);
+                        $pm->setPay($pay);
+                    }
+                }
+            }
+        }
+    }
 }
 ?>
