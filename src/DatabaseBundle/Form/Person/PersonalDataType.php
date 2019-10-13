@@ -79,11 +79,6 @@ class PersonalDataType extends AbstractType
                                'allow_add' => true,
                                'by_reference' => false,)
                         );
-              $form->add('memberData', CollectionType::class,
-                         array('entry_type' => MemberDataType::class,
-                               'allow_add' => true,
-                               'by_reference' => false,)
-                        );
               $form->add('parentData', CollectionType::class,
                          array('entry_type' => ParentDataType::class,
                                'allow_add' => true,

@@ -26,9 +26,9 @@ class PlayerPersonType extends AbstractType
                 $personalData = $event->getData();
                 $form = $event->getForm();
 
-            if ($personalData) {
-                $form->add('playerData', PlayerDataType::class);
-            }
+                if ($personalData) {
+                    $form->add('playerData', PlayerDataType::class);
+                }
         });
     }
 

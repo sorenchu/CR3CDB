@@ -85,11 +85,6 @@ class PersonalData
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $memberData;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
     private $parentData;
 
     /**
@@ -103,7 +98,6 @@ class PersonalData
     public function __construct()
     {
         $this->coachData = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->memberData = new \Doctrine\Common\Collections\ArrayCollection();
         $this->parentData = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -502,53 +496,6 @@ class PersonalData
       return NULL;
     }
 
-    /**
-     * Add memberDatum
-     *
-     * @param \DatabaseBundle\Entity\MemberData $memberDatum
-     *
-     * @return PersonalData
-     */
-    public function addMemberDatum(\DatabaseBundle\Entity\MemberData $memberDatum)
-    {
-        $this->memberData[] = $memberDatum;
-
-        return $this;
-    }
-
-    /**
-     * Remove memberDatum
-     *
-     * @param \DatabaseBundle\Entity\MemberData $memberDatum
-     */
-    public function removeMemberDatum(\DatabaseBundle\Entity\MemberData $memberDatum)
-    {
-        $this->memberData->removeElement($memberDatum);
-    }
-
-    /**
-     * Get memberData
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getMemberData()
-    {
-        return $this->memberData;
-    }
-
-    /**
-     * Set memberData
-     *
-     * @param \DatabaseBundle\Entity\MemberData $memberData
-     *
-     * @return WholePerson
-     */
-    public function setMemberData(\DatabaseBundle\Entity\MemberData $memberData = NULL)
-    {
-        $this->memberData = $memberData;
-
-        return $this;
-    }
 
     /**
      * Ask if member is present in the season
@@ -559,9 +506,9 @@ class PersonalData
      */
     public function memberIsInCurrentSeason($season)
     {
-      foreach ($this->memberData as $pd)
+      foreach ($this->getMemberPerson as $pd)
       {
-        if ($pd->getSeason() == $season)
+        if ($pd->getMemberData()->getSeason() == $season)
           return $pd;
       }
       return NULL;

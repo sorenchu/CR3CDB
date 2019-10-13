@@ -59,11 +59,6 @@ DatabaseBundle\Entity\PersonalData:
       mappedBy: personalData
       cascade: ["persist", "remove"]
 
-    memberData:
-      targetEntity: MemberData
-      mappedBy: personalData
-      cascade: ["persist", "remove"]
-
     parentData:
       targetEntity: ParentData
       mappedBy: personalData
