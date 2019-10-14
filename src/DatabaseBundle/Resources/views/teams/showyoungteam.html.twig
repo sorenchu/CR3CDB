@@ -11,6 +11,7 @@
 {% else %}
   {{ include ('DatabaseBundle:season:seasonform.html.twig') }}
 
+  <span> {% trans %} totalplayers {% endtrans %} {{ totalPlayers }}</span>
   <table style="width: 100%">
   {{ include(
       'DatabaseBundle:base:young_team_header.html.twig') }}

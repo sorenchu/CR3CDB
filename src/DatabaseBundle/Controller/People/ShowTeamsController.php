@@ -96,6 +96,8 @@ class ShowTeamsController extends Controller
                 $showCoaches = true;
             }
 
+            $totalPlayers = $entityManager->getRepository(PlayerData::class)
+                ->countByCategory($specificTeam, $this->season->getId());
             return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
                         'playerData' => $playerData['paginator'],
                         'coachData' => $coachData['paginator'],
@@ -105,6 +107,7 @@ class ShowTeamsController extends Controller
                         'season' => $this->season,
                         'counting' => $counting,
                         'showCoaches' => $showCoaches,
+                        'totalPlayers' => $totalPlayers,
                         ));
         }
         return $this->render('DatabaseBundle:teams:showteam.html.twig', array(
@@ -139,6 +142,8 @@ class ShowTeamsController extends Controller
             if ($counting == $page) {
                 $showCoaches = true;
             }
+            $totalPlayers = $entityManager->getRepository(PlayerData::class)
+                ->countByCategory($specificTeam, $this->season->getId());
             return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(
                         'playerData' => $playerData['paginator'],
                         'coachData' => $coachData['paginator'],
@@ -148,6 +153,7 @@ class ShowTeamsController extends Controller
                         'season' => $this->season,
                         'counting' => $counting,
                         'showCoaches' => $showCoaches,
+                        'totalPlayers' => $totalPlayers,
                         ));
         } else {
             return $this->render('DatabaseBundle:teams:showyoungteam.html.twig', array(

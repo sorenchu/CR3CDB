@@ -41,5 +41,19 @@ class PlayerDataRepository extends EntityRepository
         return array('paginator' => $paginator,
                     'query' => $query);
     }
+
+    public function countByCategory($category, $seasonId) {
+        $query = $this->createQueryBuilder('players')
+                    ->select('count(players)')
+                    ->join('players.season', 'season')
+                    ->join('players.playerPerson', 'playerPerson')
+                    ->where('players.category LIKE :category')
+                    ->andWhere('season.id = :seasonId')
+                    ->andWhere('playerPerson.isPlayer = 1')
+                    ->setParameter('category', $category)
+                    ->setParameter('seasonId', $seasonId)
+                    ->getQuery();
+        return $query->getSingleScalarResult();
+    }
 }
 ?>
