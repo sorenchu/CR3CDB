@@ -88,11 +88,9 @@ class EditPersonController extends Controller
             $coachData = $handlingData->getChildData();
             $coachData->setPersonalData($this->personalData);
             $coachData->setSeason($this->season);
-            $coachData->setCoachPerson($coachPerson);
             $coachPerson->setCoachData($coachData);
             $coachPerson->setPersonalData($this->personalData);
             $this->personalData->addCoachPerson($coachPerson);
-            $this->personalData->addCoachDatum($coachData);
         }
 
         $memberPerson = $this->entityManager->getRepository(MemberPerson::class)->getMemberPerson($id, $this->season);
@@ -142,12 +140,12 @@ class EditPersonController extends Controller
         if ($personalDataForm->isSubmitted()) {
             if($playerData) {
                 $pay = $playerData->getPay();
-                $this->addPayment2($pay, $personalDataForm, "player");
+                $this->addPayment($pay, $personalDataForm, "player");
                 $this->removePayment($pay, $personalDataForm, $this->season);
             }
             if($memberData) {
                 $payMember = $memberData->getPay();
-                $this->addPayment2($payMember, $personalDataForm, "member");
+                $this->addPayment($payMember, $personalDataForm, "member");
                 $this->removePayment($payMember, $personalDataForm);
             }
             $seasonForm = $this->createForm(SeasonType::class, $this->season);
@@ -278,7 +276,7 @@ class EditPersonController extends Controller
         return $playerData;
     }
 
-    private function addPayment2($pay, $personalDataForm, $childEntity) {
+    private function addPayment($pay, $personalDataForm, $childEntity) {
         foreach($personalDataForm->get($childEntity.'Person') as $subForm) {
             $playerData = $this->getFormDataArray($subForm)[$childEntity.'Data'];
             foreach ($playerData->getPay()->getActivePayment() as $activePayment) {

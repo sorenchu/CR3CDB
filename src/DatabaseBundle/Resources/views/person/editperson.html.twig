@@ -118,9 +118,11 @@
   {% endif %}
   <hr>
   <h2>
+  {% set coachPerson = "" %}
   {% for formData in personalDataForm.coachPerson %}
       {% if formData.vars.value.coachData.season.seasontext == curSeason %}
         {{ form_row(formData.isCoach) }}
+        {% set coachPerson = formData %}
       {% else %} 
         {{ form_widget(formData, 
             { 'attr': {'style': 'display:none'} })
@@ -129,21 +131,19 @@
   {% endfor %}
   </h2>
   <div class="col" align="left">
-  {% for formData in personalDataForm.coachData %}
-    {% if formData.vars.value.coachPerson.isCoach == true and formData.vars.value.season.seasontext == curSeason %}
-        {{ form_row(formData.number) }}
-        {{ form_row(formData.salary) }}
-        {{ form_row(formData.category) }} 
-        {% do formData.season.setRendered() %}
-        {{ form_row(formData.datedata.active) }}
-        {{ form_row(formData.datedata.joiningDate) }}
-        {{ form_row(formData.datedata.leavingDate) }}
+    {% if coachPerson.vars.value.isCoach == true %}
+        {{ form_row(coachPerson.coachData.number) }}
+        {{ form_row(coachPerson.coachData.salary) }}
+        {{ form_row(coachPerson.coachData.category) }} 
+        {% do coachPerson.coachData.season.setRendered() %}
+        {{ form_row(coachPerson.coachData.datedata.active) }}
+        {{ form_row(coachPerson.coachData.datedata.joiningDate) }}
+        {{ form_row(coachPerson.coachData.datedata.leavingDate) }}
     {% else %} 
-      {{ form_widget(formData, 
+      {{ form_widget(coachPerson, 
           { 'attr': {'style': 'display:none'} })
       }}
     {% endif %}
-  {% endfor %}
   </div>
   <hr>
   <h2>

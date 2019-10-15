@@ -31,13 +31,6 @@ DatabaseBundle\Entity\CoachData:
                 referencedColumnName: id
             cascade: ["persist"]
 
-        personalData:
-            targetEntity: PersonalData
-            inversedBy: coachData
-            joinColumn:
-                name: personalData_id
-                referencedColumnName: id
-
     oneToOne:
         coachPerson:
             targetEntity: CoachPerson
