@@ -86,7 +86,7 @@ class EditPersonController extends Controller
             $coachPerson->setIsCoach(false);
             $handlingData = new HandlingData($this, "coach");
             $coachData = $handlingData->getChildData();
-            $coachData->setPersonalData($this->personalData);
+            $coachData->setCoachPerson($coachPerson);
             $coachData->setSeason($this->season);
             $coachPerson->setCoachData($coachData);
             $coachPerson->setPersonalData($this->personalData);

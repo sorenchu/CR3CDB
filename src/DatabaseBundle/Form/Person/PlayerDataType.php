@@ -63,7 +63,12 @@ class PlayerDataType extends AbstractType
             'label' => 'parents',
             'class' => 'DatabaseBundle:ParentData',
             'query_builder' => function (EntityRepository $er) {
-                  return $er->createQueryBuilder('parent');
+                  return $er->createQueryBuilder('parent')
+                         ->join('parent.parentPerson', 'parentperson')
+                         ->join('parent.season', 'season')
+                         ->where('parentperson.isParent = 1')
+                         ->andWhere('season = :season')
+                         ->setParameter('season', $this->season);
             },
             'required' => false,
             'multiple' => true,
