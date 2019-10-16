@@ -110,35 +110,6 @@ class MemberData
     }
 
     /**
-     * @var \DatabaseBundle\Entity\PersonalData
-     */
-    private $personalData;
-
-
-    /**
-     * Set personalData
-     *
-     * @param \DatabaseBundle\Entity\PersonalData $personalData
-     *
-     * @return MemberData
-     */
-    public function setPersonalData(\DatabaseBundle\Entity\PersonalData $personalData = null)
-    {
-        $this->personalData = $personalData;
-
-        return $this;
-    }
-
-    /**
-     * Get personalData
-     *
-     * @return \DatabaseBundle\Entity\PersonalData
-     */
-    public function getPersonalData()
-    {
-        return $this->personalData;
-    }
-    /**
      * @var \DatabaseBundle\Entity\MemberPerson
      */
     private $memberPerson;

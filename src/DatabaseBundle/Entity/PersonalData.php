@@ -73,11 +73,6 @@ class PersonalData
     private $isParent;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $parentData;
-
-    /**
      * @var \DatabaseBundle\Entity\Pictures
      */
     private $pictures;
@@ -87,7 +82,6 @@ class PersonalData
      */
     public function __construct()
     {
-        $this->parentData = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -456,54 +450,6 @@ class PersonalData
     }
 
     /**
-     * Add parentDatum
-     *
-     * @param \DatabaseBundle\Entity\ParentData $parentDatum
-     *
-     * @return PersonalData
-     */
-    public function addParentDatum(\DatabaseBundle\Entity\ParentData $parentDatum)
-    {
-        $this->parentData[] = $parentDatum;
-
-        return $this;
-    }
-
-    /**
-     * Remove parentDatum
-     *
-     * @param \DatabaseBundle\Entity\ParentData $parentDatum
-     */
-    public function removeParentDatum(\DatabaseBundle\Entity\ParentData $parentDatum)
-    {
-        $this->parentData->removeElement($parentDatum);
-    }
-
-    /**
-     * Get parentData
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getParentData()
-    {
-        return $this->parentData;
-    }
-
-    /**
-     * Set parentData
-     *
-     * @param \DatabaseBundle\Entity\ParentData $parentData
-     *
-     * @return WholePerson
-     */
-    public function setParentData(\DatabaseBundle\Entity\ParentData $parentData = NULL)
-    {
-        $this->parentData = $parentData;
-
-        return $this;
-    }
-
-    /**
      * Ask if parent is present in the season
      *
      * @param $season
@@ -512,9 +458,9 @@ class PersonalData
      */
     public function parentIsInCurrentSeason($season)
     {
-      foreach ($this->parentData as $pd)
+      foreach ($this->getParentPerson() as $pd)
       {
-        if ($pd->getSeason() == $season)
+        if ($pd->getParentData()->getSeason() == $season)
           return $pd;
       }
       return NULL;

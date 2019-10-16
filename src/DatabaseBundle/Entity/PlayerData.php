@@ -28,11 +28,6 @@ class PlayerData
     private $number;
 
     /**
-     * @var \DatabaseBundle\Entity\PersonalData
-     */
-    private $personalData;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $parentData;
@@ -148,31 +143,6 @@ class PlayerData
     {
         return $this->getPlayerPerson()->getPersonalData()->getName().' '
                   .$this->getPlayerPerson()->getPersonalData()->getSurname();
-    }
-
-
-    /**
-     * Set personalData
-     *
-     * @param \DatabaseBundle\Entity\PersonalData $personalData
-     *
-     * @return PlayerData
-     */
-    public function setPersonalData(\DatabaseBundle\Entity\PersonalData $personalData = null)
-    {
-        $this->personalData = $personalData;
-
-        return $this;
-    }
-
-    /**
-     * Get personalData
-     *
-     * @return \DatabaseBundle\Entity\PersonalData
-     */
-    public function getPersonalData()
-    {
-        return $this->personalData;
     }
 
 
