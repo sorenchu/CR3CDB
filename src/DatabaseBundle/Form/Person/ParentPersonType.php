@@ -11,6 +11,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
 class ParentPersonType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -18,7 +21,16 @@ class ParentPersonType extends AbstractType
         $builder
             ->add('isParent', CheckboxType::class, array(
                                 'label' => 'father',
-                                'required' => false,));
+                                'required' => false,))
+            ->addEventListener(FormEvents::POST_SET_DATA,
+                               function (FormEvent $event) {
+                $personalData = $event->getData();
+                $form = $event->getForm();
+
+                if ($personalData) {
+                    $form->add('parentData', ParentDataType::class);
+                }
+        });
     }
 
     public function getBlockPrefix()

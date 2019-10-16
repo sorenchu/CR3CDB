@@ -123,13 +123,11 @@ class EditPersonController extends Controller
             $parentPerson->setIsParent(false);
             $handlingData = new HandlingData($this, "parent");
             $parentData = $handlingData->getChildData();
-            $parentData->setPersonalData($this->personalData);
             $parentData->setSeason($this->season);
             $parentData->setParentPerson($parentPerson);
             $parentPerson->setParentData($parentData);
             $parentPerson->setPersonalData($this->personalData);
             $this->personalData->addParentPerson($parentPerson);
-            $this->personalData->addParentDatum($parentData);
         }
 
         $personalDataForm = $this->createForm(PersonalDataType::class, $this->personalData);

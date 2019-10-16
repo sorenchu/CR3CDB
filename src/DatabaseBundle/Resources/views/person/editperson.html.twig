@@ -208,9 +208,11 @@
   {% endif %}
   <hr>
   <h2>
+  {% set parentPerson = "" %}
   {% for formData in personalDataForm.parentPerson %}
       {% if formData.vars.value.parentData.season.seasontext == curSeason %}
         {{ form_row(formData.isParent) }}
+        {% set parentPerson = formData %}
       {% else %} 
         {{ form_widget(formData, 
             { 'attr': {'style': 'display:none'} })
@@ -219,16 +221,14 @@
   {% endfor %}
   </h2>
   <div class="col" align="left">
-  {% for formData in personalDataForm.parentData %}
-    {% if formData.vars.value.parentPerson.isParent == true and formData.vars.value.season.seasontext == curSeason %}
-        {% do formData.season.setRendered() %}
-        {{ form_row(formData.playerdata) }}
-    {% else %} 
-      {{ form_widget(formData, 
-          { 'attr': {'style': 'display:none'} })
-      }}
-    {% endif %}
-  {% endfor %}
+  {% if parentPerson.vars.value.isParent == true %}
+      {% do parentPerson.parentData.season.setRendered() %}
+      {{ form_row(parentPerson.parentData.playerdata) }}
+  {% else %} 
+    {{ form_widget(parentPerson.parentData, 
+        { 'attr': {'style': 'display:none'} })
+    }}
+  {% endif %}
   </div>
   <hr>
   {{ form_row(personalDataForm.save)}}

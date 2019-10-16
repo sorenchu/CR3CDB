@@ -67,20 +67,6 @@ class PersonalDataType extends AbstractType
                         'allow_add' => true,
                         'by_reference' => true,)
                 )
-        ->addEventListener(FormEvents::POST_SET_DATA,
-                           function (FormEvent $event) {
-            $personalData = $event->getData();
-            $form = $event->getForm();
-
-            if ($personalData)
-            {
-              $form->add('parentData', CollectionType::class,
-                         array('entry_type' => ParentDataType::class,
-                               'allow_add' => true,
-                               'by_reference' => false,)
-                        );
-            } 
-        })
         ->add('save', SubmitType::class, array(
             'label' => 'save'));
   }

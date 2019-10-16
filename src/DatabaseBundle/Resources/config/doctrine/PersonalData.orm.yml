@@ -54,11 +54,6 @@ DatabaseBundle\Entity\PersonalData:
       cascade: ["persist", "remove"]
 
   oneToMany:
-    parentData:
-      targetEntity: ParentData
-      mappedBy: personalData
-      cascade: ["persist", "remove"]
-
     playerPerson:
         targetEntity: PlayerPerson
         mappedBy: personalData
