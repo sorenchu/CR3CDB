@@ -26,23 +26,24 @@
 
   {% for data in memberData %}
     {% if data.getMemberPerson().getIsMember() %}
+    {% set personalData = data.getMemberPerson().getPersonalData() %}
     <tr>
-      <td> {{ data.getPersonalData().getName() }}
-           {{ data.getPersonalData().getSurname() }} </td>
+      <td> {{ personalData.getName() }}
+           {{ personalData.getSurname() }} </td>
       <td> {{ data.getMemberId() }} </td>
-      <td> {% if data.getPersonalData().getContactData() %}
-                {{ data.getPersonalData().getContactData().getPhone() }}
+      <td> {% if personalData.getContactData() %}
+                {{ personalData.getContactData().getPhone() }}
            {% endif %}
       </td>
-      <td> {% if data.getPersonalData().getContactData() %}
-                {{ data.getPersonalData().getEmail() }}
+      <td> {% if personalData.getContactData() %}
+                {{ personalData.getEmail() }}
            {% endif %}
       </td>
       {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %} 
         <td> {{ data.getPayment() }} </td>
       {% endif %}
-      <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> Editar </a> </td>
-      <td> <a href="/person/deleteFromMember/{{data.getPersonalData().getId()}}/{{season.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar a este socio de la lista?')"> Eliminar </a> </td>
+      <td> <a href="/person/editPerson/{{personalData.getId()}}/{{season.getId()}}"> Editar </a> </td>
+      <td> <a href="/person/deleteFromMember/{{personalData.getId()}}/{{season.getId()}}" onclick="return confirm('¿Estás seguro de querer borrar a este socio de la lista?')"> Eliminar </a> </td>
     </tr>
     {% endif %}
   {% endfor %}
