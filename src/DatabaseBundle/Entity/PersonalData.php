@@ -73,26 +73,6 @@ class PersonalData
     private $isParent;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $playerData;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $coachData;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $memberData;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $parentData;
-
-    /**
      * @var \DatabaseBundle\Entity\Pictures
      */
     private $pictures;
@@ -102,10 +82,6 @@ class PersonalData
      */
     public function __construct()
     {
-        $this->playerData = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->coachData = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->memberData = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->parentData = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -407,66 +383,18 @@ class PersonalData
     }
 
     /**
-     * Add playerDatum
-     *
-     * @param \DatabaseBundle\Entity\PlayerData $playerDatum
-     *
-     * @return PersonalData
-     */
-    public function addPlayerDatum(\DatabaseBundle\Entity\PlayerData $playerDatum)
-    {
-        $this->playerData[] = $playerDatum;
-
-        return $this;
-    }
-
-    /**
-     * Remove playerDatum
-     *
-     * @param \DatabaseBundle\Entity\PlayerData $playerDatum
-     */
-    public function removePlayerDatum(\DatabaseBundle\Entity\PlayerData $playerDatum)
-    {
-        $this->playerData->removeElement($playerDatum);
-    }
-
-    /**
-     * Get playerData
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPlayerData()
-    {
-        return $this->playerData;
-    }
-
-    /**
      * Get playerData by season
      * 
      * @return PlayerData
      */
     public function getPlayerDataBySeason($season)
     {
-        foreach($this->playerData as $pd) {
-          if ($pd->getSeason() == $season) {
-              return $pd;
+        foreach($this->getPlayerPerson() as $pd) {
+          if ($pd->getPlayerData()->getSeason() == $season) {
+              return $pd->getPlayerData();
           } 
         }
         return NULL;
-    }
-
-    /**
-     * Set playerData
-     *
-     * @param \DatabaseBundle\Entity\PlayerData $playerData
-     *
-     * @return PersonalData
-     */
-    public function setPlayerData(\DatabaseBundle\Entity\PlayerData $playerData = NULL)
-    {
-        $this->playerData = $playerData;
-
-        return $this;
     }
 
     /**
@@ -478,60 +406,12 @@ class PersonalData
      */
     public function playerIsInCurrentSeason($season) 
     {
-      foreach ($this->playerData as $pd)
+      foreach ($this->getPlayerPerson() as $pd)
       {
-        if ($pd->getSeason() == $season)
-          return $pd;
+        if ($pd->getPlayerData()->getSeason() == $season)
+          return $pd->getPlayerData();
       }
       return NULL;
-    }
-
-    /**
-     * Add coachDatum
-     *
-     * @param \DatabaseBundle\Entity\CoachData $coachDatum
-     *
-     * @return PersonalData
-     */
-    public function addCoachDatum(\DatabaseBundle\Entity\CoachData $coachDatum)
-    {
-        $this->coachData[] = $coachDatum;
-
-        return $this;
-    }
-
-    /**
-     * Remove coachDatum
-     *
-     * @param \DatabaseBundle\Entity\CoachData $coachDatum
-     */
-    public function removeCoachDatum(\DatabaseBundle\Entity\CoachData $coachDatum)
-    {
-        $this->coachData->removeElement($coachDatum);
-    }
-
-    /**
-     * Get coachData
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCoachData()
-    {
-        return $this->coachData;
-    }
-
-    /**
-     * Set coachData
-     *
-     * @param \DatabaseBundle\Entity\CoachData $coachData
-     *
-     * @return WholePerson
-     */
-    public function setCoachData(\DatabaseBundle\Entity\CoachData $coachData = NULL)
-    {
-        $this->coachData = $coachData;
-
-        return $this;
     }
 
     /**
@@ -543,61 +423,14 @@ class PersonalData
      */
     public function coachIsInCurrentSeason($season)
     {
-      foreach ($this->coachData as $pd)
+      foreach ($this->getCoachPerson() as $pd)
       {
-        if ($pd->getSeason() == $season)
+        if ($pd->getCoachData()->getSeason() == $season)
           return $pd;
       }
       return NULL;
     }
 
-    /**
-     * Add memberDatum
-     *
-     * @param \DatabaseBundle\Entity\MemberData $memberDatum
-     *
-     * @return PersonalData
-     */
-    public function addMemberDatum(\DatabaseBundle\Entity\MemberData $memberDatum)
-    {
-        $this->memberData[] = $memberDatum;
-
-        return $this;
-    }
-
-    /**
-     * Remove memberDatum
-     *
-     * @param \DatabaseBundle\Entity\MemberData $memberDatum
-     */
-    public function removeMemberDatum(\DatabaseBundle\Entity\MemberData $memberDatum)
-    {
-        $this->memberData->removeElement($memberDatum);
-    }
-
-    /**
-     * Get memberData
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getMemberData()
-    {
-        return $this->memberData;
-    }
-
-    /**
-     * Set memberData
-     *
-     * @param \DatabaseBundle\Entity\MemberData $memberData
-     *
-     * @return WholePerson
-     */
-    public function setMemberData(\DatabaseBundle\Entity\MemberData $memberData = NULL)
-    {
-        $this->memberData = $memberData;
-
-        return $this;
-    }
 
     /**
      * Ask if member is present in the season
@@ -608,60 +441,12 @@ class PersonalData
      */
     public function memberIsInCurrentSeason($season)
     {
-      foreach ($this->memberData as $pd)
+      foreach ($this->getMemberPerson as $pd)
       {
-        if ($pd->getSeason() == $season)
+        if ($pd->getMemberData()->getSeason() == $season)
           return $pd;
       }
       return NULL;
-    }
-
-    /**
-     * Add parentDatum
-     *
-     * @param \DatabaseBundle\Entity\ParentData $parentDatum
-     *
-     * @return PersonalData
-     */
-    public function addParentDatum(\DatabaseBundle\Entity\ParentData $parentDatum)
-    {
-        $this->parentData[] = $parentDatum;
-
-        return $this;
-    }
-
-    /**
-     * Remove parentDatum
-     *
-     * @param \DatabaseBundle\Entity\ParentData $parentDatum
-     */
-    public function removeParentDatum(\DatabaseBundle\Entity\ParentData $parentDatum)
-    {
-        $this->parentData->removeElement($parentDatum);
-    }
-
-    /**
-     * Get parentData
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getParentData()
-    {
-        return $this->parentData;
-    }
-
-    /**
-     * Set parentData
-     *
-     * @param \DatabaseBundle\Entity\ParentData $parentData
-     *
-     * @return WholePerson
-     */
-    public function setParentData(\DatabaseBundle\Entity\ParentData $parentData = NULL)
-    {
-        $this->parentData = $parentData;
-
-        return $this;
     }
 
     /**
@@ -673,9 +458,9 @@ class PersonalData
      */
     public function parentIsInCurrentSeason($season)
     {
-      foreach ($this->parentData as $pd)
+      foreach ($this->getParentPerson() as $pd)
       {
-        if ($pd->getSeason() == $season)
+        if ($pd->getParentData()->getSeason() == $season)
           return $pd;
       }
       return NULL;

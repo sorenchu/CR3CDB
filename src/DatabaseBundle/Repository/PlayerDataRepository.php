@@ -15,6 +15,8 @@ class PlayerDataRepository extends EntityRepository
     public function getCategory($id, $season)
     {
        $query = $this->createQueryBuilder('players')
+                ->join('players.playerPerson', 'players')
+                ->join('playerperson.personalData', 'personaldata')
                 ->join('players.personalData', 'person')
                 ->join('players.season', 'season')
                 ->where('person.id = :id')
@@ -29,7 +31,8 @@ class PlayerDataRepository extends EntityRepository
     public function getByCategory($name, $seasonId, $page)
     {
         $query = $this->createQueryBuilder('players')
-            ->join('players.personalData', 'personaldata')
+            ->join('players.playerPerson', 'playerperson')
+            ->join('playerperson.personalData', 'personaldata')
             ->join('players.season', 'season')
             ->where('players.category LIKE :category')
             ->andWhere('season.id = :seasonId')

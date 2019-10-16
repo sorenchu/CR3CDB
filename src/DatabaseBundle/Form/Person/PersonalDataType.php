@@ -67,35 +67,6 @@ class PersonalDataType extends AbstractType
                         'allow_add' => true,
                         'by_reference' => true,)
                 )
-        ->addEventListener(FormEvents::POST_SET_DATA,
-                           function (FormEvent $event) {
-            $personalData = $event->getData();
-            $form = $event->getForm();
-
-            if ($personalData)
-            {
-              $form->add('playerData', CollectionType::class,
-                         array('entry_type' => PlayerDataType::class,
-                               'allow_add' => true,
-                               'by_reference' => false,)
-                        );
-              $form->add('coachData', CollectionType::class,
-                         array('entry_type' => CoachDataType::class,
-                               'allow_add' => true,
-                               'by_reference' => false,)
-                        );
-              $form->add('memberData', CollectionType::class,
-                         array('entry_type' => MemberDataType::class,
-                               'allow_add' => true,
-                               'by_reference' => false,)
-                        );
-              $form->add('parentData', CollectionType::class,
-                         array('entry_type' => ParentDataType::class,
-                               'allow_add' => true,
-                               'by_reference' => false,)
-                        );
-            } 
-        })
         ->add('save', SubmitType::class, array(
             'label' => 'save'));
   }

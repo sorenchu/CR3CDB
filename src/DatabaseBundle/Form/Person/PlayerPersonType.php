@@ -11,14 +11,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
 class PlayerPersonType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
             ->add('isPlayer', CheckboxType::class, array(
                                 'label' => 'player',
-                                'required' => false,));
+                                'required' => false,))
+            ->addEventListener(FormEvents::POST_SET_DATA,
+                               function (FormEvent $event) {
+                $personalData = $event->getData();
+                $form = $event->getForm();
+
+                if ($personalData) {
+                    $form->add('playerData', PlayerDataType::class);
+                }
+        });
     }
 
     public function getBlockPrefix()

@@ -28,11 +28,6 @@ class PlayerData
     private $number;
 
     /**
-     * @var \DatabaseBundle\Entity\PersonalData
-     */
-    private $personalData;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $parentData;
@@ -146,33 +141,8 @@ class PlayerData
 
     public function __toString()
     {
-        return $this->getPersonalData()->getName().' '
-                  .$this->getPersonalData()->getSurname();
-    }
-
-
-    /**
-     * Set personalData
-     *
-     * @param \DatabaseBundle\Entity\PersonalData $personalData
-     *
-     * @return PlayerData
-     */
-    public function setPersonalData(\DatabaseBundle\Entity\PersonalData $personalData = null)
-    {
-        $this->personalData = $personalData;
-
-        return $this;
-    }
-
-    /**
-     * Get personalData
-     *
-     * @return \DatabaseBundle\Entity\PersonalData
-     */
-    public function getPersonalData()
-    {
-        return $this->personalData;
+        return $this->getPlayerPerson()->getPersonalData()->getName().' '
+                  .$this->getPlayerPerson()->getPersonalData()->getSurname();
     }
 
 
@@ -289,7 +259,7 @@ class PlayerData
      */
     public function setCategoryBySeason($season)
     {
-        $birthDate = $this->getPersonalData()->getBirthday();
+        $birthDate = $this->getPlayerPerson()->getPersonalData()->getBirthday();
         $seasonDate = new \DateTime($season->getStartingyear()."-12-31");
         $diff = abs(strtotime($seasonDate->format('Y-m-d')) -
                     strtotime($birthDate->format('Y-m-d')));

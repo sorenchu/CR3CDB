@@ -26,13 +26,6 @@ DatabaseBundle\Entity\MemberData:
                 referencedColumnName: id
             cascade: ["persist"]
 
-        personalData:
-            targetEntity: PersonalData
-            inversedBy: memberData
-            joinColumn:
-                name: personalData_id
-                referencedColumnName: id
-
     oneToOne:
         memberPerson:
             targetEntity: MemberPerson

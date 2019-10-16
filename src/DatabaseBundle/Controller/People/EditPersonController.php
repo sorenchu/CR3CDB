@@ -59,28 +59,14 @@ class EditPersonController extends Controller
             $contactData->setPersonalData($this->personalData);
         }
 
+        $personalDataForm = $this->createForm(PersonalDataType::class, $this->personalData);
         $playerPerson = $this->entityManager->getRepository(PlayerPerson::class)->getPlayerPerson($id, $this->season);
         if ($playerPerson == NULL) {
             $playerPerson = new PlayerPerson();
             $playerPerson->setIsPlayer(false);
-            $handlingData = new HandlingData($this, "player");
-            $playerData = $handlingData->getChildData();
-            $playerData->setPersonalData($this->personalData);
-            $playerData->setSeason($this->season);
-            $playerData->setPlayerPerson($playerPerson);
             $playerPerson->setPersonalData($this->personalData);
             $this->personalData->addPlayerPerson($playerPerson);
-            $playerData->setCategoryBySeason($this->season);
-
-            $pay = $this->entityManager->getRepository(Pay::class)->getPay($playerData->getId());
-            if ($pay == NULL) {
-                $pay = new Pay();
-            }
-            $playerData->setPay($pay);
-            $pay->setPlayerData($playerData);
-
-            $playerPerson->setPlayerData($playerData);
-            $this->personalData->addPlayerDatum($playerData);
+            $playerData = $this->creatingPlayerData($playerPerson);
         } else {
             $playerData = $playerPerson->getPlayerData();
             $pay = $this->entityManager->getRepository(Pay::class)->getPay($playerData->getId());
@@ -102,11 +88,9 @@ class EditPersonController extends Controller
             $coachData = $handlingData->getChildData();
             $coachData->setPersonalData($this->personalData);
             $coachData->setSeason($this->season);
-            $coachData->setCoachPerson($coachPerson);
             $coachPerson->setCoachData($coachData);
             $coachPerson->setPersonalData($this->personalData);
             $this->personalData->addCoachPerson($coachPerson);
-            $this->personalData->addCoachDatum($coachData);
         }
 
         $memberPerson = $this->entityManager->getRepository(MemberPerson::class)->getMemberPerson($id, $this->season);
@@ -115,13 +99,11 @@ class EditPersonController extends Controller
             $memberPerson->setIsMember(false);
             $handlingData = new HandlingData($this, "member");
             $memberData = $handlingData->getChildData();
-            $memberData->setPersonalData($this->personalData);
             $memberData->setSeason($this->season);
             $memberData->setMemberPerson($memberPerson);
             $memberPerson->setMemberData($memberData);
             $memberPerson->setPersonalData($this->personalData);
             $this->personalData->addMemberPerson($memberPerson);
-            $this->personalData->addMemberDatum($memberData);
 
             $payMember = $this->entityManager->getRepository(Pay::class)->getPay($memberData->getId());
             if ($payMember == NULL) {
@@ -131,7 +113,6 @@ class EditPersonController extends Controller
             $payMember->setMemberData($memberData);
 
             $memberPerson->setMemberData($memberData);
-            $this->personalData->addMemberDatum($memberData);
         } else {
             $memberData = $memberPerson->getMemberData();
         }
@@ -142,29 +123,27 @@ class EditPersonController extends Controller
             $parentPerson->setIsParent(false);
             $handlingData = new HandlingData($this, "parent");
             $parentData = $handlingData->getChildData();
-            $parentData->setPersonalData($this->personalData);
             $parentData->setSeason($this->season);
             $parentData->setParentPerson($parentPerson);
             $parentPerson->setParentData($parentData);
             $parentPerson->setPersonalData($this->personalData);
             $this->personalData->addParentPerson($parentPerson);
-            $this->personalData->addParentDatum($parentData);
         }
 
         $personalDataForm = $this->createForm(PersonalDataType::class, $this->personalData);
         $personalDataForm->handleRequest($request);
-        $playerBank = $this->getBank("playerData", $personalDataForm);
-        $memberBank = $this->getBank("memberData", $personalDataForm);
+        $playerBank = $this->getBank("player", $personalDataForm);
+        $memberBank = $this->getBank("member", $personalDataForm);
         $underage = $this->isUnderage($this->personalData->getPlayerDataBySeason($this->season));
         if ($personalDataForm->isSubmitted()) {
             if($playerData) {
                 $pay = $playerData->getPay();
-                $this->addPayment($pay, $personalDataForm, "playerData");
+                $this->addPayment($pay, $personalDataForm, "player");
                 $this->removePayment($pay, $personalDataForm, $this->season);
             }
             if($memberData) {
                 $payMember = $memberData->getPay();
-                $this->addPayment($payMember, $personalDataForm, "memberData");
+                $this->addPayment($payMember, $personalDataForm, "member");
                 $this->removePayment($payMember, $personalDataForm);
             }
             $seasonForm = $this->createForm(SeasonType::class, $this->season);
@@ -202,12 +181,12 @@ class EditPersonController extends Controller
                     ));
     }
 
-    private function getBank($data, $personalDataForm)
-    {
+    private function getBank($data, $personalDataForm) {
         $bank = 'false';
-        foreach($personalDataForm->get($data) as $subForm) {
-            if ($this->getFormDataArray($subForm)["season"] == $this->season) {
-                $data = $this->getFormDataArray($subForm)["pay"];
+        foreach($personalDataForm->get($data.'Person') as $subForm) {
+            $playerData = $this->getFormDataArray($subForm)[$data.'Data'];
+            if ($playerData->getSeason() == $this->season) {
+                $data = $playerData->getPay();
                 if ($data && $data->getWayOfPayment() == 'bank') {
                     $bank = 'true';
                 }
@@ -216,59 +195,8 @@ class EditPersonController extends Controller
         return $bank;
     }
 
-    private function addPay($playerData, $personalDataForm) 
-    {
-        foreach($personalDataForm->get("playerData") as $subForm) {
-            if($this->getFormDataArray($subForm)["season"] == $playerData->getSeason()) {
-                $pay = $this->getFormDataArray($subForm)["pay"];
-                $playerData->setCategory($playerData->getCategory());
-                $pay->setPlayerData($playerData);
-                $playerData->setPay($pay);
-                return $pay;
-            }
-        }
-    }
-
-    private function addPayment($pay, $personalDataForm, $childEntity)
-    {
-        foreach($personalDataForm->get($childEntity) as $subForm) {
-            foreach($this->getFormDataArray($subForm["pay"]["activepayment"]) as $activePayment) {
-                if (!$activePayment->getPay()) {
-                    $history = new PaymentHistory();
-                    $activePayment->setPay($pay);
-
-                    $pm = $activePayment->getPayment();
-                    $activePayment->setPayment($pm);
-                    $pm->setPay($pay);
-                    $history->addPayment($pm);
-                    $pm->setPaymentHistory($history);
-                    $pm->setActivePayment($activePayment);
-                } else {
-                    $pm = $activePayment->getPayment();
-                    $originalData = $this->entityManager->getUnitOfWork()->getOriginalEntityData($pm);
-                    if (!$pm->compareWithArray($originalData)) {
-                        $originalPayment = new Payment();
-                        $originalPayment->setPay(
-                            $pm->getPay());
-                        $originalPayment->setPaymentHistory(
-                            $pm->getPaymentHistory());
-                        $originalPayment->setPaymentDate(
-                            $originalData['paymentDate']);
-                        $originalPayment->setAmountPayed(
-                            $originalData['amountPayed']);
-                        $originalPayment->setStatus(
-                            $originalData['status']);
-                        $originalPayment->setPay($pay);
-                        $pay->addPayment($originalPayment);
-                        $pm->setPay($pay);
-                    }
-                }
-            }
-        }
-    }
-
     private function removePayment($pay, $personalDataForm)
-    {
+    { 
         $payments = $pay->getPayment();
         $repository = $this->entityManager->getRepository(\DatabaseBundle\Entity\Payment::class);
         $dbPayments = $repository->getPaymentsByPay($pay->getId());
@@ -294,18 +222,9 @@ class EditPersonController extends Controller
         return $data;
     }
 
-    private function getPlayerDataForm($personalDataForm)
-    {
-        foreach($personalDataForm->get("playerData") as $subForm) {
-            if ($subForm->get("season")->getViewData() == $this->season->getId()) {
-                return $subForm;
-            }
-        }
-    }
-
     private function isUnderage($playerData)
     {
-        if ($playerData->getCategory() == 'senior' or $playerData->getCategory() == 'female') {
+        if (!$playerData or $playerData->getCategory() == 'senior' or $playerData->getCategory() == 'female') {
             return 'false';
         }
         return 'true';
@@ -338,5 +257,58 @@ class EditPersonController extends Controller
         $this->entityManager->flush();
     }
 
+    private function creatingPlayerData($playerPerson) {
+        $handlingData = new HandlingData($this, "player");
+        $playerData = $handlingData->getChildData();
+        $playerData->setSeason($this->season);
+        $playerData->setPlayerPerson($playerPerson);
+        $playerData->setCategoryBySeason($this->season);
+        $pay = $this->entityManager->getRepository(Pay::class)->getPay($playerData->getId());
+        if ($pay == NULL) {
+            $pay = new Pay();
+        }
+        $playerData->setPay($pay);
+        $pay->setPlayerData($playerData);
+
+        $playerPerson->setPlayerData($playerData);
+        return $playerData;
+    }
+
+    private function addPayment($pay, $personalDataForm, $childEntity) {
+        foreach($personalDataForm->get($childEntity.'Person') as $subForm) {
+            $playerData = $this->getFormDataArray($subForm)[$childEntity.'Data'];
+            foreach ($playerData->getPay()->getActivePayment() as $activePayment) {
+                if (!$activePayment->getPay()) {
+                    $history = new PaymentHistory();
+                    $activePayment->setPay($pay);
+                    $pm = $activePayment->getPayment();
+                    $activePayment->setPayment($pm);
+                    $pm->setPay($pay);
+                    $history->addPayment($pm);
+                    $pm->setPaymentHistory($history);
+                    $pm->setActivePayment($activePayment);
+                } else {
+                    $pm = $activePayment->getPayment();
+                    $originalData = $this->entityManager->getUnitOfWork()->getOriginalEntityData($pm);
+                    if (!$pm->compareWithArray($originalData)) {
+                        $originalPayment = new Payment();
+                        $originalPayment->setPay(
+                            $pm->getPay());
+                        $originalPayment->setPaymentHistory(
+                            $pm->getPaymentHistory());
+                        $originalPayment->setPaymentDate(
+                            $originalData['paymentDate']);
+                        $originalPayment->setAmountPayed(
+                            $originalData['amountPayed']);
+                        $originalPayment->setStatus(
+                            $originalData['status']);
+                        $originalPayment->setPay($pay);
+                        $pay->addPayment($originalPayment);
+                        $pm->setPay($pay);
+                    }
+                }
+            }
+        }
+    }
 }
 ?>

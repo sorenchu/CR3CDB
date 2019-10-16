@@ -17,17 +17,18 @@
       'DatabaseBundle:base:team_header.html.twig') }}
   {% for data in playerData %}
     {% if data.getPlayerPerson().getIsPlayer() %}
+        {% set personalData = data.getPlayerPerson().getPersonalData() %}
         <tr>
-          <td> {{ data.getPersonalData().getName() }}
-             {{ data.getPersonalData().getSurname() }} </td>
-          <td> {{ data.getPersonalData().getNickname() }} </td>
+          <td> {{ personalData.getName() }}
+             {{ personalData.getSurname() }} </td>
+          <td> {{ personalData.getNickname() }} </td>
           <td> {{ data.getNumber() }} </td>
-          <td> {% if data.getPersonalData().getContactData() %}
-                  {{ data.getPersonalData().getContactData().getEmail() }}
+          <td> {% if personalData.getContactData() %}
+                  {{ personalData.getContactData().getEmail() }}
                {% endif %}
           </td>
-          <td> {% if data.getPersonalData().getContactData() %}
-                  {{ data.getPersonalData().getContactData().getPhone() }}        {% endif %}
+          <td> {% if personalData.getContactData() %}
+                  {{ personalData.getContactData().getPhone() }}        {% endif %}
           </td>
           {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %}
             {% if data.getPay() != NULL %}
@@ -36,26 +37,27 @@
               <td> 0 </td>
             {% endif %}
           {% endif %}
-          <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> {% trans %} edit {% endtrans %} </a> </td>
-          <td> <a href="/person/deleteFromTeam/{{data.getPersonalData().getId()}}/{{season.getId()}}/0" onclick="return confirm('¿Estás seguro de querer borrar a este jugador del equipo?')"> {% trans %} delete {% endtrans %} </a> </td>
+          <td> <a href="/person/editPerson/{{personalData.getId()}}/{{season.getId()}}"> {% trans %} edit {% endtrans %} </a> </td>
+          <td> <a href="/person/deleteFromTeam/{{personalData.getId()}}/{{season.getId()}}/0" onclick="return confirm('¿Estás seguro de querer borrar a este jugador del equipo?')"> {% trans %} delete {% endtrans %} </a> </td>
         </tr>
     {% endif %}
   {% endfor %}
   {% if showCoaches %}
     {% for data in coachData %}
       {% if data.getCoachPerson().getIsCoach() %}
+          {% set personalData = data.getCoachPerson().getPersonalData() %}
           <tr>
-            <td> {{ data.getPersonalData().getName() }}
-                 {{ data.getPersonalData().getSurname() }} ({% trans %} coach {% endtrans %}) </td>
-            <td> {{ data.getPersonalData().getNickname() }} </td>
+            <td> {{ personalData.getName() }}
+                 {{ personalData.getSurname() }} ({% trans %} coach {% endtrans %}) </td>
+            <td> {{ personalData.getNickname() }} </td>
             <td> {{ data.getNumber() }} </td>
-            <td> {{ data.getPersonalData().getEmail() }} </td>
-            <td> {{ data.getPersonalData().getPhone() }} </td>
+            <td> {{ personalData.getEmail() }} </td>
+            <td> {{ personalData.getPhone() }} </td>
             {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %}
               <td> {{ data.getSalary() }} </td>
             {% endif %}
-            <td> <a href="/person/editPerson/{{data.getPersonalData().getId()}}/{{season.getId()}}"> {% trans %} edit {% endtrans %} </a> </td>
-            <td> <a href="/person/deleteFromTeam/{{data.getPersonalData().getId()}}/{{season.getId()}}/1" onclick="return confirm('¿Estás seguro de querer borrar a este entrenador del equipo?')"> {% trans %} delete {% endtrans %} </a> </td>
+            <td> <a href="/person/editPerson/{{personalData.getId()}}/{{season.getId()}}"> {% trans %} edit {% endtrans %} </a> </td>
+            <td> <a href="/person/deleteFromTeam/{{personalData.getId()}}/{{season.getId()}}/1" onclick="return confirm('¿Estás seguro de querer borrar a este entrenador del equipo?')"> {% trans %} delete {% endtrans %} </a> </td>
           </tr>
       {% endif %}
     {% endfor %}

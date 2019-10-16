@@ -35,13 +35,6 @@ DatabaseBundle\Entity\ParentData:
                 referencedColumnName: id
             cascade: ["persist"]
 
-        personalData:
-            targetEntity: PersonalData
-            inversedBy: parentData
-            joinColumn:
-                name: personalData_id
-                referencedColumnName: id
-
     oneToOne:
         parentPerson:
             targetEntity: ParentPerson
