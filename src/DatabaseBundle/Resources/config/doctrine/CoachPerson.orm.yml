@@ -20,6 +20,7 @@ DatabaseBundle\Entity\CoachPerson:
             joinColumn:
                 name: personalData_id
                 referenceColumnName: id
+            cascade: ["persist"]
 
     oneToOne:
         coachData:
@@ -28,3 +29,4 @@ DatabaseBundle\Entity\CoachPerson:
             joinColumn:
                 name: coachData_id
                 referenceColumnName: id
+            cascade: ["persist"]

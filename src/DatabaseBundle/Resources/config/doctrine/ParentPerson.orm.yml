@@ -28,3 +28,4 @@ DatabaseBundle\Entity\ParentPerson:
             joinColumn:
                 name: parentData_id
                 referenceColumnName: id
+            cascade: ["persist"]

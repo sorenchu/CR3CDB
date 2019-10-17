@@ -275,13 +275,16 @@ class EditPersonController extends Controller
     }
 
     private function addPayment($pay, $personalDataForm, $childEntity) {
+        if ($pay->getActivePayment() === null) {
+            $pay->addActivePayment(new ActivePayment());
+        }
         foreach($personalDataForm->get($childEntity.'Person') as $subForm) {
             $playerData = $this->getFormDataArray($subForm)[$childEntity.'Data'];
             foreach ($playerData->getPay()->getActivePayment() as $activePayment) {
                 if (!$activePayment->getPay()) {
                     $history = new PaymentHistory();
                     $activePayment->setPay($pay);
-                    $pm = $activePayment->getPayment();
+                    $pm = ($activePayment->getPayment()) ? $activePayment->getPayment : new Payment();
                     $activePayment->setPayment($pm);
                     $pm->setPay($pay);
                     $history->addPayment($pm);

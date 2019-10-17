@@ -16,3 +16,4 @@
 *~
 *.swp
 /web/pictures/
+./src/DatabaseBundle/Controller/Import/SqlHandling.py
