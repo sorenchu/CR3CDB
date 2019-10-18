@@ -18,6 +18,9 @@ use DatabaseBundle\Form\Person\DateDataType;
 
 use Doctrine\ORM\EntityRepository;
 
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+
 class PlayerDataType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
@@ -57,21 +60,26 @@ class PlayerDataType extends AbstractType
               ),
           )
         )
-        ->add('parentdata', EntityType::class, array(
-            'label' => 'parents',
-            'class' => 'DatabaseBundle:ParentData',
-            'query_builder' => function (EntityRepository $er) {
-                  return $er->createQueryBuilder('parent')
-                        ->join('parent.parentPerson', 'parentperson')
-                        ->join('parent.season', 'season')
-                        ->where('parentperson.isParent = 1');
-                        #->andWhere('season.seasontext = :season')
-                        #->setParameter('season', $options['current_season']);
-            },
-            'required' => false,
-            'multiple' => true,
-            )
-        )
+        ->addEventListener(FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $data = $event->getData();
+                $form = $event->getForm();
+                $form->add('parentdata', EntityType::class, array(
+                    'label' => 'parents',
+                    'class' => 'DatabaseBundle:ParentData',
+                    'query_builder' => function (EntityRepository $er) use ($data) {
+                          return $er->createQueryBuilder('parent')
+                                ->join('parent.parentPerson', 'parentperson')
+                                ->join('parent.season', 'season')
+                                ->where('parentperson.isParent = 1')
+                                ->andWhere('season.id = :season')
+                                ->setParameter('season', $data->getSeason());
+                    },
+                    'required' => false,
+                    'multiple' => true,
+                    )
+                );
+            })
         ->add('datedata', DateDataType::class, array(
                 'label' => 'activitytime')
         );
