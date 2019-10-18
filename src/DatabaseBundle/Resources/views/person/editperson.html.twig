@@ -57,7 +57,7 @@
   {% set playerPerson = "" %}
   {% for formData in personalDataForm.playerPerson %}
       {% if formData.vars.value.playerData.season.seasontext == curSeason %}
-        {{ form_row(formData.isPlayer) }}
+        {{ form_row(formData.isPlayer, {'attr': {'onchange': 'return submit();'}}) }}
         {% set playerPerson = formData %}
       {% else %} 
         {{ form_widget(formData, 
@@ -121,7 +121,7 @@
   {% set coachPerson = "" %}
   {% for formData in personalDataForm.coachPerson %}
       {% if formData.vars.value.coachData.season.seasontext == curSeason %}
-        {{ form_row(formData.isCoach) }}
+        {{ form_row(formData.isCoach, {'attr': {'onchange': 'return submit();'}}) }}
         {% set coachPerson = formData %}
       {% else %} 
         {{ form_widget(formData, 
@@ -150,7 +150,7 @@
   {% set memberPerson = "" %}
   {% for formData in personalDataForm.memberPerson %}
       {% if formData.vars.value.memberData.season.seasontext == curSeason %}
-        {{ form_row(formData.isMember) }}
+        {{ form_row(formData.isMember, {'attr': {'onchange': 'return submit();'}}) }}
         {% set memberPerson = formData %}
       {% else %} 
         {{ form_widget(formData, 
@@ -211,7 +211,7 @@
   {% set parentPerson = "" %}
   {% for formData in personalDataForm.parentPerson %}
       {% if formData.vars.value.parentData.season.seasontext == curSeason %}
-        {{ form_row(formData.isParent) }}
+        {{ form_row(formData.isParent, {'attr': {'onchange': 'return submit();'}}) }}
         {% set parentPerson = formData %}
       {% else %} 
         {{ form_widget(formData, 
