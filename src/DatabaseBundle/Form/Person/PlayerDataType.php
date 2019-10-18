@@ -22,7 +22,6 @@ class PlayerDataType extends AbstractType
 {
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
-    $this->season = $options['current_season'];
     $builder
         ->add('number', TextType::class, array(
             'label' => 'rugbynumber',
@@ -35,7 +34,6 @@ class PlayerDataType extends AbstractType
             'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('season');
             },
-            'choices' => $this->season,
             'required' => false,
             'multiple' => false,
             'expanded' => false,
@@ -64,11 +62,11 @@ class PlayerDataType extends AbstractType
             'class' => 'DatabaseBundle:ParentData',
             'query_builder' => function (EntityRepository $er) {
                   return $er->createQueryBuilder('parent')
-                         ->join('parent.parentPerson', 'parentperson')
-                         ->join('parent.season', 'season')
-                         ->where('parentperson.isParent = 1')
-                         ->andWhere('season = :season')
-                         ->setParameter('season', $this->season);
+                        ->join('parent.parentPerson', 'parentperson')
+                        ->join('parent.season', 'season')
+                        ->where('parentperson.isParent = 1');
+                        #->andWhere('season.seasontext = :season')
+                        #->setParameter('season', $options['current_season']);
             },
             'required' => false,
             'multiple' => true,
