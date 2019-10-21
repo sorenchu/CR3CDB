@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AddPersonController extends Controller
 {
+    private const PLAYER = 0;
+    private const COACH = 1;
+
     private $peopleQueries;
 
     public function __construct()
@@ -86,56 +89,63 @@ class AddPersonController extends Controller
     public function deleteFromTeamAction($id, $season, $table)
     {
         $category = $this->getCategoryFromPerson($id, $season, $table);
-        $this->peopleQueries->deleteFromTeam($id, $season, $table);
+        $this->deleteFromTeam($id, $season, $table);
         return $this->redirectToTeam($category, $season);
     }
 
     private function redirectToTeam($category)
     {
+        $page = array('page' => 1);
         switch($category)
         {
             case 'senior':
                 return $this->redirectToRoute('show_senior',
-                        array()
+                        $page
                         );
-                break;
-
             case 'femenino':
                 return $this->redirectToRoute('show_female',
-                        array()
+                        $page
                         );
-                break;
-
             case 'cadete':
                 return $this->redirectToRoute('show_cadete',
-                        array()
+                        $page
                         );
-                break;
-
             case 'alevin':
                 return $this->redirectToRoute('show_alevin',
-                        array()
+                        $page
                         );
-                break;
-
             case 'benjamin':
                 return $this->redirectToRoute('show_benjamin',
-                        array()
+                        $page
                         );
-                break;
-
             case 'prebenjamin':
                 return $this->redirectToRoute('show_prebenjamin',
-                        array()
+                        $page
                         );
-                break;
-
             default:
                 return $this->redirectToRoute('show_all',
-                        array()
+                        $page
                         );
-                break;
         }
+    }
+
+    public function deleteFromTeam($id, $seasonId, $playerOrCoach) {
+        $em = $this->getDoctrine()->getManager();
+        if ($playerOrCoach == self::PLAYER) {
+            $member = $em->getRepository(PlayerData::class)
+                ->deleteFromTeam($id, $seasonId);
+        } else {
+            $member = $em->getRepository(CoachData::class)
+                ->deleteFromTeam($id, $seasonId);
+        }
+        if ($member) {
+            $em->remove($member);
+            $em->flush();
+        }
+        $person = $em->getRepository('DatabaseBundle:PersonalData')
+            ->find($id);
+        $em->getRepository(PersonalData::class)
+            ->savePerson($person, true);
     }
 
     public function deleteFromMemberAction($id, $season)

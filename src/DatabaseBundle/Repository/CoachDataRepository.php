@@ -18,7 +18,7 @@ class CoachDataRepository extends EntityRepository
                 ->join('coaches.coachPerson', 'coachperson')
                 ->join('coachperson.personalData', 'personaldata')
                 ->join('coaches.season', 'season')
-                ->where('person.id = :id')
+                ->where('personaldata.id = :id')
                 ->andWhere('season.id = :seasonId')
                 ->setParameter('id', $id)
                 ->setParameter('seasonId', $season)
@@ -42,6 +42,19 @@ class CoachDataRepository extends EntityRepository
         return array('paginator' => $paginator,
                     'query' => $query);
     }
+
+    public function deleteFromTeam($id, $seasonId) {
+        $query = $this->createQueryBuilder('coaches')
+            ->join('coaches.coachPerson', 'coachperson')
+            ->join('coachperson.personalData', 'personaldata')
+            ->join('coaches.season', 'season')
+            ->where('personaldata.id = :id')
+            ->andWhere('season.id = :seasonId')
+            ->setParameter('id', $id)
+            ->setParameter('seasonId', $seasonId)
+            ->getQuery();
+        return $query
+            ->getOneOrNullResult();
+    }
 }
 ?>
-}

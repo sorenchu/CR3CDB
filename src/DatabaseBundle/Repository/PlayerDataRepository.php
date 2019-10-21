@@ -15,11 +15,10 @@ class PlayerDataRepository extends EntityRepository
     public function getCategory($id, $season)
     {
        $query = $this->createQueryBuilder('players')
-                ->join('players.playerPerson', 'players')
+                ->join('players.playerPerson', 'playerperson')
                 ->join('playerperson.personalData', 'personaldata')
-                ->join('players.personalData', 'person')
                 ->join('players.season', 'season')
-                ->where('person.id = :id')
+                ->where('personaldata.id = :id')
                 ->andWhere('season.id = :seasonId')
                 ->setParameter('id', $id)
                 ->setParameter('seasonId', $season)
@@ -49,14 +48,28 @@ class PlayerDataRepository extends EntityRepository
         $query = $this->createQueryBuilder('players')
                     ->select('count(players)')
                     ->join('players.season', 'season')
-                    ->join('players.playerPerson', 'playerPerson')
+                    ->join('players.playerPerson', 'playerperson')
                     ->where('players.category LIKE :category')
                     ->andWhere('season.id = :seasonId')
-                    ->andWhere('playerPerson.isPlayer = 1')
+                    ->andWhere('playerperson.isPlayer = 1')
                     ->setParameter('category', $category)
                     ->setParameter('seasonId', $seasonId)
                     ->getQuery();
         return $query->getSingleScalarResult();
+    }
+
+    public function deleteFromTeam($id, $seasonId) {
+        $query = $this->createQueryBuilder('players')
+            ->join('players.playerPerson', 'playerperson')
+            ->join('playerperson.personalData', 'personaldata')
+            ->join('players.season', 'season')
+            ->where('personaldata.id = :id')
+            ->andWhere('season.id = :seasonId')
+            ->setParameter('id', $id)
+            ->setParameter('seasonId', $seasonId)
+            ->getQuery();
+        return $query
+            ->getOneOrNullResult();
     }
 }
 ?>

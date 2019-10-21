@@ -76,41 +76,6 @@ class GetEditionQueries extends Controller
         $em->flush();
     }
 
-    public function deleteFromTeam($id, $seasonId, $table)
-    {
-        $em = $this->personController->getDoctrine()->getManager();
-        if (0 == $table) {
-            $teamMember = $em->getRepository('DatabaseBundle:PlayerData')
-                ->createQueryBuilder('players')
-                ->join('players.season', 'season')
-                ->join('players.personalData', 'person')
-                ->where('season.id = :seasonId')
-                ->andWhere('person.id = :id')
-                ->setParameter('seasonId', $seasonId)
-                ->setParameter('id', $id)
-                ->getQuery()
-                ->getResult()[0];
-            $em->remove($teamMember);
-            $em->flush();
-        } else {
-            $teamMember = $em->getRepository('DatabaseBundle:CoachData')
-                ->createQueryBuilder('coaches')
-                ->join('coaches.personalData', 'person')
-                ->join('coaches.season', 'season')
-                ->where('season.id = :seasonId')
-                ->andWhere('person.id = :id')
-                ->setParameter('seasonId', $seasonId)
-                ->setParameter('id', $id)
-                ->getQuery()
-                ->getResult()[0];
-            $em->remove($teamMember);
-            $em->flush();
-        }
-        $person = $em->getRepository('DatabaseBundle:PersonalData')
-            ->find($id);
-        $this->savePerson($person, true);
-    }
-
     public function deleteFromMember($id, $seasonId)
     {
         $em = $this->personController->getDoctrine()->getManager();
