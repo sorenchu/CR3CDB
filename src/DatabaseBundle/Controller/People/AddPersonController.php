@@ -23,13 +23,6 @@ class AddPersonController extends Controller
     private const PLAYER = 0;
     private const COACH = 1;
 
-    private $peopleQueries;
-
-    public function __construct()
-    {
-        $this->peopleQueries = new GetEditionQueries($this);
-    }
-
     public function newAction(Request $request)
     {
         $entityManager = $this->getDoctrine()->getManager();
