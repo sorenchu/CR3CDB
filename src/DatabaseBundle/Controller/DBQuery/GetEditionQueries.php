@@ -42,37 +42,5 @@ class GetEditionQueries extends Controller
         $em->remove($personalData);
         $em->flush();
     }
-
-    public function deleteFromParent($id, $seasonId)
-    {
-        $em = $this->personController->getDoctrine()->getManager();
-        $parent = $em->getRepository('DatabaseBundle:ParentData')
-            ->createQueryBuilder('parents')
-            ->join('parents.season', 'season')
-            ->where('season.id = :seasonId')
-            ->andWhere('parents.id = :id')
-            ->setParameter('seasonId', $seasonId)
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getResult()[0];
-        $em->remove($parent);
-        $em->flush();
-
-        // Check if it is still parent. Either way, set to non parent
-        $parent = $em->getRepository('DatabaseBundle:ParentData')
-            ->createQueryBuilder('parents')
-            ->join('parents.personalData', 'person')
-            ->where('person.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getOneOrNullResult();
-
-        if ($parent == NULL) {
-            $person = $em->getRepository('DatabaseBundle:PersonalData')
-                ->find($id);
-            $person->setIsParent(0);
-            $this->savePerson($person, true);
-        }
-    }
 }
 ?>

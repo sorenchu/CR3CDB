@@ -169,9 +169,19 @@ class AddPersonController extends Controller
 
     public function deleteFromParentAction($id, $season)
     {
-        $this->peopleQueries->deleteFromParent($id, $season);
+        $em = $this->getDoctrine()->getManager();
+        $member = $em->getRepository(ParentData::class)
+            ->deleteFromParent($id, $season);
+        if ($member) {
+            $em->remove($member);
+            $em->flush();
+        }
+        $person = $em->getRepository(PersonalData::class)
+            ->find($id);
+        $em->getRepository(PersonalData::class)
+            ->savePerson($person, true);
         return $this->redirectToRoute('show_parents',
-                array()
+                array('page' => 1)
                 );
     }
 

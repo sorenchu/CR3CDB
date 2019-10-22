@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ParentDataRepository extends EntityRepository
 {
+    public function deleteFromParent($id, $seasonId) {
+        $query = $this->createQueryBuilder('parents')
+            ->join('parents.parentPerson', 'parentperson')
+            ->join('parentperson.personalData', 'personaldata')
+            ->join('parents.season', 'season')
+            ->where('personaldata.id = :id')
+            ->andWhere('season.id = :seasonId')
+            ->setParameter('id', $id)
+            ->setParameter('seasonId', $seasonId)
+            ->getQuery();
+        return $query->getOneOrNullResult();
+    }
 }
