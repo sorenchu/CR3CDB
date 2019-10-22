@@ -33,14 +33,5 @@ class GetEditionQueries extends Controller
         $em->persist($personalData);
         $em->flush();
     }
-
-    public function deletePerson($id)
-    {
-        $em = $this->personController->getDoctrine()->getManager();
-        $personalData = $em->getRepository('DatabaseBundle:PersonalData')
-            ->find($id);
-        $em->remove($personalData);
-        $em->flush();
-    }
 }
 ?>

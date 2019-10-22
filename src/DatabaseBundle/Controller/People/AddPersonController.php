@@ -78,12 +78,11 @@ class AddPersonController extends Controller
 
     public function deletePersonAction($id)
     {
-        $this->peopleQueries->deletePerson($id);
-        $entityManager = $this->getDoctrine()->getManager();
-        return $this->render('DatabaseBundle:people:showall.html.twig', array(
-                    'personalData' => $entityManager->getRepository(PersonalData::class)->findAll(),
-                    'season' => $entityManager->getRepository(Season::class)->getDefaultSeason(),
-                    )
+        $em = $this->getDoctrine()->getManager();
+        $em->getRepository(PersonalData:.class)
+            ->deletePerson($id);
+        return $this->redirectToRoute('show_all',
+                array('page' => 1)
                 );
     }
 
