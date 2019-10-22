@@ -7,6 +7,7 @@ use DatabaseBundle\Entity\PersonalData;
 use DatabaseBundle\Entity\ContactData;
 use DatabaseBundle\Entity\PlayerData;
 use DatabaseBundle\Entity\CoachData;
+use DatabaseBundle\Entity\MemberData;
 use DatabaseBundle\Entity\Season;
 use DatabaseBundle\Form\Person\PersonalDataType;
 
@@ -129,7 +130,7 @@ class AddPersonController extends Controller
         }
     }
 
-    public function deleteFromTeam($id, $seasonId, $playerOrCoach) {
+    private function deleteFromTeam($id, $seasonId, $playerOrCoach) {
         $em = $this->getDoctrine()->getManager();
         if ($playerOrCoach == self::PLAYER) {
             $member = $em->getRepository(PlayerData::class)
@@ -142,7 +143,7 @@ class AddPersonController extends Controller
             $em->remove($member);
             $em->flush();
         }
-        $person = $em->getRepository('DatabaseBundle:PersonalData')
+        $person = $em->getRepository(PersonalData::class)
             ->find($id);
         $em->getRepository(PersonalData::class)
             ->savePerson($person, true);
@@ -150,9 +151,19 @@ class AddPersonController extends Controller
 
     public function deleteFromMemberAction($id, $season)
     {
-        $this->peopleQueries->deleteFromMember($id, $season);
+        $em = $this->getDoctrine()->getManager();
+        $member = $em->getRepository(MemberData::class)
+            ->deleteFromMember($id, $season);
+        if ($member) {
+            $em->remove($member);
+            $em->flush();
+        }
+        $person = $em->getRepository(PersonalData::class)
+            ->find($id);
+        $em->getRepository(PersonalData::class)
+            ->savePerson($person, true);
         return $this->redirectToRoute('show_members',
-                array()
+                array('page' => 1)
                 );
     }
 

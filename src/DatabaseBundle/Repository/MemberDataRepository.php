@@ -12,4 +12,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class MemberDataRepository extends EntityRepository
 {
+    public function deleteFromMember($id, $seasonId) {
+        $query = $this->createQueryBuilder('members')
+            ->join('members.memberPerson', 'memberperson')
+            ->join('memberperson.personalData', 'personaldata')
+            ->join('members.season', 'season')
+            ->where('personaldata.id = :id')
+            ->andWhere('season.id = :seasonId')
+            ->setParameter('id', $id)
+            ->setParameter('seasonId', $seasonId)
+            ->getQuery();
+        return $query->getOneOrNullResult();
+    }
 }
