@@ -283,4 +283,33 @@ class PlayerData
 
         return $this;
     }
+    /**
+     * @var \DatabaseBundle\Entity\PersonNumber
+     */
+    private $personNumber;
+
+
+    /**
+     * Set personNumber.
+     *
+     * @param \DatabaseBundle\Entity\PersonNumber|null $personNumber
+     *
+     * @return PlayerData
+     */
+    public function setPersonNumber(\DatabaseBundle\Entity\PersonNumber $personNumber = null)
+    {
+        $this->personNumber = $personNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get personNumber.
+     *
+     * @return \DatabaseBundle\Entity\PersonNumber|null
+     */
+    public function getPersonNumber()
+    {
+        return $this->personNumber;
+    }
 }

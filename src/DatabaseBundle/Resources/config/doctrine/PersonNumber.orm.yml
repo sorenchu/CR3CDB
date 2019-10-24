@@ -1,0 +1,18 @@
+# src/DatabaseBundle/Resources/config/doctrine/PersonNumber.orm.yml
+DatabaseBundle\Entity\PersonNumber:
+    type: entity
+    table: personNumber
+    repositoryClass: DatabaseBundle\Repository\PersonNumberRepository
+    id:
+        number:
+            type: integer
+            id: true
+            nullable: true
+
+    lifecycleCallbacks: {  }
+
+    oneToMany:
+        playerData:
+            targetEntity: PlayerData
+            mappedBy: personNumber
+            cascade: ["remove"]

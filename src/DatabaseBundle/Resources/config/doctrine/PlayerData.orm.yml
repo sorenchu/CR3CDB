@@ -34,6 +34,14 @@ DatabaseBundle\Entity\PlayerData:
                 referencedColumnName: id
             cascade: ["persist"]
 
+        personNumber:
+            targetEntity: PersonNumber
+            inversedBy: playerData
+            joinColumn:
+                name: personNumber
+                referencedColumnName: number
+            cascade: ["persist", "remove"]
+
     oneToOne:
         pay:
             targetEntity: Pay
