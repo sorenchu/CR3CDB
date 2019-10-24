@@ -72,7 +72,7 @@ class AddPersonController extends Controller
     public function deletePersonAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->getRepository(PersonalData:.class)
+        $em->getRepository(PersonalData::class)
             ->deletePerson($id);
         return $this->redirectToRoute('show_all',
                 array('page' => 1)
