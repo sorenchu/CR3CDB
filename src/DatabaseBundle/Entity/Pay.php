@@ -283,4 +283,8 @@ class Pay
     {
         return $this->activePayment;
     }
+
+    public function __toString() {
+        return strval($this->totalAmount);
+    }
 }

@@ -184,11 +184,14 @@ class EditPersonController extends Controller
     private function getBank($data, $personalDataForm) {
         $bank = 'false';
         foreach($personalDataForm->get($data.'Person') as $subForm) {
-            $playerData = $this->getFormDataArray($subForm)[$data.'Data'];
-            if ($playerData->getSeason() == $this->season) {
-                $data = $playerData->getPay();
-                if ($data && $data->getWayOfPayment() == 'bank') {
-                    $bank = 'true';
+            $formData = $this->getFormDataArray($subForm);
+            if (isset($formData[$data.'Data'])) {
+                $playerData = $this->getFormDataArray($subForm)[$data.'Data'];
+                if ($playerData->getSeason() == $this->season) {
+                    $data = $playerData->getPay();
+                    if ($data && $data->getWayOfPayment() == 'bank') {
+                        $bank = 'true';
+                    }
                 }
             }
         }
