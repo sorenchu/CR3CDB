@@ -4,9 +4,15 @@ DatabaseBundle\Entity\PersonNumber:
     table: personNumber
     repositoryClass: DatabaseBundle\Repository\PersonNumberRepository
     id:
-        number:
+        id:
             type: integer
             id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        number:
+            type: integer
             nullable: true
 
     lifecycleCallbacks: {  }

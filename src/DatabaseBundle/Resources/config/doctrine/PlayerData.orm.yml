@@ -38,8 +38,8 @@ DatabaseBundle\Entity\PlayerData:
             targetEntity: PersonNumber
             inversedBy: playerData
             joinColumn:
-                name: personNumber
-                referencedColumnName: number
+                name: personNumber_id
+                referencedColumnName: id 
             cascade: ["persist", "remove"]
 
     oneToOne:
