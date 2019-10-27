@@ -13,9 +13,6 @@ DatabaseBundle\Entity\PlayerData:
         category:
             type: string
             length: 150
-        number:
-            type: integer
-            nullable: true
             
     lifecycleCallbacks: {  }
 

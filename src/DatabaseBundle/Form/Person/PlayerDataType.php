@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use DatabaseBundle\Form\Person\PayType;
 use DatabaseBundle\Form\Person\DateDataType;
+use DatabaseBundle\Form\Person\PersonNumber;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -26,9 +27,8 @@ class PlayerDataType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
-        ->add('number', TextType::class, array(
-            'label' => 'rugbynumber',
-            'required' => false,
+        ->add('personNumber', PersonNumberType::class, array(
+            'label' => false,
           )
         )
         ->add('season', EntityType::class, array(

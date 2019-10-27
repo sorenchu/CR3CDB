@@ -68,7 +68,7 @@
   </h2>
   {% if playerPerson.vars.value.isPlayer == 1 %}
     <div class="col" align="left">
-      {{ form_row(playerPerson.playerData.number) }}
+      {{ form_row(playerPerson.playerData.personNumber) }}
       {{ form_row(playerPerson.playerData.category) }}
       {% do playerPerson.playerData.season.setRendered() %}
       {{ form_row(playerPerson.playerData.datedata.active) }}

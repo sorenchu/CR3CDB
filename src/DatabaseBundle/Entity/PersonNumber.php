@@ -10,6 +10,22 @@ class PersonNumber
     /**
      * @var int
      */
+    private $id;
+
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @var int
+     */
     private $number;
 
     /**
@@ -84,19 +100,8 @@ class PersonNumber
     {
         return $this->playerData;
     }
-    /**
-     * @var int
-     */
-    private $id;
 
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
+    public function __tostring() {
+        return strval($this->number);
     }
 }
