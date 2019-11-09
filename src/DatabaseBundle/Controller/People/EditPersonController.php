@@ -20,6 +20,7 @@ use DatabaseBundle\Entity\Payment;
 use DatabaseBundle\Entity\PaymentHistory;
 use DatabaseBundle\Entity\ActivePayment;
 use DatabaseBundle\Entity\Journal;
+use DatabaseBundle\Entity\PersonNumber;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,8 +66,8 @@ class EditPersonController extends Controller
             $playerPerson = new PlayerPerson();
             $playerPerson->setIsPlayer(false);
             $playerPerson->setPersonalData($this->personalData);
-            $this->personalData->addPlayerPerson($playerPerson);
             $playerData = $this->creatingPlayerData($playerPerson);
+            $this->personalData->addPlayerPerson($playerPerson);
         } else {
             $playerData = $playerPerson->getPlayerData();
             $pay = $this->entityManager->getRepository(Pay::class)->getPay($playerData->getId());
@@ -140,6 +141,7 @@ class EditPersonController extends Controller
                 $pay = $playerData->getPay();
                 $this->addPayment($pay, $personalDataForm, "player");
                 $this->removePayment($pay, $personalDataForm, $this->season);
+                $this->updatePlayerPersonNumber($personalDataForm);
             }
             if($memberData) {
                 $payMember = $memberData->getPay();
@@ -275,6 +277,19 @@ class EditPersonController extends Controller
 
         $playerPerson->setPlayerData($playerData);
         return $playerData;
+    }
+
+    private function updatePlayerPersonNumber($personalDataForm) {
+        foreach ($personalDataForm->get('playerPerson') as $pdForm) {
+            $number = $pdForm->get('playerData')->get('personNumber')->get('number')->getData();
+            if ($this->entityManager->getRepository(PersonNumber::class)->getByNumber($number) === null) {
+                foreach ($this->personalData->getPlayerPerson() as $pp) { 
+                    $pp->getPlayerData()->getPersonNumber()->setNumber($number);
+                    break;
+                }
+                break;
+            }
+        }
     }
 
     private function addPayment($pay, $personalDataForm, $childEntity) {

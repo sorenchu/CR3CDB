@@ -10,4 +10,12 @@ namespace DatabaseBundle\Repository;
  */
 class PersonNumberRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getByNumber($number)
+    {
+        $query = $this->createQueryBuilder('pnumber')
+                ->where('pnumber.number = :number')
+                ->setParameter('number', $number)
+                ->getQuery();
+        return $query->getOneOrNullResult();
+    }
 }

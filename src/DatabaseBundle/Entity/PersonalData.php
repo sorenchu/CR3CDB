@@ -592,6 +592,12 @@ class PersonalData
      */
     public function addPlayerPerson(\DatabaseBundle\Entity\PlayerPerson $playerPerson)
     {
+        if ($this->getPlayerPerson() !== null) {
+            $number = $this->getPlayerPerson()[0]
+                    ->getPlayerData()
+                    ->getPersonNumber();
+            $playerPerson->getPlayerData()->setPersonNumber($number);
+        }
         $this->playerPerson[] = $playerPerson;
 
         return $this;
