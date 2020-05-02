@@ -40,7 +40,10 @@ class MemberInfo {
         return $this->memberData->getPay();
     }
 
-    private function creatingMemberData($memberPerson, $season) {
+    private function creatingMemberData(
+        \DatabaseBundle\Entity\MemberPerson $memberPerson,
+        \DatabaseBundle\Entity\Season $season
+    ) {
         $handlingData = new HandlingData($this, "member");
         $this->memberData = $handlingData->getChildData();
         $this->memberData->setSeason($season);

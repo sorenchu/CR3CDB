@@ -48,7 +48,10 @@ class PlayerInfo {
         return $this->playerData->getPay();
     }
 
-    private function creatingPlayerData($playerPerson, $season) {
+    private function creatingPlayerData(
+        \DatabaseBundle\Entity\PlayerPerson $playerPerson,
+        \DatabaseBundle\Entity\Season $season
+    ) {
         $handlingData = new HandlingData($this, "player");
         $this->playerData = $handlingData->getChildData();
         $this->playerData->setSeason($season);
