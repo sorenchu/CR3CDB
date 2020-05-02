@@ -17,10 +17,10 @@ class PlayerInfo {
     private $playerData;
 
     function __construct(
-        $personalData,
-        $playerPerson,
-        $season,
-        $entityManager
+        \DatabaseBundle\Entity\PersonalData $personalData,
+        \DatabaseBundle\Entity\PlayerPerson $playerPerson = null,
+        \DatabaseBundle\Entity\Season $season,
+        \Doctrine\ORM\EntityManagerInterface $entityManager
     ) {
         $this->entityManager = $entityManager;
         if (!$playerPerson) {
@@ -55,7 +55,7 @@ class PlayerInfo {
         $this->playerData->setPlayerPerson($playerPerson);
         $this->playerData->setCategoryBySeason($season);
         $pay = $this->entityManager->getRepository(Pay::class)->getPay($this->playerData->getId());
-        if ($pay == NULL) {
+        if (!$pay) {
             $pay = new Pay();
         }
         $this->playerData->setPay($pay);
