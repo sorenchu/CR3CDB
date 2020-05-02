@@ -22,6 +22,7 @@ use DatabaseBundle\Entity\ActivePayment;
 use DatabaseBundle\Entity\Journal;
 
 use DatabaseBundle\Controller\People\Subentities\PlayerInfo;
+use DatabaseBundle\Controller\People\Subentities\MemberInfo;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,28 +84,12 @@ class EditPersonController extends Controller {
         }
 
         $memberPerson = $this->entityManager->getRepository(MemberPerson::class)->getMemberPerson($id, $this->season);
-        if ($memberPerson == NULL) {
-            $memberPerson = new MemberPerson();
-            $memberPerson->setIsMember(false);
-            $handlingData = new HandlingData($this, "member");
-            $memberData = $handlingData->getChildData();
-            $memberData->setSeason($this->season);
-            $memberData->setMemberPerson($memberPerson);
-            $memberPerson->setMemberData($memberData);
-            $memberPerson->setPersonalData($this->personalData);
-            $this->personalData->addMemberPerson($memberPerson);
-
-            $payMember = $this->entityManager->getRepository(Pay::class)->getPay($memberData->getId());
-            if ($payMember == NULL) {
-                $payMember = new Pay();
-            }
-            $memberData->setPay($payMember);
-            $payMember->setMemberData($memberData);
-
-            $memberPerson->setMemberData($memberData);
-        } else {
-            $memberData = $memberPerson->getMemberData();
-        }
+        $memberData = new MemberInfo(
+            $this->personalData,
+            $memberPerson,
+            $this->season,
+            $this->entityManager
+        );
 
         $parentPerson = $this->entityManager->getRepository(ParentPerson::class)->getParentPerson($id, $this->season);
         if ($parentPerson == NULL) {
