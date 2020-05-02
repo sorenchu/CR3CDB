@@ -56,12 +56,9 @@ class EditPersonController extends Controller {
         }
 
         $this->personalData = $this->entityManager->getRepository(PersonalData::class)->find($id);
-        $contactData = $this->entityManager->getRepository(ContactData::class)->getContactData($id);
-        if ($contactData) {
-            $contactData->setPersonalData($this->personalData);
-        }
-
         $personalDataForm = $this->createForm(PersonalDataType::class, $this->personalData);
+        $this->setContactData();
+
         $playerPerson = $this->entityManager->getRepository(PlayerPerson::class)->getPlayerPerson($id, $this->season);
         $playerData = new PlayerInfo(
             $this->personalData,
@@ -153,6 +150,14 @@ class EditPersonController extends Controller {
                     'journalForms' => $journalForms,
                     'journalLength' => sizeof($journalForms),
                     ));
+    }
+
+    private function setContactData() {
+        $contactData = $this->entityManager->
+                getRepository(ContactData::class)->getContactData($id);
+        if ($contactData) {
+            $contactData->setPersonalData($this->personalData);
+        }
     }
 
     private function getBank($data, $personalDataForm) {
