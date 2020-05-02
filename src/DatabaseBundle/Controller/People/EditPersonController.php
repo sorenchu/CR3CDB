@@ -23,6 +23,8 @@ use DatabaseBundle\Entity\Journal;
 
 use DatabaseBundle\Controller\People\Subentities\PlayerInfo;
 use DatabaseBundle\Controller\People\Subentities\MemberInfo;
+use DatabaseBundle\Controller\People\Subentities\CoachInfo;
+use DatabaseBundle\Controller\People\Subentities\ParentInfo;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,7 +59,7 @@ class EditPersonController extends Controller {
 
         $this->personalData = $this->entityManager->getRepository(PersonalData::class)->find($id);
         $personalDataForm = $this->createForm(PersonalDataType::class, $this->personalData);
-        $this->setContactData();
+        $this->setContactData($id);
 
         $playerPerson = $this->entityManager->getRepository(PlayerPerson::class)->getPlayerPerson($id, $this->season);
         $playerData = new PlayerInfo(
@@ -68,17 +70,11 @@ class EditPersonController extends Controller {
         );
 
         $coachPerson = $this->entityManager->getRepository(CoachPerson::class)->getCoachPerson($id, $this->season);
-        if ($coachPerson == NULL) {
-            $coachPerson = new CoachPerson();
-            $coachPerson->setIsCoach(false);
-            $handlingData = new HandlingData($this, "coach");
-            $coachData = $handlingData->getChildData();
-            $coachData->setCoachPerson($coachPerson);
-            $coachData->setSeason($this->season);
-            $coachPerson->setCoachData($coachData);
-            $coachPerson->setPersonalData($this->personalData);
-            $this->personalData->addCoachPerson($coachPerson);
-        }
+        $coachData = new CoachInfo(
+            $this->personalData,
+            $coachPerson,
+            $this->season
+        );
 
         $memberPerson = $this->entityManager->getRepository(MemberPerson::class)->getMemberPerson($id, $this->season);
         $memberData = new MemberInfo(
@@ -89,17 +85,11 @@ class EditPersonController extends Controller {
         );
 
         $parentPerson = $this->entityManager->getRepository(ParentPerson::class)->getParentPerson($id, $this->season);
-        if ($parentPerson == NULL) {
-            $parentPerson = new ParentPerson();
-            $parentPerson->setIsParent(false);
-            $handlingData = new HandlingData($this, "parent");
-            $parentData = $handlingData->getChildData();
-            $parentData->setSeason($this->season);
-            $parentData->setParentPerson($parentPerson);
-            $parentPerson->setParentData($parentData);
-            $parentPerson->setPersonalData($this->personalData);
-            $this->personalData->addParentPerson($parentPerson);
-        }
+        $parentData = new ParentInfo(
+            $this->personalData,
+            $parentPerson,
+            $this->season
+        );
 
         $personalDataForm = $this->createForm(PersonalDataType::class, $this->personalData);
         $personalDataForm->handleRequest($request);
@@ -152,7 +142,7 @@ class EditPersonController extends Controller {
                     ));
     }
 
-    private function setContactData() {
+    private function setContactData(int $id) {
         $contactData = $this->entityManager->
                 getRepository(ContactData::class)->getContactData($id);
         if ($contactData) {

@@ -31,7 +31,7 @@ class MemberInfo {
             $this->memberData = $this->creatingMemberData($this->memberPerson, $season);
 
         } else {
-            $this->memberPerson = memberPerson;
+            $this->memberPerson = $memberPerson;
             $this->memberData = $this->memberPerson->getMemberData();
         }
     }
