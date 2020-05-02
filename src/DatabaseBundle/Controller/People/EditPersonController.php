@@ -62,7 +62,12 @@ class EditPersonController extends Controller {
 
         $personalDataForm = $this->createForm(PersonalDataType::class, $this->personalData);
         $playerPerson = $this->entityManager->getRepository(PlayerPerson::class)->getPlayerPerson($id, $this->season);
-        $playerData = new PlayerInfo($playerPerson, $this->season, $this->entityManager);
+        $playerData = new PlayerInfo(
+            $this->personalData,
+            $playerPerson,
+            $this->season,
+            $this->entityManager
+        );
 
         $coachPerson = $this->entityManager->getRepository(CoachPerson::class)->getCoachPerson($id, $this->season);
         if ($coachPerson == NULL) {

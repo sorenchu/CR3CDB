@@ -4,6 +4,9 @@
 
 namespace DatabaseBundle\Controller\People\Subentities;
 
+use DatabaseBundle\Controller\People\HandlingData;
+
+use DatabaseBundle\Entity\PlayerPerson;
 use DatabaseBundle\Entity\Pay;
 use DatabaseBundle\Entity\Payment;
 
@@ -13,13 +16,18 @@ class PlayerInfo {
     private $entityManager;
     private $playerData;
 
-    function __construct($playerPerson, $season, $entityManager) {
+    function __construct(
+        $personalData,
+        $playerPerson,
+        $season,
+        $entityManager
+    ) {
         $this->entityManager = $entityManager;
         if (!$playerPerson) {
             $this->playerPerson = new PlayerPerson();
             $this->playerPerson->setIsPlayer(false);
-            $this->playerPerson->setPersonalData($this->personalData);
-            $this->personalData->addPlayerPerson($this->playerPerson);
+            $this->playerPerson->setPersonalData($personalData);
+            $personalData->addPlayerPerson($this->playerPerson);
             $this->playerData = $this->creatingPlayerData($this->playerPerson, $season);
         } else {
             $this->playerPerson = $playerPerson;
