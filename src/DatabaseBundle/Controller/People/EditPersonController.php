@@ -21,6 +21,8 @@ use DatabaseBundle\Entity\PaymentHistory;
 use DatabaseBundle\Entity\ActivePayment;
 use DatabaseBundle\Entity\Journal;
 
+use DatabaseBundle\Controller\People\Subentities\PlayerInfo;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -61,24 +63,7 @@ class EditPersonController extends Controller
 
         $personalDataForm = $this->createForm(PersonalDataType::class, $this->personalData);
         $playerPerson = $this->entityManager->getRepository(PlayerPerson::class)->getPlayerPerson($id, $this->season);
-        if ($playerPerson == NULL) {
-            $playerPerson = new PlayerPerson();
-            $playerPerson->setIsPlayer(false);
-            $playerPerson->setPersonalData($this->personalData);
-            $this->personalData->addPlayerPerson($playerPerson);
-            $playerData = $this->creatingPlayerData($playerPerson);
-        } else {
-            $playerData = $playerPerson->getPlayerData();
-            $pay = $this->entityManager->getRepository(Pay::class)->getPay($playerData->getId());
-            if ($pay == NULL) {
-                $pay = new Pay();
-                $playerData->setPay($pay);
-                $pay->setPlayerData($playerData);
-            }
-            $playerData->setCategoryBySeason($this->season);
-            $playerPayments = $this->entityManager->getRepository(Payment::class)
-                                ->getPaymentsByPay($playerData->getPay()->getId());
-        }
+        $playerData = new PlayerInfo($playerPerson, $this->season, $this->entityManager);
 
         $coachPerson = $this->entityManager->getRepository(CoachPerson::class)->getCoachPerson($id, $this->season);
         if ($coachPerson == NULL) {
@@ -258,23 +243,6 @@ class EditPersonController extends Controller
         }
         $this->entityManager->persist($editingJournal);
         $this->entityManager->flush();
-    }
-
-    private function creatingPlayerData($playerPerson) {
-        $handlingData = new HandlingData($this, "player");
-        $playerData = $handlingData->getChildData();
-        $playerData->setSeason($this->season);
-        $playerData->setPlayerPerson($playerPerson);
-        $playerData->setCategoryBySeason($this->season);
-        $pay = $this->entityManager->getRepository(Pay::class)->getPay($playerData->getId());
-        if ($pay == NULL) {
-            $pay = new Pay();
-        }
-        $playerData->setPay($pay);
-        $pay->setPlayerData($playerData);
-
-        $playerPerson->setPlayerData($playerData);
-        return $playerData;
     }
 
     private function addPayment($pay, $personalDataForm, $childEntity) {
