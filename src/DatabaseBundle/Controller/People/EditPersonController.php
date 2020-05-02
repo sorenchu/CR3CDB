@@ -30,14 +30,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 
-class EditPersonController extends Controller
-{
+class EditPersonController extends Controller {
+
     private $entityManager;
     private $season;
     private $personalData;
 
-    public function editPersonAction($id, $seasonId=null, Request $request)
-    {
+    function editPersonAction($id, $seasonId=null, Request $request) {
         $playerData = NULL;
         $bank = 'false';
         $underage = 'false';
