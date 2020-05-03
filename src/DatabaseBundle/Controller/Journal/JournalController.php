@@ -19,19 +19,21 @@ class JournalController extends Controller
 {
     private $entityManager;
 
-    public function addEntryAction($id, $seasonId, Request $request)
-    {
+    public function addEntryAction($id, $seasonId, Request $request) {
         $this->entityManager = $this->getDoctrine()->getManager();
         $personalData = $this->entityManager->getRepository(PersonalData::class)->find($id);
         $season = $this->entityManager->getRepository(Season::class)->find($seasonId);
-        $seasonForm = $this->createForm(SeasonType::class, $season);
-        $seasonForm->handleRequest($request);
-        if ($seasonForm->isSubmitted()) {
-            return $this->redirectToRoute('add_entry',
-                    array('id' => $id,
-                        'seasonId' => $seasonForm->get('season')
-                        ->getData()->getId()
-                        ));
+        $response = $this->forward(
+            'DatabaseBundle\Controller\Season\SeasonController::handleForm',
+            [
+                'id' => $id,
+                'path' => 'add_entry',
+                'season' => $season,
+                'request' => $request
+            ]
+        );
+        if ($response instanceof \Symfony\Component\HttpFoundation\RedirectResponse) {
+            return $response;
         }
 
         $journal = new Journal();
@@ -68,9 +70,12 @@ class JournalController extends Controller
             ->find($id);
         $this->entityManager->remove($entryData);
         $this->entityManager->flush();
-        return $this->redirectToRoute('edit_person',
-                array('id' => $entryData->getPersonalData()->getId(),
-                    'seasonId' => $entryData->getSeason()->getId()
-            ));
+        return $this->redirectToRoute(
+            'edit_person',
+            [
+                'id' => $entryData->getPersonalData()->getId(),
+                'seasonId' => $entryData->getSeason()->getId()
+            ]
+        );
     }
 }
