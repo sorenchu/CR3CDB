@@ -12,14 +12,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class SeasonController extends Controller {
 
-    function handleForm(int $id, Season $season, Request $request, $logger) {
+    function handleForm(int $id, Season $season, Request $request) {
         $seasonForm = $this->createForm(SeasonType::class, $season);
         $seasonForm->handleRequest($request);
-$logger->info('patata '. $seasonForm->get('season')->getData()->getId());
         $seasonId = $seasonForm->get('season')->getData()->getId();
-$logger->info('sison aidi '. $seasonId);
         if ($seasonForm->isSubmitted()) {
-            $logger->info('redirecting '.$id.' '.$seasonId);
             return $this->redirectToRoute(
                     'edit_person',
                     array(

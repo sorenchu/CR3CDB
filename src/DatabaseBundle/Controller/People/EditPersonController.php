@@ -40,20 +40,18 @@ class EditPersonController extends Controller {
     private $personalData;
 
     function editPersonAction($id, $seasonId=null, Request $request) {
-        $playerData = NULL;
         $bank = 'false';
         $underage = 'false';
-        $playerPayments = NULL;
 
         $this->entityManager = $this->getDoctrine()->getManager();
         $this->season = $this->entityManager->getRepository(Season::class)->find($seasonId);
+        $seasonForm = $this->createForm(SeasonType::class, $this->season);
         $response = $this->forward(
             'DatabaseBundle\Controller\Season\SeasonController::handleForm',
             [
                 'id' => $id,
                 'season' => $this->season,
-                'request' => $request,
-                'logger' => $logger
+                'request' => $request
             ]
         );
         if ($response instanceof \Symfony\Component\HttpFoundation\RedirectResponse) {
@@ -71,14 +69,12 @@ class EditPersonController extends Controller {
             $this->season,
             $this->entityManager
         );
-
         $coachPerson = $this->entityManager->getRepository(CoachPerson::class)->getCoachPerson($id, $this->season);
         $coachData = new CoachInfo(
             $this->personalData,
             $coachPerson,
             $this->season
         );
-
         $memberPerson = $this->entityManager->getRepository(MemberPerson::class)->getMemberPerson($id, $this->season);
         $memberData = new MemberInfo(
             $this->personalData,
@@ -86,7 +82,6 @@ class EditPersonController extends Controller {
             $this->season,
             $this->entityManager
         );
-
         $parentPerson = $this->entityManager->getRepository(ParentPerson::class)->getParentPerson($id, $this->season);
         $parentData = new ParentInfo(
             $this->personalData,
@@ -125,24 +120,25 @@ class EditPersonController extends Controller {
             $journalForm = $this->createForm(JournalType::class, $journal);
         }
 
-        $journalForms = array();
+        $journalForms = [];
         foreach ($this->personalData->getJournalEntriesBySeason($this->season) as $j) {
             $journalForms[] = $this->createForm(JournalType::class, $j);
         }
 
-        return $this->render('DatabaseBundle:person:editperson.html.twig', array(
-                    'personalDataForm' => $personalDataForm->createView(),
-                    'seasonForm' => $seasonForm->createView(),
-                    'personalData' => $this->personalData,
-                    'curSeason' => $this->season,
-                    'isPlayerBank' => $playerBank,
-                    'isMemberBank' => $memberBank,
-                    'underage' => $underage,
-                    'playerPayments' => $playerPayments,
-                    'journalForm' => $journalForm->createView(),
-                    'journalForms' => $journalForms,
-                    'journalLength' => sizeof($journalForms),
-                    ));
+        return $this->render('DatabaseBundle:person:editperson.html.twig',
+                    [
+                        'personalDataForm' => $personalDataForm->createView(),
+                        'seasonForm' => $seasonForm->createView(),
+                        'personalData' => $this->personalData,
+                        'curSeason' => $this->season,
+                        'isPlayerBank' => $playerBank,
+                        'isMemberBank' => $memberBank,
+                        'underage' => $underage,
+                        'journalForm' => $journalForm->createView(),
+                        'journalForms' => $journalForms,
+                        'journalLength' => sizeof($journalForms),
+                    ]
+        );
     }
 
     private function setContactData(int $id) {
@@ -170,8 +166,7 @@ class EditPersonController extends Controller {
         return $bank;
     }
 
-    private function removePayment($pay, $personalDataForm)
-    { 
+    private function removePayment($pay, $personalDataForm) {
         $payments = $pay->getPayment();
         $repository = $this->entityManager->getRepository(\DatabaseBundle\Entity\Payment::class);
         $dbPayments = $repository->getPaymentsByPay($pay->getId());
@@ -188,8 +183,7 @@ class EditPersonController extends Controller {
         }
     }
 
-    private function getFormDataArray($form)
-    {
+    private function getFormDataArray($form) {
         $data = [];
         foreach($form as $key => $value) {
             $data[$key] = $value->getData();
@@ -197,9 +191,12 @@ class EditPersonController extends Controller {
         return $data;
     }
 
-    private function isUnderage($playerData)
-    {
-        if (!$playerData or $playerData->getCategory() == 'senior' or $playerData->getCategory() == 'female') {
+    private function isUnderage($playerData) {
+        if (
+            !$playerData
+                || $playerData->getCategory() == 'senior'
+                || $playerData->getCategory() == 'female'
+            ) {
             return 'false';
         }
         return 'true';
