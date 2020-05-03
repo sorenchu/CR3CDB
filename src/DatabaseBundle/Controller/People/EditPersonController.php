@@ -47,14 +47,17 @@ class EditPersonController extends Controller {
 
         $this->entityManager = $this->getDoctrine()->getManager();
         $this->season = $this->entityManager->getRepository(Season::class)->find($seasonId);
-        $seasonForm = $this->createForm(SeasonType::class, $this->season);
-        $seasonForm->handleRequest($request);
-        if ($seasonForm->isSubmitted()) {
-            return $this->redirectToRoute('edit_person',
-                    array('id' => $id,
-                        'seasonId' => $seasonForm->get('season')
-                        ->getData()->getId()
-                        ));
+        $response = $this->forward(
+            'DatabaseBundle\Controller\Season\SeasonController::handleForm',
+            [
+                'id' => $id,
+                'season' => $this->season,
+                'request' => $request,
+                'logger' => $logger
+            ]
+        );
+        if ($response instanceof \Symfony\Component\HttpFoundation\RedirectResponse) {
+            return $response;
         }
 
         $this->personalData = $this->entityManager->getRepository(PersonalData::class)->find($id);
