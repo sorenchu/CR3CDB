@@ -91,18 +91,18 @@ class EditPersonController extends Controller {
 
         $personalDataForm = $this->createForm(PersonalDataType::class, $this->personalData);
         $personalDataForm->handleRequest($request);
-        $playerBank = $this->getBank("player", $personalDataForm);
-        $memberBank = $this->getBank("member", $personalDataForm);
+        $playerBank = $this->getBank('player', $personalDataForm);
+        $memberBank = $this->getBank('member', $personalDataForm);
         $underage = $this->isUnderage($this->personalData->getPlayerDataBySeason($this->season));
         if ($personalDataForm->isSubmitted()) {
             if($playerData) {
                 $pay = $playerData->getPay();
-                $this->addPayment($pay, $personalDataForm, "player");
+                $this->addPayment($pay, $personalDataForm, 'player');
                 $this->removePayment($pay, $personalDataForm, $this->season);
             }
             if($memberData) {
                 $payMember = $memberData->getPay();
-                $this->addPayment($payMember, $personalDataForm, "member");
+                $this->addPayment($payMember, $personalDataForm, 'member');
                 $this->removePayment($payMember, $personalDataForm);
             }
             $seasonForm = $this->createForm(SeasonType::class, $this->season);
