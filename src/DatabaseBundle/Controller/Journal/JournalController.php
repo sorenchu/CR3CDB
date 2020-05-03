@@ -19,7 +19,7 @@ class JournalController extends Controller
 {
     private $entityManager;
 
-    public function addEntryAction($id, $seasonId, Request $request) {
+    function addEntryAction($id, $seasonId, Request $request) {
         $this->entityManager = $this->getDoctrine()->getManager();
         $personalData = $this->entityManager->getRepository(PersonalData::class)->find($id);
         $season = $this->entityManager->getRepository(Season::class)->find($seasonId);
@@ -54,8 +54,7 @@ class JournalController extends Controller
         ));
     }
 
-    public function showJournalEntriesAction($id, $seasonId)
-    {
+    function showJournalEntriesAction($id, $seasonId) {
         $this->entityManager = $this->getDoctrine()->getManager();
         $personalData = $this->entityManager->getRepository(PersonalData::class)->find($id);
         return $this->render('DatabaseBundle:journal:showentries.html.twig', array(
@@ -63,8 +62,7 @@ class JournalController extends Controller
         ));
     }
 
-    public function deleteEntryAction($id)
-    {
+    function deleteEntryAction($id) {
         $this->entityManager = $this->getDoctrine()->getManager();
         $entryData = $this->entityManager->getRepository('DatabaseBundle:Journal')
             ->find($id);

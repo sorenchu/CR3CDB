@@ -38,71 +38,31 @@ class EditPersonController extends Controller {
     private $entityManager;
     private $season;
     private $personalData;
+    private $playerData;
+    private $memberData;
 
     function editPersonAction($id, $seasonId=null, Request $request) {
-        $bank = 'false';
-        $underage = 'false';
-
         $this->entityManager = $this->getDoctrine()->getManager();
         $this->season = $this->entityManager->getRepository(Season::class)->find($seasonId);
         $seasonForm = $this->createForm(SeasonType::class, $this->season);
-        $response = $this->forward(
-            'DatabaseBundle\Controller\Season\SeasonController::handleForm',
-            [
-                'id' => $id,
-                'path' => 'edit_person',
-                'season' => $this->season,
-                'request' => $request
-            ]
-        );
+        $response = $this->changingSeasonForm($id, $request);
         if ($response instanceof \Symfony\Component\HttpFoundation\RedirectResponse) {
             return $response;
         }
-
         $this->personalData = $this->entityManager->getRepository(PersonalData::class)->find($id);
         $personalDataForm = $this->createForm(PersonalDataType::class, $this->personalData);
         $this->setContactData($id);
-
-        $playerPerson = $this->entityManager->getRepository(PlayerPerson::class)->getPlayerPerson($id, $this->season);
-        $playerData = new PlayerInfo(
-            $this->personalData,
-            $playerPerson,
-            $this->season,
-            $this->entityManager
-        );
-        $coachPerson = $this->entityManager->getRepository(CoachPerson::class)->getCoachPerson($id, $this->season);
-        $coachData = new CoachInfo(
-            $this->personalData,
-            $coachPerson,
-            $this->season
-        );
-        $memberPerson = $this->entityManager->getRepository(MemberPerson::class)->getMemberPerson($id, $this->season);
-        $memberData = new MemberInfo(
-            $this->personalData,
-            $memberPerson,
-            $this->season,
-            $this->entityManager
-        );
-        $parentPerson = $this->entityManager->getRepository(ParentPerson::class)->getParentPerson($id, $this->season);
-        $parentData = new ParentInfo(
-            $this->personalData,
-            $parentPerson,
-            $this->season
-        );
-
+        $this->setPersonInfo($id);
         $personalDataForm = $this->createForm(PersonalDataType::class, $this->personalData);
         $personalDataForm->handleRequest($request);
-        $playerBank = $this->getBank('player', $personalDataForm);
-        $memberBank = $this->getBank('member', $personalDataForm);
-        $underage = $this->isUnderage($this->personalData->getPlayerDataBySeason($this->season));
         if ($personalDataForm->isSubmitted()) {
-            if($playerData) {
-                $pay = $playerData->getPay();
+            if($this->playerData) {
+                $pay = $this->playerData->getPay();
                 $this->addPayment($pay, $personalDataForm, 'player');
                 $this->removePayment($pay, $personalDataForm, $this->season);
             }
-            if($memberData) {
-                $payMember = $memberData->getPay();
+            if($this->memberData) {
+                $payMember = $this->memberData->getPay();
                 $this->addPayment($payMember, $personalDataForm, 'member');
                 $this->removePayment($payMember, $personalDataForm);
             }
@@ -131,9 +91,12 @@ class EditPersonController extends Controller {
                         'seasonForm' => $seasonForm->createView(),
                         'personalData' => $this->personalData,
                         'curSeason' => $this->season,
-                        'isPlayerBank' => $playerBank,
-                        'isMemberBank' => $memberBank,
-                        'underage' => $underage,
+                        'isPlayerBank' => $this->getBank('player', $personalDataForm),
+                        'isMemberBank' => $this->getBank('member', $personalDataForm),
+                        'underage' => $this->isUnderage(
+                            $this->personalData->getPlayerDataBySeason(
+                                $this->season)
+                        ),
                         'journalForm' => $journalForm->createView(),
                         'journalForms' => $journalForms,
                         'journalLength' => sizeof($journalForms),
@@ -268,5 +231,50 @@ class EditPersonController extends Controller {
             }
         }
     }
+
+    private function changingSeasonForm(int $id, Request $request) {
+        $response = $this->forward(
+            'DatabaseBundle\Controller\Season\SeasonController::handleForm',
+            [
+                'id' => $id,
+                'path' => 'edit_person',
+                'season' => $this->season,
+                'request' => $request
+            ]
+        );
+        return $response;
+    }
+
+    private function setPersonInfo(int $id) {
+        $playerPerson = $this->entityManager->getRepository(PlayerPerson::class)
+                            ->getPlayerPerson($id, $this->season);
+        $this->playerData = new PlayerInfo(
+            $this->personalData,
+            $playerPerson,
+            $this->season,
+            $this->entityManager
+        );
+        $coachPerson = $this->entityManager->getRepository(CoachPerson::class)
+                            ->getCoachPerson($id, $this->season);
+        $coachData = new CoachInfo(
+            $this->personalData,
+            $coachPerson,
+            $this->season
+        );
+        $memberPerson = $this->entityManager->getRepository(MemberPerson::class)
+                            ->getMemberPerson($id, $this->season);
+        $this->memberData = new MemberInfo(
+            $this->personalData,
+            $memberPerson,
+            $this->season,
+            $this->entityManager
+        );
+        $parentPerson = $this->entityManager->getRepository(ParentPerson::class)
+                            ->getParentPerson($id, $this->season);
+        $parentData = new ParentInfo(
+            $this->personalData,
+            $parentPerson,
+            $this->season
+        );
+    }
 }
-?>
