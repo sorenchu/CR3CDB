@@ -23,26 +23,26 @@ class AddPersonController extends Controller
     private const PLAYER = 0;
     private const COACH = 1;
 
-    public function newAction(Request $request)
-    {
+    public function newAction(Request $request) {
         $entityManager = $this->getDoctrine()->getManager();
         $personalData = new PersonalData();
         $personalDataForm = $this->createForm(PersonalDataType::class, $personalData);
         $personalDataForm->handleRequest($request);
-
         if($personalDataForm->isSubmitted()) {
             $contactData = $this->setContactData($personalDataForm->get("contactData"));
             $contactData->setPersonalData($personalData);
             $personalData->setContactData($contactData);
-        
             $entityManager->getRepository(PersonalData::class)->savePerson($personalData, false);
-            return $this->redirectToRoute('edit_person', 
-                    array(
-                        'id' => $personalData->getId(),
-                        'seasonId' => $entityManager->getRepository(Season::class)->getDefaultSeason()->getId(),
-                        ));
+            $season = $entityManager->getRepository(Season::class)->getDefaultSeason();
+            $response = $this->forward(
+                'DatabaseBundle\Controller\Season\SeasonController::handleForm',
+                [
+                    'id' => $id,
+                    'season' => $season,
+                    'request' => $request
+                ]
+            );
         }
-
         return $this->render('DatabaseBundle:person:new.html.twig', array(
                     'personalDataForm' => $personalDataForm->createView(),
                     ));
