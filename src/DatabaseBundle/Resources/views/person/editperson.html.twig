@@ -108,19 +108,40 @@
   </h2>
   {% if playerPerson.vars.value.isPlayer == 1 %}
     <div class="col" align="left">
-      {{ form_row(playerPerson.playerData.number) }}
-      {{ form_row(playerPerson.playerData.category) }}
-      {% do playerPerson.playerData.season.setRendered() %}
-      {{ form_row(playerPerson.playerData.datedata.active) }}
-      {{ form_row(playerPerson.playerData.datedata.joiningDate) }}
-      {{ form_row(playerPerson.playerData.datedata.leavingDate) }}
+        <table>
+            <tr>
+                <td>{{ form_label(playerPerson.playerData.number) }}</td>
+                <td>{{ form_widget(playerPerson.playerData.number) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(playerPerson.playerData.category) }}</td>
+                <td>{{ form_widget(playerPerson.playerData.category) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(playerPerson.playerData.datedata.active) }}</td>
+                <td>{{ form_widget(playerPerson.playerData.datedata.active) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(playerPerson.playerData.datedata.joiningDate) }}</td>
+                <td>{{ form_widget(playerPerson.playerData.datedata.joiningDate) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(playerPerson.playerData.datedata.leavingDate) }}</td>
+                <td>{{ form_widget(playerPerson.playerData.datedata.leavingDate) }}</td>
+            </tr>
+            {% do playerPerson.playerData.season.setRendered() %}
+        </table>
     </div>
     <div class="col" align="center">
-              {% if underage == 'true' %}
-                  {{ form_row(playerPerson.playerData.parentdata) }}
-              {% else %}
-                  {% do playerPerson.playerData.parentdata.setRendered() %}
-              {% endif %}
+         <table>
+            {% if underage == 'true' %}
+            <tr>
+                <td>{{ form_label(playerPerson.playerData.parentdata) }}</td>
+                <td>{{ form_widget(playerPerson.playerData.parentdata) }}</td>
+            {% else %}
+                {% do playerPerson.playerData.parentdata.setRendered() %}
+            {% endif %}
+        </table>
     </div>
     {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_ACCOUNTING") %}
     <div class="col" align="right">
