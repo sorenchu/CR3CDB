@@ -120,7 +120,6 @@ class EditPersonController extends Controller {
             $journal = new Journal();
             $journalForm = $this->createForm(JournalType::class, $journal);
         }
-
         $journalForms = [];
         foreach ($this->personalData->getJournalEntriesBySeason($this->season) as $j) {
             $journalForms[] = $this->createForm(JournalType::class, $j);

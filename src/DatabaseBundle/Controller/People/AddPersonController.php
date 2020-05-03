@@ -184,7 +184,7 @@ class AddPersonController extends Controller
     private function getCategoryFromPerson($id, $season, $table)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        if (0 == $table) {
+        if ($table === self::PLAYER) {
             $member = $entityManager->getRepository(PlayerData::class)->getCategory($id, $season);
         } else {
             $member = $entityManager->getRepository(CoachData::class)->getCategory($id, $season);

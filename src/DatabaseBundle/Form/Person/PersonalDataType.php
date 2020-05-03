@@ -41,8 +41,8 @@ class PersonalDataType extends AbstractType
         ->add('sex', ChoiceType::class, array(
             'label' => 'sex',
             'choices' => array(
-              'male' => 'male',
-              'female' => 'female',
+              'man' => 'male',
+              'woman' => 'female',
             ),
           )
         )
