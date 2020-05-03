@@ -50,6 +50,7 @@ class EditPersonController extends Controller {
             'DatabaseBundle\Controller\Season\SeasonController::handleForm',
             [
                 'id' => $id,
+                'path' => 'edit_person',
                 'season' => $this->season,
                 'request' => $request
             ]

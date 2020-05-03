@@ -38,10 +38,14 @@ class AddPersonController extends Controller
                 'DatabaseBundle\Controller\Season\SeasonController::handleForm',
                 [
                     'id' => $id,
+                    'path' => 'edit_person',
                     'season' => $season,
                     'request' => $request
                 ]
             );
+            if ($response instanceof \Symfony\Component\HttpFoundation\RedirectResponse) {
+                return $response;
+            }
         }
         return $this->render('DatabaseBundle:person:new.html.twig', array(
                     'personalDataForm' => $personalDataForm->createView(),
