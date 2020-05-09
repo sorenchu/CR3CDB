@@ -18,8 +18,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AddPersonController extends Controller
-{
+class AddPersonController extends Controller {
+
     private const PLAYER = 0;
     private const COACH = 1;
 
@@ -29,7 +29,7 @@ class AddPersonController extends Controller
         $personalDataForm = $this->createForm(PersonalDataType::class, $personalData);
         $personalDataForm->handleRequest($request);
         if($personalDataForm->isSubmitted()) {
-            $contactData = $this->setContactData($personalDataForm->get("contactData"));
+            $contactData = $this->setContactData($personalDataForm->get('contactData'));
             $contactData->setPersonalData($personalData);
             $personalData->setContactData($contactData);
             $entityManager->getRepository(PersonalData::class)->savePerson($personalData, false);
@@ -47,51 +47,38 @@ class AddPersonController extends Controller
                 return $response;
             }
         }
-        return $this->render('DatabaseBundle:person:new.html.twig', array(
-                    'personalDataForm' => $personalDataForm->createView(),
-                    ));
+        return $this->render(
+                    'DatabaseBundle:person:new.html.twig', 
+                    ['personalDataForm' => $personalDataForm->createView()]
+        );
     }
 
-    public function setContactData($contactDataForm)
-    {
+    public function setContactData($contactDataForm) {
         $contactData = new ContactData();
-        $contactData->setAddress($this->viewData($contactDataForm["address"]));
-        $contactData->setCity($this->viewData($contactDataForm["city"]));
-        $contactData->setZipcode($this->viewData($contactDataForm["zipcode"]));
-        $contactData->setProvince($this->viewData($contactDataForm["province"]));
-        $contactData->setPhone($this->viewData($contactDataForm["phone"]));
-        $contactData->setEmail($this->viewData($contactDataForm["email"]));
+        $contactData->setAddress($this->viewData($contactDataForm['address']));
+        $contactData->setCity($this->viewData($contactDataForm['city']));
+        $contactData->setZipcode($this->viewData($contactDataForm['zipcode']));
+        $contactData->setProvince($this->viewData($contactDataForm['province']));
+        $contactData->setPhone($this->viewData($contactDataForm['phone']));
+        $contactData->setEmail($this->viewData($contactDataForm['email']));
 
         return $contactData;
     }
 
-    public function viewData($formSlot) 
-    {
-        if ($formSlot->getViewData() == "") {
+    public function viewData($formSlot) {
+        if ($formSlot->getViewData() == '') {
             return NULL;
         }
         return $formSlot->getViewData();
     }
 
-    public function deletePersonAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->getRepository(PersonalData::class)
-            ->deletePerson($id);
-        return $this->redirectToRoute('show_all',
-                array('page' => 1)
-                );
-    }
-
-    public function deleteFromTeamAction($id, $season, $table)
-    {
+    public function deleteFromTeamAction($id, $season, $table) {
         $category = $this->getCategoryFromPerson($id, $season, $table);
         $this->deleteFromTeam($id, $season, $table);
         return $this->redirectToTeam($category, $season);
     }
 
-    private function redirectToTeam($category)
-    {
+    private function redirectToTeam($category) {
         $page = array('page' => 1);
         switch($category)
         {
@@ -145,8 +132,7 @@ class AddPersonController extends Controller
             ->savePerson($person, true);
     }
 
-    public function deleteFromMemberAction($id, $season)
-    {
+    public function deleteFromMemberAction($id, $season) {
         $em = $this->getDoctrine()->getManager();
         $member = $em->getRepository(MemberData::class)
             ->deleteFromMember($id, $season);
@@ -181,8 +167,7 @@ class AddPersonController extends Controller
                 );
     }
 
-    private function getCategoryFromPerson($id, $season, $table)
-    {
+    private function getCategoryFromPerson($id, $season, $table) {
         $entityManager = $this->getDoctrine()->getManager();
         if ($table === self::PLAYER) {
             $member = $entityManager->getRepository(PlayerData::class)->getCategory($id, $season);
@@ -192,4 +177,3 @@ class AddPersonController extends Controller
         return $member->getCategory();
     }
 }
-?>
