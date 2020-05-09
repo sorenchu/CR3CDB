@@ -14,6 +14,7 @@ use DatabaseBundle\Form\Person\PersonalDataType;
 use DatabaseBundle\Controller\DBQuery\GetEditionQueries;
 use DatabaseBundle\Controller\DBQuery\ShowTeamQueries;
 
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,7 @@ class AddPersonController extends Controller {
 
     private const PLAYER = 0;
     private const COACH = 1;
+    const DUPLICATED_ENTRY = -1;
 
     public function newAction(Request $request) {
         $entityManager = $this->getDoctrine()->getManager();
@@ -32,19 +34,18 @@ class AddPersonController extends Controller {
             $contactData = $this->setContactData($personalDataForm->get('contactData'));
             $contactData->setPersonalData($personalData);
             $personalData->setContactData($contactData);
-            $entityManager->getRepository(PersonalData::class)->savePerson($personalData, false);
-            $season = $entityManager->getRepository(Season::class)->getDefaultSeason();
-            $response = $this->forward(
-                'DatabaseBundle\Controller\Season\SeasonController::handleForm',
-                [
-                    'id' => $id,
-                    'path' => 'edit_person',
-                    'season' => $season,
-                    'request' => $request
-                ]
-            );
-            if ($response instanceof \Symfony\Component\HttpFoundation\RedirectResponse) {
-                return $response;
+            $id = $entityManager->getRepository(PersonalData::class)->savePerson($personalData);
+            if ($id === self::DUPLICATED_ENTRY) {
+                $session = $request->getSession();
+                $session->getFlashBag()->add('error', 'Este DNI ha sido utilizado anteriormente');
+            } else {
+                return $this->redirectToRoute(
+                    'edit_person',
+                    [
+                        'id' => $id,
+                        'seasonId' => $entityManager->getRepository(Season::class)->getDefaultSeason()->getId()
+                    ]
+                );
             }
         }
         return $this->render(
@@ -61,7 +62,6 @@ class AddPersonController extends Controller {
         $contactData->setProvince($this->viewData($contactDataForm['province']));
         $contactData->setPhone($this->viewData($contactDataForm['phone']));
         $contactData->setEmail($this->viewData($contactDataForm['email']));
-
         return $contactData;
     }
 
@@ -79,37 +79,37 @@ class AddPersonController extends Controller {
     }
 
     private function redirectToTeam($category) {
-        $page = array('page' => 1);
+        $page = ['page' => 1];
         switch($category)
         {
             case 'senior':
                 return $this->redirectToRoute('show_senior',
                         $page
-                        );
+                );
             case 'femenino':
                 return $this->redirectToRoute('show_female',
                         $page
-                        );
+                );
             case 'cadete':
                 return $this->redirectToRoute('show_cadete',
                         $page
-                        );
+                );
             case 'alevin':
                 return $this->redirectToRoute('show_alevin',
                         $page
-                        );
+                );
             case 'benjamin':
                 return $this->redirectToRoute('show_benjamin',
                         $page
-                        );
+                );
             case 'prebenjamin':
                 return $this->redirectToRoute('show_prebenjamin',
                         $page
-                        );
+                );
             default:
                 return $this->redirectToRoute('show_all',
                         $page
-                        );
+                );
         }
     }
 
@@ -145,8 +145,8 @@ class AddPersonController extends Controller {
         $em->getRepository(PersonalData::class)
             ->savePerson($person, true);
         return $this->redirectToRoute('show_members',
-                array('page' => 1)
-                );
+                'page' => 1
+        );
     }
 
     public function deleteFromParentAction($id, $season)
@@ -163,8 +163,8 @@ class AddPersonController extends Controller {
         $em->getRepository(PersonalData::class)
             ->savePerson($person, true);
         return $this->redirectToRoute('show_parents',
-                array('page' => 1)
-                );
+                'page' => 1
+        );
     }
 
     private function getCategoryFromPerson($id, $season, $table) {
