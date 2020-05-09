@@ -24,10 +24,10 @@ class SeasonController extends Controller {
         if ($seasonForm->isSubmitted()) {
             return $this->redirectToRoute(
                     $path,
-                    array(
+                    [
                         'id' => $id,
                         'seasonId' => $seasonId
-                    )
+                    ]
             );
         }
         return new Response();
