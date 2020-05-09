@@ -8,26 +8,78 @@
 {# src/DatabaseBundle/Resources/views/person/new.html.twig #}
 
 {{ form_start(personalDataForm) }}
-<table style="width:33%">
+<table>
+  <tr>
+    <td>{{ form_label(personalDataForm.name) }}</td>
+    <td>{{ form_widget(personalDataForm.name) }}</td>
+  </tr>
+  </tr>
+  <tr>
+    <td>{{ form_label(personalDataForm.surname) }}</td>
+    <td>{{ form_widget(personalDataForm.surname) }}</td>
+  </tr>
+  <tr>
+    <td>{{ form_label(personalDataForm.nickname) }}</td>
+    <td>{{ form_widget(personalDataForm.nickname) }}</td>
+  </tr>
+  {% for flash_message in app.session.flashbag.get('error') %}
+    <tr>
+      <td>
+        <div class='alert alert-danger'>
+          {{ flash_message }}
+        </div>
+      </td>
+    </tr>
+  {% endfor %}
+  <tr>
+    <td>{{ form_label(personalDataForm.dni) }}</td>
+    <td>{{ form_widget(personalDataForm.dni) }}</td>
+  </tr>
+  <tr>
+    <td>{{ form_label(personalDataForm.birthday) }}</td>
+    <td>{{ form_widget(personalDataForm.birthday) }}</td>
+  </tr>
+  <tr>
+    <td>{{ form_label(personalDataForm.sex) }}</td>
+    <td>{{ form_widget(personalDataForm.sex) }}</td>
+  </tr>
+  <hr>
+  <tr>
+    <td>{{ form_label(personalDataForm.contactData.phone) }}</td>
+    <td>{{ form_widget(personalDataForm.contactData.phone) }}</td>
+  </tr>
+  <tr>
+    <td>{{ form_label(personalDataForm.contactData.email) }}</td>
+    <td>{{ form_widget(personalDataForm.contactData.email) }}</td>
+  </tr>
+  <tr>
+    <td>{{ form_label(personalDataForm.contactData.address) }}</td>
+    <td>{{ form_widget(personalDataForm.contactData.address) }}</td>
+  </tr>
+  <tr>
+    <td>{{ form_label(personalDataForm.contactData.city) }}</td>
+    <td>{{ form_widget(personalDataForm.contactData.city) }}</td>
+  </tr>
+  <tr>
+    <td>{{ form_label(personalDataForm.contactData.zipcode) }}</td>
+    <td>{{ form_widget(personalDataForm.contactData.zipcode) }}</td>
+  </tr>
+  <tr>
+    <td>{{ form_label(personalDataForm.contactData.province) }}</td>
+    <td>{{ form_widget(personalDataForm.contactData.province) }}</td>
+  </tr>
+    <hr>
   <tr>
     <td>
-      {{ form_row(personalDataForm.name) }}
-      {{ form_row(personalDataForm.surname) }}
-      {{ form_row(personalDataForm.nickname) }}
-      {{ form_row(personalDataForm.dni) }}
-      {{ form_row(personalDataForm.birthday) }}
-      {{ form_row(personalDataForm.sex) }}
-    <hr> 
-      {{ form_row(personalDataForm.contactData.phone) }}
-      {{ form_row(personalDataForm.contactData.email) }}
-      {{ form_row(personalDataForm.contactData.address) }}
-      {{ form_row(personalDataForm.contactData.city) }}
-      {{ form_row(personalDataForm.contactData.zipcode) }}
-      {{ form_row(personalDataForm.contactData.province) }}
-    <hr>
       {{ form_row(personalDataForm.save) }}
     </td>
   </tr>
 </table>
+{% do personalDataForm.playerPerson.setRendered() %}
+{% do personalDataForm.coachPerson.setRendered() %}
+{% do personalDataForm.memberPerson.setRendered() %}
+{% do personalDataForm.parentPerson.setRendered() %}
+{{ form_row(personalDataForm._token) }}
+{{ form_end(personalDataForm) }}
 {% endblock %}
 
