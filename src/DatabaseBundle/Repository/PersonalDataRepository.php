@@ -14,7 +14,7 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
  */
 class PersonalDataRepository extends EntityRepository {
 
-    public function savePerson(PersonalData $personalData, boolean $edit = null): int {
+    public function savePerson(PersonalData $personalData, bool $edit = null): int {
         $em = $this->getEntityManager();
         if ($edit)
             $em->merge($personalData);
