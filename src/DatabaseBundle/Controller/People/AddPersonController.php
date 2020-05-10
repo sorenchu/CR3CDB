@@ -145,7 +145,7 @@ class AddPersonController extends Controller {
         $em->getRepository(PersonalData::class)
             ->savePerson($person, true);
         return $this->redirectToRoute('show_members',
-                'page' => 1
+                ['page' => 1]
         );
     }
 
@@ -163,7 +163,7 @@ class AddPersonController extends Controller {
         $em->getRepository(PersonalData::class)
             ->savePerson($person, true);
         return $this->redirectToRoute('show_parents',
-                'page' => 1
+                ['page' => 1]
         );
     }
 
